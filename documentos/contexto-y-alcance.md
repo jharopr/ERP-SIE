@@ -2,7 +2,7 @@
 
 ## Empresa y operación
 
-**IMPORTACIONES MYS HERMANOS S.A.C.** comercializa autoradios y accesorios para vehículos. La ficha RUC registra a la empresa como activa, importadora y emisora electrónica de facturas y boletas. El detalle del catálogo, los volúmenes y las reglas comerciales deberá validarse durante el levantamiento.
+**IMPORTACIONES MYS HERMANOS S.A.C.** comercializa autoradios y accesorios para vehículos. La ficha RUC registra a la empresa como activa, importadora y emisora electrónica de facturas y boletas. La línea base de diseño usa catálogo por SKU, inventario por ubicación, listas de precio minorista y mayorista, y ventas originadas en atención presencial o WhatsApp móvil.
 
 ## Situación actual
 
@@ -17,11 +17,11 @@ Las ventas ingresan por dos canales:
 
 La ausencia de un sistema central dificulta conocer el historial del cliente, mantener una sola versión del stock, dar seguimiento al pedido y enlazar la venta con su comprobante. El problema principal no es WhatsApp por sí mismo, sino la fragmentación del proceso comercial.
 
-## Tipos de cliente propuestos
+## Tipos de cliente
 
 El ERP debe manejar una ficha única de cliente y permitir una clasificación inicial:
 
-| Tipo | Necesidad principal | Tratamiento propuesto |
+| Tipo | Necesidad principal | Tratamiento en el ERP |
 | --- | --- | --- |
 | Consumidor final | Compra ocasional y atención rápida | Datos mínimos, boleta y seguimiento del pedido |
 | Cliente con factura | Compra asociada a RUC | Validación de razón social y emisión de factura |
@@ -42,10 +42,10 @@ Centralizar en Odoo clientes, cotizaciones, pedidos, inventario y ventas; delega
 
 ## Alcance inicial
 
-| Incluido | Posterior o sujeto a validación |
+| Incluido | Fuera del alcance inicial |
 | --- | --- |
 | Clientes, productos, ventas, inventario, dos canales de origen, boletas, facturas, guías y reportes básicos | Automatización de WhatsApp, compras/importaciones completas, contabilidad avanzada, campañas y comercio electrónico |
-| Odoo como sistema central y UBLHUB como microservicio tributario | Integraciones adicionales y personalizaciones no justificadas por una brecha validada |
+| Odoo como sistema central y UBLHUB como microservicio tributario | Integraciones adicionales y personalizaciones sin un caso de negocio aprobado |
 
 ## Indicadores iniciales
 
@@ -55,4 +55,14 @@ Centralizar en Odoo clientes, cotizaciones, pedidos, inventario y ventas; delega
 - porcentaje de documentos electrónicos procesados sin reproceso;
 - clientes duplicados detectados y corregidos.
 
-Cada indicador requiere fórmula, responsable, fuente y línea base antes de fijar una meta.
+## Definición de indicadores
+
+| Indicador | Fórmula | Responsable | Fuente | Meta inicial |
+| --- | --- | --- | --- | --- |
+| Tiempo de registro | Hora de pedido menos hora de solicitud | Ventas | Marcas de tiempo de Odoo | Medir semanalmente y reducir respecto de la primera semana |
+| Registro único de WhatsApp | Pedidos de WhatsApp sin duplicado / total de pedidos de WhatsApp | Ventas | Pedido y referencia de canal | 100 % |
+| Exactitud de stock | Unidades coincidentes / unidades contadas | Almacén | Conteo y existencias Odoo | 98 % o más |
+| Emisión sin reproceso | Documentos aceptados al primer envío / total emitido | Facturación | Estados UBLHUB | 95 % o más |
+| Duplicidad de clientes | Clientes duplicados detectados / clientes activos | Administrador | Contactos Odoo | Menos de 1 % |
+
+Las metas porcentuales son controles operativos del proyecto y se revisan mensualmente con evidencia del ERP.

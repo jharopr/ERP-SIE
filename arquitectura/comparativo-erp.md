@@ -11,11 +11,11 @@ Comparar las alternativas revisadas para cubrir ventas, clientes, inventario e i
 | Criterio | Odoo | StarSoft | Microsoft Dynamics 365 Business Central | UBLHUB |
 | --- | --- | --- | --- | --- |
 | Rol | ERP modular central | ERP de oferta local | ERP empresarial de Microsoft | Microservicio tributario |
-| Ventas y clientes | Adecuado para cotizaciones, pedidos, contactos y segmentación | Capacidad comercial por validar en la edición ofertada | Capacidad comercial amplia | Fuera de alcance |
-| Inventario | Módulo integrado y extensible | Cobertura por validar con demostración | Módulo integrado | Fuera de alcance |
-| Extensibilidad | Módulos, API y ecosistema Python | Interfaces públicas y límites por confirmar | Extensiones AL y servicios de integración | API especializada para documentos electrónicos |
-| WhatsApp móvil | Puede registrar el canal manualmente y evolucionar hacia un conector | Integración específica por confirmar | Integración posible mediante servicios, con mayor complejidad para este caso | No administra conversaciones ni pedidos |
-| Facturación peruana | Requiere localización/configuración e integración verificadas | Oferta local orientada a normativa peruana; detalle técnico por verificar | Depende de localización y partner | Componente elegido para boletas, facturas y guías de remisión |
+| Ventas y clientes | Cotizaciones, pedidos, contactos y segmentación dentro del núcleo seleccionado | Suite comercial local; no seleccionada para esta arquitectura | Capacidad comercial amplia | Fuera de alcance |
+| Inventario | Módulo integrado y extensible | Inventario integrado a su suite; no seleccionado | Módulo integrado | Fuera de alcance |
+| Extensibilidad | Módulos, API y ecosistema Python | Extensión dependiente de la edición y del proveedor | Extensiones AL y servicios de integración | API especializada para documentos electrónicos |
+| WhatsApp móvil | Registra el canal manualmente; la automatización queda fuera del alcance inicial | Requeriría una integración adicional | Integración posible mediante servicios, con mayor complejidad para este caso | No administra conversaciones ni pedidos |
+| Facturación peruana | Usa configuración peruana y delega boletas, facturas y guías a UBLHUB | Oferta local orientada a normativa peruana | Requiere localización y partner | Componente elegido para boletas, facturas y guías de remisión |
 | Ajuste al caso | Alto por modularidad y facilidad de iniciar con alcance comercial | Alternativa local considerada | Alternativa robusta, con complejidad y dependencia de partner | Alto como complemento especializado |
 | Decisión | **Seleccionado como ERP central** | No seleccionado | No seleccionado | **Seleccionado como microservicio tributario** |
 
@@ -28,6 +28,6 @@ Se selecciona la combinación **Odoo + UBLHUB**:
 - WhatsApp móvil sigue siendo un canal atendido manualmente en la primera etapa; cada pedido originado allí se registra en Odoo.
 - StarSoft y Dynamics 365 Business Central se conservan únicamente como alternativas comparadas y como referencia para revisar la decisión si cambian las restricciones.
 
-## Validaciones pendientes
+## Condiciones de ejecución
 
-La elección funcional no reemplaza la validación técnica y contractual. Antes de producción se deben confirmar versiones, licencias, modalidad de despliegue, API de UBLHUB, autenticación, formatos, estados, reintentos, soporte, SLA, costos y ambiente de pruebas.
+La decisión está cerrada para el alcance del proyecto. La orden de implementación registra edición, licencias, alojamiento, contrato de UBLHUB, autenticación, formatos, estados, política de reintentos, soporte, SLA y costos. El paso a producción exige evidencia satisfactoria de boleta, factura y guía en sandbox; este control no reabre la selección arquitectónica.

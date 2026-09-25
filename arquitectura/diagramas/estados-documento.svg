@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="900" viewBox="0 0 1700 900" role="img" aria-labelledby="title desc">
+  <title id="title">Estados del documento electrónico</title>
+  <desc id="desc">Máquina de estados UML para creación, cola, envío, aceptación, rechazo, corrección, consulta y anulación.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker>
+    <style>
+      .title{font:700 34px Arial;fill:#10243e}.sub{font:18px Arial;fill:#42526b}.state{fill:#e8f1ff;stroke:#2563eb;stroke-width:2.5}.error{fill:#fff7ed;stroke:#ea580c;stroke-width:2.5}.ok{fill:#ecfdf5;stroke:#16a34a;stroke-width:2.5}.final{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2.5}.h{font:700 19px Arial;fill:#10243e}.t{font:14px Arial;fill:#334155}.flow{fill:none;stroke:#334155;stroke-width:2.5;marker-end:url(#arrow)}.retry{fill:none;stroke:#ea580c;stroke-width:2.5;stroke-dasharray:9 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1700" height="900" fill="#fff"/>
+  <text x="45" y="55" class="title">Ciclo de vida del documento electrónico</text>
+  <text x="45" y="88" class="sub">UML · máquina de estados con reintento idempotente y conservación de evidencia</text>
+
+  <circle cx="100" cy="260" r="23" fill="#334155"/>
+  <rect x="175" y="205" width="210" height="110" rx="18" class="state"/><text x="280" y="250" text-anchor="middle" class="h">CREADO</text><text x="280" y="278" text-anchor="middle" class="t">Venta confirmada</text>
+  <rect x="470" y="205" width="210" height="110" rx="18" class="state"/><text x="575" y="250" text-anchor="middle" class="h">EN COLA</text><text x="575" y="278" text-anchor="middle" class="t">Clave idempotente asignada</text>
+  <rect x="765" y="205" width="210" height="110" rx="18" class="state"/><text x="870" y="250" text-anchor="middle" class="h">ENVIADO</text><text x="870" y="278" text-anchor="middle" class="t">Solicitud registrada</text>
+  <rect x="1060" y="135" width="220" height="110" rx="18" class="ok"/><text x="1170" y="180" text-anchor="middle" class="h">ACEPTADO</text><text x="1170" y="208" text-anchor="middle" class="t">ID y archivos conservados</text>
+  <rect x="1060" y="345" width="220" height="110" rx="18" class="error"/><text x="1170" y="390" text-anchor="middle" class="h">RECHAZADO</text><text x="1170" y="418" text-anchor="middle" class="t">Mensaje accionable</text>
+  <rect x="765" y="520" width="210" height="110" rx="18" class="error"/><text x="870" y="565" text-anchor="middle" class="h">CORRECCIÓN</text><text x="870" y="593" text-anchor="middle" class="t">Datos permitidos y auditados</text>
+  <rect x="470" y="520" width="210" height="110" rx="18" class="error"/><text x="575" y="565" text-anchor="middle" class="h">CONSULTA</text><text x="575" y="593" text-anchor="middle" class="t">Sin respuesta o tiempo agotado</text>
+  <rect x="1375" y="135" width="220" height="110" rx="18" class="final"/><text x="1485" y="180" text-anchor="middle" class="h">ENTREGADO</text><text x="1485" y="208" text-anchor="middle" class="t">Disponible para el cliente</text>
+  <rect x="1375" y="345" width="220" height="110" rx="18" class="final"/><text x="1485" y="390" text-anchor="middle" class="h">ANULADO</text><text x="1485" y="418" text-anchor="middle" class="t">Autorización y motivo registrados</text>
+  <circle cx="1635" cy="190" r="25" fill="#fff" stroke="#334155" stroke-width="4"/><circle cx="1635" cy="190" r="16" fill="#334155"/>
+  <circle cx="1635" cy="400" r="25" fill="#fff" stroke="#334155" stroke-width="4"/><circle cx="1635" cy="400" r="16" fill="#334155"/>
+
+  <path d="M123 260 L175 260" class="flow"/><path d="M385 260 L470 260" class="flow"/><path d="M680 260 L765 260" class="flow"/>
+  <path d="M975 245 C1010 245 1025 190 1060 190" class="flow"/><text x="980" y="160" class="t">respuesta aceptada</text>
+  <path d="M975 275 C1010 275 1025 400 1060 400" class="flow"/><text x="985" y="335" class="t">respuesta rechazada</text>
+  <path d="M1060 430 C1010 460 990 575 975 575" class="retry"/><text x="1015" y="510" class="t">asignar corrección</text>
+  <path d="M765 575 C700 575 700 315 640 315" class="retry"/><text x="650" y="460" class="t">misma clave</text>
+  <path d="M820 315 C790 410 710 575 680 575" class="retry"/><text x="720" y="430" class="t">sin respuesta</text>
+  <path d="M575 520 C575 440 690 370 765 300" class="retry"/><text x="585" y="490" class="t">consultar antes de reenviar</text>
+  <path d="M1280 190 L1375 190" class="flow"/><path d="M1595 190 L1610 190" class="flow"/>
+  <path d="M1280 220 C1335 245 1320 400 1375 400" class="flow"/><text x="1290" y="315" class="t">anulación autorizada</text>
+  <path d="M1595 400 L1610 400" class="flow"/>
+
+  <rect x="175" y="710" width="1230" height="100" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="205" y="745" class="h">Reglas invariantes</text>
+  <text x="205" y="778" class="t">Cada transición conserva usuario o sistema, fecha, solicitud, respuesta y motivo. Reintentar no crea un documento nuevo.</text>
+  <text x="205" y="802" class="t">La venta comercial permanece registrada aunque el documento esté en cola, rechazado o en corrección.</text>
+</svg>
