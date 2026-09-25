@@ -41,6 +41,6 @@ Abrir [index.html](index.html) en un navegador moderno. El código está en [app
 
 La imagen es un recurso ficticio generado para el prototipo y no representa un artículo real de la empresa.
 
-## Próximos pasos
+## Implementación técnica requerida
 
-El prototipo debe evolucionar después de validar catálogos, roles, reglas de clientes, stock, documentos y contrato de UBLHUB. La integración real requiere backend, gestión segura de secretos, auditoría y pruebas en sandbox.
+El prototipo es una referencia visual, no una base productiva. La implementación usa Odoo para catálogos, roles, clientes, stock y ventas; incorpora un backend de integración con gestión segura de secretos, auditoría, idempotencia y pruebas en sandbox; y conecta UBLHUB mediante el contrato técnico registrado en la orden de implementación.

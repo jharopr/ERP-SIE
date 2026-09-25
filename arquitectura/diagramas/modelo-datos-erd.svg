@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1000" viewBox="0 0 1700 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Modelo entidad relación del proceso comercial</title>
+  <desc id="desc">Entidades Cliente, Pedido, Detalle, Producto, Venta, Movimiento, Documento e Interacción con sus cardinalidades.</desc>
+  <defs>
+    <style>
+      .title{font:700 34px Arial;fill:#10243e}.sub{font:18px Arial;fill:#42526b}.entity{fill:#fff;stroke:#334155;stroke-width:2}.head{fill:#2563eb}.headExt{fill:#ea580c}.h{font:700 19px Arial;fill:#fff}.field{font:15px Arial;fill:#23324a}.key{font:700 14px Arial;fill:#2563eb}.rel{stroke:#64748b;stroke-width:2.5;fill:none}.card{font:700 15px Arial;fill:#334155}.note{font:14px Arial;fill:#475569}
+    </style>
+  </defs>
+  <rect width="1700" height="1000" fill="#fff"/>
+  <text x="45" y="55" class="title">Modelo de datos comercial</text>
+  <text x="45" y="88" class="sub">ERD · claves, relaciones y cardinalidades mínimas para trazabilidad</text>
+
+  <g class="rel">
+    <path d="M300 295 L410 295"/><path d="M680 295 L790 295"/><path d="M1060 295 L1170 295"/>
+    <path d="M545 430 L545 535"/><path d="M410 350 L340 350 L340 675 L300 675"/>
+    <path d="M1305 430 L1305 480 L1100 480 L1100 700 L1060 700"/><path d="M1060 675 L1170 675"/>
+    <path d="M790 765 L680 765"/>
+  </g>
+  <g class="card">
+    <text x="315" y="285">1</text><text x="380" y="285">0..N</text>
+    <text x="695" y="285">1</text><text x="750" y="285">1..N</text>
+    <text x="1075" y="285">0..N</text><text x="1145" y="285">1</text>
+    <text x="558" y="455">1</text><text x="558" y="520">0..1</text>
+    <text x="350" y="342">1</text><text x="305" y="665">0..N</text>
+    <text x="1318" y="455">1</text><text x="1068" y="690">0..N</text>
+    <text x="1075" y="665">1</text><text x="1140" y="665">1..N</text>
+    <text x="705" y="755">1</text><text x="750" y="755">0..N</text>
+  </g>
+
+  <g>
+    <rect x="40" y="180" width="260" height="250" rx="10" class="entity"/><path d="M40 190 Q40 180 50 180 H290 Q300 180 300 190 V230 H40 Z" class="head"/><text x="170" y="214" text-anchor="middle" class="h">CLIENTE</text>
+    <text x="60" y="260" class="key">PK id_cliente</text><text x="60" y="290" class="field">tipo</text><text x="60" y="320" class="field">documento / RUC</text><text x="60" y="350" class="field">nombre / razón social</text><text x="60" y="380" class="field">contacto autorizado</text><text x="60" y="410" class="field">estado</text>
+
+    <rect x="410" y="180" width="270" height="250" rx="10" class="entity"/><path d="M410 190 Q410 180 420 180 H670 Q680 180 680 190 V230 H410 Z" class="head"/><text x="545" y="214" text-anchor="middle" class="h">PEDIDO</text>
+    <text x="430" y="260" class="key">PK id_pedido</text><text x="430" y="290" class="key">FK id_cliente</text><text x="430" y="320" class="field">fecha y canal</text><text x="430" y="350" class="field">total y pago</text><text x="430" y="380" class="field">estado</text><text x="430" y="410" class="field">referencia de atención</text>
+
+    <rect x="790" y="180" width="270" height="250" rx="10" class="entity"/><path d="M790 190 Q790 180 800 180 H1050 Q1060 180 1060 190 V230 H790 Z" class="head"/><text x="925" y="214" text-anchor="middle" class="h">DETALLE_PEDIDO</text>
+    <text x="810" y="260" class="key">PK id_detalle</text><text x="810" y="290" class="key">FK id_pedido</text><text x="810" y="320" class="key">FK id_producto</text><text x="810" y="350" class="field">cantidad</text><text x="810" y="380" class="field">precio e impuesto</text><text x="810" y="410" class="field">subtotal</text>
+
+    <rect x="1170" y="180" width="270" height="250" rx="10" class="entity"/><path d="M1170 190 Q1170 180 1180 180 H1430 Q1440 180 1440 190 V230 H1170 Z" class="head"/><text x="1305" y="214" text-anchor="middle" class="h">PRODUCTO</text>
+    <text x="1190" y="260" class="key">PK id_producto</text><text x="1190" y="290" class="field">SKU único</text><text x="1190" y="320" class="field">descripción y unidad</text><text x="1190" y="350" class="field">precio e impuesto</text><text x="1190" y="380" class="field">estado</text>
+
+    <rect x="40" y="535" width="260" height="280" rx="10" class="entity"/><path d="M40 545 Q40 535 50 535 H290 Q300 535 300 545 V585 H40 Z" class="head"/><text x="170" y="569" text-anchor="middle" class="h">INTERACCIÓN</text>
+    <text x="60" y="615" class="key">PK id_interacción</text><text x="60" y="645" class="key">FK id_pedido</text><text x="60" y="675" class="field">canal</text><text x="60" y="705" class="field">fecha y estado</text><text x="60" y="735" class="field">referencia mínima</text><text x="60" y="765" class="field">responsable</text>
+
+    <rect x="410" y="535" width="270" height="280" rx="10" class="entity"/><path d="M410 545 Q410 535 420 535 H670 Q680 535 680 545 V585 H410 Z" class="head"/><text x="545" y="569" text-anchor="middle" class="h">VENTA</text>
+    <text x="430" y="615" class="key">PK id_venta_odoo</text><text x="430" y="645" class="key">FK id_pedido</text><text x="430" y="675" class="field">fecha y total</text><text x="430" y="705" class="field">pago</text><text x="430" y="735" class="field">estado comercial</text><text x="430" y="765" class="field">usuario confirmador</text>
+
+    <rect x="790" y="535" width="270" height="330" rx="10" class="entity"/><path d="M790 545 Q790 535 800 535 H1050 Q1060 535 1060 545 V585 H790 Z" class="head"/><text x="925" y="569" text-anchor="middle" class="h">MOVIMIENTO</text>
+    <text x="810" y="615" class="key">PK id_movimiento</text><text x="810" y="645" class="key">FK id_venta_odoo</text><text x="810" y="675" class="key">FK id_producto</text><text x="810" y="705" class="field">ubicación</text><text x="810" y="735" class="field">tipo y cantidad</text><text x="810" y="765" class="field">fecha y responsable</text><text x="810" y="795" class="field">motivo y estado</text>
+
+    <rect x="1170" y="535" width="270" height="330" rx="10" class="entity"/><path d="M1170 545 Q1170 535 1180 535 H1430 Q1440 535 1440 545 V585 H1170 Z" class="headExt"/><text x="1305" y="569" text-anchor="middle" class="h">DOCUMENTO</text>
+    <text x="1190" y="615" class="key">PK id_documento</text><text x="1190" y="645" class="key">FK id_venta_odoo</text><text x="1190" y="675" class="field">tipo, serie y número</text><text x="1190" y="705" class="field">id_ublhub</text><text x="1190" y="735" class="field">clave idempotente</text><text x="1190" y="765" class="field">estado y mensaje</text><text x="1190" y="795" class="field">archivos y fechas</text><text x="1190" y="825" class="field">contador de reintentos</text>
+  </g>
+
+  <rect x="1490" y="180" width="170" height="685" rx="10" fill="#f8fafc" stroke="#cbd5e1"/>
+  <text x="1575" y="220" text-anchor="middle" class="key">REGLAS</text>
+  <text x="1510" y="260" class="note">• Cliente único</text><text x="1510" y="285" class="note">• SKU único</text><text x="1510" y="310" class="note">• Canal obligatorio</text><text x="1510" y="335" class="note">• Venta trazable</text><text x="1510" y="360" class="note">• Movimiento auditable</text><text x="1510" y="385" class="note">• Clave idempotente</text><text x="1510" y="410" class="note">• Sin borrado de evidencia</text>
+  <text x="1510" y="470" class="note">PK: clave primaria</text><text x="1510" y="495" class="note">FK: clave foránea</text><text x="1510" y="535" class="note">1: obligatorio único</text><text x="1510" y="560" class="note">0..1: opcional único</text><text x="1510" y="585" class="note">0..N: opcional múltiple</text><text x="1510" y="610" class="note">1..N: uno o más</text>
+</svg>

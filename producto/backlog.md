@@ -1,92 +1,104 @@
 # Backlog de desarrollo: Odoo + UBLHUB
 
-**Empresa:** IMPORTACIONES MYS HERMANOS S.A.C.  
-**Grupo:** 7  
-**Versión propuesta:** 0.4  
-**Fecha:** 25/09/2026
+## 1. Objetivo y estado real
 
-## 1. Objetivo y punto de partida
+Organizar la configuración y el desarrollo de la primera versión comercial con Odoo y UBLHUB. Se conserva la arquitectura seleccionada por el equipo: Odoo centraliza clientes, pedidos e inventario; el adaptador gestiona la comunicación documental con UBLHUB; WhatsApp permanece como canal atendido manualmente.
 
-Organizar el trabajo necesario para implementar una primera versión que permita registrar clientes y pedidos presenciales o recibidos por WhatsApp, controlar inventario y gestionar documentos electrónicos mediante la integración propuesta entre Odoo y UBLHUB.
+La versión 0.4 incorpora actores y permisos, matriz RACI, diagramas de proceso, componentes, secuencia, estados y datos. Son insumos de diseño disponibles; su existencia no acredita configuración de Odoo, un adaptador operativo ni pruebas aprobadas. El frontend sigue siendo una demostración local.
 
-El repositorio contiene documentación y un frontend de demostración con datos locales. Este prototipo no constituye una instalación de Odoo ni acredita una conexión con UBLHUB.
+La selección del proyecto no sustituye la verificación de API, cobertura, alojamiento y condiciones de servicio. Si una dependencia resulta incompatible, se registra el bloqueo y se eleva una decisión de cambio al equipo y al responsable del negocio, sin cambiar la arquitectura de manera unilateral.
 
-La primera versión mantendrá la atención manual de WhatsApp: el vendedor registrará el pedido en Odoo y conservará su canal de origen. La automatización del canal queda para una etapa posterior.
+## 2. Insumos incorporados
 
-La incorporación de UBLHUB está condicionada a verificar su documentación, cobertura y acceso de pruebas. El tratamiento del requisito PLE mencionado en S3 debe resolverse expresamente antes de cerrar el alcance.
+| Insumo disponible | Uso en el backlog | Trabajo restante |
+| --- | --- | --- |
+| [Actores, permisos y RACI](../arquitectura/actores-y-responsabilidades.md) | BL-05 y BL-14: separación de funciones y pruebas por rol | Revisar con usuarios y configurar permisos |
+| [Arquitectura y reglas](../arquitectura/erp-base.md) | BL-01, BL-02, BL-07 y BL-08 | Conciliar reglas, concretar despliegue y verificar configuración |
+| [ERD](../arquitectura/diagramas/modelo-datos-erd.svg) y [diccionario](../datos/inventario-fuentes.md) | BL-04 y BL-06: revisión del modelo y mapeo de datos | Revisar integridad y correspondencia con Odoo; preparar cargas |
+| [Proceso comercial](../procesos/flujos-prioritarios.md) | BL-07, BL-08 y BL-14 | Verificar pedidos, reservas, entregas, devoluciones y excepciones |
+| [Secuencia de emisión](../arquitectura/diagramas/secuencia-emision.svg) y [estados](../arquitectura/diagramas/estados-documento.svg) | BL-09 a BL-12 | Contrastarlos con API real y probar transiciones |
+| [Casos de aceptación P-01 a P-13](../pruebas/casos-aceptacion.md) | BL-06 a BL-14 | Ejecutar y registrar resultados; completar escenarios faltantes |
+| [Prototipo visual](frontend/README.md) | Referencia para revisión con usuarios | No utilizarlo como prueba de integración real |
 
-## 2. Reglas de priorización y seguimiento
+Los actores del negocio validan resultados operativos. Los roles técnicos del backlog ejecutan configuración o desarrollo. No se asignan automáticamente esos trabajos a los integrantes de clase: la distribución debe acordarse y registrarse en [contribuciones](../documentos/contribuciones.md).
 
-- **P0 — Bloqueante:** resuelve una incertidumbre que impide diseñar o implementar con fundamento.
-- **P1 — Primera versión:** capacidad necesaria para completar el flujo comercial acordado.
-- **P2 — Evolución:** mejora que puede realizarse después del piloto.
+## 3. Prioridad, estado y cierre
 
-Una tarea pasa a **Lista para iniciar** cuando sus dependencias están resueltas, tiene un responsable confirmado y un criterio de aceptación revisado. Pasa a **Terminada** cuando existe evidencia del resultado y otra persona lo revisa.
+- **P0:** insumo o decisión que bloquea el trabajo dependiente.
+- **P1:** capacidad necesaria para el alcance inicial.
+- **P2:** mejora posterior, fuera de la primera versión.
 
-Las prioridades no representan duración. No se asignan fechas de implementación hasta confirmar disponibilidad del equipo, modalidad de Odoo y acceso a UBLHUB.
+**Diseño disponible** significa que existe documentación. **Pendiente de ejecución** significa que no se ha acreditado implementación. **Bloqueado** indica una dependencia externa sin resolver. **Terminado** exige evidencia y revisión; no basta con especificar la tarea.
 
-## 3. Backlog priorizado
+Una actividad puede comenzar cuando tenga entradas disponibles, responsable confirmado y criterio de aceptación revisado. Los estados siguientes reflejan evidencia del repositorio al momento de esta revisión; deben actualizarse si el equipo aporta trabajo adicional verificable.
 
-Los responsables indicados son roles propuestos. “Por verificar” significa que debe comprobarse si existe trabajo realizado fuera del repositorio.
+## 4. Backlog priorizado
 
-| ID | Trabajo y resultado esperado | Prioridad | Depende de | Responsable propuesto | Estado inicial |
-|---|---|---|---|---|---|
-| BL-01 | Confirmar el proceso actual, herramientas utilizadas y alcance inicial. Resolver los cambios respecto de S3. | P0 | Acceso a información del negocio | Análisis funcional y representante de la empresa | Por validar |
-| BL-02 | Definir versión, edición y alojamiento de Odoo, ubicación del adaptador y responsabilidades de operación. | P0 | BL-01; restricciones de presupuesto, conectividad y soporte | Arquitectura | Pendiente |
-| BL-03 | Verificar la viabilidad de UBLHUB: proveedor, documentos cubiertos, API, autenticación, estados, ambiente de pruebas y condiciones de servicio. | P0 | BL-01; documentación del proveedor | Integración y responsable de facturación | Pendiente de información externa |
-| BL-04 | Completar el modelo de datos y las reglas de clientes, productos, pedidos, stock y documentos. | P0 | BL-01 | Datos y análisis funcional | Modelo preliminar; por completar |
-| BL-05 | Preparar un ambiente de pruebas de Odoo y configurar usuarios y permisos básicos. | P1 | BL-02 | Configuración ERP | Por verificar |
-| BL-06 | Configurar y cargar clientes y productos sintéticos, con reglas de identificación y duplicados. | P1 | BL-04 y BL-05 | Datos y configuración ERP | Pendiente |
-| BL-07 | Configurar el registro de pedidos presenciales y de WhatsApp, incluyendo canal de origen y seguimiento. | P1 | BL-06; casos de uso revisados | Configuración ERP y ventas | Pendiente |
-| BL-08 | Configurar existencias, reservas, salidas y reglas ante stock insuficiente. | P1 | BL-04, BL-05 y BL-06 | Configuración ERP y almacén | Pendiente |
-| BL-09 | Diseñar el contrato del adaptador: datos, correspondencia de campos, identificadores, estados y errores. | P1 | BL-03, BL-04, BL-07 y BL-08 | Integración | Bloqueado por validación de API |
-| BL-10 | Implementar y probar la solicitud y consulta de boletas y facturas mediante el adaptador. | P1 | BL-09; credenciales de pruebas | Integración | Bloqueado |
-| BL-11 | Implementar y probar las guías de remisión vinculadas con el traslado correspondiente. | P1 | BL-09; reglas de traslado y cobertura confirmadas | Integración y almacén | Bloqueado |
-| BL-12 | Implementar controles de duplicación, recuperación ante fallos y conciliación de estados documentales. | P1 | BL-10 y BL-11 | Integración | Bloqueado |
-| BL-13 | Configurar consultas de pedidos por canal y documentos pendientes o rechazados. | P1 | BL-07, BL-08 y BL-12 | Configuración ERP y usuarios clave | Pendiente |
-| BL-14 | Ejecutar las pruebas integrales y preparar un piloto con usuarios, instrucciones y procedimiento de contingencia. | P1 | BL-06 a BL-13 | Validación y usuarios clave | No ejecutado |
-| BL-15 | Evaluar la automatización de WhatsApp a partir del volumen y reproceso observados. | P2 | Proceso inicial validado y datos operativos disponibles | Análisis funcional e integración | Fuera de la primera versión |
+Se conservan BL-01 a BL-15 del PR original. Se añaden BL-16 y BL-17 para hacer explícitas la migración y la continuidad operativa. La numeración identifica tareas, no obliga a ejecutarlas en orden numérico.
 
-## 4. Criterios de aceptación y evidencias
+| ID | Trabajo concreto | Prioridad | Dependencias | Responsable ejecutor propuesto | Estado |
+| --- | --- | --- | --- | --- | --- |
+| BL-01 | Consolidar línea base y alcance: herramientas actuales, usuarios, sedes, datos, reglas comerciales y tratamiento de PLE respecto de S3. Conciliar discrepancias entre documentos. | P0 | Información del negocio y documentos del proyecto | Análisis funcional; validan gerencia y áreas operativas | Diseño disponible; validación del negocio por acreditar |
+| BL-02 | Registrar edición, versión y alojamiento de Odoo, ubicación del adaptador, costos y responsabilidades de operación. | P0 | BL-01; información contractual y técnica | Arquitectura y administrador ERP | Pendiente de concreción documental |
+| BL-03 | Obtener y revisar documentación, cobertura, autenticación, consulta de estados, sandbox y condiciones de servicio de UBLHUB. | P0 | Alcance documental de BL-01; acceso al proveedor | Integración; consulta a facturación | Bloqueado por documentación y acceso verificables |
+| BL-04 | Revisar el ERD y diccionario existentes, alinear entidades y claves y mapearlas a objetos de Odoo sin duplicar innecesariamente modelos nativos. | P0 | BL-01; ERD y diccionario v0.4 | Datos y configuración ERP | Diseño disponible; revisión y mapeo pendientes |
+| BL-05 | Preparar Odoo de pruebas y configurar permisos de Ventas, Almacén, Facturación, Gerencia y Administrador según la matriz de actores. | P1 | BL-02; permisos revisados | Administrador ERP | Diseño disponible; ejecución no acreditada |
+| BL-06 | Configurar clientes, productos y listas de precios; cargar datos sintéticos y probar unicidad e importaciones. | P1 | BL-04 y BL-05 | Datos y configuración ERP | Pendiente de ejecución |
+| BL-07 | Configurar cotización, pedido, canal presencial/WhatsApp, condiciones comerciales, registro de pago y descuentos autorizados. | P1 | BL-01 y BL-06 | Configuración ERP; valida Ventas | Diseño disponible; ejecución no acreditada |
+| BL-08 | Configurar ubicaciones, reserva al confirmar, salida al entregar, bloqueo de stock negativo, preventa autorizada y devolución vinculada. | P1 | BL-06 y BL-07 | Configuración ERP; valida Almacén | Diseño disponible; ejecución no acreditada |
+| BL-09 | Especificar el contrato del adaptador: mapeos por documento, evento de emisión, correlación, estados, autenticación, deduplicación y recuperación. | P1 | BL-02, BL-03 y BL-04; reglas de BL-01 | Integración y arquitectura | Diagramas disponibles; contrato bloqueado por API |
+| BL-10 | Implementar emisión y consulta de boletas y facturas, conservando respuesta, archivos y referencia de origen. | P1 | BL-05, BL-07 y BL-09; sandbox | Integración; valida Facturación | Bloqueado |
+| BL-11 | Implementar guías con datos de traslado y relación con la entrega correspondiente. | P1 | BL-08 y BL-09; cobertura y sandbox | Integración; validan Almacén y Facturación | Bloqueado |
+| BL-12 | Implementar y probar control de duplicación, respuestas perdidas, rechazos, correcciones, anulaciones y reintentos limitados. | P1 | BL-10 y BL-11; diseño de controles en BL-09 | Integración; valida Facturación | Diseño disponible; ejecución bloqueada |
+| BL-13 | Configurar consultas por canal y estado, documentos en cola o rechazados y trazabilidad a pedido, movimiento y operación documental. | P1 | BL-07, BL-08 y BL-12 | Configuración ERP; validan Gerencia y Facturación | Pendiente de ejecución |
+| BL-14 | Ejecutar aceptación integral, capacitación por rol y un piloto autorizado; registrar resultados, defectos y decisión de avance. | P1 | BL-05 a BL-13, BL-16 y BL-17 | Validación y usuarios clave; gerencia autoriza piloto | Casos definidos; ejecución no acreditada |
+| BL-15 | Evaluar automatización de WhatsApp con volumen, reproceso, costos y requisitos del canal. | P2 | Evidencia del proceso inicial y decisión de alcance | Análisis funcional e integración | Fuera del alcance inicial |
+| BL-16 | Ensayar carga de clientes, productos y stock inicial; depurar duplicados y conciliar con un conjunto de origen autorizado. | P1 | BL-04, BL-06 y BL-08; datos autorizados | Datos; valida Almacén | Planificado; no ejecutado |
+| BL-17 | Definir y probar respaldo, restauración, monitoreo, contingencia por desconexión y retorno del piloto. | P1 | BL-02 y BL-05; BL-12 para fallos de integración | Administrador ERP; validan áreas operativas | Planificado; no ejecutado |
 
-Estos criterios describen resultados que deberán comprobarse. No representan pruebas ya ejecutadas.
+## 5. Criterios de aceptación y evidencia de cierre
 
-| ID | Criterio de aceptación | Evidencia de cierre |
-|---|---|---|
-| BL-01 | El documento distingue situación actual y propuesta, identifica herramientas conocidas y registra qué entra o queda fuera, incluido WhatsApp y PLE. Los datos sin confirmar aparecen como pendientes. | Ficha de alcance revisada y registro de validación o de preguntas abiertas. |
-| BL-02 | Se identifica la modalidad concreta de Odoo, dónde funcionará el adaptador y quién administrará cada componente. La elección explica sus restricciones y dependencias. | Decisión de arquitectura con fuentes y diagrama actualizado. |
-| BL-03 | Cada capacidad requerida de UBLHUB tiene respaldo identificable o se declara no confirmada. Se registra una conclusión de viabilidad; si es negativa, se revisa la solución antes de desarrollar. | Matriz de cobertura y documentación o respuesta del proveedor. |
-| BL-04 | Las entidades tienen identificadores, relaciones, cardinalidades y reglas de integridad. Se diferencia pedido, movimiento de stock y documento electrónico. | Modelo de datos y diccionario revisados. |
-| BL-05 | El ambiente puede ponerse en funcionamiento siguiendo instrucciones y se comprueba una operación permitida y otra restringida para los roles definidos. | Versión y configuración registradas; resultados de acceso sin exponer credenciales. |
-| BL-06 | Se cargan clientes y productos sintéticos identificables. Al repetir una importación o registrar un identificador existente, se aplica la regla aprobada sin crear duplicados inadvertidos. | Datos de prueba y reporte de carga y validación. |
-| BL-07 | Se registra un pedido por cada canal, con cliente, productos, cantidades y estado. Ambos pueden localizarse por su identificador y canal. | Casos ejecutados y capturas anonimizadas. |
-| BL-08 | Con 10 unidades iniciales, un pedido de 2 reserva la cantidad según la regla acordada; al validar su salida, las existencias quedan en 8. Una solicitud superior al disponible aplica la restricción o excepción definida. | Registro de existencias, reserva y movimiento; caso de stock insuficiente. |
-| BL-09 | El contrato define los campos de cada documento, identificadores de correlación, mecanismo de consulta o respuesta, estados y tratamiento de errores según la API verificada. | Especificación del adaptador y ejemplos sintéticos de mensajes. |
-| BL-10 | En pruebas, una boleta y una factura conservan la relación con su operación de origen, identificador externo y estado. Una solicitud inválida deja un error visible y trazable. | Solicitudes y respuestas anonimizadas y resultados por caso. |
-| BL-11 | Una guía de prueba contiene los datos de traslado exigidos por la interfaz validada y conserva la relación con la operación correspondiente. | Caso ejecutado, identificadores y respuesta del servicio. |
-| BL-12 | Repetir una solicitud no genera otro documento. Si se pierde la respuesta después del envío, se consulta o concilia el resultado antes de reenviar. Los fallos quedan visibles y no producen reintentos indefinidos. | Pruebas de duplicación, pérdida de respuesta y recuperación, con registros técnicos. |
-| BL-13 | El usuario autorizado puede localizar pedidos por canal y documentos pendientes o rechazados, y acceder a la operación de origen. | Consultas verificadas contra los datos de prueba. |
-| BL-14 | Los escenarios de ambos canales, inventario y documentos tienen resultado, ejecutor, fecha y evidencia. No se autoriza el piloto con fallos que causen duplicación, pérdida de trazabilidad o movimientos incorrectos de stock. | Informe de pruebas, incidencias y decisión de avance o corrección. |
-| BL-15 | La evaluación describe el problema medido, opciones, costos y requisitos de automatización, y concluye si conviene implementarla. | Caso de mejora revisado; no exige construir un conector para cerrar esta evaluación. |
+Son condiciones para aceptar trabajo futuro. Los casos P corresponden al archivo de pruebas existente; los casos adicionales deben documentarse antes de su ejecución.
 
-## 5. Secuencia de ejecución
+| ID | Criterio observable | Evidencia y relación con pruebas |
+| --- | --- | --- |
+| BL-01 | La línea base distingue hechos, reglas de diseño y datos no confirmados. Define el alcance de PLE y resuelve la secuencia pedido–reserva–entrega y sus discrepancias documentales. | Ficha revisada, observaciones y decisión sobre cada discrepancia; revisión funcional |
+| BL-02 | Se identifican modalidad de Odoo y entorno del adaptador, acceso de integración compatible, responsable, costos conocidos y condiciones pendientes. | Registro técnico/contractual o referencia autorizada; no basta mencionar una orden sin identificarla |
+| BL-03 | Cada capacidad requerida tiene fuente o respuesta identificable. Se comprueba acceso de pruebas o se registra la imposibilidad y se mantiene el bloqueo. | Matriz de cobertura, versión de API y evidencia de acceso sin secretos |
+| BL-04 | ERD y diccionario concuerdan en entidades, claves, cardinalidades y relaciones. El mapeo distingue objetos estándar, campos adicionales y extensiones necesarias. | Revisión del modelo y tabla de mapeo; una imagen por sí sola no cierra el trabajo |
+| BL-05 | Cada rol ejecuta una acción permitida y recibe rechazo ante una prohibida. Ventas no ajusta stock; Almacén no altera precios; permisos críticos requieren aprobación. | Configuración e instrucciones reproducibles; pruebas adicionales de permisos con fecha y ejecutor |
+| BL-06 | Se crea un cliente válido y se detecta documento/RUC existente. Una carga repetida no duplica clientes ni SKU; las listas de precios se aplican según la regla aprobada. | P-01, P-02 y pruebas adicionales de carga y precios |
+| BL-07 | Se registra un pedido de cada canal con cliente, líneas, cantidades y referencia. Un descuento excepcional deja autorización y se verifica la regla de pago antes de entrega. | P-03 y P-04; casos adicionales de pago y descuento |
+| BL-08 | Con 10 unidades, confirmar 2 reserva 2 sin reducir las existencias físicas; entregar deja 8 y libera la reserva. No se registra stock negativo; la preventa autorizada no simula una salida inexistente. Una devolución deja movimiento inverso y referencia original. | P-05 y P-06; pruebas adicionales de devolución y preventa. P-03 debe aclarar que la salida se registra al entregar |
+| BL-09 | Se documentan mensajes sintéticos, campos obligatorios, eventos de emisión y estados según la API. La identidad estable distingue reintentos de nuevas operaciones legítimas; se contempla una venta con varios documentos o traslados. | Contrato revisado, mapeo de estados y secuencia; no implementar solo una clave genérica venta/tipo sin evaluar esos casos |
+| BL-10 | Una boleta y una factura de prueba conservan identificador, estado y archivos disponibles; una solicitud inválida deja error trazable. | P-07 y P-08, mensajes anonimizados y correlación con la operación |
+| BL-11 | La guía de prueba conserva datos de traslado, identificador, estado y vínculo con la entrega. Traslados diferentes se identifican sin confundirse con reintentos. | P-09 y caso adicional de entregas parciales si el alcance las admite |
+| BL-12 | Solicitudes repetidas o concurrentes no duplican emisión. Ante pérdida de respuesta se consulta/concilia antes de reenviar. Un rechazo conserva historial; una anulación requiere autorización y no borra evidencia. Los reintentos tienen límite y escalamiento. | P-10, P-11 y P-12; casos adicionales de concurrencia, pérdida de respuesta y anulación |
+| BL-13 | Usuarios autorizados consultan canal y estado, encuentran pendientes/rechazos y navegan hasta el pedido y documento relacionado. | P-13 y contraste de consultas con datos de prueba |
+| BL-14 | Cada caso tiene precondiciones, ejecutor, fecha, ambiente, resultado y evidencia. No se autoriza piloto con duplicación, pérdida de trazabilidad, permisos indebidos o stock incorrecto. | Informe de aceptación, capacitación y decisión de gerencia; simulaciones identificadas como tales |
+| BL-15 | Se justifica automatizar o mantener el registro manual mediante datos del proceso y requisitos técnicos y económicos. | Caso de mejora; no exige construir el conector |
+| BL-16 | Una carga de ensayo concilia cantidades de origen/destino, detecta rechazos y demuestra que repetirla no duplica registros. El saldo inicial se aprueba antes del piloto. | Reporte de migración y conciliación; datos sintéticos o autorizados. La carga productiva exige autorización separada |
+| BL-17 | Se restaura un respaldo en pruebas y se ejecuta el procedimiento ante caída del servicio o pérdida de acceso desde el local. Se identifican responsable, registro de contingencia y reconciliación posterior. | Evidencia de restauración y simulación de contingencia; plan de retorno revisado |
 
-**Primera etapa: cerrar decisiones.** Resolver BL-01 a BL-04. La definición de Odoo, la investigación de UBLHUB y el modelo de datos pueden avanzar en paralelo una vez aclarado el alcance.
+## 6. Secuencia y dependencias externas
 
-**Segunda etapa: configurar la operación comercial.** Preparar Odoo, cargar datos de prueba y configurar pedidos e inventario. El equipo debe comprobar este recorrido antes de incorporar la integración documental.
+1. **Preparación:** BL-01 a BL-04. Se reutilizan los diseños v0.4, se revisan y se concretan las dependencias. La falta de API bloquea la integración, pero no toda la configuración comercial.
+2. **Configuración comercial:** BL-05 a BL-08. BL-09 puede diseñarse en paralelo cuando tenga sus entradas; los controles de duplicación se diseñan aquí, no después de emitir documentos.
+3. **Integración:** BL-10 y BL-11, seguidos por la comprobación transversal de BL-12. BL-13 incorpora los estados ya normalizados.
+4. **Preparación de piloto:** BL-16 y BL-17 avanzan cuando sus dependencias lo permitan. BL-14 requiere sus resultados además del flujo integrado.
+5. **Evolución:** BL-15 permanece fuera de la primera versión.
 
-**Tercera etapa: integrar y controlar documentos.** Diseñar el contrato del adaptador, implementar los documentos confirmados y verificar duplicación, errores y recuperación.
+## 7. Correspondencia con el backlog anterior de main
 
-**Cuarta etapa: validar el flujo completo.** Preparar consultas operativas, ejecutar pruebas y decidir si procede un piloto.
-
-La automatización de WhatsApp se evalúa después y no bloquea el alcance inicial de registro manual.
-
-## 6. Dependencias y límites
-
-La integración depende de documentación y acceso de pruebas de UBLHUB. Mientras no estén disponibles, pueden prepararse contratos y simulaciones claramente identificadas, pero no declararse probada la integración real.
-
-Las reglas de inventario y emisión deben validarse con los responsables del negocio. Confirmar un pedido, reservar existencias y registrar una salida se tratarán como eventos diferenciados.
-
-La pérdida de internet en el local requiere un procedimiento operativo específico. Una cola en el adaptador no resuelve por sí sola la imposibilidad de acceder a un ERP alojado fuera del local.
-
-Los casos utilizarán datos sintéticos. El prototipo actual servirá para revisar pantallas y necesidades con usuarios; su almacenamiento local no se utilizará como evidencia de funcionamiento del ERP.
+| ID anterior | Trabajo conservado en esta versión |
+| --- | --- |
+| B-01: línea base | BL-01 |
+| B-02: cliente único | BL-04 y BL-06 |
+| B-03: dos canales | BL-07 |
+| B-04: inventario | BL-08 |
+| B-05: integración | BL-03, BL-09, BL-10 y BL-11 |
+| B-06: documentos en sandbox | BL-10, BL-11 y BL-14 |
+| B-07: errores y contingencia | BL-12 y BL-17 |
+| B-08: migración | BL-16 |
+| B-09: capacitación y piloto | BL-14 |
+| B-10: WhatsApp automático | BL-15, evaluación fuera del alcance inicial |

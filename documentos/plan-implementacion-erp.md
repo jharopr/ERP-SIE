@@ -8,23 +8,25 @@ Poner en funcionamiento Odoo como sistema central de ventas e inventario, integr
 
 | Fase | Trabajo principal | Resultado de salida |
 | --- | --- | --- |
-| 1. Levantamiento | Confirmar usuarios, clientes, productos, stock, precios, pagos, documentos, volúmenes y excepciones | Alcance y reglas aprobados |
+| 1. Línea base | Registrar usuarios, clientes, productos, stock, precios, pagos, documentos, volúmenes y excepciones | Alcance y reglas aprobados |
 | 2. Diseño | Definir módulos Odoo, roles, tipos de cliente, estados, datos e interfaz con UBLHUB | Diseño funcional y técnico revisado |
 | 3. Configuración | Preparar Odoo, catálogos, permisos, canales y flujos | Ambiente de prueba utilizable |
 | 4. Integración | Implementar autenticación, mapeos, idempotencia, estados y reintentos con UBLHUB | Boleta, factura y guía probadas en sandbox |
 | 5. Migración | Limpiar clientes, productos y stock inicial; cargar y conciliar | Maestros sin duplicados críticos y stock conciliado |
 | 6. Piloto | Ejecutar ventas presenciales y de WhatsApp con usuarios seleccionados | Aceptación del flujo y defectos prioritarios cerrados |
 | 7. Producción | Capacitar, respaldar, habilitar usuarios y monitorear | Salida controlada con plan de retorno |
-| 8. Mejora | Medir indicadores y evaluar automatización de WhatsApp | Backlog priorizado con evidencia |
+| 8. Mejora | Medir indicadores y priorizar mejoras fuera del alcance inicial | Backlog ordenado con evidencia |
 
-## Dependencias
+## Insumos obligatorios de implementación
 
-- versión y modalidad de Odoo;
-- contrato, documentación, credenciales y sandbox de UBLHUB;
+- edición, licencias y modalidad de alojamiento de Odoo registradas en la orden de implementación;
+- contrato, documentación, credenciales y sandbox de UBLHUB custodiados por el administrador;
 - reglas para boleta, factura, guía, anulación y contingencia;
 - inventario de datos actuales y calidad de maestros;
 - conectividad, usuarios, sedes, equipos y soporte;
 - responsables de ventas, almacén, facturación y administración.
+
+La ausencia de un insumo bloquea el paso de fase, pero no modifica la arquitectura ni las responsabilidades adoptadas.
 
 ## Criterios de paso a producción
 
