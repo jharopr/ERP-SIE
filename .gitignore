@@ -1,0 +1,9 @@
+# Evidencia original o exportaciones con datos personales
+documentos/insumos/*.pdf
+documentos/insumos/*.docx
+datos/privados/
+evidencias/privadas/
+
+# Archivos locales y temporales
+*.tmp
+~$*

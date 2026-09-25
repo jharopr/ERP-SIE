@@ -1,0 +1,5 @@
+# Declaración de uso de IA
+
+En la versión 0.1 del repositorio se utilizó **Codex, asistente de IA de OpenAI**, el 24/09/2026 para leer y resumir los insumos proporcionados, proponer la estructura del repositorio, redactar documentos Markdown y generar un diagrama Mermaid conceptual. En la versión 0.2 se usó para programar el MVP frontend y la herramienta integrada de imágenes de OpenAI para crear un render PNG de autoradio genérico, citado en el [README del frontend](../producto/frontend/README.md). La IA no entrevistó a la empresa, no ejecutó pruebas de ERP ni validó en línea las fuentes de los proveedores.
+
+El equipo debe revisar cada afirmación contra los originales, verificar el diagrama y completar las evidencias de contribución antes de la entrega. Las hipótesis y recomendaciones producidas con apoyo de IA quedan marcadas como provisionales. Registrar aquí cualquier uso adicional de IA en la presentación o en una prueba de concepto, indicando herramienta, fecha, propósito y revisión humana.
