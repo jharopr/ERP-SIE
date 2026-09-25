@@ -1,6 +1,6 @@
 # Arquitectura e implementación ERP · Importaciones MYS Hermanos
 
-Este repositorio reúne el análisis del negocio, la comparación de soluciones y la propuesta base para implementar un sistema de gestión en **IMPORTACIONES MYS HERMANOS S.A.C.** (RUC 20606915528).
+Este repositorio reúne el análisis del negocio, la comparación de soluciones y la arquitectura base para implementar un sistema de gestión en **IMPORTACIONES MYS HERMANOS S.A.C.** (RUC 20606915528).
 
 ## Situación y decisión
 
@@ -19,7 +19,7 @@ Los documentos base se identifican por nombres funcionales:
 
 ## Alcance inicial
 
-La primera liberación contempla gestión de clientes, ventas por ambos canales, inventario, emisión electrónica mediante UBLHUB y reportes operativos básicos. WhatsApp continúa siendo atendido por una persona; su integración técnica se diseña como una evolución para reducir la doble digitación sin bloquear el inicio del ERP.
+La primera liberación contempla gestión de clientes, ventas por ambos canales, inventario, emisión electrónica mediante UBLHUB y reportes operativos básicos. WhatsApp continúa siendo atendido por una persona y cada pedido se registra manualmente en Odoo. La automatización del canal está fuera del alcance inicial.
 
 ## Estructura
 
@@ -38,6 +38,7 @@ La primera liberación contempla gestión de clientes, ventas por ambos canales,
 1. Revisar el [contexto y alcance](documentos/contexto-y-alcance.md).
 2. Leer el [flujo comercial](procesos/flujos-prioritarios.md).
 3. Consultar la [comparación de soluciones](arquitectura/comparativo-erp.md) y la [decisión](arquitectura/criterios-seleccion.md).
-4. Revisar la [arquitectura base](arquitectura/erp-base.md), el [plan de implementación](documentos/plan-implementacion-erp.md) y el [backlog](producto/backlog.md).
+4. Revisar los [actores y responsabilidades](arquitectura/actores-y-responsabilidades.md) y el [catálogo de diagramas](arquitectura/diagramas/README.md).
+5. Revisar la [arquitectura base](arquitectura/erp-base.md), el [plan de implementación](documentos/plan-implementacion-erp.md) y el [backlog](producto/backlog.md).
 
 No se deben publicar DNI, teléfonos, correos personales, direcciones completas, datos reales de clientes ni reportes RUC íntegros. Las pruebas deben utilizar información sintética o anonimizada.

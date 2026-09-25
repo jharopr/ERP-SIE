@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1080" viewBox="0 0 1800 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Proceso comercial objetivo con carriles</title>
+  <desc id="desc">Diagrama BPMN simplificado del proceso de venta desde la solicitud hasta la entrega y conciliación.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker>
+    <style>
+      .title{font:700 34px Arial;fill:#10243e}.sub{font:18px Arial;fill:#42526b}.lane{stroke:#94a3b8;stroke-width:1.5}.lh{font:700 18px Arial;fill:#10243e}.task{fill:#fff;stroke:#2563eb;stroke-width:2}.service{fill:#fff7ed;stroke:#ea580c;stroke-width:2}.decision{fill:#fefce8;stroke:#ca8a04;stroke-width:2}.t{font:15px Arial;fill:#1e293b}.small{font:13px Arial;fill:#475569}.flow{fill:none;stroke:#334155;stroke-width:2.5;marker-end:url(#arrow)}.msg{fill:none;stroke:#ea580c;stroke-width:2.5;stroke-dasharray:8 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1800" height="1080" fill="#fff"/>
+  <text x="40" y="52" class="title">Proceso comercial de extremo a extremo</text>
+  <text x="40" y="83" class="sub">BPMN simplificado · el tiempo avanza de izquierda a derecha y cada carril identifica al responsable</text>
+
+  <g>
+    <rect x="40" y="120" width="1720" height="130" fill="#eff6ff" class="lane"/><text x="60" y="152" class="lh">Cliente</text>
+    <rect x="40" y="250" width="1720" height="130" fill="#f8fafc" class="lane"/><text x="60" y="282" class="lh">Ventas</text>
+    <rect x="40" y="380" width="1720" height="130" fill="#eff6ff" class="lane"/><text x="60" y="412" class="lh">Odoo</text>
+    <rect x="40" y="510" width="1720" height="130" fill="#f8fafc" class="lane"/><text x="60" y="542" class="lh">Almacén</text>
+    <rect x="40" y="640" width="1720" height="130" fill="#fff7ed" class="lane"/><text x="60" y="672" class="lh">Adaptador / UBLHUB</text>
+    <rect x="40" y="770" width="1720" height="130" fill="#f8fafc" class="lane"/><text x="60" y="802" class="lh">Facturación</text>
+    <rect x="40" y="900" width="1720" height="120" fill="#eff6ff" class="lane"/><text x="60" y="932" class="lh">Gerencia</text>
+  </g>
+
+  <g>
+    <circle cx="180" cy="190" r="24" fill="#fff" stroke="#16a34a" stroke-width="5"/><text x="180" y="232" text-anchor="middle" class="small">Inicio</text>
+    <rect x="260" y="145" width="185" height="80" rx="12" class="task"/><text x="352" y="178" text-anchor="middle" class="t">Solicitar producto</text><text x="352" y="200" text-anchor="middle" class="t">y documento</text>
+    <rect x="490" y="275" width="205" height="80" rx="12" class="task"/><text x="592" y="306" text-anchor="middle" class="t">Identificar cliente</text><text x="592" y="328" text-anchor="middle" class="t">y canal de origen</text>
+    <rect x="740" y="405" width="190" height="80" rx="12" class="task"/><text x="835" y="438" text-anchor="middle" class="t">Validar datos</text><text x="835" y="460" text-anchor="middle" class="t">y disponibilidad</text>
+    <polygon points="1000,400 1050,445 1000,490 950,445" class="decision"/><text x="1000" y="440" text-anchor="middle" class="small">¿Hay</text><text x="1000" y="458" text-anchor="middle" class="small">stock?</text>
+    <rect x="1090" y="535" width="185" height="80" rx="12" class="task"/><text x="1182" y="568" text-anchor="middle" class="t">Reservar y</text><text x="1182" y="590" text-anchor="middle" class="t">preparar</text>
+    <rect x="1090" y="275" width="185" height="80" rx="12" class="task"/><text x="1182" y="308" text-anchor="middle" class="t">Informar falta</text><text x="1182" y="330" text-anchor="middle" class="t">o alternativa</text>
+    <rect x="1320" y="405" width="185" height="80" rx="12" class="task"/><text x="1412" y="438" text-anchor="middle" class="t">Confirmar venta</text><text x="1412" y="460" text-anchor="middle" class="t">y movimiento</text>
+    <rect x="1320" y="665" width="185" height="80" rx="12" class="service"/><text x="1412" y="698" text-anchor="middle" class="t">Emitir documento</text><text x="1412" y="720" text-anchor="middle" class="t">con idempotencia</text>
+    <rect x="1550" y="795" width="170" height="80" rx="12" class="task"/><text x="1635" y="828" text-anchor="middle" class="t">Conciliar</text><text x="1635" y="850" text-anchor="middle" class="t">resultado</text>
+    <rect x="1550" y="535" width="170" height="80" rx="12" class="task"/><text x="1635" y="568" text-anchor="middle" class="t">Entregar</text><text x="1635" y="590" text-anchor="middle" class="t">producto</text>
+    <rect x="1550" y="145" width="170" height="80" rx="12" class="task"/><text x="1635" y="178" text-anchor="middle" class="t">Recibir producto</text><text x="1635" y="200" text-anchor="middle" class="t">y comprobante</text>
+    <rect x="1320" y="925" width="185" height="70" rx="12" class="task"/><text x="1412" y="955" text-anchor="middle" class="t">Consultar KPI y</text><text x="1412" y="977" text-anchor="middle" class="t">excepciones</text>
+    <circle cx="1738" cy="190" r="24" fill="#fff" stroke="#16a34a" stroke-width="5"/><circle cx="1738" cy="190" r="16" fill="none" stroke="#16a34a" stroke-width="2"/>
+  </g>
+
+  <g>
+    <path d="M204 190 L260 190" class="flow"/>
+    <path d="M445 185 C470 185 465 315 490 315" class="flow"/>
+    <path d="M695 315 C720 315 715 445 740 445" class="flow"/>
+    <path d="M930 445 L950 445" class="flow"/>
+    <path d="M1000 490 C1000 575 1050 575 1090 575" class="flow"/><text x="1012" y="520" class="small">Sí</text>
+    <path d="M1000 400 C1000 315 1050 315 1090 315" class="flow"/><text x="1012" y="385" class="small">No</text>
+    <path d="M1275 575 C1300 575 1295 445 1320 445" class="flow"/>
+    <path d="M1505 445 C1530 445 1525 575 1550 575" class="flow"/>
+    <path d="M1505 445 C1530 445 1520 705 1320 705" class="msg"/>
+    <path d="M1505 705 C1540 705 1515 835 1550 835" class="msg"/>
+    <path d="M1720 835 C1740 835 1740 625 1635 615" class="flow"/>
+    <path d="M1635 535 L1635 225" class="flow"/>
+    <path d="M1720 185 L1714 185" class="flow"/>
+    <path d="M1600 875 C1580 930 1540 960 1505 960" class="flow"/>
+  </g>
+
+  <rect x="70" y="940" width="520" height="54" rx="8" fill="#fff" stroke="#cbd5e1"/>
+  <line x1="95" y1="966" x2="150" y2="966" class="flow"/><text x="165" y="972" class="small">Flujo interno</text>
+  <line x1="315" y1="966" x2="370" y2="966" class="msg"/><text x="385" y="972" class="small">Mensaje entre sistemas</text>
+</svg>

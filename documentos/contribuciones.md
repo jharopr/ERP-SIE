@@ -1,12 +1,12 @@
-# Contribuciones verificables
+# Responsabilidades y evidencia del equipo
 
-| Integrante | Rol | Contribución por registrar | Evidencia y fecha |
+| Integrante | Rol | Responsabilidad asignada | Evidencia controlada |
 | --- | --- | --- | --- |
-| Shirley Carrión Oré | Facilitación | Pendiente | Pendiente |
-| Benjamin Francis Arancibia Ynga | Arquitectura | Pendiente | Pendiente |
-| Jharolym Friendly Paucarcaja Ramos | Datos | Pendiente | Pendiente |
-| Adrián Antony Mansilla Soto | Producto | Pendiente | Pendiente |
-| Ballack Zidane Quintanilla Huamanraime | Procesos | Pendiente | Pendiente |
-| Gabriel Omar Chavez Mendoza | Validación | Pendiente | Pendiente |
+| Shirley Carrión Oré | Facilitación | Coordinar acuerdos, agenda, revisión cruzada y entrega | Actas y [lista de verificación](guion-entrega.md) |
+| Benjamin Francis Arancibia Ynga | Arquitectura | Mantener actores, componentes, integración, seguridad y despliegue | Carpeta [arquitectura](../arquitectura/README.md) |
+| Jharolym Friendly Paucarcaja Ramos | Datos | Mantener diccionario, claves, privacidad, migración y conciliación | Carpeta [datos](../datos/README.md) |
+| Adrián Antony Mansilla Soto | Producto | Mantener alcance, prioridad, criterios de cierre y prototipo | Carpeta [producto](../producto/README.md) |
+| Ballack Zidane Quintanilla Huamanraime | Procesos | Mantener flujo actual, flujo objetivo, reglas y responsables | Carpeta [procesos](../procesos/README.md) |
+| Gabriel Omar Chavez Mendoza | Validación | Mantener casos, evidencia, incidencias y resultado de aceptación | Carpeta [pruebas](../pruebas/README.md) |
 
-Una contribución se considera verificable cuando enlaza un artefacto, revisión, prueba o decisión concreta con fecha.
+Git conserva autor, fecha y cambio de cada contribución. Las actas registran acuerdos grupales; las pruebas registran ejecutor, fecha, ambiente y evidencia sin atribuir resultados que no hayan sido ejecutados.
