@@ -3,8 +3,7 @@
 **Empresa:** IMPORTACIONES MYS HERMANOS S.A.C.  
 **Grupo:** 7  
 **Versión propuesta:** 0.4  
-**Fecha:** 25/09/2026  
-**Responsable de elaboración y seguimiento del backlog:** Gabriel Omar Chavez Mendoza.
+**Fecha:** 25/09/2026
 
 ## 1. Objetivo y punto de partida
 
