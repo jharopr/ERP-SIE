@@ -1,0 +1,5 @@
+README.md
+compose.yaml
+.dockerignore
+.git
+*.log
