@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1000" viewBox="0 0 1700 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Diagrama de componentes de Odoo y UBLHUB</title>
+  <desc id="desc">Diagrama C4 de los canales, componentes Odoo, adaptador y servicios externos.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker>
+    <style>
+      .title{font:700 34px Arial;fill:#10243e}.sub{font:18px Arial;fill:#42526b}.zone{fill:#f8fafc;stroke:#94a3b8;stroke-width:2}.channel{fill:#e8f1ff;stroke:#2563eb;stroke-width:2}.comp{fill:#fff;stroke:#334155;stroke-width:2}.integration{fill:#fff7ed;stroke:#ea580c;stroke-width:2}.external{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2}.db{fill:#ecfdf5;stroke:#16a34a;stroke-width:2}.h{font:700 20px Arial;fill:#10243e}.t{font:16px Arial;fill:#23324a}.small{font:14px Arial;fill:#475569}.flow{fill:none;stroke:#334155;stroke-width:2.5;marker-end:url(#arrow)}.api{fill:none;stroke:#ea580c;stroke-width:2.5;stroke-dasharray:9 7;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1700" height="1000" fill="#fff"/>
+  <text x="45" y="55" class="title">Componentes y responsabilidades técnicas</text>
+  <text x="45" y="88" class="sub">C4 · los límites separan canales, núcleo ERP, integración y servicios externos</text>
+
+  <rect x="40" y="125" width="260" height="790" rx="18" class="zone"/>
+  <text x="65" y="165" class="h">Canales</text>
+  <rect x="70" y="220" width="200" height="120" rx="12" class="channel"/><text x="170" y="260" text-anchor="middle" class="h">Presencial</text><text x="170" y="290" text-anchor="middle" class="small">Venta registrada</text><text x="170" y="312" text-anchor="middle" class="small">directamente</text>
+  <rect x="70" y="400" width="200" height="120" rx="12" class="channel"/><text x="170" y="440" text-anchor="middle" class="h">WhatsApp móvil</text><text x="170" y="470" text-anchor="middle" class="small">Conversación externa</text><text x="170" y="492" text-anchor="middle" class="small">y registro manual</text>
+  <rect x="70" y="580" width="200" height="120" rx="12" class="channel"/><text x="170" y="620" text-anchor="middle" class="h">Usuarios internos</text><text x="170" y="650" text-anchor="middle" class="small">Roles y permisos</text><text x="170" y="672" text-anchor="middle" class="small">diferenciados</text>
+
+  <rect x="340" y="125" width="720" height="790" rx="18" class="zone"/>
+  <text x="365" y="165" class="h">Odoo · fuente única del estado comercial</text>
+  <rect x="390" y="210" width="260" height="115" rx="12" class="comp"/><text x="520" y="247" text-anchor="middle" class="h">Contactos</text><text x="520" y="277" text-anchor="middle" class="small">Ficha única, tipo y</text><text x="520" y="299" text-anchor="middle" class="small">datos autorizados</text>
+  <rect x="750" y="210" width="260" height="115" rx="12" class="comp"/><text x="880" y="247" text-anchor="middle" class="h">Ventas</text><text x="880" y="277" text-anchor="middle" class="small">Cotización, pedido, canal,</text><text x="880" y="299" text-anchor="middle" class="small">confirmación y pago</text>
+  <rect x="390" y="385" width="260" height="115" rx="12" class="comp"/><text x="520" y="422" text-anchor="middle" class="h">Inventario</text><text x="520" y="452" text-anchor="middle" class="small">Disponibilidad, reserva,</text><text x="520" y="474" text-anchor="middle" class="small">salida y devolución</text>
+  <rect x="750" y="385" width="260" height="115" rx="12" class="comp"/><text x="880" y="422" text-anchor="middle" class="h">Documentos</text><text x="880" y="452" text-anchor="middle" class="small">Solicitud, estado, archivos,</text><text x="880" y="474" text-anchor="middle" class="small">error y correlación</text>
+  <rect x="390" y="560" width="260" height="115" rx="12" class="comp"/><text x="520" y="597" text-anchor="middle" class="h">Reportes</text><text x="520" y="627" text-anchor="middle" class="small">Ventas, stock, canal,</text><text x="520" y="649" text-anchor="middle" class="small">tiempos y excepciones</text>
+  <rect x="750" y="560" width="260" height="115" rx="12" class="comp"/><text x="880" y="597" text-anchor="middle" class="h">Seguridad y auditoría</text><text x="880" y="627" text-anchor="middle" class="small">Roles, bitácora, alertas</text><text x="880" y="649" text-anchor="middle" class="small">y separación de funciones</text>
+  <path d="M430 755 C430 720 610 720 610 755 L610 835 C610 870 430 870 430 835 Z" class="db"/><ellipse cx="520" cy="755" rx="90" ry="25" class="db"/><text x="520" y="800" text-anchor="middle" class="h">Base de datos</text><text x="520" y="827" text-anchor="middle" class="small">Estado y trazabilidad</text>
+  <rect x="750" y="750" width="260" height="105" rx="12" class="comp"/><text x="880" y="790" text-anchor="middle" class="h">Cola de trabajos</text><text x="880" y="820" text-anchor="middle" class="small">Reintento con límite</text>
+
+  <rect x="1100" y="125" width="250" height="790" rx="18" class="zone"/>
+  <text x="1125" y="165" class="h">Integración</text>
+  <rect x="1125" y="300" width="200" height="280" rx="12" class="integration"/>
+  <text x="1225" y="340" text-anchor="middle" class="h">Adaptador</text>
+  <text x="1225" y="380" text-anchor="middle" class="small">Mapeo</text><text x="1225" y="410" text-anchor="middle" class="small">Autenticación</text><text x="1225" y="440" text-anchor="middle" class="small">Idempotencia</text><text x="1225" y="470" text-anchor="middle" class="small">Correlación</text><text x="1225" y="500" text-anchor="middle" class="small">Reintento</text><text x="1225" y="530" text-anchor="middle" class="small">Auditoría</text>
+
+  <rect x="1390" y="125" width="270" height="790" rx="18" class="zone"/>
+  <text x="1415" y="165" class="h">Servicios externos</text>
+  <rect x="1425" y="285" width="200" height="130" rx="12" class="external"/><text x="1525" y="330" text-anchor="middle" class="h">UBLHUB</text><text x="1525" y="360" text-anchor="middle" class="small">Boleta, factura, guía</text><text x="1525" y="384" text-anchor="middle" class="small">estado y archivos</text>
+  <rect x="1425" y="520" width="200" height="130" rx="12" class="external"/><text x="1525" y="565" text-anchor="middle" class="h">SUNAT</text><text x="1525" y="595" text-anchor="middle" class="small">Ruta tributaria</text><text x="1525" y="619" text-anchor="middle" class="small">y respuesta</text>
+  <rect x="1425" y="750" width="200" height="105" rx="12" class="external"/><text x="1525" y="790" text-anchor="middle" class="h">Correo / archivo</text><text x="1525" y="820" text-anchor="middle" class="small">Entrega al cliente</text>
+
+  <g>
+    <path d="M270 280 L390 267" class="flow"/><path d="M270 460 L750 267" class="flow"/><path d="M270 640 L390 442" class="flow"/>
+    <path d="M650 267 L750 267" class="flow"/><path d="M750 442 L650 442" class="flow"/><path d="M880 325 L880 385" class="flow"/><path d="M650 617 L750 617" class="flow"/>
+    <path d="M520 500 L520 730" class="flow"/><path d="M880 675 L880 750" class="flow"/>
+    <path d="M1010 442 L1125 442" class="api"/><path d="M1325 400 L1425 350" class="api"/><path d="M1525 415 L1525 520" class="api"/><path d="M1425 380 L1325 480" class="api"/><path d="M1125 520 L1010 520" class="api"/><path d="M1010 802 L1125 540" class="flow"/><path d="M1010 442 L1425 802" class="flow"/>
+  </g>
+  <rect x="1120" y="750" width="230" height="105" rx="10" fill="#fff" stroke="#cbd5e1"/>
+  <line x1="1145" y1="785" x2="1200" y2="785" class="flow"/><text x="1215" y="791" class="small">Uso interno</text>
+  <line x1="1145" y1="825" x2="1200" y2="825" class="api"/><text x="1215" y="831" class="small">API segura</text>
+</svg>

@@ -4,14 +4,18 @@
 
 | Fuente | Datos útiles | Estado y límite |
 | --- | --- | --- |
-| Ficha de la empresa | productos, clientes, canales, proceso actual y necesidades | Validar con responsables del negocio |
-| Ficha de comparación de ERPs | capacidades, brechas y razones de selección | No sustituye demostración ni cotización |
-| Ficha de implementación base del ERP | alcance, fases, integración, controles y riesgos | Base sujeta a validación técnica |
-| Odoo | clientes, productos, pedidos, ventas, inventario y estados | Sistema central propuesto |
-| UBLHUB | solicitudes, identificadores, documentos, respuestas y errores | Servicio tributario propuesto |
+| Ficha de la empresa | productos, clientes, canales, proceso actual y necesidades | Fuente del contexto y alcance adoptado |
+| Ficha de comparación de ERPs | capacidades, brechas y razones de selección | Evidencia de la decisión Odoo + UBLHUB |
+| Ficha de implementación base del ERP | alcance, fases, integración, controles y riesgos | Especificación técnica base |
+| Odoo | clientes, productos, pedidos, ventas, inventario y estados | Sistema central seleccionado |
+| UBLHUB | solicitudes, identificadores, documentos, respuestas y errores | Servicio tributario seleccionado |
 | WhatsApp móvil | conversación y referencia del pedido | Canal manual; evitar copiar conversaciones completas sin autorización |
 
 ## Diccionario mínimo
+
+![Modelo entidad–relación del proceso comercial](../arquitectura/diagramas/modelo-datos-erd.svg)
+
+*El ERD conecta cliente, pedido, detalle, producto, venta, movimiento, documento e interacción con cardinalidades explícitas.*
 
 | Entidad | Campos mínimos | Regla |
 | --- | --- | --- |
