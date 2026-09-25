@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="titulo descripcion">
+  <title id="titulo">Arquitectura ERP base de contexto e integración</title>
+  <desc id="descripcion">Cliente y WhatsApp se conectan con un servicio de integración externo al ERP SaaS. El ERP contiene ventas y atención, inventario, facturación y reportes básicos. La integración con WhatsApp y la ruta tributaria están pendientes de demostración.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M 1 1 L 11 6 L 1 11 z" fill="#325872"/></marker>
+    <marker id="arrow-orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse"><path d="M 1 1 L 11 6 L 1 11 z" fill="#be741c"/></marker>
+    <style>
+      text{font-family:Arial,Helvetica,sans-serif;fill:#233345} .title{font-size:42px;font-weight:700;fill:#850605}.subtitle{font-size:21px;fill:#687787}.header-white{fill:#fff}.node-title{font-size:23px;font-weight:700}.node-sub{font-size:17px;fill:#667889}.small{font-size:16px;fill:#536879}.legend{font-size:18px;fill:#465666}.edge{fill:none;stroke:#325872;stroke-width:4;marker-end:url(#arrow)}.pending{fill:none;stroke:#be741c;stroke-width:4;stroke-dasharray:13 9;marker-end:url(#arrow-orange)}
+    </style>
+  </defs>
+  <rect width="1920" height="1080" fill="#fff"/>
+  <text x="960" y="82" text-anchor="middle" class="title">Arquitectura ERP base de contexto e integración</text>
+  <text x="960" y="120" text-anchor="middle" class="subtitle">PC1 · Grupo 7 · propuesta conceptual para Importaciones MYS Hermanos S.A.C.</text>
+
+  <rect x="873" y="185" width="700" height="602" rx="24" fill="#f4f8fc" stroke="#173b5c" stroke-width="5"/>
+  <rect x="873" y="185" width="700" height="80" rx="24" fill="#173b5c"/>
+  <rect x="873" y="235" width="700" height="30" fill="#173b5c"/>
+  <text x="1223" y="235" text-anchor="middle" font-size="28" font-weight="700" class="header-white">ERP modular SaaS · límite de la solución</text>
+
+  <rect x="58" y="324" width="190" height="124" rx="18" fill="#f1f3f5" stroke="#71808b" stroke-width="3"/>
+  <text x="153" y="377" text-anchor="middle" class="node-title">Cliente</text>
+  <text x="153" y="409" text-anchor="middle" class="node-sub">Consulta o pedido</text>
+
+  <rect x="305" y="324" width="215" height="124" rx="18" fill="#f1f3f5" stroke="#71808b" stroke-width="3"/>
+  <text x="412" y="375" text-anchor="middle" class="node-title">WhatsApp</text>
+  <text x="412" y="408" text-anchor="middle" class="node-sub">Canal externo</text>
+
+  <rect x="580" y="310" width="250" height="152" rx="18" fill="#fff3e3" stroke="#be741c" stroke-width="3"/>
+  <text x="705" y="357" text-anchor="middle" class="node-title">Servicio de</text>
+  <text x="705" y="386" text-anchor="middle" class="node-title">integración</text>
+  <text x="705" y="423" text-anchor="middle" class="node-sub">Mecanismo por confirmar</text>
+
+  <rect x="923" y="310" width="270" height="152" rx="18" fill="#fff" stroke="#275c81" stroke-width="3"/>
+  <text x="1058" y="361" text-anchor="middle" class="node-title">Ventas y atención</text>
+  <text x="1058" y="394" text-anchor="middle" class="node-sub">Pedido y respuesta</text>
+  <text x="1058" y="424" text-anchor="middle" class="small">Identificador vinculado</text>
+
+  <rect x="1250" y="310" width="270" height="152" rx="18" fill="#fff" stroke="#275c81" stroke-width="3"/>
+  <text x="1385" y="373" text-anchor="middle" class="node-title">Inventario</text>
+  <text x="1385" y="407" text-anchor="middle" class="node-sub">Consulta o reserva</text>
+
+  <rect x="923" y="552" width="270" height="150" rx="18" fill="#fff" stroke="#275c81" stroke-width="3"/>
+  <text x="1058" y="605" text-anchor="middle" class="node-title">Facturación</text>
+  <text x="1058" y="636" text-anchor="middle" class="node-title">electrónica</text>
+  <text x="1058" y="669" text-anchor="middle" class="node-sub">Estado del comprobante</text>
+
+  <rect x="1250" y="552" width="270" height="150" rx="18" fill="#fff" stroke="#275c81" stroke-width="3"/>
+  <text x="1385" y="613" text-anchor="middle" class="node-title">Reportes básicos</text>
+  <text x="1385" y="650" text-anchor="middle" class="node-sub">Consulta de gerencia</text>
+
+  <rect x="1635" y="565" width="245" height="135" rx="18" fill="#f1f3f5" stroke="#71808b" stroke-width="3"/>
+  <text x="1757" y="613" text-anchor="middle" class="node-title">OSE, PSE o SUNAT</text>
+  <text x="1757" y="647" text-anchor="middle" class="node-sub">Por confirmar</text>
+
+  <path d="M 248 351 H 305" class="edge"/><path d="M 305 424 H 248" class="edge"/>
+  <text x="277" y="307" text-anchor="middle" class="small">Pedido</text><text x="277" y="474" text-anchor="middle" class="small">Respuesta</text>
+  <path d="M 520 351 H 580" class="pending"/><path d="M 580 424 H 520" class="pending"/>
+  <path d="M 830 351 H 923" class="pending"/><path d="M 923 424 H 830" class="pending"/>
+  <text x="725" y="287" text-anchor="middle" class="small">Evento y estado · pendiente</text>
+  <path d="M 1193 351 H 1250" class="edge"/><path d="M 1250 424 H 1193" class="edge"/>
+  <text x="1221" y="296" text-anchor="middle" class="small">Stock</text>
+  <path d="M 1058 462 V 552" class="edge"/>
+  <text x="1067" y="515" class="small">Venta confirmada</text>
+  <path d="M 1193 586 H 1215 V 505 H 1585 V 604 H 1635" class="pending"/><path d="M 1635 674 H 1595 V 740 H 1215 V 680 H 1193" class="pending"/>
+  <text x="1440" y="484" text-anchor="middle" class="small">Comprobante / estado · pendiente</text>
+
+  <text x="960" y="826" text-anchor="middle" font-size="20" font-weight="700" fill="#287b5a">ROLES INTERNOS QUE ACCEDEN AL ERP</text>
+  <rect x="309" y="850" width="300" height="70" rx="14" fill="#eaf6ee" stroke="#287b5a" stroke-width="2"/>
+  <text x="459" y="893" text-anchor="middle" font-size="19" font-weight="700">Usuario de ventas y atención</text>
+  <rect x="633" y="850" width="300" height="70" rx="14" fill="#eaf6ee" stroke="#287b5a" stroke-width="2"/>
+  <text x="783" y="893" text-anchor="middle" font-size="19" font-weight="700">Usuario de almacén</text>
+  <rect x="957" y="850" width="300" height="70" rx="14" fill="#eaf6ee" stroke="#287b5a" stroke-width="2"/>
+  <text x="1107" y="893" text-anchor="middle" font-size="19" font-weight="700">Usuario de facturación</text>
+  <rect x="1281" y="850" width="300" height="70" rx="14" fill="#eaf6ee" stroke="#287b5a" stroke-width="2"/>
+  <text x="1431" y="893" text-anchor="middle" font-size="19" font-weight="700">Gerencia · consulta</text>
+
+  <line x1="310" y1="984" x2="405" y2="984" stroke="#325872" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="430" y="991" class="legend">Relación incluida en la propuesta</text>
+  <line x1="855" y1="984" x2="950" y2="984" stroke="#be741c" stroke-width="4" stroke-dasharray="13 9" marker-end="url(#arrow-orange)"/>
+  <text x="975" y="991" class="legend">Integración pendiente de demostración</text>
+  <text x="960" y="1032" text-anchor="middle" class="small">ND = no documentado · Los roles son lógicos; el diagrama no representa sistemas existentes confirmados.</text>
+</svg>
