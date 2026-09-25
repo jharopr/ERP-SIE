@@ -1,24 +1,17 @@
-# Comparativo de arquitecturas ERP v0.1 mejorado
+# Comparativo ERP para la arquitectura base de PC1
 
-## Alcance de la evidencia
+El taller S2, §§1-5, fechado el 12/09/2026, compara StarSoft, Odoo y Microsoft Dynamics 365 Business Central. **Evidencia** aquí significa que S2 registró una fuente o hallazgo; no que la capacidad haya sido probada en la empresa. Odoo y Business Central siguen como candidatos del caso común. StarSoft conserva su lugar de referencia local, con documentación técnica **ND** donde S2 no la encontró. No se revalidaron en línea las páginas de S2 para este incremento.
 
-El taller S2, §§1-5 (12/09/2026), comparó StarSoft, Odoo y Dynamics 365 Business Central. La tabla conserva sus hallazgos como **información recopilada por el equipo**, con fuentes registradas allí. En este incremento no se revalidaron en línea versiones, precios ni capacidades actuales. Las fichas comerciales no prueban un flujo integrado funcionando.
-
-| Criterio | StarSoft | Odoo | Business Central | Vacío decisivo |
+| Criterio | Odoo | Business Central | StarSoft, referencia local | Verificación pendiente |
 | --- | --- | --- | --- | --- |
-| Despliegue | S2 describe uso local y oferta cloud comercial sin detalle técnico público | S2 cita Odoo Online, Odoo.sh y on-premise | S2 cita Online y on-premises | Disponibilidad, responsabilidad operativa y conectividad de cada oferta cotizada |
-| Arquitectura y extensión | S2 no halló documentación técnica pública de capas/API; señala consultoría del proveedor | S2 describe módulos Python y PostgreSQL con documentación pública | S2 describe extensiones AL y APIs documentadas | Acceso a sandbox, límites de personalización y costos |
-| Integración | S2 no halló API pública documentada | S2 registra mecanismos y conectores externos | S2 registra REST/OData y ecosistema Azure | Probar conexión con el canal y sistemas **reales** de la empresa |
-| Contexto peruano | S2 reporta foco en SUNAT/PLE desde material del proveedor | S2 encontró documentación de localización fiscal para Perú | S2 no encontró localización peruana oficial en las fuentes consultadas | Confirmar por escrito y demostrar comprobantes/libros requeridos con producto y partner concretos |
-| Operación y soporte | S2 cita soporte del proveedor; mantenimiento específico por cotizar | Depende de la modalidad elegida | Depende de modalidad y partner | SLA, respaldos, administración de usuarios y costo total |
+| Despliegue | **Evidencia S2:** documenta Odoo Online, Odoo.sh y on-premise | **Evidencia S2:** documenta Online y on-premises | **Evidencia S2:** oferta local y mención comercial de nube; detalle técnico cloud **ND** | Modalidad SaaS, contrato y SLA ofertados |
+| Arquitectura y extensibilidad | **Evidencia S2:** módulos Python, PostgreSQL y documentación técnica | **Evidencia S2:** extensiones AL y documentación técnica | API y extensión pública **ND** en fuentes revisadas por S2 | Sandbox, límites de personalización y actualizaciones |
+| Integración con WhatsApp | **ND** para el caso de la empresa; S2 registra mecanismos generales de integración | **ND** para el caso de la empresa; S2 registra APIs generales | **ND** en fuentes técnicas públicas revisadas | Acceso al canal, API/webhook/conector autorizado y demostración de ida y vuelta |
+| Flujo ventas–inventario | **Pendiente de demostración** en el escenario común | **Pendiente de demostración** en el escenario común | **Pendiente de demostración** | Pedido único, disponibilidad y reserva o descuento |
+| Facturación electrónica peruana | **Evidencia S2:** documentación de localización Perú; cobertura exacta **ND** | Localización peruana oficial **ND** en fuentes revisadas por S2; verificar partner | **Evidencia S2:** material comercial menciona SUNAT/PLE; flujo concreto **ND** | Factura/boleta de prueba y estado tributario por oferta concreta |
+| Operación y soporte | Depende de modalidad y proveedor; SLA **ND** | Depende de modalidad y partner; SLA **ND** | S2 cita soporte comercial; SLA de la oferta **ND** | Responsable, respaldo, monitoreo, actualización y contingencia |
+| Costo y evidencia pendiente | Precio del caso **ND** | Precio del caso **ND** | Precio del caso **ND** | Cotizaciones comparables de licencias, integración, implementación y soporte |
 
-## Evidencia, interpretación y supuesto
+**Interpretación:** la documentación técnica pública de Odoo y Business Central facilita preparar pruebas equivalentes; no demuestra por sí sola una integración con WhatsApp ni una factura peruana aceptada. Que S2 no hallara documentación de StarSoft o localización de Business Central no prueba que esas capacidades no existan. La ficha RUC acredita emisión electrónica de la empresa, no cobertura de un ERP específico.
 
-- **Evidencia de fuente consultada:** S2, §1, lista páginas de proveedores y documentación técnica con fecha 12/09/2026. Ver [registro de fuentes](../fuentes/registro-fuentes.md).
-- **Interpretación del equipo:** un servicio administrado podría reducir mantenimiento local si se confirma poca capacidad de TI; documentación pública facilita evaluar integraciones.
-- **Supuestos no resueltos:** número de usuarios, sedes, presupuesto, conectividad, motor de datos, canales, sistemas existentes, cobertura SUNAT/PLE y precios. S2, §§3-5, reconoce varios de estos vacíos.
-- **Límite:** la ausencia de información en las fuentes revisadas no prueba que una función no exista. Una localización publicada tampoco prueba que cubra todos los comprobantes requeridos.
-
-## Mejora necesaria antes de elegir producto
-
-Solicitar a cada proveedor/partner un mismo caso de demostración: pedido originado en un canal digital, reserva de stock, venta, factura o boleta electrónica, respuesta de aceptación/rechazo y actualización de estado para atención. Registrar versión, modalidad, configuración, intermediarios, tiempo, errores, costo y fuente de cada resultado. La [matriz de criterios](criterios-seleccion.md) define cómo usar esa evidencia.
+**Supuestos y pendientes:** producto, versión, modalidad SaaS, partner, canal WhatsApp autorizado, número de usuarios, conectividad y presupuesto. La [matriz de criterios](criterios-seleccion.md) indica la evidencia necesaria antes de recomendar una marca. Fuentes originales y fecha de acceso del equipo: [registro de fuentes](../fuentes/registro-fuentes.md), F-04 y sus enlaces de S2, §1.
