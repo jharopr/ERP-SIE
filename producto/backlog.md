@@ -1,15 +1,14 @@
-# Backlog de PC1 y siguiente incremento
+# Backlog de implementación
 
 | ID | Prioridad | Historia o tarea | Evidencia de cierre | Estado |
 | --- | --- | --- | --- | --- |
-| B-01 | Alta | Confirmar canal, sistemas, usuarios y síntoma de doble registro | Entrevista o flujo validado y anonimizado | Pendiente |
-| B-02 | Alta | Confirmar catálogo y alcance real de venta mayorista/minorista | Lista de procesos y productos aprobada | Pendiente |
-| B-03 | Alta | Revisar cobertura de comprobantes y libros requeridos | Demostración/respuesta de proveedor y facturación | Pendiente |
-| B-04 | Alta | Contrastar arquitectura y restricciones de sedes, internet, TI y presupuesto | Registro de restricciones aprobado | Pendiente |
-| B-05 | Alta | Comparar al menos dos ERP bajo el mismo pedido de prueba | Matriz con versión, modalidad, resultado, costo y fuente | Pendiente |
-| B-06 | Alta | Completar contribuciones, presentación y declaración de fuentes/IA | Enlaces y revisión cruzada | Pendiente |
-| B-07 | Media | Probar pedido sintético desde canal a venta, stock y comprobante | Registro de casos y fallos | Pendiente de sandbox |
-| B-08 | Media | Diseñar migración y conciliación de maestros | Perfil de datos y reglas de limpieza | Siguiente incremento |
-| B-09 | Media | Definir capacitación, soporte y continuidad | Plan por rol y contingencia | Siguiente incremento |
-
-Los ítems B-01 a B-06 cierran la evidencia de PC1; B-07 a B-09 preparan la implementación descrita en S3. El orden puede cambiar según acceso a la empresa. No se declaran tareas completadas solo por haber documentado la propuesta.
+| B-01 | Alta | Confirmar usuarios, sedes, volúmenes, productos, stock, precios y medios de pago | Acta de levantamiento aprobada | Pendiente |
+| B-02 | Alta | Definir ficha única y tipos de cliente | Reglas de deduplicación y segmentación probadas | Pendiente |
+| B-03 | Alta | Configurar ventas por ERP/presencial y WhatsApp móvil | Pedidos de ambos canales trazables | Pendiente |
+| B-04 | Alta | Configurar inventario, ubicaciones y reglas de salida | Conteo y conciliación aceptados | Pendiente |
+| B-05 | Alta | Integrar Odoo con UBLHUB | API autenticada con auditoría e idempotencia | Pendiente de sandbox |
+| B-06 | Alta | Probar boleta, factura y guía de remisión | Casos aceptados con estados y archivos | Pendiente de sandbox |
+| B-07 | Alta | Definir rechazos, anulaciones, reintentos y contingencia | Procedimientos ejecutados en prueba | Pendiente |
+| B-08 | Media | Migrar clientes y productos sin duplicados críticos | Reporte de carga y conciliación | Pendiente |
+| B-09 | Media | Capacitar por rol y ejecutar piloto | Acta de aceptación y defectos registrados | Pendiente |
+| B-10 | Baja | Evaluar automatización de WhatsApp | Caso de negocio, API, consentimiento y costo | Futuro |

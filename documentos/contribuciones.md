@@ -1,8 +1,6 @@
 # Contribuciones verificables
 
-Los integrantes y roles provisionales provienen de la ficha S1, §1. La evidencia se deja pendiente hasta que cada persona aporte un artefacto o revisión comprobable. No equivale a certificar participación.
-
-| Integrante | Rol provisional | Contribución por registrar | Enlace a evidencia y fecha |
+| Integrante | Rol | Contribución por registrar | Evidencia y fecha |
 | --- | --- | --- | --- |
 | Shirley Carrión Oré | Facilitación | Pendiente | Pendiente |
 | Benjamin Francis Arancibia Ynga | Arquitectura | Pendiente | Pendiente |
@@ -11,4 +9,4 @@ Los integrantes y roles provisionales provienen de la ficha S1, §1. La evidenci
 | Ballack Zidane Quintanilla Huamanraime | Procesos | Pendiente | Pendiente |
 | Gabriel Omar Chavez Mendoza | Validación | Pendiente | Pendiente |
 
-La plantilla PC1 escribe el apellido de Ballack como “Quintainlla”; la ficha S1 indica “Quintanilla”. Confirmar la grafía con el integrante antes de entregar.
+Una contribución se considera verificable cuando enlaza un artefacto, revisión, prueba o decisión concreta con fecha.

@@ -1,26 +1,58 @@
-# Contexto, problema y alcance
+# Ficha de la empresa: contexto, problema y alcance
 
-## Evidencia de la empresa
+## Empresa y operación
 
-La ficha RUC emitida el 05/09/2026 identifica a **IMPORTACIONES MYS HERMANOS S.A.C.** (RUC 20606915528) como sociedad anónima cerrada activa, con domicilio fiscal habido, fecha de inscripción 18/11/2020 y comienzo de actividades 23/11/2020. Declara CIIU 4649, venta al por mayor de otros enseres domésticos; figura como importador y emisor electrónico de factura desde el 26/11/2021 y boleta desde el 05/06/2023 (SUNAT, pp. 1-2). El registro tributario no describe todos los productos, canales, almacenes ni aplicaciones internas.
+**IMPORTACIONES MYS HERMANOS S.A.C.** comercializa autoradios y accesorios para vehículos. La ficha RUC registra a la empresa como activa, importadora y emisora electrónica de facturas y boletas. El detalle del catálogo, los volúmenes y las reglas comerciales deberá validarse durante el levantamiento.
 
-## Información reportada por el equipo
+## Situación actual
 
-La ficha S1, §3, describe autoradios y accesorios para automóviles, clientes conductores y propietarios de vehículos, y procesos de compras, inventario, ventas, atención y posventa. Enumera sistemas de ventas, inventario, facturación y clientes, pero no identifica proveedores, interfaces ni evidencia de uso. S2, §4, agrega observaciones sobre ventas mayoristas/minoristas, tienda y almacén separados y ausencia de equipo de TI; requieren confirmación directa antes de tratarlas como restricciones reales.
+Las ventas ingresan por dos canales:
 
-## Problema de integración
+![Resumen de la situación actual: venta presencial, WhatsApp móvil manual y falta de integración entre ventas, clientes, inventario y facturación](../imagenes/situacion%20actual.png)
 
-**Hipótesis de S1, §4:** la atención al cliente no se integra adecuadamente con canales digitales de venta, lo que podría causar demoras y pérdida de oportunidades. No hay línea base ni prueba documentada. La PC1 debe mostrar los eventos a contrastar: recepción del pedido, identificación del cliente, disponibilidad de stock, registro de venta, emisión del comprobante y respuesta al cliente.
+*Resumen visual de los canales actuales y de la necesidad de centralizar la operación en un ERP.*
 
-## Alcance propuesto
+1. **Presencial:** el cliente es atendido en el local. Actualmente falta un ERP que concentre el registro comercial; en la solución objetivo este canal se registrará directamente en Odoo.
+2. **WhatsApp móvil:** una persona recibe consultas y pedidos manualmente. El canal no está automatizado ni integrado con inventario, clientes o facturación.
 
-| Primera liberación propuesta | Fuera o pendiente de decisión |
+La ausencia de un sistema central dificulta conocer el historial del cliente, mantener una sola versión del stock, dar seguimiento al pedido y enlazar la venta con su comprobante. El problema principal no es WhatsApp por sí mismo, sino la fragmentación del proceso comercial.
+
+## Tipos de cliente propuestos
+
+El ERP debe manejar una ficha única de cliente y permitir una clasificación inicial:
+
+| Tipo | Necesidad principal | Tratamiento propuesto |
+| --- | --- | --- |
+| Consumidor final | Compra ocasional y atención rápida | Datos mínimos, boleta y seguimiento del pedido |
+| Cliente con factura | Compra asociada a RUC | Validación de razón social y emisión de factura |
+| Cliente recurrente | Historial y atención consistente | Contactos, compras anteriores y preferencias autorizadas |
+| Cliente mayorista | Volumen, condiciones y precios acordados | Lista de precios, límites comerciales y seguimiento de deuda si aplica |
+
+Las categorías no deben duplicar personas o empresas: un cliente conserva un registro único y puede cambiar de segmento según reglas aprobadas.
+
+## Objetivo de mejora
+
+Centralizar en Odoo clientes, cotizaciones, pedidos, inventario y ventas; delegar a UBLHUB la emisión y consulta de boletas, facturas y guías de remisión; y dejar trazabilidad del canal de origen. Con ello se busca:
+
+- reducir doble digitación y pedidos omitidos;
+- consultar stock desde una única fuente;
+- diferenciar clientes sin crear registros duplicados;
+- relacionar pedido, venta, movimiento de inventario y documento electrónico;
+- conocer el estado de atención y medir tiempos por canal.
+
+## Alcance inicial
+
+| Incluido | Posterior o sujeto a validación |
 | --- | --- |
-| Ventas, inventario, facturación electrónica y conexión de **un** canal digital con atención comercial | Manufactura, planillas, todos los canales digitales, automatización de importaciones, migración completa y despliegue productivo |
-| Arquitectura base, interfaces conceptuales, criterios de elección y prueba de flujo | Selección contractual del ERP y partner, presupuesto aprobado y fecha de arranque |
+| Clientes, productos, ventas, inventario, dos canales de origen, boletas, facturas, guías y reportes básicos | Automatización de WhatsApp, compras/importaciones completas, contabilidad avanzada, campañas y comercio electrónico |
+| Odoo como sistema central y UBLHUB como microservicio tributario | Integraciones adicionales y personalizaciones no justificadas por una brecha validada |
 
-La visión posterior puede incluir compras e importaciones, según S3, §2. El alcance se validará con la empresa; no se presume que los sistemas actuales admitan API ni que un ERP cubra SUNAT/PLE sin configuración o partner.
+## Indicadores iniciales
 
-## Usuarios y resultados por validar
+- tiempo desde la solicitud hasta el registro del pedido;
+- porcentaje de pedidos de WhatsApp registrados una sola vez;
+- diferencia entre stock físico y stock del ERP;
+- porcentaje de documentos electrónicos procesados sin reproceso;
+- clientes duplicados detectados y corregidos.
 
-Usuarios candidatos: ventas/atención, almacén, facturación/contabilidad y gerencia. Indicadores candidatos de S3, §2: tiempo de respuesta, pedidos digitales sin doble digitación, diferencia entre stock físico y sistema y comprobantes emitidos sin reproceso. Definir fórmula, fuente y línea base antes de prometer mejoras.
+Cada indicador requiere fórmula, responsable, fuente y línea base antes de fijar una meta.

@@ -1,5 +1,3 @@
 # Procesos
 
-- [Flujos prioritarios](flujos-prioritarios.md): modelo actual por confirmar y flujo objetivo de PC1.
-
-Las reglas, eventos y controles descritos son propuestas hasta validarlos con ventas, almacén y facturación.
+- [Flujo comercial prioritario](flujos-prioritarios.md): situación actual y proceso objetivo para ERP/presencial y WhatsApp móvil.

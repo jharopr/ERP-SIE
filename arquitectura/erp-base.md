@@ -1,112 +1,108 @@
-# Arquitectura ERP base para PC1
+# Ficha de implementación base del ERP
 
-## 1. Propósito y alcance
+## 1. Propósito
 
-**Evidencia:** la ficha S1, §4, plantea una falta de integración entre atención y canales digitales; S3, §2, propone ventas, inventario y facturación electrónica para la primera liberación. La ficha RUC SUNAT acredita que la empresa es emisora electrónica, pero no documenta sus aplicaciones internas. **Propuesta:** representar WhatsApp como único canal digital de esta liberación, unido a ventas y atención, inventario y facturación. La existencia de WhatsApp como canal operativo y sus condiciones técnicas están **pendientes** de confirmación con la empresa.
+Implementar una fuente única de información comercial para clientes, pedidos, inventario y ventas, con **Odoo como ERP central** y **UBLHUB como microservicio de documentos electrónicos**. La solución atiende dos canales: venta presencial registrada en el ERP y venta por WhatsApp móvil atendida manualmente.
 
-La hipótesis de doble digitación, demora de respuesta, consulta manual de stock, diferencias de disponibilidad, pedidos duplicados, pérdida de trazabilidad y reproceso de comprobantes sigue **pendiente** de observación. Ninguno de esos efectos se presenta como hecho probado.
+## 2. Arquitectura seleccionada
 
-## 2. Tipo de arquitectura
+La solución adopta una arquitectura modular e integrada:
 
-**Propuesta:** ERP modular SaaS accesible mediante navegador web, con un servicio de integración desacoplado entre WhatsApp y el ERP. El producto no está seleccionado. Odoo y Microsoft Dynamics 365 Business Central continúan como candidatos del comparativo S2; StarSoft permanece como referencia local. La decisión provisional es: **evaluar una arquitectura ERP modular SaaS con una capa de integración para WhatsApp, manteniendo abierta la selección del producto hasta realizar demostraciones, pruebas equivalentes, validación de facturación electrónica y comparación de costos**.
+![Arquitectura de despliegue con usuarios, Odoo, registro manual de WhatsApp, adaptador Odoo–UBLHUB, UBLHUB y SUNAT](diagramas/arquitectura-despliegue.png)
 
-**Supuesto:** un proveedor SaaS o partner operaría la plataforma; el reparto preciso de actualización, respaldo, monitoreo y soporte depende de un SLA aún **pendiente**.
+*Vista consolidada de los actores, componentes, límites y conexiones de la solución seleccionada.*
+
+- **Odoo:** clientes, tipos de cliente, productos, cotizaciones, pedidos, inventario, ventas y reportes.
+- **Adaptador Odoo–UBLHUB:** transforma solicitudes, conserva correlación, aplica idempotencia y gestiona reintentos.
+- **UBLHUB:** emisión y consulta de boletas, facturas y guías de remisión.
+- **WhatsApp móvil:** canal externo de conversación. En la primera etapa el vendedor registra manualmente el pedido en Odoo; la automatización queda como evolución.
+- **Servicio tributario:** destino administrado por la ruta configurada en UBLHUB.
+
+![Integración sugerida: Odoo como ERP central y UBLHUB como microservicio para boletas, facturas y guías de remisión](../imagenes/integracion-ublhub.png)
+
+*Separación propuesta entre la lógica comercial administrada en Odoo y la emisión electrónica delegada a UBLHUB.*
 
 ## 3. Actores
 
-| Actor lógico | Interacción propuesta | Estado |
+| Actor | Responsabilidad |
+| --- | --- |
+| Cliente | Solicita, confirma y recibe información o documentos |
+| Ventas/atención | Registra clientes y pedidos de ambos canales, consulta stock y responde |
+| Almacén | Prepara, entrega y controla movimientos |
+| Facturación/contabilidad | Supervisa documentos, rechazos, anulaciones y conciliación |
+| Gerencia | Consulta indicadores por canal, cliente, producto y estado |
+| Administrador | Configura usuarios, catálogos, integración y monitoreo |
+| UBLHUB | Procesa documentos electrónicos y devuelve su estado |
+
+## 4. Flujo principal
+
+1. El cliente compra presencialmente o solicita por WhatsApp móvil.
+2. Ventas busca una ficha existente y evita duplicados; si corresponde, crea el cliente y su clasificación.
+3. Registra el pedido en Odoo e identifica el canal de origen.
+4. Odoo valida disponibilidad y reserva o descuenta stock según la operación.
+5. La venta confirmada genera una solicitud de documento al adaptador.
+6. El adaptador envía a UBLHUB la boleta, factura o guía con una clave idempotente.
+7. UBLHUB devuelve identificador, estado, respuesta y archivos disponibles.
+8. Odoo actualiza el estado sin perder la relación con pedido, inventario y cliente.
+9. El vendedor entrega el comprobante o informa la incidencia por el canal de origen.
+
+## 5. Componentes
+
+| Límite | Componente | Función |
 | --- | --- | --- |
-| Cliente | Envía consulta o pedido y recibe estado por WhatsApp | Propuesta; flujo real pendiente |
-| Usuario de ventas y atención | Revisa conversación vinculada, pedido, disponibilidad y estado del comprobante | Propuesta |
-| Usuario de almacén | Consulta o actualiza el estado de inventario desde el ERP | Propuesta |
-| Usuario de facturación o contabilidad | Revisa venta y estado del comprobante electrónico | Propuesta |
-| Gerencia | Consulta reportes básicos de ventas y operación | Propuesta; necesidad por confirmar |
-| Proveedor SaaS o partner | Administra el servicio según contrato; aparece solo en la vista de despliegue | Pendiente de selección y SLA |
-| OSE, PSE o SUNAT | Sistema externo de recepción o validación tributaria | Ruta concreta pendiente de confirmar |
+| Canal | Atención presencial / ERP | Captura directa de la venta |
+| Canal | WhatsApp móvil | Conversación y pedido atendidos manualmente |
+| ERP | Contactos y segmentación | Ficha única y tipo de cliente |
+| ERP | Ventas | Cotización, pedido, confirmación, pago y estado |
+| ERP | Inventario | Disponibilidad, reserva, salida, devolución y ubicación |
+| ERP | Reportes | Indicadores comerciales y operativos |
+| Integración | Adaptador Odoo–UBLHUB | Mapeo, seguridad, idempotencia, reintento y auditoría |
+| Servicio | UBLHUB | Boletas, facturas, guías y estados asociados |
+| Externo | Ruta tributaria | Recepción o validación según configuración aplicable |
 
-Los nombres representan roles, no trabajadores distintos ni una cantidad de empleados. Una persona podría cumplir varios roles.
+## 6. Interfaces y datos mínimos
 
-## 4. Vista de contexto e integración
-
-![Arquitectura ERP base de contexto e integración](diagramas/arquitectura-contexto-integracion.png)
-
-**Propuesta:** WhatsApp permanece fuera del límite del ERP. Un servicio intermedio conecta el canal con ventas y atención; inventario y facturación son componentes internos. Las líneas discontinuas muestran la conexión WhatsApp–ERP y la integración tributaria **pendientes de demostración**. El diagrama no afirma que la empresa tenga acceso a WhatsApp Business Platform o a una API.
-
-## 5. Lectura del flujo principal
-
-1. **Propuesta:** el cliente inicia una conversación o pedido por WhatsApp.
-2. **Pendiente:** se confirma si el acceso será API, webhook, conector o algún otro mecanismo permitido.
-3. **Propuesta:** el servicio de integración conserva un identificador externo para relacionar conversación y pedido, y entrega el evento a ventas y atención.
-4. **Propuesta:** el usuario de ventas consulta o reserva inventario y confirma la venta en el ERP.
-5. **Propuesta:** facturación genera una factura o boleta de prueba conforme al caso aprobado.
-6. **Pendiente:** el producto o partner demuestra la ruta hacia OSE, PSE o SUNAT y devuelve aceptación, observación o rechazo.
-7. **Propuesta:** el estado regresa a ventas y atención, pasa por el servicio de integración y se comunica al cliente por WhatsApp.
-
-Este recorrido es una hipótesis de arquitectura para contrastar en una demostración; no describe una operación existente.
-
-## 6. Componentes de la solución
-
-| Límite | Componente | Función | Estado |
-| --- | --- | --- | --- |
-| Externo | WhatsApp | Canal único de conversación y pedido | Propuesta; uso y acceso pendientes |
-| Externo | Servicio de integración WhatsApp–ERP | Traduce eventos y relaciona identificadores externos e internos | Propuesta; mecanismo ND |
-| ERP SaaS | Ventas y atención comercial | Registra pedido, confirmación y estado comunicado | Propuesta |
-| ERP SaaS | Inventario | Informa disponibilidad y reserva o descuenta stock | Propuesta; regla exacta pendiente |
-| ERP SaaS | Facturación electrónica | Prepara comprobante y registra su estado | Propuesta; cobertura peruana pendiente |
-| ERP SaaS | Reportes básicos | Consulta para gerencia, sin módulo adicional de analítica | Propuesta opcional |
-| ERP SaaS | Persistencia transaccional | Conserva pedido, movimiento y estado de comprobante | Propuesta; tecnología del proveedor ND |
-| Externo | OSE, PSE o SUNAT | Respuesta tributaria por la ruta que corresponda | Pendiente de confirmación |
-
-## 7. Interfaces
-
-| Origen → destino | Intercambio propuesto | Mecanismo y estado |
+| Interfaz | Datos principales | Controles |
 | --- | --- | --- |
-| Cliente ↔ WhatsApp | Mensaje, pedido y respuesta | Canal propuesto; uso empresarial pendiente |
-| WhatsApp ↔ servicio de integración | Evento y respuesta asociados a un identificador externo | **Pendiente:** API, webhook, conector o mecanismo por confirmar |
-| Servicio de integración ↔ ventas y atención | Pedido, referencia de conversación y estado | **Pendiente:** API/conector del ERP elegido y prueba de no duplicación |
-| Ventas y atención ↔ inventario | Consulta de disponibilidad, reserva o descuento | Propuesta de intercambio interno; comportamiento por demostrar |
-| Ventas y atención → facturación | Venta confirmada y referencia del pedido | Propuesta de intercambio interno |
-| Facturación ↔ OSE, PSE o SUNAT | Comprobante de prueba y aceptación, observación o rechazo | **Pendiente:** localización, proveedor y ruta tributaria |
-| Ventas y atención → servicio de integración → WhatsApp | Estado del pedido o comprobante para el cliente | **Pendiente:** prueba de retorno en el canal |
+| Usuario → Odoo | cliente, tipo, canal, productos, cantidades y entrega | permisos, campos obligatorios y duplicados |
+| Odoo → UBLHUB | identificador de venta, emisor, receptor, detalle, totales y tipo de documento | autenticación, validación, cifrado e idempotencia |
+| UBLHUB → Odoo | identificador externo, estado, mensaje, archivos y marcas de tiempo | firma/verificación de respuesta, auditoría y reintento controlado |
+| Odoo → usuario | disponibilidad, venta y estado del documento | mensajes accionables y restricciones por rol |
+| Vendedor → WhatsApp | confirmación, entrega o incidencia | verificación del destinatario y protección de datos |
 
-## 8. Vista de despliegue
+## 7. Manejo de errores
 
-![Arquitectura ERP base de despliegue](diagramas/arquitectura-despliegue.png)
+- Si UBLHUB no responde, la venta permanece registrada con documento pendiente; no se duplica la emisión.
+- Si el documento es rechazado, se conserva la respuesta y se habilita una corrección controlada.
+- Si se repite la solicitud, la clave idempotente debe devolver o consultar el mismo resultado.
+- Si no hay internet, se registra la contingencia y se procesa la cola cuando se restablece el servicio.
+- Ninguna falla tributaria debe revertir silenciosamente el movimiento comercial; la conciliación queda visible.
 
-**Propuesta:** los roles de la empresa acceden por navegador e internet HTTPS a la aplicación web del ERP SaaS. El servicio de integración se aloja en la plataforma administrada propuesta y se comunica con WhatsApp y el ERP. El ERP mantiene persistencia transaccional y se conecta al servicio tributario que corresponda. **Pendiente:** proveedor, SLA, conectividad, respaldo, actualización, monitoreo y ruta tributaria. No se presupone infraestructura local.
+## 8. Seguridad y operación
 
-## 9. Decisiones de diseño
+Los secretos de UBLHUB se almacenan en configuración segura, nunca en el repositorio. Se aplican permisos por rol, bitácora de acciones, copias de seguridad, monitoreo de integración y alertas para documentos pendientes o rechazados. Los ambientes de desarrollo y prueba usan datos ficticios.
 
-| ID | Decisión provisional | Justificación y base | Condición que la cambiaría |
-| --- | --- | --- | --- |
-| D-01 | Evaluar ERP modular SaaS | **Interpretación** de S2, §5, y S3, §§1-2: reduce operación local si la conectividad y soporte lo permiten | Conectividad, presupuesto o requisito de alojamiento que lo hagan inviable |
-| D-02 | Limitar la liberación a WhatsApp, ventas, inventario y facturación | **Propuesta** que acota la hipótesis S1 y el alcance S3 | Validación de la empresa que cambie el canal o alcance |
-| D-03 | Separar servicio de integración de WhatsApp y ERP | **Propuesta** para adaptar el mecanismo real sin confundir canal y módulo de ventas | Demostración de integración nativa suficiente y sostenible |
-| D-04 | Relacionar conversación, pedido, movimiento y comprobante | **Propuesta** para seguir el flujo y observar duplicados o pérdidas | Restricciones técnicas que exijan otra forma de correlación |
-| D-05 | Configurar antes de personalizar | **Interpretación** del riesgo de extensibilidad de S2 y S3 | Una brecha demostrada que no pueda cubrirse por configuración |
-| D-06 | Mantener Odoo y Business Central en evaluación | **Evidencia** de que ambos forman parte de S2; selección no aprobada | Demostraciones, cobertura fiscal, soporte y costos comparables |
+## 9. Fases
 
-## 10. Límites
+1. **Levantamiento:** validar clientes, productos, stock, documentos, usuarios, volúmenes y reglas.
+2. **Configuración:** preparar Odoo, roles, catálogos, tipos de cliente y los dos canales.
+3. **Integración:** implementar y probar el adaptador con el sandbox de UBLHUB.
+4. **Migración y conciliación:** depurar maestros e inventario inicial.
+5. **Prueba piloto:** ejecutar ventas presenciales y de WhatsApp con usuarios seleccionados.
+6. **Salida controlada:** habilitar producción, monitorear y aplicar plan de retorno.
+7. **Mejora:** medir resultados y evaluar automatización de WhatsApp.
 
-La arquitectura es conceptual. Los sistemas actuales, el acceso técnico a WhatsApp, la integración tributaria, el número de usuarios, la conectividad, el presupuesto, el SLA y el ERP definitivo están **pendientes**. No hay evidencia de implementación ni aprobación productiva.
+## 10. Decisiones
 
-**Fuera del alcance, en una única lista:** compras, proveedores, importaciones, transporte internacional, nacionalización, aduanas, agentes de aduana, costos de importación, despacho o distribución, posventa, garantías, planillas, manufactura, otros canales digitales, aplicación móvil propia, inteligencia artificial, integraciones bancarias, implementación productiva y migración completa. Esos elementos no aparecen como nodos ni como trabajo comprometido por esta arquitectura.
-
-## 11. Supuestos y pendientes
-
-| Tema | Estado actual | Evidencia necesaria |
+| ID | Decisión | Estado |
 | --- | --- | --- |
-| WhatsApp utilizado por la empresa | Supuesto; S1 solo describe canales digitales en general | Confirmación del canal y acceso autorizado |
-| WhatsApp Business Platform o API | ND | Respuesta del titular del canal y proveedor técnico |
-| Sistemas actuales e interfaces | ND en S1/S2 | Inventario de aplicaciones e interfaces de la empresa |
-| Cantidad de usuarios y conectividad | ND | Entrevista y medición en sedes aplicables |
-| Factura, boleta y ruta tributaria | Emisión electrónica acreditada por RUC; implementación ERP pendiente | Demostración del producto/partner y validación de facturación |
-| Presupuesto, soporte y SLA | ND | Cotizaciones y condiciones del proveedor |
-| Selección de ERP | Pendiente | Caso común, costos y decisión documentada |
+| D-01 | Usar Odoo como ERP central | Adoptada; validar versión, modalidad y licencias |
+| D-02 | Usar UBLHUB para boletas, facturas y guías | Adoptada; validar contrato, API y sandbox |
+| D-03 | Mantener dos canales: ERP/presencial y WhatsApp móvil | Adoptada |
+| D-04 | Registrar manualmente WhatsApp en la primera etapa | Adoptada; automatización posterior |
+| D-05 | Configurar antes de personalizar | Adoptada |
+| D-06 | Usar integración idempotente y auditable | Obligatoria para producción |
 
-## 12. Archivos gráficos generados
+## 11. Pendientes de levantamiento
 
-- [Contexto e integración PNG](diagramas/arquitectura-contexto-integracion.png) y [fuente editable SVG](diagramas/arquitectura-contexto-integracion.svg).
-- [Despliegue PNG](diagramas/arquitectura-despliegue.png) y [fuente editable SVG](diagramas/arquitectura-despliegue.svg).
-
-Ambos gráficos se preparan a 1920 × 1080 píxeles, relación 16:9. Las referencias son S1, §§3-4; S2, §§1-5; S3, §§1-3; rúbrica PC1, p. 1, y ficha RUC SUNAT, pp. 1-2, registradas en [fuentes](../fuentes/registro-fuentes.md).
+Volumen de ventas, número de usuarios, sedes, conectividad, reglas de precios, medios de pago, ubicaciones de stock, series de documentos, condiciones para guías, devoluciones, datos a migrar, SLA, costos y responsables de soporte.

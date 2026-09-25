@@ -1,5 +1,3 @@
 # Pruebas
 
-- [Casos PC1](casos-pc1.md): escenarios, resultados pendientes, incidencias y criterios de aceptación.
-
-No hay resultados ejecutados en esta versión. La validación del diseño se distingue de pruebas en un ERP real.
+- [Casos y criterios de aceptación](casos-aceptacion.md): escenarios funcionales para clientes, canales, inventario y UBLHUB.

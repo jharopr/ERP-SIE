@@ -1,27 +1,28 @@
-# Inventario de fuentes y tratamiento de datos
+# Inventario de datos y fuentes operativas
 
-## Fuentes del análisis
+## Fuentes para el levantamiento
 
-| Fuente | Datos útiles para PC1 | Estado y límite |
+| Fuente | Datos útiles | Estado y límite |
 | --- | --- | --- |
-| Ficha RUC SUNAT, 05/09/2026, pp. 1-2 | Razón social, RUC, tipo, actividad CIIU, condición de importador, emisión electrónica | Evidencia tributaria a esa fecha; no acredita catálogo ni procesos internos |
-| Ficha S1, §§3-4 | Productos, clientes y sistemas descritos por el equipo; hipótesis de integración | Declaración académica por confirmar con empresa |
-| Comparativo S2, §§2-5 | Alternativas, despliegue, integración y vacíos | Análisis del equipo; no prueba funcionamiento ni precios |
-| Estrategia S3, §§2-6 | Alcance, fases, indicadores y riesgos propuestos | Plan de implementación, pendiente de aprobación |
+| Ficha de la empresa | productos, clientes, canales, proceso actual y necesidades | Validar con responsables del negocio |
+| Ficha de comparación de ERPs | capacidades, brechas y razones de selección | No sustituye demostración ni cotización |
+| Ficha de implementación base del ERP | alcance, fases, integración, controles y riesgos | Base sujeta a validación técnica |
+| Odoo | clientes, productos, pedidos, ventas, inventario y estados | Sistema central propuesto |
+| UBLHUB | solicitudes, identificadores, documentos, respuestas y errores | Servicio tributario propuesto |
+| WhatsApp móvil | conversación y referencia del pedido | Canal manual; evitar copiar conversaciones completas sin autorización |
 
-## Diccionario mínimo para la prueba de flujo
+## Diccionario mínimo
 
-| Entidad | Campos mínimos propuestos | Restricción |
+| Entidad | Campos mínimos | Regla |
 | --- | --- | --- |
-| Producto | SKU sintético, descripción genérica, unidad, estado | No asumir catálogo real |
-| Pedido | ID externo, fecha, canal, SKU, cantidad, estado | ID único e idempotencia |
-| Inventario | SKU, ubicación sintética, disponible, reservado, movimiento | Conciliar antes/después |
-| Venta | ID ERP, referencia de pedido, total, estado | Trazable al pedido |
-| Comprobante | Tipo, serie/número de prueba, ID de venta, estado de aceptación | No emitir comprobantes reales durante la demo |
-| Interacción de atención | ID de pedido, fecha de respuesta, estado | Usar cliente ficticio |
+| Cliente | ID, tipo, documento/RUC, nombre o razón social, contacto autorizado, estado | Un registro por persona o empresa; controlar duplicados |
+| Producto | SKU, descripción, unidad, precio, impuestos, estado | SKU único |
+| Pedido | ID, fecha, canal, cliente, líneas, total y estado | Canal obligatorio: ERP/presencial o WhatsApp móvil |
+| Inventario | SKU, ubicación, disponible, reservado y movimiento | Conciliar antes y después |
+| Venta | ID Odoo, pedido, cliente, total, pago y estado | Trazable al pedido |
+| Documento electrónico | tipo, serie/número, ID de venta, ID UBLHUB, estado, archivos y error | Idempotencia y trazabilidad |
+| Interacción | referencia de pedido, canal, fechas y estado | No almacenar más datos de conversación de los necesarios |
 
-## Datos de prueba y datos sensibles
+## Datos de prueba y privacidad
 
-Usar un SKU ficticio como `DEMO-001`, un cliente ficticio y cantidades de ejemplo. No incluir DNI, teléfonos, direcciones, correos, datos de clientes ni capturas del RUC completo. La ficha RUC original contiene datos personales de representantes y socios, por lo que permanece fuera del repositorio. Si se comparte una evidencia, ocultar esos campos y revisar también metadatos y capturas.
-
-Los datos empresariales reales, la calidad de maestros y el motor de base de datos siguen pendientes de autorización y levantamiento. La prueba de concepto debe funcionar con datos sintéticos hasta contar con permiso y controles apropiados.
+Usar SKU, clientes, documentos, teléfonos y cantidades ficticios. No incluir DNI, teléfonos, direcciones, correos, credenciales ni conversaciones reales en capturas o archivos de prueba. Los datos productivos solo se migran con autorización, respaldo, reglas de limpieza y conciliación.

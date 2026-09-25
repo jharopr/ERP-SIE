@@ -1,6 +1,6 @@
 # Producto
 
-- [Backlog PC1](backlog.md): trabajo priorizado y condiciones de salida.
-- [MVP frontend para Odoo](frontend/README.md): interfaz estática navegable, imagen PNG de demostración e instrucciones de Docker.
+- [Backlog de implementación](backlog.md): trabajo priorizado y evidencia de cierre.
+- [Prototipo visual para Odoo](frontend/README.md): interfaz estática navegable e instrucciones de ejecución.
 
-El MVP permite revisar pantallas y flujo con datos ficticios. No incluye backend, Odoo instalado, emisión tributaria ni integración con sistemas de la empresa.
+El prototipo no reemplaza Odoo ni UBLHUB y no emite documentos electrónicos reales.

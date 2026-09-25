@@ -1,17 +1,33 @@
-# Comparativo ERP para la arquitectura base de PC1
+# Ficha de comparación de ERPs y servicios complementarios
 
-El taller S2, §§1-5, fechado el 12/09/2026, compara StarSoft, Odoo y Microsoft Dynamics 365 Business Central. **Evidencia** aquí significa que S2 registró una fuente o hallazgo; no que la capacidad haya sido probada en la empresa. Odoo y Business Central siguen como candidatos del caso común. StarSoft conserva su lugar de referencia local, con documentación técnica **ND** donde S2 no la encontró. No se revalidaron en línea las páginas de S2 para este incremento.
+## Objetivo
 
-| Criterio | Odoo | Business Central | StarSoft, referencia local | Verificación pendiente |
+Comparar las alternativas revisadas para cubrir ventas, clientes, inventario e integración tributaria. **UBLHUB no es un ERP generalista**: se incluye porque cubre el componente especializado de documentos electrónicos y complementa al ERP elegido.
+
+![Comparación visual de Odoo, Dynamics 365 y StarSoft por despliegue, integración, localización peruana, extensibilidad y ajuste al caso](../imagenes/comparativas.png)
+
+*Síntesis visual de las alternativas ERP consideradas. La matriz siguiente añade el papel complementario de UBLHUB y formaliza la decisión.*
+
+| Criterio | Odoo | StarSoft | Microsoft Dynamics 365 Business Central | UBLHUB |
 | --- | --- | --- | --- | --- |
-| Despliegue | **Evidencia S2:** documenta Odoo Online, Odoo.sh y on-premise | **Evidencia S2:** documenta Online y on-premises | **Evidencia S2:** oferta local y mención comercial de nube; detalle técnico cloud **ND** | Modalidad SaaS, contrato y SLA ofertados |
-| Arquitectura y extensibilidad | **Evidencia S2:** módulos Python, PostgreSQL y documentación técnica | **Evidencia S2:** extensiones AL y documentación técnica | API y extensión pública **ND** en fuentes revisadas por S2 | Sandbox, límites de personalización y actualizaciones |
-| Integración con WhatsApp | **ND** para el caso de la empresa; S2 registra mecanismos generales de integración | **ND** para el caso de la empresa; S2 registra APIs generales | **ND** en fuentes técnicas públicas revisadas | Acceso al canal, API/webhook/conector autorizado y demostración de ida y vuelta |
-| Flujo ventas–inventario | **Pendiente de demostración** en el escenario común | **Pendiente de demostración** en el escenario común | **Pendiente de demostración** | Pedido único, disponibilidad y reserva o descuento |
-| Facturación electrónica peruana | **Evidencia S2:** documentación de localización Perú; cobertura exacta **ND** | Localización peruana oficial **ND** en fuentes revisadas por S2; verificar partner | **Evidencia S2:** material comercial menciona SUNAT/PLE; flujo concreto **ND** | Factura/boleta de prueba y estado tributario por oferta concreta |
-| Operación y soporte | Depende de modalidad y proveedor; SLA **ND** | Depende de modalidad y partner; SLA **ND** | S2 cita soporte comercial; SLA de la oferta **ND** | Responsable, respaldo, monitoreo, actualización y contingencia |
-| Costo y evidencia pendiente | Precio del caso **ND** | Precio del caso **ND** | Precio del caso **ND** | Cotizaciones comparables de licencias, integración, implementación y soporte |
+| Rol | ERP modular central | ERP de oferta local | ERP empresarial de Microsoft | Microservicio tributario |
+| Ventas y clientes | Adecuado para cotizaciones, pedidos, contactos y segmentación | Capacidad comercial por validar en la edición ofertada | Capacidad comercial amplia | Fuera de alcance |
+| Inventario | Módulo integrado y extensible | Cobertura por validar con demostración | Módulo integrado | Fuera de alcance |
+| Extensibilidad | Módulos, API y ecosistema Python | Interfaces públicas y límites por confirmar | Extensiones AL y servicios de integración | API especializada para documentos electrónicos |
+| WhatsApp móvil | Puede registrar el canal manualmente y evolucionar hacia un conector | Integración específica por confirmar | Integración posible mediante servicios, con mayor complejidad para este caso | No administra conversaciones ni pedidos |
+| Facturación peruana | Requiere localización/configuración e integración verificadas | Oferta local orientada a normativa peruana; detalle técnico por verificar | Depende de localización y partner | Componente elegido para boletas, facturas y guías de remisión |
+| Ajuste al caso | Alto por modularidad y facilidad de iniciar con alcance comercial | Alternativa local considerada | Alternativa robusta, con complejidad y dependencia de partner | Alto como complemento especializado |
+| Decisión | **Seleccionado como ERP central** | No seleccionado | No seleccionado | **Seleccionado como microservicio tributario** |
 
-**Interpretación:** la documentación técnica pública de Odoo y Business Central facilita preparar pruebas equivalentes; no demuestra por sí sola una integración con WhatsApp ni una factura peruana aceptada. Que S2 no hallara documentación de StarSoft o localización de Business Central no prueba que esas capacidades no existan. La ficha RUC acredita emisión electrónica de la empresa, no cobertura de un ERP específico.
+## Resultado
 
-**Supuestos y pendientes:** producto, versión, modalidad SaaS, partner, canal WhatsApp autorizado, número de usuarios, conectividad y presupuesto. La [matriz de criterios](criterios-seleccion.md) indica la evidencia necesaria antes de recomendar una marca. Fuentes originales y fecha de acceso del equipo: [registro de fuentes](../fuentes/registro-fuentes.md), F-04 y sus enlaces de S2, §1.
+Se selecciona la combinación **Odoo + UBLHUB**:
+
+- Odoo mantiene la ficha única del cliente, el pedido, el canal de origen, el inventario y el estado comercial.
+- UBLHUB recibe solicitudes de emisión, procesa boletas, facturas y guías de remisión, y devuelve el estado y los archivos correspondientes.
+- WhatsApp móvil sigue siendo un canal atendido manualmente en la primera etapa; cada pedido originado allí se registra en Odoo.
+- StarSoft y Dynamics 365 Business Central se conservan únicamente como alternativas comparadas y como referencia para revisar la decisión si cambian las restricciones.
+
+## Validaciones pendientes
+
+La elección funcional no reemplaza la validación técnica y contractual. Antes de producción se deben confirmar versiones, licencias, modalidad de despliegue, API de UBLHUB, autenticación, formatos, estados, reintentos, soporte, SLA, costos y ambiente de pruebas.

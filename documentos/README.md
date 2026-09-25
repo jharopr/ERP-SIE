@@ -1,8 +1,8 @@
-# Documentos de PC1
+# Documentos del proyecto ERP
 
-- [Plan de desarrollo](plan-desarrollo-pc1.md): tareas, secuencia y cierre.
-- [Contexto y alcance](contexto-y-alcance.md): evidencia, hipótesis y límites.
-- [Guion de entrega](guion-entrega.md): correspondencia con la plantilla y la rúbrica.
-- [Contribuciones](contribuciones.md): registro pendiente de pruebas por integrante.
-- [Versiones](versiones.md): historial de incrementos y decisiones.
-- [Insumos](insumos/README.md): documentos consultados sin copiar datos personales.
+- [Ficha de la empresa](contexto-y-alcance.md): situación actual, clientes, problema, objetivo y alcance.
+- [Ficha de implementación base](plan-implementacion-erp.md): fases, dependencias, criterios y riesgos.
+- [Lista de verificación](guion-entrega.md): revisión integral antes del piloto o despliegue.
+- [Contribuciones](contribuciones.md): responsables y evidencias del equipo.
+- [Versiones y decisiones](versiones.md): cambios y decisiones vigentes.
+- [Insumos](insumos/README.md): documentos funcionales y empresariales de entrada.

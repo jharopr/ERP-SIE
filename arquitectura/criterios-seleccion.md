@@ -1,41 +1,44 @@
-# Criterios de selección y decisión provisional
+# Decisión de solución y criterios de validación
 
-## Decisión provisional
+## Decisión adoptada
 
-**Propuesta:** evaluar una arquitectura ERP modular SaaS con una capa de integración para WhatsApp, manteniendo abierta la selección del producto hasta realizar demostraciones, pruebas equivalentes, validación de facturación electrónica y comparación de costos. Odoo y Microsoft Dynamics 365 Business Central son los candidatos principales de S2; StarSoft se conserva como referencia local. No hay marca elegida ni puntajes asignados.
+La solución base es **Odoo como ERP central + UBLHUB como microservicio para boletas, facturas y guías de remisión**. La combinación separa la gestión comercial de la responsabilidad tributaria especializada y permite iniciar con los dos canales reales: registro presencial en el ERP y venta atendida manualmente por WhatsApp móvil.
 
-## Criterios para las demostraciones
+## Razones principales
 
-| Criterio | Pregunta verificable | Evidencia exigida |
-| --- | --- | --- |
-| Integración con WhatsApp | ¿Cómo llega y vuelve un mensaje o pedido? | Mecanismo autorizado, versión, partner y demostración; API actual de la empresa **ND** |
-| Flujo integrado de venta | ¿Se registra una sola venta por pedido de prueba? | Rastro del identificador externo y venta creada |
-| Consistencia entre venta e inventario | ¿Se consulta y reserva o descuenta la cantidad correcta? | Estado antes y después del caso común |
-| Facturación electrónica peruana | ¿Se genera factura o boleta de prueba y se registra aceptación, observación o rechazo? | Demo con localización y ruta OSE, PSE o SUNAT identificadas |
-| Despliegue SaaS | ¿Se accede por navegador sin infraestructura local de la empresa? | Modalidad contractual y arquitectura del proveedor |
-| Continuidad operativa | ¿Qué ocurre ante caída de conexión o servicio? | SLA, respaldo, monitoreo y procedimiento de contingencia |
-| Costo total | ¿Cuánto cuestan licencias, implementación, integración y operación? | Cotizaciones bajo el mismo alcance, plazo y número de usuarios por confirmar |
-| Soporte | ¿Quién resuelve incidentes y en qué plazo? | Alcance y horarios del proveedor o partner por escrito |
-| Extensibilidad | ¿Se adapta la interfaz sin modificar el núcleo? | Documentación técnica y prueba en sandbox |
-| Capacidad de demostrar el flujo | ¿Puede completarse el caso de principio a fin? | Registro de pasos, versión, configuración, fallos y condiciones |
+| Criterio | Aplicación en la decisión |
+| --- | --- |
+| Cobertura funcional | Odoo concentra clientes, ventas, productos, inventario y reportes |
+| Adecuación al tamaño y evolución | Permite comenzar con módulos prioritarios y ampliar por etapas |
+| Integración | UBLHUB se desacopla como microservicio y evita cargar al núcleo del ERP con toda la lógica tributaria |
+| Trazabilidad | Pedido, venta, movimiento y documento conservan identificadores relacionados |
+| Canales | Ambos canales usan el mismo proceso en Odoo; WhatsApp se registra manualmente al inicio |
+| Mantenibilidad | Se configura primero y se personaliza solo ante una brecha demostrada |
+| Riesgo | La emisión se prueba en sandbox antes de habilitar documentos productivos |
 
-**Interpretación:** el taller S2 documenta despliegue y extensibilidad generales, pero no demuestra este flujo de WhatsApp ni cobertura tributaria concreta. Una función **ND** no equivale a ausencia de capacidad; exige verificación. No se inventan pesos, puntajes ni precios.
+## Caso de validación de extremo a extremo
 
-## Caso común para Odoo y Business Central
+1. Crear o identificar un cliente sin duplicar documento o RUC.
+2. Registrar un pedido con canal ERP/presencial o WhatsApp móvil.
+3. Consultar y reservar inventario en Odoo.
+4. Confirmar la venta.
+5. Solicitar a UBLHUB una boleta, factura o guía según el caso.
+6. Recibir identificador, estado, respuesta tributaria y archivos.
+7. Guardar el resultado en Odoo sin emitir dos veces ante un reintento.
+8. Comunicar el resultado al cliente por su canal de origen.
+9. Verificar la trazabilidad completa en el reporte operativo.
 
-Ejecutar con datos ficticios y el mismo escenario en ambos productos:
+## Criterios de aceptación técnica
 
-1. Recibir un pedido de prueba desde WhatsApp o, si el acceso aún no está disponible, registrar la imposibilidad técnica como **pendiente**.
-2. Crear **una sola venta** vinculada al identificador externo de la conversación.
-3. Consultar disponibilidad en inventario.
-4. Reservar o descontar stock según el flujo configurado.
-5. Confirmar la venta.
-6. Generar factura o boleta de prueba, sin emitir documentos productivos.
-7. Registrar aceptación, observación o rechazo devueltos por la ruta tributaria demostrada.
-8. Devolver el estado a ventas y atención para comunicarlo por WhatsApp.
+- autenticación y secretos fuera del código fuente;
+- idempotencia por venta y tipo de documento;
+- registro de solicitud, respuesta, error y reintento;
+- estados comprensibles para el usuario del ERP;
+- conciliación entre venta, stock y documento;
+- operación controlada cuando UBLHUB o internet no estén disponibles;
+- permisos separados para vender, ajustar stock, emitir y anular;
+- datos de prueba anonimizados en todos los ambientes no productivos.
 
-Registrar por cada producto: versión, modalidad SaaS, configuración, proveedor/partner, capturas anonimizadas, resultado por paso, error, tiempo y costo ofertado. Si una etapa no puede ejecutarse, marcar **ND** o **pendiente de demostración**; no simular un resultado como prueba.
+## Condiciones para revisar la decisión
 
-## Condiciones de cambio
-
-**Pendiente:** validar canal real, conectividad, número de usuarios, presupuesto, SLA, restricciones de alojamiento y comprobantes exigidos. Si SaaS no cumple una restricción confirmada, se revisa D-01. Si la integración nativa cubre el caso sin servicio separado, se revisa D-03. La decisión final requiere evidencia comparable y aprobación de la empresa. Véase [arquitectura base](erp-base.md) y [comparativo S2 acotado](comparativo-erp.md).
+La combinación deberá reevaluarse si UBLHUB no cubre un documento obligatorio, no ofrece una API o soporte compatible, o si el costo y SLA no cumplen las restricciones aprobadas. También se revisará el despliegue de Odoo si conectividad, presupuesto, volumen o requisitos de alojamiento cambian materialmente.
