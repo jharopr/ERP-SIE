@@ -47,7 +47,7 @@ Antes de iniciar cada tarea se confirmarán el responsable, sus dependencias y e
 
 La documentación de una tarea no equivale a su implementación. Los estados se actualizarán cuando exista evidencia nueva.
 
-## 4. Relación con los casos de aceptación
+## 4. Relación con casos de aceptación
 
 Se utilizarán los [casos de aceptación del repositorio](../pruebas/casos-aceptacion.md):
 
