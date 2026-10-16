@@ -2,18 +2,14 @@
 
 Este repositorio reúne el análisis del negocio, la comparación de soluciones y la arquitectura base para implementar un sistema de gestión en **IMPORTACIONES MYS HERMANOS S.A.C.** (RUC 20606915528).
 
-## Incremento vigente · PC2
+## Incremento vigente · PC2 (Consolidado Oficial v2.1)
 
-La [entrega PC2](documentos/pc2/README.md) incorpora **CRM de Odoo** y documenta el recorrido fuente/lead → oportunidad → cotización → solicitud de transición al ERP. El tramo termina en aceptación, rechazo o promesa condicionada; una falla técnica queda pendiente. Pedido operativo, facturación, entrega y posventa continúan fuera de esta evaluación.
+El documento principal de entrega consolidado conforme a la consigna oficial vigente (corte a la diapositiva 12 de la sesión 6) se encuentra en:
+- 📄 **Documento Consolidado (Word):** [`GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx`](GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx)
+- 📖 **Documento Consolidado (Markdown):** [`documentos/pc2/entrega-pc2.md`](documentos/pc2/entrega-pc2.md)
+- 👥 **Reparto y contribuciones del equipo:** [`documentos/contribuciones.md`](documentos/contribuciones.md)
 
-![Arquitectura de componentes CRM–ERP de PC2](arquitectura/diagramas/componentes-crm-erp-pc2.svg)
-
-- [Entrega integrada en cinco secciones](documentos/pc2/entrega-pc2.md).
-- [Componentes y sistemas de registro](arquitectura/crm-erp-pc2.md) → [contrato e interfaces I01–I07](arquitectura/contratos/crm-erp-v1.md).
-- [Escenario y flujos](procesos/pc2-escenario-y-flujo.md), [datos y controles](datos/pc2-modelo-y-controles.md), [fuentes y supuestos](fuentes/pc2.md).
-- [Prueba local reproducible y evidencias](pruebas/pc2/README.md): `python pruebas/pc2/generar_evidencias.py`.
-
-**Estado:** arquitectura propuesta y contrato simulado con datos sintéticos. No hay una instalación Odoo acreditada. Los precios/reglas son supuestos y las revisiones humanas del equipo están pendientes. La documentación operativa que sigue corresponde a la línea base de PC1 y su implementación futura.
+Este incremento delimita el escenario evaluable al tramo comercial CRM (tienda física, lead calificado, cotización versionada, 3 decisiones comerciales y 2 casos de análisis). El contrato técnico CRM–ERP y las simulaciones se conservan como investigación y trabajo técnico adicional de continuidad.
 
 ## Situación y decisión
 
