@@ -10,8 +10,9 @@
     "order_id": null
   },
   "obtained": {
-    "contract_version": "1.0",
+    "contract_version": "1.1",
     "request_id": "SOL-DEMO-001",
+    "response_id": "RESP-02822677ab85f5b57f04",
     "correlation_id": "COR-DEMO-001",
     "quotation_id": "COT-DEMO-001",
     "quotation_version": 1,
@@ -23,11 +24,14 @@
     "total": "1900.00",
     "currency": "PEN",
     "order_id": null,
-    "conditions": []
+    "order_state": "NO_CONFIRMADO",
+    "conditions": [],
+    "follow_up_state": "RECUPERAR_SERVICIO",
+    "attention_due_at": "2026-10-16T18:00:00-05:00"
   },
   "passed": true,
   "request": {
-    "contract_version": "1.0",
+    "contract_version": "1.1",
     "company_id": "MYS-DEMO",
     "request_id": "SOL-DEMO-001",
     "correlation_id": "COR-DEMO-001",
@@ -36,6 +40,23 @@
     "quotation_id": "COT-DEMO-001",
     "quotation_version": 1,
     "acceptance_id": "ACE-DEMO-001"
+  },
+  "crm_feedback": {
+    "attention_due_at": "2026-10-16T18:00:00-05:00",
+    "code": "DEPENDENCIA_NO_DISPONIBLE",
+    "conditions": [],
+    "follow_up_state": "RECUPERAR_SERVICIO",
+    "opportunity_id": "CRM-DEMO-001",
+    "opportunity_lost": false,
+    "order_id": null,
+    "order_state": "NO_CONFIRMADO",
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "required_action": "Recuperar dependencia y reanudar la misma solicitud.",
+    "response_id": "RESP-02822677ab85f5b57f04",
+    "responsible_role": "ADMINISTRADOR_Y_VENTAS",
+    "status": "PENDIENTE",
+    "updated_at": "2026-10-15T18:00:00-05:00"
   },
   "audit": [
     {
@@ -90,6 +111,17 @@
       "actor_id": "VEN-DEMO-01",
       "interface_id": "I07",
       "event_type": "DECISION",
+      "code": "DEPENDENCIA_NO_DISPONIBLE",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    },
+    {
+      "event_id": 6,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I08",
+      "event_type": "CRM_ACTUALIZADO",
       "code": "DEPENDENCIA_NO_DISPONIBLE",
       "occurred_at": "2026-10-15T18:00:00-05:00"
     }

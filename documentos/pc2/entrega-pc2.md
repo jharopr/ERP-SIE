@@ -2,7 +2,7 @@
 
 **Curso:** GE703, Sistemas Integrados Empresariales, 2026-2.  
 **Empresa:** IMPORTACIONES MYS HERMANOS S.A.C.  
-**Versión:** v2.0 · **Fecha del documento:** 15/10/2026 · **Exposición:** 17/10/2026.  
+**Versión:** v2.1 · **Fecha del documento:** 16/10/2026 · **Exposición:** 17/10/2026.<br>
 **Evidencias:** [índice del paquete en este repositorio](README.md). **Remoto configurado:** [jharopr/ERP-SIE](https://github.com/jharopr/ERP-SIE). Los cambios de este incremento están en el espacio de trabajo local y todavía deben publicarse para que el remoto los muestre.  
 **Expositores propuestos:** Gabriel Chavez y Jharolym Paucarcaja; falta ratificación e inscripción por el grupo.  
 **Estado:** propuesta técnica y pruebas locales simuladas; revisión humana pendiente, sin Odoo instalado.
@@ -19,7 +19,7 @@ PC1 seleccionó Odoo como núcleo de clientes, ventas e inventario, con UBLHUB c
 | Cotizaciones y pedidos en Ventas | Precisa frontera y sistemas de registro | CRM mantiene oportunidad; Ventas conserva cotización y futura conversión en el mismo `sale.order` |
 | UBLHUB como servicio documental | Mantiene como continuidad posterior | Facturación y ruta tributaria quedan fuera de PC2 |
 | Captación/campañas fuera de la primera liberación operativa | Añade escenario didáctico PC2 | Modela fuente y campaña sin afirmar una campaña ejecutada ni ampliar el despliegue real |
-| Seguridad e idempotencia | Extiende al contrato comercial | Se proponen C04/C06 y bitácora específica; no son módulos ya instalados |
+| Seguridad e idempotencia | Extiende al contrato comercial | Se proponen funciones internas de validación/aprobación en Ventas y seguimiento CRM; no son módulos ya instalados |
 
 El [mapa y SIPOC O2C/P2P](../../procesos/pc2-escenario-y-flujo.md#4-macroprocesos-de-contexto) se conservan como contexto de Semana 5. El Word de macroprocesos anterior limitaba su versión a canal físico; este incremento declara expresamente el caso WhatsApp, sin reemplazar silenciosamente los límites históricos.
 
@@ -37,15 +37,17 @@ Si solo existen tres unidades, una cotización válida y autorizada puede recibi
 
 ![Arquitectura de componentes que gobierna el contrato](../../arquitectura/diagramas/componentes-crm-erp-pc2.svg)
 
-La [arquitectura](../../arquitectura/crm-erp-pc2.md) separa **C01 CRM**, **C02 Contactos**, **C03 Ventas/catálogo**, **C04 control de transición**, **C05 Inventario**, **C06 autorizaciones**, **C07 seguridad/bitácora** y **C08 persistencia**. C04/C06 y el historial específico son extensiones propuestas para Odoo; los proveedores del simulador son fixtures locales.
+La [arquitectura](../../arquitectura/crm-erp-pc2.md) muestra **CRM, Contactos, Ventas e Inventario** dentro de Odoo. La validación, aprobación y trazabilidad son funciones internas. WhatsApp es canal externo manual; adaptador propio, UBLHUB y SUNAT quedan como continuidad de PC1 fuera del tramo PC2. Los proveedores del simulador son fixtures locales.
 
-Las interfaces quedan fijadas por ese diagrama: I01 resuelve cliente; I02 prepara cotización; I03 solicita/consulta transición; I04 lee el snapshot y la aceptación; I05 consulta disponibilidad; I06 verifica aprobación; I07 autoriza y audita. Son interfaces internas entre módulos, no endpoints REST publicados.
+Las interfaces quedan fijadas por ese diagrama: I01 resuelve cliente; I02 prepara cotización; I03 solicita/consulta transición; I04 lee el snapshot; I05 consulta disponibilidad; I06 verifica aprobación; I07 autoriza/audita; **I08 devuelve la decisión a CRM con causa, responsable, acción y plazo**. Son operaciones conceptuales internas, no endpoints REST publicados.
 
 I03 transmite versión de contrato, compañía, solicitud, correlación, oportunidad, cliente, cotización/versionado y aceptación. Los precios y permisos no provienen del payload. El servidor obtiene identidad de sesión, comprueba acceso y consulta las fuentes oficiales. La matriz de datos y controles se desarrolla en [modelo y controles](../../datos/pc2-modelo-y-controles.md).
 
 La [especificación completa](../../arquitectura/contratos/crm-erp-v1.md) define orden de validación, estados, acciones y recuperación. Los [schemas](../../arquitectura/contratos/solicitud-pedido-v1.schema.json) hacen explícito el formato cerrado. La clave `(company_id, request_id)` evita reejecutar una solicitud; la unicidad de cotización/versión impide duplicarla usando otra clave. Un resultado final no se sobrescribe y se audita junto con su decisión.
 
-**Distinción de cierre:** `ACEPTADA` valida la solicitud; `RECHAZADA` expresa un incumplimiento; `PROMESA_CONDICIONADA` propone revisar condiciones; `PENDIENTE` indica falta de una lectura técnica confiable. En todos los casos `order_id` es `null`. La confirmación operativa posterior debe volver a validar los datos y usar la cotización existente, sin generar un segundo `sale.order`.
+**Distinción de cierre:** `ACEPTADA` valida la solicitud; `RECHAZADA` expresa un incumplimiento; `PROMESA_CONDICIONADA` propone revisar condiciones; `PENDIENTE` indica falta de una lectura técnica confiable. En el perfil simulado `order_state=NO_CONFIRMADO` y `order_id=null`; el contrato permite referencia futura únicamente con confirmación explícita. El rechazo no pierde la oportunidad: abre seguimiento de aprobación o corrección. La confirmación operativa posterior debe volver a validar los datos y usar la cotización existente, sin generar un segundo `sale.order`.
+
+La revisión S6 incorpora pago/entrega y evidencia del canal como supuestos explícitos, plazo didáctico de atención de 24 h, [calibración Andina](calibracion-andina-s6.md) sin inventar datos faltantes y [dos métricas](metricas-s6.md) con sus fuentes y vacíos. El detalle JSON/SQLite queda en los anexos del repositorio.
 
 ## 4. Prueba del contrato
 

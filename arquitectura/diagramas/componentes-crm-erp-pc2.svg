@@ -1,113 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1480" viewBox="0 0 1800 1480" role="img" aria-labelledby="title desc">
-  <title id="title">PC2 · Componentes e interfaces de la transición CRM–ERP</title>
-  <desc id="desc">Odoo propuesto, no instalado: CRM consulta Contactos y prepara cotizaciones en Ventas. Control de transición propuesto consulta Ventas, Inventario y Autorizaciones, con Seguridad y bitácora transversal. Interfaces I01 a I07. PostgreSQL se usa mediante ORM. WhatsApp es manual. UBLHUB queda fuera de PC2.</desc>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
-      <path d="M0 0 L9 4 L0 8Z" fill="#355477" />
-    </marker>
-    <marker id="grayarrow" markerWidth="10" markerHeight="10" refX="9" refY="4" orient="auto">
-      <path d="M0 0 L9 4 L0 8Z" fill="#8290a2" />
-    </marker>
-  </defs>
-  <rect width="1800" height="1480" fill="white" />
-  <rect x="35" y="28" width="7" height="68" rx="3" fill="#246b89" />
-  <text x="60" y="58" class="title" font-family="Arial,sans-serif" fill="#152c46" font-size="34px" font-weight="700">Arquitectura CRM–ERP · componentes e interfaces</text>
-  <text x="60" y="91" class="subtitle" font-family="Arial,sans-serif" fill="#152c46" font-size="19px">Grupo 7 · MYS Hermanos · PC2 v2.0 · Diseño propuesto y simulación local · 15/10/2026</text>
-  <rect x="330" y="145" width="1430" height="1080" rx="18" class="zone" fill="#fbfcff" stroke="#9aaec6" stroke-width="2" />
-  <text x="360" y="183" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">Plataforma Odoo · frontera entre módulos, sin API comercial externa</text>
-  <text x="360" y="208" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Cada flecha identifica al consumidor y al proveedor de una interfaz; incluye la respuesta.</text>
-  <rect x="40" y="260" width="250" height="135" rx="12" class="context" fill="#f4f6f9" stroke="#a3afbf" stroke-width="2" />
-  <text x="60" y="291" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">Cliente / WhatsApp</text>
-  <text x="60" y="320" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Consulta por 5 autoradios</text>
-  <text x="60" y="347" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Captación y datos didácticos</text>
-  <text x="60" y="373" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Atención manual, sin conector</text>
-  <rect x="40" y="475" width="250" height="125" rx="12" class="context" fill="#f4f6f9" stroke="#a3afbf" stroke-width="2" />
-  <text x="60" y="510" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">Vendedor</text>
-  <text x="60" y="542" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Registro manual en CRM</text>
-  <text x="60" y="572" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Identidad de sesión autorizada</text>
-  <path d="M165 395 V475" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="180" y="437" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Atención humana</text>
-  <path d="M290 530 H350 V235 H1030 V265" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <rect x="420" y="222" width="380" height="24" fill="#fbfcff" />
-  <text x="430" y="240" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">Captura de fuente, lead y oportunidad</text>
-  <rect x="395" y="265" width="330" height="135" rx="12" class="standard" fill="#edf4ff" stroke="#547eb3" stroke-width="2" />
-  <text x="415" y="292" class="tag" font-family="Arial,sans-serif" fill="#152c46" font-size="15px">«componente estándar»</text>
-  <text x="415" y="325" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C02 · Contactos</text>
-  <text x="415" y="355" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Cliente único · res.partner</text>
-  <text x="415" y="382" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Coincidencias revisadas</text>
-  <rect x="865" y="265" width="330" height="135" rx="12" class="standard" fill="#edf4ff" stroke="#547eb3" stroke-width="2" />
-  <text x="885" y="292" class="tag" font-family="Arial,sans-serif" fill="#152c46" font-size="15px">«componente estándar»</text>
-  <text x="885" y="325" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C01 · CRM</text>
-  <text x="885" y="355" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Lead / oportunidad · crm.lead</text>
-  <text x="885" y="382" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Campaña, fuente y atención</text>
-  <rect x="1325" y="265" width="380" height="135" rx="12" class="standard" fill="#edf4ff" stroke="#547eb3" stroke-width="2" />
-  <text x="1345" y="292" class="tag" font-family="Arial,sans-serif" fill="#152c46" font-size="15px">«estándar + extensión de versión/aceptación»</text>
-  <text x="1345" y="325" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C03 · Ventas y catálogo</text>
-  <text x="1345" y="355" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Cotización · sale.order / líneas</text>
-  <text x="1345" y="382" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Dueño de precios, totales y futura confirmación</text>
-  <path d="M865 330 H725" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="785" y="314" text-anchor="middle" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I01</text>
-  <text x="785" y="356" text-anchor="middle" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Cliente</text>
-  <path d="M1195 330 H1325" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="1260" y="314" text-anchor="middle" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I02</text>
-  <text x="1260" y="356" text-anchor="middle" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Cotización</text>
-  <rect x="800" y="535" width="460" height="260" rx="14" class="proposed" fill="#fff5e3" stroke="#bd861f" stroke-width="2" />
-  <text x="825" y="567" class="tag" font-family="Arial,sans-serif" fill="#152c46" font-size="15px">«extensión propuesta · no instalada»</text>
-  <text x="825" y="603" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C04 · Control de transición</text>
-  <text x="825" y="635" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">mys.crm.transition · contrato 1.0</text>
-  <text x="825" y="666" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Valida referencias, vigencia y autorizaciones</text>
-  <text x="825" y="697" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Idempotencia + unicidad por cotización/versión</text>
-  <text x="825" y="730" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">ACEPTADA / RECHAZADA</text>
-  <text x="825" y="778" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">PC2 no confirma pedido · order_id = null</text>
-  <path d="M1030 400 V535" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="1050" y="455" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I03 · solicitud / consulta</text>
-  <text x="1050" y="481" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Referencias → decisión trazable</text>
-  <path d="M1230 535 V510 H1515 V400" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="1533" y="444" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I04</text>
-  <text x="1533" y="470" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Snapshot y aceptación</text>
-  <rect x="395" y="610" width="330" height="145" rx="12" class="standard" fill="#edf4ff" stroke="#547eb3" stroke-width="2" />
-  <text x="415" y="638" class="tag" font-family="Arial,sans-serif" fill="#152c46" font-size="15px">«componente estándar»</text>
-  <text x="415" y="673" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C05 · Inventario</text>
-  <text x="415" y="705" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Disponibilidad por SKU y ubicación</text>
-  <text x="415" y="734" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Lectura sin reserva ni salida</text>
-  <path d="M800 683 H725" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="763" y="667" text-anchor="middle" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I05</text>
-  <rect x="1325" y="610" width="380" height="145" rx="12" class="proposed" fill="#fff5e3" stroke="#bd861f" stroke-width="2" />
-  <text x="1345" y="638" class="tag" font-family="Arial,sans-serif" fill="#152c46" font-size="15px">«extensión propuesta»</text>
-  <text x="1345" y="673" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="21px" font-weight="700">C06 · Autorizaciones comerciales</text>
-  <text x="1345" y="705" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">mys.discount.approval</text>
-  <text x="1345" y="734" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Aprobador, versión, importe y vigencia</text>
-  <path d="M1260 683 H1325" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="1292" y="667" text-anchor="middle" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I06</text>
-  <rect x="40" y="705" width="250" height="110" rx="12" class="context" fill="#f4f6f9" stroke="#a3afbf" stroke-width="2" />
-  <text x="60" y="740" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">Gerencia</text>
-  <text x="60" y="772" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Autoriza excepciones</text>
-  <text x="60" y="798" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Sin autoaprobación</text>
-  <path d="M290 760 H350 V850 H1515 V755" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <rect x="1310" y="836" width="360" height="26" fill="#fbfcff" />
-  <text x="1320" y="855" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">Decisión humana registrada en C06</text>
-  <path d="M1030 795 V920" class="flow" fill="none" stroke="#355477" stroke-width="2.5" marker-end="url(#arrow)" />
-  <rect x="1010" y="823" width="70" height="29" fill="#fbfcff" />
-  <text x="1045" y="844" text-anchor="middle" class="label" font-family="Arial,sans-serif" fill="#152c46" font-size="17px" font-weight="700">I07</text>
-  <rect x="395" y="920" width="1310" height="115" rx="12" class="proposed" fill="#fff5e3" stroke="#bd861f" stroke-width="2" />
-  <text x="420" y="952" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C07 · Seguridad y bitácora transversal</text>
-  <text x="420" y="983" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Sesión, grupos y reglas por compañía/registro · aplica a C01–C06 antes de acceder a datos</text>
-  <text x="420" y="1013" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Auditoría específica propuesta: mys.transition.event · actor, interfaz, correlación, fecha y resultado sin datos sensibles</text>
-  <path d="M1030 1035 V1090" class="orm" fill="none" stroke="#388366" stroke-width="2.5" marker-end="url(#arrow)" />
-  <text x="1050" y="1070" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">C01–C07 → ORM → persistencia</text>
-  <rect x="395" y="1090" width="1310" height="90" rx="12" fill="#eaf6ef" stroke="#4b8c6d" stroke-width="2" />
-  <text x="420" y="1127" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">C08 · Persistencia de Odoo / PostgreSQL</text>
-  <text x="420" y="1158" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Maestros, snapshot, solicitud y eventos · restricciones únicas y transacción atómica por implementar en Odoo</text>
-  <path d="M1705 330 H1735 V1260 H1515 V1290" class="later" fill="none" stroke="#8290a2" stroke-width="2" stroke-dasharray="9 7" marker-end="url(#grayarrow)" />
-  <text x="1300" y="1258" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Continuidad posterior a PC2</text>
-  <rect x="395" y="1290" width="1310" height="88" rx="12" fill="#f6f7f9" stroke="#a3afbf" stroke-width="2" stroke-dasharray="9 7" />
-  <text x="420" y="1324" class="head" font-family="Arial,sans-serif" fill="#152c46" font-size="23px" font-weight="700">Contexto PC1: Ventas → adaptador Odoo–UBLHUB → UBLHUB / ruta tributaria</text>
-  <text x="420" y="1354" class="body" font-family="Arial,sans-serif" fill="#152c46" font-size="18px">Pedido operativo, reservas, pago, facturación, entrega y posventa quedan fuera de la evaluación PC2.</text>
-  <rect x="40" y="1410" width="24" height="20" rx="4" class="standard" fill="#edf4ff" stroke="#547eb3" stroke-width="2" />
-  <text x="75" y="1427" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Componente estándar de referencia</text>
-  <rect x="435" y="1410" width="24" height="20" rx="4" class="proposed" fill="#fff5e3" stroke="#bd861f" stroke-width="2" />
-  <text x="470" y="1427" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">Extensión o configuración propuesta</text>
-  <text x="920" y="1427" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">I01–I07: especificación en arquitectura/contratos/crm-erp-v1.md</text>
-  <text x="40" y="1461" class="small" font-family="Arial,sans-serif" fill="#152c46" font-size="16px">No acredita instalación, permisos ni integración real. La simulación del contrato usa JSON + SQLite y conserva los mismos identificadores de interfaces.</text>
-  <text x="825" y="753" font-family="Arial,sans-serif" font-size="16px" fill="#52627a">PROMESA_CONDICIONADA / PENDIENTE</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="1440" viewBox="0 0 1300 1440" role="img" aria-labelledby="title desc">
+<title id="title">Componentes de Odoo y sistemas externos · PC2</title>
+<desc id="desc">WhatsApp es un canal manual. CRM, Contactos, Ventas e Inventario están dentro de Odoo. Ventas devuelve estado y acción a CRM. El adaptador, UBLHUB y SUNAT son continuidad de PC1 fuera de PC2.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs>
+<style>text{font-family:Arial,sans-serif;fill:#172b40}.h{font-size:32px;font-weight:bold}.name{font-size:28px;font-weight:bold}.body{font-size:23px}.small{font-size:21px}.label{font-size:22px;font-weight:bold}.line{fill:none;stroke:#475569;stroke-width:2.5;marker-end:url(#arrow)}.future{stroke-dasharray:8 7}.card{stroke:#64748b;stroke-width:2;rx:14}.external{fill:#f1f5f9}.odoo{fill:#fafcfe;stroke:#52728c;stroke-width:2.5}.crm{fill:#e6f0fb}.erp{fill:#e8f4ef}</style>
+<rect width="1300" height="1440" fill="white"/>
+<text x="70" y="62" class="h">Arquitectura de componentes · PC2</text>
+<text x="70" y="102" class="body">Fuente comercial → oportunidad → cotización → solicitud y respuesta</text>
+<rect x="70" y="155" width="330" height="120" class="card external"/>
+<text x="95" y="194" class="name">WhatsApp móvil</text><text x="95" y="229" class="small">Canal externo de consulta</text><text x="95" y="256" class="small">Atención por una persona</text>
+<rect x="500" y="155" width="300" height="120" class="card external"/>
+<text x="650" y="211" text-anchor="middle" class="name">Vendedor</text><text x="650" y="249" text-anchor="middle" class="small">Actor de negocio</text>
+<rect x="910" y="155" width="300" height="120" class="card external"/>
+<text x="1060" y="211" text-anchor="middle" class="name">Gerencia</text><text x="1060" y="249" text-anchor="middle" class="small">Actor de aprobación</text>
+<path d="M400 215 H500" class="line"/>
+<rect x="70" y="350" width="1140" height="735" rx="20" class="odoo"/>
+<text x="100" y="392" class="name">ODOO · módulos de la propuesta PC2</text>
+<rect x="500" y="430" width="300" height="130" class="card crm"/>
+<text x="650" y="474" text-anchor="middle" class="name">CRM</text><text x="650" y="510" text-anchor="middle" class="body">Lead y oportunidad</text><text x="650" y="541" text-anchor="middle" class="small">Contexto y seguimiento</text>
+<path d="M650 275 V430" class="line"/><text x="670" y="329" class="small">Registro manual</text>
+<rect x="500" y="685" width="300" height="145" class="card erp"/>
+<text x="650" y="725" text-anchor="middle" class="name">Ventas</text><text x="650" y="759" text-anchor="middle" class="body">Cotización y solicitud</text><text x="650" y="791" text-anchor="middle" class="small">Validación y aprobación</text><text x="650" y="817" text-anchor="middle" class="small">como funciones internas</text>
+<path d="M605 560 V685" class="line"/><text x="580" y="607" text-anchor="end" class="label">I02 / I03</text><text x="580" y="640" text-anchor="end" class="small">Cotizar / solicitar</text>
+<path d="M695 685 V560" class="line"/><text x="720" y="607" class="label">I08 · respuesta</text><text x="720" y="640" class="small">Estado, causa y acción</text>
+<path d="M1060 275 V755 H800" class="line"/><text x="1084" y="490" transform="rotate(90 1084 490)" class="small">Autorizar excepción comercial</text>
+<rect x="120" y="910" width="330" height="115" class="card erp"/>
+<text x="285" y="956" text-anchor="middle" class="name">Contactos</text><text x="285" y="994" text-anchor="middle" class="small">Identidad y canal autorizado</text>
+<rect x="840" y="910" width="330" height="115" class="card erp"/>
+<text x="1005" y="956" text-anchor="middle" class="name">Inventario</text><text x="1005" y="994" text-anchor="middle" class="small">Disponibilidad por SKU</text>
+<path d="M500 755 H285 V910" class="line"/><text x="305" y="867" class="small">Cliente validado</text>
+<path d="M500 485 H180 V910" class="line"/><text x="202" y="608" class="label">I01 · resolver cliente</text>
+<path d="M800 795 H1005 V910" class="line"/><text x="1025" y="867" class="small">I05 · stock</text>
+<text x="650" y="1063" text-anchor="middle" class="small">Funciones internas: snapshot (I04), aprobación (I06), permisos y trazabilidad (I07)</text>
+<rect x="70" y="1150" width="1140" height="225" rx="20" class="card external future"/>
+<text x="100" y="1194" class="name">Continuidad de PC1 · fuera del tramo PC2</text>
+<rect x="120" y="1230" width="330" height="100" class="card external"/>
+<text x="285" y="1269" text-anchor="middle" class="label">Adaptador Odoo–UBLHUB</text><text x="285" y="1305" text-anchor="middle" class="small">Integración propia propuesta</text>
+<rect x="525" y="1230" width="280" height="100" class="card external"/>
+<text x="665" y="1269" text-anchor="middle" class="name">UBLHUB</text><text x="665" y="1305" text-anchor="middle" class="small">Emisión electrónica externa</text>
+<rect x="900" y="1230" width="270" height="100" class="card external"/>
+<text x="1035" y="1269" text-anchor="middle" class="name">SUNAT</text><text x="1035" y="1305" text-anchor="middle" class="small">Sistema externo tributario</text>
+<path d="M500 795 H90 V1280 H120" class="line future"/><path d="M450 1280 H525" class="line future"/><path d="M805 1280 H900" class="line future"/>
+<text x="70" y="1420" class="small">Línea continua: PC2 · línea discontinua: continuidad posterior · sin API de WhatsApp</text>
 </svg>

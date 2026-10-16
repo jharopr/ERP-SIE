@@ -27,13 +27,21 @@ python pruebas/pc2/simulador.py pruebas/pc2/fixtures/solicitud-normal.json --dat
 
 La base local está ignorada por Git. No borrar una evidencia anterior sin conservar su versión; si se cambia una regla, volver a generar evidencia y revisar el diff. El prototipo `producto/frontend` es de PC1 y no ejecuta estas reglas.
 
+## Cambios de la revisión S6
+
+El contrato vigente es 1.1. Los cuatro casos MYS incluyen `crm_feedback`, `response_id`, estado de seguimiento, responsable y plazo. El rechazo por descuento queda `PENDIENTE_APROBACION` en CRM; no pierde la oportunidad. Reintentos no duplican seguimiento y reanudar un pendiente actualiza la misma proyección. Un fallo en I08 revierte decisión y bitácora.
+
+El perfil local siempre tiene `order_state=NO_CONFIRMADO` y `order_id=null`; el schema admite una referencia confirmada futura solo con estado explícito. Las pruebas de esa forma no implementan pedidos reales. La validación formal activa verificación de fechas ISO con zona horaria.
+
+Las fixtures suponen contado, recojo local, fecha solicitada y evidencia de canal. La atención de excepciones en 24 horas es ilustrativa. También se genera [Andina S6](evidencias/andina-s6.json), calibración documental separada con 1,000 = 650 + 350; no se le aplica el precio ni el umbral 5 % de MYS. [Dos métricas y sus vacíos](../../documentos/pc2/metricas-s6.md).
+
 ## PC2-N01 · Escenario normal obligatorio
 
 **Precondiciones:** sesión `VEN-DEMO-01`, compañía `MYS-DEMO`, oportunidad asignada, cliente revisado, cotización `COT-DEMO-001/v1` enviada y vigente, aceptación `ACE-DEMO-001` coincidente; cinco unidades a S/400.00, descuento 5 %, total S/1,900.00 y ocho disponibles.
 
 1. Cargar [maestros sintéticos](fixtures/maestros.json) y [solicitud normal](fixtures/solicitud-normal.json).
 2. Invocar I03 con identidad de Ventas fuera del payload.
-3. Verificar lectura de snapshot I04, política I06, disponibilidad I05 y decisión I07.
+3. Verificar lectura de snapshot I04, política I06, disponibilidad I05, decisión I07 y retorno de seguimiento I08.
 4. Comparar salida con `ACEPTADA`, `VALIDADA`, total `1900.00`, `order_id: null` y una solicitud persistida.
 5. Comprobar que maestros, stock y cotización no cambiaron; consultar la evidencia y sus eventos.
 
@@ -44,7 +52,7 @@ La base local está ignorada por Git. No borrar una evidencia anterior sin conse
 **Precondiciones:** misma sesión/oportunidad del caso, alternativa `COT-DEMO-002/v1`, cinco unidades a S/400.00, descuento 10 %, total S/1,800.00, aceptación de esa versión y sin aprobación registrada por Gerencia.
 
 1. Cargar la fixture de [solicitud de excepción](fixtures/solicitud-excepcion.json).
-2. Invocar I03; C04 lee el snapshot y solicita verificación a C06 por I06.
+2. Invocar I03; Ventas lee el snapshot y verifica la aprobación humana registrada por I06.
 3. Comparar salida con `RECHAZADA`, `DESCUENTO_SIN_APROBACION`, responsable `GERENCIA` y `order_id: null`.
 4. Verificar que no se realizó una consulta/promesa de stock posterior al rechazo ni se alteraron maestros.
 5. Escalar a Gerencia. Si se autoriza después, Ventas prepara nueva versión, aceptación y solicitud; no modifica la decisión rechazada.

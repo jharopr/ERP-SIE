@@ -1,4 +1,4 @@
-"""Simulación local de I03-I07. No importa Odoo ni ejecuta pedidos reales.
+"""Simulación local de I03-I08. No importa Odoo ni ejecuta pedidos reales.
 
 Solo biblioteca estándar. Los proveedores de maestros son fixtures confiables,
 separadas del payload de la solicitud. La validación de entrada sigue el schema;
@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import argparse
 from copy import deepcopy
-from datetime import datetime
+from datetime import datetime, timedelta
 from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
 import hashlib
 import json
@@ -77,6 +77,11 @@ class TransitionSimulator:
                 actor_id TEXT NOT NULL, interface_id TEXT NOT NULL,
                 event_type TEXT NOT NULL, code TEXT NOT NULL, occurred_at TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS crm_feedback (
+                company_id TEXT NOT NULL, request_id TEXT NOT NULL,
+                opportunity_id TEXT NOT NULL, projection_json TEXT NOT NULL,
+                PRIMARY KEY (company_id, request_id)
+            );
         """)
 
     def close(self):
@@ -91,12 +96,20 @@ class TransitionSimulator:
 
     def _response(self, request, code, message, action, role="VENTAS", status="RECHAZADA", total=None, conditions=None):
         data = request if valid_request(request) else {}
-        return {"contract_version": "1.0", "request_id": data.get("request_id"),
+        follow_up = {"VALIDADA": "SIN_TAREA", "DESCUENTO_SIN_APROBACION": "PENDIENTE_APROBACION",
+                     "DISPONIBILIDAD_PARCIAL": "NEGOCIAR_PROMESA", "DEPENDENCIA_NO_DISPONIBLE": "RECUPERAR_SERVICIO",
+                     "NO_AUTORIZADO": "REVISAR_ACCESO", "IDEMPOTENCIA_CONFLICTO": "CONSULTAR_ORIGINAL",
+                     "COTIZACION_YA_EVALUADA": "CONSULTAR_ORIGINAL"}.get(code, "CORREGIR_DATOS")
+        response_id = "RESP-" + hashlib.sha256(canonical([data.get("company_id"), data.get("request_id"), status, code]).encode()).hexdigest()[:20] if data else None
+        return {"contract_version": "1.1", "request_id": data.get("request_id"),
+                "response_id": response_id,
                 "correlation_id": data.get("correlation_id"), "quotation_id": data.get("quotation_id"),
                 "quotation_version": int(data["quotation_version"]) if data else None, "status": status, "code": code,
                 "message": message, "responsible_role": role, "required_action": action,
                 "total": total, "currency": "PEN" if total is not None else None,
-                "order_id": None, "conditions": conditions or []}
+                "order_id": None, "order_state": "NO_CONFIRMADO", "conditions": conditions or [],
+                "follow_up_state": follow_up,
+                "attention_due_at": None if status == "ACEPTADA" else (self.now + timedelta(hours=24)).isoformat()}
 
     def _authorized(self, request, actor):
         user = self.masters["actors"].get(actor, {})
@@ -109,7 +122,7 @@ class TransitionSimulator:
         try:
             if not valid_request(request):
                 self._event({}, actor, "I07", "DENEGADA", "CONTRATO_INVALIDO")
-                result = self._response(request, "CONTRATO_INVALIDO", "Formato de solicitud inválido.", "Corregir el mensaje según el schema 1.0.")
+                result = self._response(request, "CONTRATO_INVALIDO", "Formato de solicitud inválido.", "Corregir el mensaje según el schema 1.1.")
             elif not self._authorized(request, actor):
                 self._event(request, actor, "I07", "DENEGADA", "NO_AUTORIZADO")
                 result = self._response(request, "NO_AUTORIZADO", "Sin permiso sobre compañía u oportunidad.", "Solicitar revisión de acceso; no cambiar el rol del payload.")
@@ -149,7 +162,21 @@ class TransitionSimulator:
             self.db.execute("UPDATE requests SET response_json=? WHERE company_id=? AND request_id=?", (canonical(result), *key))
         else:
             self.db.execute("INSERT INTO requests VALUES(?,?,?,?,?,?,?)", (*key, digest, request["quotation_id"], request["quotation_version"], request["opportunity_id"], canonical(result)))
+        self._publish_feedback(request, result, actor)
         return result
+
+    def _publish_feedback(self, request, response, actor):
+        """I08: proyección CRM atómica con decisión y bitácora; no cierra la oportunidad."""
+        projection = {"opportunity_id": request["opportunity_id"], "quotation_id": request["quotation_id"],
+                      "quotation_version": request["quotation_version"], "response_id": response["response_id"],
+                      "status": response["status"], "code": response["code"],
+                      "responsible_role": response["responsible_role"], "required_action": response["required_action"],
+                      "follow_up_state": response["follow_up_state"], "attention_due_at": response["attention_due_at"],
+                      "conditions": response["conditions"], "order_id": response["order_id"],
+                      "order_state": response["order_state"], "opportunity_lost": False, "updated_at": self.now.isoformat()}
+        self.db.execute("INSERT INTO crm_feedback VALUES(?,?,?,?) ON CONFLICT(company_id,request_id) DO UPDATE SET projection_json=excluded.projection_json",
+                        (request["company_id"], request["request_id"], request["opportunity_id"], canonical(projection)))
+        self._event(request, actor, "I08", "CRM_ACTUALIZADO", response["code"])
 
     def _evaluate(self, request, actor):
         fail = lambda code, msg, action="Corregir datos, versionar y obtener nueva aceptación.", role="VENTAS": self._response(request, code, msg, action, role)
@@ -167,6 +194,26 @@ class TransitionSimulator:
             return fail("DATOS_INCONSISTENTES", "Maestros, compañía, vendedor o vínculos no coinciden.")
         if not customer.get("active") or not customer.get("identity_reviewed"):
             return fail("CLIENTE_NO_VALIDADO", "Cliente inactivo o coincidencia sin revisar.")
+        consent = customer.get("consent", {})
+        if (consent.get("purpose") != "ATENDER_COTIZACION" or consent.get("channel") != opportunity.get("channel")
+                or not consent.get("evidence_ref") or not consent.get("valid_until")):
+            return fail("CONTACTO_NO_AUTORIZADO", "Falta evidencia vigente para atender por el canal declarado.")
+        try:
+            consent_until = datetime.fromisoformat(consent["valid_until"])
+            if consent_until.tzinfo is None or consent_until < self.now:
+                raise ValueError("Evidencia vencida")
+        except (ValueError, TypeError):
+            return fail("CONTACTO_NO_AUTORIZADO", "La evidencia del canal no tiene vigencia válida.")
+        delivery = quote.get("delivery", {})
+        try:
+            requested_at = datetime.fromisoformat(delivery["requested_date"])
+            if (quote.get("payment_terms") != "CONTADO" or delivery.get("mode") != "RECOJO_LOCAL"
+                    or delivery.get("location_id") != self.masters["availability"].get("location_id")
+                    or not delivery.get("location_id") or type(delivery.get("partial_delivery_accepted")) is not bool
+                    or requested_at.tzinfo is None or requested_at < self.now):
+                raise ValueError("Condiciones sin validar")
+        except (KeyError, ValueError, TypeError):
+            return fail("CONDICIONES_POR_VALIDAR", "Revisar pago al contado, lugar, modalidad y fecha solicitada; no se autoriza crédito.")
         if quote["version"] != request["quotation_version"]:
             return fail("VERSION_OBSOLETA", "La versión solicitada no es la vigente.")
         if quote["state"] != "sent":
@@ -238,6 +285,8 @@ class TransitionSimulator:
                                       "Corregir proveedor y reanudar la misma solicitud.", "ADMINISTRADOR_Y_VENTAS", "PENDIENTE", total_text)
             if available < quantity:
                 conditions.append({"sku": sku, "requested_quantity": quantity, "available_quantity": available,
+                                   "pending_quantity": quantity - available, "delivery_mode": delivery["mode"],
+                                   "location_id": delivery["location_id"], "requested_date": delivery["requested_date"],
                                    "promised_date": None, "requires_customer_acceptance": True})
         if conditions:
             return self._response(request, "DISPONIBILIDAD_PARCIAL", "Disponibilidad insuficiente para lo cotizado.",
@@ -252,6 +301,14 @@ class TransitionSimulator:
         if not self._authorized({"company_id": company, "opportunity_id": row["opportunity_id"]}, actor):
             raise PermissionError("Sin acceso al resultado de la solicitud")
         return json.loads(row["response_json"])
+
+    def get_crm_feedback(self, company, request_id, actor="VEN-DEMO-01"):
+        # Reutiliza la misma comprobación de ámbito antes de exponer el seguimiento.
+        if self.get(company, request_id, actor) is None:
+            return None
+        row = self.db.execute("SELECT projection_json FROM crm_feedback WHERE company_id=? AND request_id=?",
+                              (company, request_id)).fetchone()
+        return json.loads(row[0]) if row else None
 
 
 def main():

@@ -44,6 +44,76 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(result["conditions"][0]["requires_customer_acceptance"])
         self.assertIsNone(result["order_id"])
 
+    def test_crm_receives_one_follow_up_per_decision_and_replay_is_stable(self):
+        request = load_json(FIXTURES / "solicitud-excepcion.json")
+        response = self.sim.submit(request)
+        feedback = self.sim.get_crm_feedback("MYS-DEMO", request["request_id"])
+        self.assertEqual(feedback["response_id"], response["response_id"])
+        self.assertEqual(feedback["follow_up_state"], "PENDIENTE_APROBACION")
+        self.assertEqual(feedback["responsible_role"], "GERENCIA")
+        self.assertEqual(feedback["attention_due_at"], "2026-10-16T18:00:00-05:00")
+        self.assertFalse(feedback["opportunity_lost"])
+        self.sim.submit(request)
+        self.assertEqual(feedback, self.sim.get_crm_feedback("MYS-DEMO", request["request_id"]))
+        self.assertEqual(self.sim.db.execute("SELECT COUNT(*) FROM crm_feedback").fetchone()[0], 1)
+        self.assertEqual(self.sim.db.execute("SELECT COUNT(*) FROM audit WHERE interface_id='I08'").fetchone()[0], 1)
+        with self.assertRaises(PermissionError):
+            self.sim.get_crm_feedback("MYS-DEMO", request["request_id"], "VEN-DEMO-02")
+
+    def test_resume_updates_crm_without_duplicate_tasks(self):
+        self.sim.masters["availability"]["available"] = False
+        self.sim.submit(self.request)
+        self.assertEqual(self.sim.get_crm_feedback("MYS-DEMO", self.request["request_id"])["follow_up_state"], "RECUPERAR_SERVICIO")
+        self.sim.masters["availability"]["available"] = True
+        result = self.sim.submit(self.request, resume=True)
+        feedback = self.sim.get_crm_feedback("MYS-DEMO", self.request["request_id"])
+        self.assertEqual((feedback["status"], feedback["follow_up_state"]), ("ACEPTADA", "SIN_TAREA"))
+        self.assertIsNone(feedback["attention_due_at"])
+        self.assertEqual(feedback["order_state"], "NO_CONFIRMADO")
+        self.assertEqual(feedback["response_id"], result["response_id"])
+        self.assertEqual(self.sim.db.execute("SELECT COUNT(*) FROM crm_feedback").fetchone()[0], 1)
+
+    def test_feedback_failure_rolls_back_decision_and_audit(self):
+        def fail(*args):
+            raise RuntimeError("No se pudo actualizar CRM")
+        self.sim._publish_feedback = fail
+        with self.assertRaises(RuntimeError):
+            self.sim.submit(self.request)
+        for name in ["requests", "crm_feedback", "audit"]:
+            self.assertEqual(self.sim.db.execute(f"SELECT COUNT(*) FROM {name}").fetchone()[0], 0)
+
+    def test_missing_or_expired_channel_evidence_blocks_contact(self):
+        for consent in [{}, {**self.masters["customers"]["CLI-DEMO-001"]["consent"], "valid_until": "2026-10-14T12:00:00-05:00"},
+                        {**self.masters["customers"]["CLI-DEMO-001"]["consent"], "purpose": "MARKETING_MASIVO"}]:
+            with self.subTest(consent=consent):
+                sim = TransitionSimulator(self.masters)
+                try:
+                    sim.masters["customers"]["CLI-DEMO-001"]["consent"] = consent
+                    self.assertEqual(sim.submit(self.request)["code"], "CONTACTO_NO_AUTORIZADO")
+                finally:
+                    sim.close()
+
+    def test_unknown_payment_or_delivery_terms_cannot_be_accepted(self):
+        for change in [{"payment_terms": "CREDITO_NO_VALIDADO"}, {"delivery": {}},
+                       {"delivery": {**self.masters["quotations"]["COT-DEMO-001"]["delivery"], "location_id": "OTRO-ALMACEN"}}]:
+            with self.subTest(change=change):
+                sim = TransitionSimulator(self.masters)
+                try:
+                    sim.masters["quotations"]["COT-DEMO-001"].update(change)
+                    self.assertEqual(sim.submit(self.request)["code"], "CONDICIONES_POR_VALIDAR")
+                finally:
+                    sim.close()
+
+    def test_partial_promise_includes_quantity_gap_and_requested_delivery(self):
+        self.sim.masters["availability"]["quantities"]["AUT-DEMO-001"] = 3
+        result = self.sim.submit(self.request)
+        condition = result["conditions"][0]
+        self.assertEqual(condition["pending_quantity"], 2)
+        self.assertEqual(condition["delivery_mode"], "RECOJO_LOCAL")
+        self.assertEqual(condition["requested_date"], "2026-10-16T18:00:00-05:00")
+        self.assertIsNone(condition["promised_date"])
+        self.assertEqual(result["follow_up_state"], "NEGOCIAR_PROMESA")
+
     def test_same_key_replays_persisted_result_after_restart(self):
         with tempfile.TemporaryDirectory() as directory:
             database = Path(directory) / "ledger.sqlite3"

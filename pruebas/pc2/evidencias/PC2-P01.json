@@ -10,8 +10,9 @@
     "order_id": null
   },
   "obtained": {
-    "contract_version": "1.0",
+    "contract_version": "1.1",
     "request_id": "SOL-DEMO-001",
+    "response_id": "RESP-0941a5df5006cd4fef3d",
     "correlation_id": "COR-DEMO-001",
     "quotation_id": "COT-DEMO-001",
     "quotation_version": 1,
@@ -23,19 +24,26 @@
     "total": "1900.00",
     "currency": "PEN",
     "order_id": null,
+    "order_state": "NO_CONFIRMADO",
     "conditions": [
       {
         "sku": "AUT-DEMO-001",
         "requested_quantity": 5,
         "available_quantity": 3,
+        "pending_quantity": 2,
+        "delivery_mode": "RECOJO_LOCAL",
+        "location_id": "ALM-DEMO",
+        "requested_date": "2026-10-16T18:00:00-05:00",
         "promised_date": null,
         "requires_customer_acceptance": true
       }
-    ]
+    ],
+    "follow_up_state": "NEGOCIAR_PROMESA",
+    "attention_due_at": "2026-10-16T18:00:00-05:00"
   },
   "passed": true,
   "request": {
-    "contract_version": "1.0",
+    "contract_version": "1.1",
     "company_id": "MYS-DEMO",
     "request_id": "SOL-DEMO-001",
     "correlation_id": "COR-DEMO-001",
@@ -44,6 +52,35 @@
     "quotation_id": "COT-DEMO-001",
     "quotation_version": 1,
     "acceptance_id": "ACE-DEMO-001"
+  },
+  "crm_feedback": {
+    "attention_due_at": "2026-10-16T18:00:00-05:00",
+    "code": "DISPONIBILIDAD_PARCIAL",
+    "conditions": [
+      {
+        "available_quantity": 3,
+        "delivery_mode": "RECOJO_LOCAL",
+        "location_id": "ALM-DEMO",
+        "pending_quantity": 2,
+        "promised_date": null,
+        "requested_date": "2026-10-16T18:00:00-05:00",
+        "requested_quantity": 5,
+        "requires_customer_acceptance": true,
+        "sku": "AUT-DEMO-001"
+      }
+    ],
+    "follow_up_state": "NEGOCIAR_PROMESA",
+    "opportunity_id": "CRM-DEMO-001",
+    "opportunity_lost": false,
+    "order_id": null,
+    "order_state": "NO_CONFIRMADO",
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "required_action": "Revisar cantidad/plazo con el cliente; nueva versión y aceptación.",
+    "response_id": "RESP-0941a5df5006cd4fef3d",
+    "responsible_role": "VENTAS",
+    "status": "PROMESA_CONDICIONADA",
+    "updated_at": "2026-10-15T18:00:00-05:00"
   },
   "audit": [
     {
@@ -98,6 +135,17 @@
       "actor_id": "VEN-DEMO-01",
       "interface_id": "I07",
       "event_type": "DECISION",
+      "code": "DISPONIBILIDAD_PARCIAL",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    },
+    {
+      "event_id": 6,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I08",
+      "event_type": "CRM_ACTUALIZADO",
       "code": "DISPONIBILIDAD_PARCIAL",
       "occurred_at": "2026-10-15T18:00:00-05:00"
     }

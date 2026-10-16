@@ -20,3 +20,7 @@ Se utilizó **Codex de OpenAI** para leer los insumos académicos proporcionados
 | Límites | No entrevistó a la empresa, no ejecutó campañas, no configuró Odoo, no envió WhatsApp, no creó pedidos ni emitió documentos; no hay agente comercial operativo |
 
 Los precios, descuento, existencias, fechas comerciales y campaña son [supuestos declarados](pc2.md). La revisión debe comprobar fuentes, coherencia de diagramas y mensajes, reproducción de pruebas y ausencia de afirmaciones empresariales no verificadas. Los aportes individuales solo se registrarán como realizados después de una revisión o cambio efectivo del integrante.
+
+## PC2 v2.1 · 16/10/2026 · revisión S6 y Word personal
+
+Codex analizó el PDF de Semana 6, simplificó la vista a cuatro módulos Odoo, distinguió canal manual y sistemas externos, revisó contratos 1.1 e I08, condiciones/plazos, calibración Andina y dos métricas. Actualizó la simulación/evidencias y las secciones 3 y 5 del Word de Jharolym con el mismo diagrama. Se conserva la plantilla y las secciones ajenas sin completar. La revisión humana sigue pendiente. No se instaló Odoo ni se ejecutaron servicios externos; los nuevos campos de pago, canal y plazo son supuestos declarados.

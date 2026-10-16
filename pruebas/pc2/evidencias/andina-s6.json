@@ -1,0 +1,69 @@
+{
+  "kind": "CALIBRACION_DOCUMENTAL_S6_NO_EJECUCION_ODOO",
+  "source": "GE703_S6_Presentacion.pdf, pp. 25-30 (Andina)",
+  "facts": {
+    "requested_quantity": 1000,
+    "available_quantity": 650,
+    "replenishment_quantity": 350,
+    "partial_delivery_accepted": true,
+    "one_invoice_on_completion": true,
+    "discount_exceeds_authority": true
+  },
+  "unknown": {
+    "discount_percentage": null,
+    "discount_limit": null,
+    "authorized_approver": null,
+    "replenishment_date": null,
+    "price": null,
+    "credit": null,
+    "fiscal_identity": null
+  },
+  "scenarios": [
+    {
+      "id": "AND-A",
+      "cause": "DESCUENTO_FUERA_DE_AUTORIDAD",
+      "state": "PENDIENTE_APROBACION",
+      "owner": "Responsable comercial identifica al aprobador autorizado",
+      "next_action": "Registrar decisión de la autoridad competente antes de confirmar; porcentaje y umbral desconocidos.",
+      "due_at": null,
+      "missing": "Aprobador y plazo de atención por acordar",
+      "order_confirmed": false
+    },
+    {
+      "id": "AND-B",
+      "cause": "STOCK_PARCIAL",
+      "state": "PROMESA_POR_VALIDAR",
+      "available_quantity": 650,
+      "pending_quantity": 350,
+      "promised_date": null,
+      "owner": "Ventas y Almacén",
+      "next_action": "Documentar plan parcial aceptado y validar fecha del saldo; no prometer una fecha desconocida.",
+      "due_at": null,
+      "missing": "Fecha de reposición y plazo de atención",
+      "order_confirmed": false
+    },
+    {
+      "id": "AND-C",
+      "cause": "FACTURA_UNICA_AL_COMPLETAR",
+      "state": "REGLA_DE_CONTINUIDAD",
+      "owner": "Facturación",
+      "next_action": "Propuesta: emitir una factura al completar 1000 unidades y verificar aceptación; ejecución fuera de PC2.",
+      "due_at": null,
+      "missing": "Identidad fiscal y condiciones tributarias por validar",
+      "invoice_issued": false
+    },
+    {
+      "id": "AND-D",
+      "cause": "REPOSICION_RETRASADA",
+      "state": "ATENCION_ABIERTA_EN_CRM",
+      "owner": "Ventas con Almacén",
+      "next_action": "Registrar retraso, informar al cliente y renegociar saldo; conservar causa y aceptación de nuevas condiciones.",
+      "pending_quantity": 350,
+      "new_promised_date": null,
+      "due_at": null,
+      "missing": "Nueva fecha y plazo de respuesta por acordar",
+      "opportunity_lost": false
+    }
+  ],
+  "limit": "Calibración del contrato con información incompleta. No prueba precio, crédito, fiscalidad, aprobación real ni el flujo completo MYS. No se aplica el umbral MYS del 5 %."
+}

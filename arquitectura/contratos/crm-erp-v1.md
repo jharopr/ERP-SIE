@@ -1,35 +1,35 @@
-# Contrato de transición CRM–ERP · versión 1.0
+# Contrato CRM–ERP · revisión 1.1
 
-**Base:** [componentes C01–C08](../crm-erp-pc2.md). **Autoría asistida:** Codex; revisión propuesta de Gabriel y Jharolym pendiente. **Fecha:** 15/10/2026.  
-Especificación funcional y de datos. Los nombres de operación son conceptuales: no son endpoints de Odoo ni métodos ya publicados.
+**Base:** [cuatro módulos Odoo y sus sistemas externos](../crm-erp-pc2.md). **Fecha:** 16/10/2026. Revisión humana de Gabriel/Jharolym pendiente. Las operaciones son interfaces conceptuales internas, no endpoints publicados de Odoo.
 
-## 1. Límite y condiciones del caso
+## 1. Objeto y alcance
 
-La entrada I03 solicita evaluar una cotización aceptada. C04 devuelve una decisión con trazabilidad. El contrato **no confirma `sale.order` ni crea otro registro para duplicar la cotización**. `order_id = null` en todas las respuestas de PC2; `ACEPTADA` autoriza continuar posteriormente, sujeto a revalidación. No hay reserva, cobro, comprobante ni llamada a UBLHUB.
+CRM solicita a Ventas evaluar una cotización aceptada. Ventas consulta sus datos oficiales, Contactos e Inventario, comprueba reglas y devuelve una decisión trazable a CRM. PC2 termina en solicitud/respuesta. No confirma `sale.order`, no reserva stock, no cobra ni llama a UBLHUB/SUNAT. Cotización y futuro pedido comparten el registro `sale.order`.
 
-Reglas del negocio y parámetros comerciales son supuestos S-01 a S-09 del [registro de fuentes y supuestos](../../fuentes/pc2.md). Los formatos, unicidad y controles son decisiones de diseño D-PC2, no capacidades instaladas.
+La revisión 1.1 sustituye a 1.0 en los mensajes y evidencias del repositorio; el validador exige `contract_version=1.1`. Los nombres de archivo `*-v1` conservan la familia de contrato. No se afirma compatibilidad de mensajes 1.0 con el validador actual.
 
-## 2. Contratos de las siete interfaces
+## 2. Interfaces del diagrama
 
-| ID / operación | Entrada confiable y emisor | Salida / proveedor | Errores y mutaciones permitidas |
-| --- | --- | --- | --- |
-| **I01** `resolver_cliente` | C01: compañía de sesión y referencia de contacto autorizada | C02: `customer_id`, activo y coincidencia revisada | Coincidencia ambigua: revisión de Ventas. Puede crear ficha solo tras búsqueda y autorización; no crea pedido |
-| **I02** `preparar_cotizacion` | C01: oportunidad, cliente, SKU, cantidad y campaña; precios consultados en C03 | C03: `quotation_id`, `quotation_version`, estado, líneas, total y vigencia | Producto/precio inválido: corregir. Crea/actualiza cotización; cada cambio relevante incrementa versión e invalida aceptación/aprobación anterior |
-| **I03** `solicitar_transicion` / `consultar_transicion` | C01: solicitud según JSON Schema; actor autenticado fuera del payload | C04: respuesta según JSON Schema y estado persistido | Sin acceso: `NO_AUTORIZADO`. Conflicto de clave: `IDEMPOTENCIA_CONFLICTO`. Solo crea/consulta solicitud y bitácora |
-| **I04** `leer_snapshot` | C04: compañía, oportunidad, cliente, cotización y versión | C03: snapshot comercial, aceptación y versión de catálogo/precio | Vínculos distintos, caducidad o versión obsoleta: rechazo. Lectura sin cambiar líneas ni confirmar pedido |
-| **I05** `consultar_disponibilidad` | C04: compañía, ubicación y SKUs/cantidades de I04 | C05: cantidad disponible, ubicación y hora de observación | Stock parcial: promesa condicionada; proveedor no disponible: pendiente. Lectura sin reserva ni salida |
-| **I06** `verificar_aprobacion` | C04: cotización, versión, vendedor, total y descuento de I04 | C06: decisión registrada por gerencia, ámbito y vigencia | Sin aprobación, autoaprobación o aprobación de otra versión: rechazo. No acepta un booleano del solicitante; no aprueba desde C04 |
-| **I07** `autorizar_y_auditar` | C01–C06: identidad de sesión, operación y referencias | C07: autorización y evento con actor, hora, interfaz y código | Denegación bloquea la acción. No escribe cuerpos sensibles completos; no modifica permisos ni decisiones comerciales |
+| ID / operación | Emisor → responsable | Entrada mínima / fuente confiable | Salida y excepción | Efecto autorizado |
+| --- | --- | --- | --- | --- |
+| I01 `resolver_cliente` | CRM → Contactos | Compañía de sesión, referencia del cliente y canal | ID único, activo, identidad revisada y evidencia de finalidad/canal/vigencia; ambigüedad → revisión | Vincular/crear ficha solo tras búsqueda y revisión; fixture en prueba |
+| I02 `preparar_cotizacion` | CRM → Ventas | Oportunidad, cliente, SKU/unidad, cantidad, condiciones; precio desde catálogo | Cotización/versionado, líneas, total, vigencia, pago, lugar/modalidad/fecha solicitada; error → corregir | Preparar cotización; nueva versión invalida aceptación/aprobación previa; fixture en prueba |
+| I03 `solicitar_transicion` / `consultar_transicion` | CRM → Ventas | Mensaje cerrado de referencias; actor autenticado fuera del payload | Decisión del schema; sin acceso → `NO_AUTORIZADO`; clave distinta de contenido → conflicto | Crear/consultar evaluación, nunca confirmar pedido |
+| I04 `leer_snapshot` | Función interna de Ventas | Compañía, cotización/versión, oportunidad, cliente y aceptación | Datos comerciales oficiales, pago y promesa; vínculo, versión, aceptación o vigencia inválidos → rechazo | Solo lectura; no recalcular desde datos libres del solicitante |
+| I05 `consultar_disponibilidad` | Ventas → Inventario | Compañía, ubicación, SKU/cantidad agregada | Cantidad observada y ubicación; parcial → promesa condicionada; proveedor caído → pendiente | Solo lectura; no reserva ni salida |
+| I06 `verificar_aprobacion` | Función interna de Ventas | Descuento, cotización/versión, total y vendedor del snapshot | Decisión humana de autoridad competente y vigencia; ausente/obsoleta/autoaprobada → rechazo | Verificar autorización registrada; no autoaprobar |
+| I07 `autorizar_y_auditar` | Módulos → control transversal | Actor de sesión, operación, compañía y referencias | Permiso y evento: actor, hora, interfaz, causa/código y correlación | Bloquear accesos indebidos; registrar eventos mínimos |
+| **I08 `actualizar_seguimiento_crm`** | **Ventas → CRM** | **Decisión persistida, oportunidad y cotización/versionado** | **Respuesta, estado, causa, responsable, siguiente acción y plazo; fallo → rollback** | **Actualizar una proyección de seguimiento por solicitud; no cerrar oportunidad ni duplicar tareas en replay** |
 
-I01 e I02 son preparación humana/asistida; las fixtures representan sus resultados. El simulador ejecuta I03–I07 con proveedores locales controlados, no los módulos Odoo. `consultar_transicion(company_id, request_id)` comprueba acceso por compañía y oportunidad antes de devolver un resultado. Una referencia de conversación no sirve como clave única: puede generar varias cotizaciones legítimas.
+WhatsApp → vendedor → CRM es registro manual. La ruta adaptador → UBLHUB → SUNAT es continuidad PC1; sus contratos tributarios no se inventan en esta revisión. I04/I06/I07 son funciones internas, no nuevos componentes desplegables.
 
-## 3. Mensaje I03 y validación estructural
+## 3. Información contractual
 
-[JSON Schema de solicitud](solicitud-pedido-v1.schema.json) y [JSON Schema de respuesta](respuesta-pedido-v1.schema.json). UTF-8, nombres y enum sensibles a mayúsculas. Se rechazan campos adicionales. El payload tiene solo referencias; no admite actor, rol, precio, stock ni indicador de aprobación.
+[Schema I03](solicitud-pedido-v1.schema.json) y [schema de respuesta I03/I08](respuesta-pedido-v1.schema.json), Draft 2020-12; UTF-8 y campos cerrados. La solicitud incluye:
 
 ```json
 {
-  "contract_version": "1.0",
+  "contract_version": "1.1",
   "company_id": "MYS-DEMO",
   "request_id": "SOL-DEMO-001",
   "correlation_id": "COR-DEMO-001",
@@ -41,93 +41,52 @@ I01 e I02 son preparación humana/asistida; las fixtures representan sus resulta
 }
 ```
 
-| Campo | Regla | Fuente / control |
+IDs: 1–64 caracteres ASCII, letras, números, guion o guion bajo; versión de cotización entera positiva. `request_id` es clave idempotente por compañía; `correlation_id` une el recorrido. Compañía, oportunidad, cliente, cotización y aceptación deben coincidir entre sí y con la sesión. El mensaje no contiene precios, stock, rol ni booleanos de aprobación.
+
+| Dimensión de S6, pp. 14–15 | Datos resueltos desde el sistema dueño | Regla del caso MYS |
 | --- | --- | --- |
-| `contract_version` | Exactamente `1.0` | Incompatibilidad rechazada antes de decidir |
-| `company_id` | Identificador de compañía autorizada | Se compara con sesión y todos los maestros |
-| `request_id` | Único por compañía, estable durante reintentos | Clave de idempotencia; máximo 64 caracteres |
-| `correlation_id` | Referencia estable del recorrido | Une oportunidad, solicitud y eventos; no es clave de deduplicación |
-| `opportunity_id` | Oportunidad existente y asignada al vendedor | C01 / permisos por registro |
-| `customer_id` | Cliente existente, activo y con coincidencia resuelta | C02 / no se exige documento personal en la evidencia |
-| `quotation_id` | Cotización de C03 de la misma compañía, cliente y oportunidad | No puede sustituirse por otra cotización con precio parecido |
-| `quotation_version` | Entero positivo; versión vigente | Bloquea aceptación o aprobación obsoleta |
-| `acceptance_id` | Aceptación registrada de esa cotización y versión | Fuente confiable I04; cambiar condiciones exige nueva aceptación |
+| Identidad | Cliente único, compañía, activo, identidad revisada; evidencia del canal con finalidad y vigencia | Consentimiento sintético solo para atender cotización por WhatsApp manual, no campañas masivas ni validación fiscal |
+| Oferta | SKU/unidad, cantidad, precio, descuento, moneda, vigencia y versión | PEN; precio final sintético; cálculo `Decimal`, redondeo por línea a 2 decimales; aceptación exacta |
+| Promesa | Pago, modalidad, lugar, fecha solicitada, aceptación de entrega parcial | Contado y recojo `ALM-DEMO`; fecha solicitada no equivale a fecha prometida. Crédito u otras condiciones requieren validación |
+| Trazabilidad | Oportunidad → cotización/versionado → aceptación → solicitud → respuesta → seguimiento/pedido futuro | No duplicar la cotización al convertirla; `response_id` identifica la revisión de decisión |
+| Gobernanza | Actor, autorización de excepción, estado/causa, responsable, acción, plazo y eventos | Descuento >5 % requiere Gerencia independiente; atención de excepción en 24 h es supuesto, no SLA real |
 
-Los identificadores admiten letras ASCII, números, guion y guion bajo. El cliente no genera la compañía ni el actor efectivos: el servidor los contrasta con su contexto autorizado. Dinero en snapshots y respuestas usa cadenas decimales de dos posiciones y operaciones `Decimal`; nunca flotantes binarios. Moneda didáctica `PEN`; el precio final del ejemplo no modela impuestos ni emite documentos fiscales.
+Cambiar oferta o promesa relevante exige nueva versión, aceptación y autorización aplicable. Las referencias del mensaje resuelven ese snapshot; no se omiten condiciones por no transportarlas duplicadas en JSON.
 
-## 4. Orden de evaluación y reglas
+## 4. Orden de validación y estados
 
-| Regla | Comprobación / resultado | Fuente o decisión |
-| --- | --- | --- |
-| R01 | Estructura conforme al schema; si falla `CONTRATO_INVALIDO` | D-PC2-03 |
-| R02 | Actor de sesión con rol Ventas, compañía y oportunidad asignada; de lo contrario `NO_AUTORIZADO` | D-PC2-04; F-PC2-06 |
-| R03 | Misma clave + mismo payload: devuelve estado existente; distinto payload: `IDEMPOTENCIA_CONFLICTO` | D-PC2-05 |
-| R04 | Otra clave para la misma compañía/cotización/versión: `COTIZACION_YA_EVALUADA` | D-PC2-05 |
-| R05 | Cliente activo, coincidencia resuelta y vínculos coherentes | D-PC2-04 |
-| R06 | Versión actual, estado de cotización `sent`, vigencia y aceptación exacta válidos | D-PC2-06; S-04 |
-| R07 | Líneas con SKU activo, cantidad positiva, precio y moneda de catálogo, descuento 0–100 y total recalculado | D-PC2-03; S-02 |
-| R08 | Descuento hasta 5 % permitido; superior requiere decisión de Gerencia distinta del vendedor y de esa versión/total | S-03; D-PC2-07 |
-| R09 | Consultar disponibilidad; si el proveedor falla, `PENDIENTE` sin prometer stock | D-PC2-08 |
-| R10 | Disponible menor que solicitado: `PROMESA_CONDICIONADA`, sin fecha comprometida inventada | S-05; D-PC2-08 |
-| R11 | Todos los controles superados: `ACEPTADA`, `VALIDADA`, sin efectos operativos | D-PC2-01 |
-| R12 | Guardar decisión y eventos atómicamente; no borrar historial | D-PC2-05 |
+1. Validar schema y sesión autorizada para compañía/oportunidad antes de consultar caché.
+2. Comprobar clave y huella del JSON normalizado: misma solicitud/contenido devuelve resultado; contenido distinto genera `IDEMPOTENCIA_CONFLICTO`; otra clave para la misma cotización/versión genera `COTIZACION_YA_EVALUADA`.
+3. Verificar vínculos, cliente, finalidad/canal/vigencia, pago y entrega; luego versión actual, estado `sent`, vigencia y aceptación exacta.
+4. Recalcular catálogo, precio y total. Verificar aprobación de Gerencia cuando supera 5 %, con versión/total/vigencia exactos y persona distinta del vendedor. Este control precede al stock.
+5. Consultar disponibilidad agregada por SKU: lectura fallida → `PENDIENTE`; cantidad insuficiente → `PROMESA_CONDICIONADA`; controles superados → `ACEPTADA`.
+6. Persistir decisión, proyección CRM y eventos juntos. Error al actualizar seguimiento revierte la transacción completa.
 
-R01–R02 se comprueban antes de leer resultados idempotentes. En reintento de un estado final se devuelve el resultado original, aunque posteriormente cambien precios o stock: es evidencia histórica, no una nueva autorización operativa. En producción la decisión final se debe vincular a un snapshot bloqueado/versionado, y revalidarse antes de confirmar el pedido. Las reglas se aplican en este orden; un descuento no aprobado se rechaza antes de ofrecer disponibilidad parcial.
-
-## 5. Estados, eventos y recuperación
-
-| Estado | Significado | Evento / siguiente paso | Responsable |
+| Estado de solicitud | Código principal / significado | Seguimiento y responsable | Recuperación |
 | --- | --- | --- | --- |
-| `RECIBIDA` | Evento interno tras admitir la solicitud | Validar R05–R10; no es una respuesta final de I03 | C04 |
-| `PENDIENTE` | No se pudo consultar una dependencia; no hay decisión comercial | Consultar misma clave; recuperar servicio y reanudar misma solicitud | Administrador + Ventas |
-| `ACEPTADA` | Solicitud validada para continuar después | Informar al vendedor; pedido operativo pendiente | Ventas |
-| `RECHAZADA` | Regla incumplida, con código y acción | Corregir cotización; nueva versión, aceptación y solicitud | Ventas / Gerencia |
-| `PROMESA_CONDICIONADA` | Se ofrece revisar cantidad o plazo por disponibilidad insuficiente | Cliente acepta nuevas condiciones documentadas; nueva cotización/versionado y solicitud | Ventas / Almacén / Cliente |
+| ACEPTADA | VALIDADA: controles superados | SIN_TAREA; Ventas informa resultado | Confirmación operativa futura con nueva validación, fuera de PC2 |
+| RECHAZADA | DESCUENTO_SIN_APROBACION | PENDIENTE_APROBACION; Gerencia decide en plazo supuesto | Mantener oportunidad; nueva versión/aceptación/solicitud después de resolver |
+| RECHAZADA | CLIENTE_NO_VALIDADO, DATOS_INCONSISTENTES, CONTACTO_NO_AUTORIZADO, CONDICIONES_POR_VALIDAR | CORREGIR_DATOS; Ventas | Corregir fuente oficial; nueva evaluación/versionado aplicable |
+| RECHAZADA | VERSION_OBSOLETA, COTIZACION_NO_ENVIADA, COTIZACION_VENCIDA, ACEPTACION_INVALIDA, PRECIO_INVALIDO | CORREGIR_DATOS; Ventas | Preparar versión válida y nueva aceptación |
+| RECHAZADA | CONTRATO_INVALIDO / NO_AUTORIZADO | CORREGIR_DATOS / REVISAR_ACCESO | No crea solicitud comercial ni proyección CRM; solo denegación mínima |
+| RECHAZADA | IDEMPOTENCIA_CONFLICTO / COTIZACION_YA_EVALUADA | CONSULTAR_ORIGINAL | No sobrescribe decisión ni seguimiento original |
+| PROMESA_CONDICIONADA | DISPONIBILIDAD_PARCIAL | NEGOCIAR_PROMESA; Ventas con Almacén | Revisar cantidad/plazo con cliente; nueva versión y aceptación; fecha desconocida permanece nula |
+| PENDIENTE | DEPENDENCIA_NO_DISPONIBLE | RECUPERAR_SERVICIO; Administración y Ventas | Recuperar servicio y reanudar explícitamente misma solicitud; revalidar versión vigente |
 
-```mermaid
-stateDiagram-v2
-    [*] --> RECIBIDA: solicitud autorizada y unica
-    RECIBIDA --> RECHAZADA: regla comercial incumplida
-    RECIBIDA --> PENDIENTE: dependencia no disponible
-    RECIBIDA --> PROMESA_CONDICIONADA: disponibilidad parcial
-    RECIBIDA --> ACEPTADA: validaciones completas
-    PENDIENTE --> PENDIENTE: consulta o falla persistente
-    PENDIENTE --> RECIBIDA: reanudar misma clave
-    ACEPTADA --> [*]
-    RECHAZADA --> [*]
-    PROMESA_CONDICIONADA --> [*]
-```
+`RECIBIDA` es un evento transaccional, no un estado final del schema. Solo `PENDIENTE` admite reanudación; los demás resultados se conservan como evidencia histórica. Añadir una aprobación después del rechazo no sobrescribe ese resultado.
 
-`RECIBIDA` vive en la bitácora y dentro de la transacción; si el proceso cae antes del commit, el reintento no encuentra una decisión parcial. Una solicitud pendiente sí se persiste. Solo esa solicitud puede reanudarse; sus parámetros no se cambian. Si la cotización cambió entretanto, la reanudación la rechaza por versión. El simulador ofrece `submit`, `get` y `resume` bajo el mismo contexto de Ventas; administración recupera la dependencia y no se atribuye permisos comerciales.
+## 5. Respuesta y retorno a CRM
 
-## 6. Respuestas y excepciones
+Todas las respuestas incluyen versión, `response_id`, solicitud/correlación, cotización/versión, estado/código/mensaje, responsable, acción, plazo, seguimiento, total/moneda, condiciones y referencia/estado de pedido. Referencias nulas solo cuando el mensaje no es estructuralmente válido. Los errores de acceso y conflictos devuelven respuesta al llamante sin publicar datos en CRM.
 
-Todas las respuestas incluyen versión, referencias recibidas, estado, código, mensaje, responsable, acción, total/moneda cuando estén validados y `order_id: null`. Los errores estructurales pueden devolver referencias `null` porque no existe una solicitud válida. Para interoperabilidad HTTP futura se podrán mapear los códigos a estados de transporte; **no se fija una API HTTP en PC2**.
+En stock parcial, `conditions` precisa SKU, solicitado, disponible, pendiente, modalidad/lugar, fecha solicitada, `promised_date:null` y necesidad de aceptación de nuevas condiciones. Una lectura fallida no ofrece cantidades como si fueran confiables.
 
-| Código | Estado | Acción |
-| --- | --- | --- |
-| `VALIDADA` | ACEPTADA | Continuar posteriormente con confirmación controlada |
-| `DESCUENTO_SIN_APROBACION` | RECHAZADA | Gerencia decide; Ventas genera nueva versión y aceptación |
-| `DISPONIBILIDAD_PARCIAL` | PROMESA_CONDICIONADA | Revisar cantidad/plazo con cliente; no reservar ni fijar fecha sin evidencia |
-| `DEPENDENCIA_NO_DISPONIBLE` | PENDIENTE | Recuperar dependencia, consultar y reanudar misma solicitud |
-| `CONTRATO_INVALIDO` / `NO_AUTORIZADO` | RECHAZADA | Corregir formato o acceso; no consume clave ni crea registro comercial |
-| `IDEMPOTENCIA_CONFLICTO` | RECHAZADA | Consultar original; no reemplazar payload ni decisión almacenada |
-| `COTIZACION_YA_EVALUADA` | RECHAZADA | Consultar la solicitud original; no crea segunda evaluación |
-| `DATOS_INCONSISTENTES` / `CLIENTE_NO_VALIDADO` | RECHAZADA | Corregir vínculos/cliente bajo permisos |
-| `VERSION_OBSOLETA` / `COTIZACION_NO_ENVIADA` / `COTIZACION_VENCIDA` | RECHAZADA | Preparar y aceptar versión vigente |
-| `ACEPTACION_INVALIDA` / `PRECIO_INVALIDO` | RECHAZADA | Revisar evidencia comercial y recalcular desde catálogo |
+**Dos estados distintos:** `status=ACEPTADA` valida la solicitud; `order_state=CONFIRMADO` requiere pedido operativo real. El perfil simulado siempre devuelve `order_state=NO_CONFIRMADO` y `order_id=null`. El schema admite `order_id` no nulo únicamente con `CONFIRMADO` y solicitud `ACEPTADA`, para la continuidad posterior; validar esa forma no demuestra una confirmación implementada.
 
-En promesa, `conditions` incluye SKU, cantidad solicitada/disponible, `promised_date: null` y `requires_customer_acceptance: true`. `PENDIENTE` no ofrece estas condiciones porque aún no hay lectura confiable de stock.
+I08 mantiene en SQLite `crm_feedback`, una proyección por compañía/solicitud con `opportunity_lost:false`. El rechazo genera seguimiento de aprobación, no marca la oportunidad como perdida. La consulta de seguimiento aplica el mismo control de acceso que la consulta de solicitud. Un replay devuelve la decisión previa y no publica otra tarea; una reanudación pendiente actualiza la misma proyección y conserva eventos anteriores. Es una representación local, no un módulo ni una notificación de Odoo ejecutada.
 
-## 7. Concurrencia, auditoría y datos
+## 6. Seguridad, persistencia y evidencia
 
-- Huella: SHA-256 del JSON completo con claves ordenadas y versión normalizada a entero (`1` y `1.0` son equivalentes según JSON Schema), sin campos de identidad suministrados por el cliente. La identidad efectiva se audita aparte.
-- SQLite en simulación usa transacción `BEGIN IMMEDIATE`, PK de clave idempotente y restricción única de cotización/versión. En Odoo se deberá implementar el equivalente transaccional en PostgreSQL; una búsqueda seguida de un alta sin restricción no basta.
-- Una solicitud final es inmutable. Repetirla agrega un evento `REINTENTO` y devuelve la misma decisión. Un conflicto agrega evidencia y conserva intacta la decisión original.
-- El resultado de negocio y sus eventos se confirman juntos. Formato/autorización inválidos no crean solicitud; solo eventos mínimos de denegación, sin cuerpos sensibles.
-- La identidad/rol de gerencia se consulta en el proveedor de aprobaciones; el payload no puede fabricarlos. La sesión comercial no puede aprobar sus propios descuentos.
-- No se ingresan conversaciones reales, DNI, RUC de clientes, teléfonos ni credenciales. Se usan referencias sintéticas. En producción falta aprobar retención, acceso a logs y copias de seguridad.
+La huella SHA-256 usa JSON canónico y normaliza versión numérica a entero. SQLite aplica `BEGIN IMMEDIATE`, clave primaria y unicidad de cotización/versión. Cada decisión nueva se guarda con I07 y actualización I08; el replay agrega solo evento de reintento. Producción requerirá equivalente ORM/PostgreSQL, permisos, versionado y protección de confirmaciones por interfaz, importación y automatización; ocultar botones no basta.
 
-## 8. Evidencia y límites de implementación
-
-La [simulación reproducible](../../pruebas/pc2/README.md) valida reglas, mensajes y persistencia local. No instala Odoo, no configura ACL reales, no confirma `sale.order` y no valida disponibilidad concurrente del almacén real. Para cerrar implementación se requiere configurar CRM/Contactos/Ventas/Inventario, desarrollar la extensión, verificar seguridad por cada vía de entrada, versionado, restricciones y auditoría, y ejecutar casos en Odoo con evidencia revisada por el equipo.
+No hay datos reales de clientes ni credenciales. El plazo de 24 h, el consentimiento sintético, contado/recojo y la política 5 % son supuestos por validar, no reglas verificadas de MYS. [Fuentes y decisiones](../../fuentes/pc2.md), [pruebas reproducibles](../../pruebas/pc2/README.md), [calibración Andina](../../documentos/pc2/calibracion-andina-s6.md) y [dos métricas S6](../../documentos/pc2/metricas-s6.md).

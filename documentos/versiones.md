@@ -6,6 +6,7 @@
 | 0.2 | 24/09/2026 | Prototipo visual estático inspirado en Odoo | Base de demostración |
 | 0.3 | 25/09/2026 | Contexto real de dos canales, selección Odoo + UBLHUB y proceso comercial mejorado | Sustituida |
 | 0.4 | 25/09/2026 | Actores detallados, matriz RACI, diagramas UML/BPMN/C4 y cierre de decisiones abiertas | Línea base PC1 |
+| PC2 v2.1 | 16/10/2026 | Revisión S6: cuatro módulos Odoo y externos, retorno I08, contrato 1.1, promesa/plazo, calibración Andina, dos métricas y Word personal | Simulación local; revisión humana pendiente |
 | PC2 v2.0 | 15/10/2026 | CRM de Odoo, componentes C01–C08, interfaces I01–I07, contrato 1.0, datos/controles y prueba local reproducible | Incremento documentado; revisión humana pendiente |
 
 ## Registro de decisiones

@@ -21,6 +21,8 @@ El vendedor califica el lead con necesidad concreta, cantidad y posibilidad de a
 | Aprobación requerida | Dentro del umbral propuesto | Gerencia; ausente en la prueba |
 | Existencias observadas | 8 unidades | 8 unidades |
 | Resultado | Solicitud ACEPTADA | RECHAZADA: descuento sin aprobación |
+| Pago / entrega propuestos | Contado; recojo ALM-DEMO, solicitado 16/10 18:00 -05:00 | Mismas condiciones didácticas |
+| Seguimiento CRM | SIN_TAREA; pedido NO_CONFIRMADO | PENDIENTE_APROBACION; Gerencia, plazo supuesto 24 h |
 
 Precios finales aproximados, sin desglose ni validación tributaria. Cotizaciones enviadas, aceptadas el 15/10/2026 a las 17:00 y vigentes hasta el 16/10/2026 a las 23:59:59, zona `-05:00`. Son fechas de escenario; el manifiesto de ejecución registra aparte la hora real de las pruebas.
 
@@ -44,12 +46,14 @@ flowchart TB
         E{Datos completos y cotización vigente}
         F[Completa datos o prepara nueva versión]
         I[Solicita transición I03]
+        U[Recibe retorno I08: estado, causa, responsable, acción y plazo]
         R[Informa resultado y siguiente acción]
+        X[Solicitud validada; operación posterior fuera de PC2]
     end
     subgraph GE[Gerencia]
         G[Decide descuento excepcional; no se autoaprueba]
     end
-    subgraph ER[Odoo: Control de transición y proveedores]
+    subgraph ER[Odoo Ventas: validación interna y consulta de proveedores]
         J[Autoriza sesión y aplica idempotencia]
         K[Lee snapshot y aceptación I04]
         L{Descuento dentro de política o aprobado I06}
@@ -63,15 +67,23 @@ flowchart TB
     A --> B --> C --> D --> E
     E -->|No| F --> D
     E -->|Sí| H --> I --> J --> K --> L
-    L -->|No| M --> G --> F
+    L -->|No| M --> U
+    G --> F
     L -->|Sí| N
-    N -->|No| T -->|Servicio recuperado| J
+    N -->|No| T --> U
     N -->|Sí| O
-    O -->|No| Q --> R --> P --> F
-    O -->|Sí| S --> R
+    O -->|No| Q --> U
+    O -->|Sí| S --> U
+    U --> R
+    R -->|Rechazo por descuento| G
+    R -->|Promesa condicionada| P --> F
+    R -->|Pendiente y servicio recuperado| J
+    R -->|Aceptada| X
 ```
 
 Errores de versión, aceptación, identidad o permiso salen con rechazo y código del [contrato](../arquitectura/contratos/crm-erp-v1.md); no deben atravesar el camino de aceptación. El lazo de Gerencia implica cambiar versión y recoger nueva aceptación antes de una nueva solicitud, no modificar una solicitud rechazada.
+
+I08 conserva oportunidad y cotización, con seguimiento según causa; rechazo de solicitud no significa oportunidad perdida. El plazo didáctico de 24 horas y las condiciones de pago/entrega requieren validación empresarial. Las denegaciones de acceso o formato no crean solicitud ni publican seguimiento comercial.
 
 ## 3. Casos de uso
 

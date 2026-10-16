@@ -10,6 +10,7 @@ import subprocess
 import sys
 
 from simulador import FIXTURES, ROOT, TransitionSimulator, load_json
+from calibrar_andina import main as generate_andina
 
 
 OUT = Path(__file__).resolve().parent / "evidencias"
@@ -49,6 +50,7 @@ def main():
                       "business_time": source["business_time"], "fixture_variant": mode,
                       "expected": {"status": status, "code": code, "order_id": None}, "obtained": response,
                       "passed": passed, "request": request,
+                      "crm_feedback": sim.get_crm_feedback(request["company_id"], request["request_id"]),
                       "audit": [dict(row) for row in sim.db.execute("SELECT * FROM audit ORDER BY event_id")],
                       "request_count": sim.db.execute("SELECT COUNT(*) FROM requests").fetchone()[0],
                       "masters_unchanged": sim.masters == source}
@@ -58,7 +60,9 @@ def main():
             results.append({"case_id": case_id, "status": status, "code": code, "passed": passed})
         finally:
             sim.close()
+    generate_andina()
     tracked_inputs = [Path(__file__), Path(__file__).with_name("simulador.py"), Path(__file__).with_name("test_contrato.py"),
+                      Path(__file__).with_name("calibrar_andina.py"), Path(__file__).with_name("test_andina.py"),
                       *sorted(FIXTURES.glob("*.json")), *sorted((ROOT / "arquitectura/contratos").glob("*.schema.json"))]
     manifest = {"executed_at_utc": datetime.now(timezone.utc).isoformat(),
                 "executor": "Codex (ejecución automatizada); revisión humana pendiente",

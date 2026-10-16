@@ -1,5 +1,5 @@
 {
-  "executed_at_utc": "2026-10-16T04:55:13.212844+00:00",
+  "executed_at_utc": "2026-10-16T05:56:47.571625+00:00",
   "validator": "jsonschema 4.26.0",
   "draft": "2020-12",
   "schema_count": 2,
@@ -12,17 +12,18 @@
     "pruebas/pc2/evidencias/PC2-T01.json"
   ],
   "request_consistency_cases": 149,
-  "invalid_response_cases": 4,
+  "invalid_response_cases": 8,
+  "future_confirmed_response_shape_validated": true,
   "passed": true,
   "sha256": {
-    "arquitectura/contratos/solicitud-pedido-v1.schema.json": "f0ae93a6094a01439493e8f0083e4bfee259c5e494339b3dc5e5b76880f257ab",
-    "arquitectura/contratos/respuesta-pedido-v1.schema.json": "7b3b75cfe89cfd9c7b246ce4eae38534758c4136a7ec8e9d93beb80bb38b196c",
-    "pruebas/pc2/fixtures/solicitud-excepcion.json": "6d0da4d9873bf7c5ad0d3f9129b6daa45aa0fa6336d102d17debad50f4271d00",
-    "pruebas/pc2/fixtures/solicitud-normal.json": "b3cbff8c45e37bbb29a88645016f3b71d36982f9948331fad0baa68ea2bec88b",
-    "pruebas/pc2/evidencias/PC2-E01.json": "788bb276c2a2c4382f65bc94530027c00a7af874c7e2390f09be6e7fb2fa969c",
-    "pruebas/pc2/evidencias/PC2-N01.json": "bb60607f4fae54592ae0b77624d33a54356b8bb9e0f7ebde2c0534f2bd343129",
-    "pruebas/pc2/evidencias/PC2-P01.json": "e3c2a44b40a5e8c22a2a035c53b994bbb32fe9c9e9f51c3a3019bc87e7db98ed",
-    "pruebas/pc2/evidencias/PC2-T01.json": "209b2d7c96c15fae95014d383851e56e4529f54c1c3dd6f691312a4378936dfc",
-    "pruebas/pc2/validar_esquemas.py": "aeeb3164a05a3e32b76af3b5aba88323c15e928ab80a9fbd6a731533a7fe2f3d"
+    "arquitectura/contratos/solicitud-pedido-v1.schema.json": "2da94b5898c80738c1b4df38e995fca15f638bc1d9eeeccd1d05071d9d97b1cb",
+    "arquitectura/contratos/respuesta-pedido-v1.schema.json": "bf77e5bf88a3d5e440e0051386a91cf6f24d4c17eff9331c6f0210cb4acdd376",
+    "pruebas/pc2/fixtures/solicitud-excepcion.json": "5424121536485844f95c8e12a2e462e653e8044edef70b8fbee8eafa8cc063d6",
+    "pruebas/pc2/fixtures/solicitud-normal.json": "7e66d141adaeb537b60b9857eb4ef3e4393cfc6a99b2e648d7763d0084e0f98c",
+    "pruebas/pc2/evidencias/PC2-E01.json": "4c6a5e292c990a560e719b4aa160182a13d294cf5437a66d0e32555d8924d38d",
+    "pruebas/pc2/evidencias/PC2-N01.json": "7e46194a585030c842fff23bb3278b9bd40dc828d12e0f9727287e6bd8153d97",
+    "pruebas/pc2/evidencias/PC2-P01.json": "14c934f81ce895309a1136e821f7ccc2284bad4fa2d78a51c2225d6eb39b0af9",
+    "pruebas/pc2/evidencias/PC2-T01.json": "2f64e5ea895904ac89cea04d57851bb8e8eb04fafc26b237c4820863c25e3df1",
+    "pruebas/pc2/validar_esquemas.py": "3e618a23c70089264ff7a512fbc71f3e9240a577ef1cc134e6c49d361894b259"
   }
 }

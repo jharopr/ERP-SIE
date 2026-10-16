@@ -1,13 +1,13 @@
 # Fuentes, decisiones y supuestos de PC2
 
-**Fecha de consulta y registro:** 15/10/2026, America/Lima. Revisión humana pendiente. No se copian los documentos originales al repositorio ni se publican datos personales de clientes.
+**Fecha de consulta y registro:** 15–16/10/2026, America/Lima. Revisión humana pendiente. No se copian los documentos originales al repositorio ni se publican datos personales de clientes.
 
 ## 1. Insumos y fuentes primarias
 
 | ID | Fuente / sección consultada | Qué respalda y límite |
 | --- | --- | --- |
 | F-PC2-01 | `GE703_PC2_Instrucciones_y_Rubrica (1) (1).docx`: Propósito, Alcance evaluable, Producto mínimo, Criterios de calidad y lista de verificación | Seis productos mínimos, contrato probado, dos expositores, declaración de IA y fin en solicitud/respuesta; exige evidencia verificable y declaración de límites |
-| F-PC2-02 | `GE703_PC2_G7_IMPORTACIONES_MYS_HERMANOS_S_A_C_.docx`: Identificación, Integrantes y guion 1–5 | Estructura del documento integrado; no se creó ni modificó Word por instrucción del usuario |
+| F-PC2-02 | `GE703_PC2_G7_IMPORTACIONES_MYS_HERMANOS_S_A_C_.docx`: Identificación, Integrantes y guion 1–5 | Estructura del documento integrado; aporte personal Word de Jharolym revisado a solicitud posterior, sin completar secciones ajenas |
 | F-PC2-03 | `Distribucion_Actividades_PC2_Grupo7_Con_Plantilla (2).pdf`, pp. 2–5 | Escenario de cinco autoradios por WhatsApp; Jharolym arquitectura/interfaces/IA, reparto de secciones y revisiones |
 | F-PC2-04 | Odoo 19, [Create quotations](https://www.odoo.com/documentation/19.0/applications/sales/sales/sales_quotations/create_quotations.html), apartados Tracking y Sending and confirming quotations | Cotización en Ventas, vínculo con oportunidad y conversión al confirmar; consulta mediante extractos indexados de la página oficial |
 | F-PC2-05 | Odoo 18, [Create and send quotations](https://www.odoo.com/documentation/18.0/applications/sales/crm/acquire_leads/send_quotes.html), introducción | Preparar cotización desde oportunidad; referencia funcional de versión 18, no prueba de instalación/compatibilidad en 19 |
@@ -16,6 +16,8 @@
 | F-PC2-08 | Odoo 19, [integración sale_crm](https://github.com/odoo/odoo/blob/19.0/addons/sale_crm/models/sale_order.py), extensión de `sale.order`; y [prueba oficial de Ventas](https://github.com/odoo/odoo/blob/19.0/addons/sale/tests/test_sale_to_invoice.py), confirmación de cotización | Referencia a integración CRM/Ventas y cambio de estado; no se copia implementación ni se ejecuta el método en este proyecto |
 | F-PC2-09 | Usuario, conversación del 15/10/2026 | Confirma falta de avances/instalación, integración de CRM de Odoo, caso WhatsApp y autorización para supuestos; solicita modificar solo repositorio con diagrama de componentes y contratos derivados |
 | F-PC2-10 | [Línea base PC1](../arquitectura/erp-base.md), [versiones](../documentos/versiones.md), [README del prototipo](../producto/frontend/README.md) | Odoo + UBLHUB, registro manual de WhatsApp y límites del frontend estático; no demuestra operación real |
+| F-PC2-12 | `GE703_S6_Presentacion.pdf`, pp. 9, 11, 14–19, 21, 25–31 | Frontera CRM–ERP, contratos de proceso, promesa, excepciones accionables, retorno a CRM, calibración Andina y dos métricas; no sustituye el cierre de la rúbrica |
+| F-PC2-13 | Odoo 19, [Sales quotations](https://www.odoo.com/documentation/19.0/applications/sales/sales/sales_quotations.html), [Create quotations](https://www.odoo.com/documentation/19.0/applications/sales/sales/sales_quotations/create_quotations.html), [Forecasted report](https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/inventory/warehouses_storage/reporting/forecast.html), extractos oficiales consultados el 16/10/2026 | Asociación oportunidad–cotización y disponibilidad/inventario; no prueba despliegue ni extensiones específicas |
 | F-PC2-11 | `SIE - GRUPOI7 - AVANCE MACROPROCESOS (1).docx`, Propósito, corrección de alcance y secciones 1–5 | Antecedente de Semana 5 con canal físico y P2P excluido; PC2 declara cambio de escenario a WhatsApp y P2P solo de contexto |
 
 Las fuentes técnicas describen capacidades/modelos del producto. No sustentan precios, existencia real de campañas, políticas de MYS ni que estén desarrollados los componentes `mys.*`. No se copiaron fragmentos de código oficial ni imágenes de terceros; los SVG/Mermaid y scripts son elaborados para esta propuesta. No se atribuye una licencia al repositorio completo ni se cambian las de sus dependencias.
@@ -29,6 +31,7 @@ El SHA-256 identifica el archivo leído. Los originales permanecen en Downloads 
 | F-PC2-01, rúbrica | `1AC503DC4F14408DC35E05207359B96035E5B0A8E81B40A1C593A64BDDB2508B` |
 | F-PC2-02, plantilla | `BE9E30DA88AA69BE7BBB4DC898BA7223851CCA8C1A7F1CA895043DC592F88A3F` |
 | F-PC2-03, distribución | `AC52F1C27CE0E7D8126578042F4AC8BFEDC8CD203704CC5A50B8135C0B358073` |
+| F-PC2-12, sesión 6 | `1B31C7772E67A6746633639FA6F84A06919BDD041EF15C62981F253C1560A942` |
 | F-PC2-11, macroprocesos | `14DA62EC6B7D2E84B9B74145FCB3B4B9C95AA914F5BFED67CCD55B1AFD0117D1` |
 
 ## 2. Supuestos didácticos, no hechos empresariales
@@ -44,19 +47,26 @@ El SHA-256 identifica el archivo leído. Los originales permanecen en Downloads 
 | S-07 | Precio final se redondea por línea a dos decimales y se suma con Decimal | Convención del ejemplo; configuración real de precios/tributos pendiente |
 | S-08 | Una aceptación efectiva por cotización/versionado | Política propuesta de aceptación y su histórico; pendiente de implementación |
 | S-09 | Mapa P2P propuesto de necesidad → aprobación → compra → recepción → conciliación → pago | Solo contexto académico; no acredita cómo compra/importa la empresa |
+| S-10 | Contado, recojo en ALM-DEMO, fecha solicitada 16/10 18:00 y entrega parcial aún no aceptada | Condiciones sintéticas del caso MYS; no asumir crédito ni fecha de reposición |
+| S-11 | Evidencia sintética de finalidad/canal/vigencia para atender cotización por WhatsApp | No equivale a consentimiento para marketing masivo ni validación legal/empresarial |
+| S-12 | Excepción asignada con vencimiento a 24 h del reloj comercial | Plazo ilustrativo, no SLA medido o aprobado |
 
 ## 3. Decisiones de diseño trazables
 
 | ID | Decisión | Motivo / evidencia |
 | --- | --- | --- |
-| D-PC2-01 | Terminar en decisión de solicitud, `order_id: null` | F-PC2-01 y F-PC2-02; impide atribuir ejecución de pedido |
-| D-PC2-02 | CRM integrado en Odoo; C04/C06 y auditoría específica como extensiones propuestas | F-PC2-09; preservar PC1 y distinguir estándar de diseño |
+| D-PC2-01 | Terminar en decisión de solicitud; perfil simulado `order_state=NO_CONFIRMADO`, `order_id:null` | F-PC2-01 y F-PC2-02; impide atribuir ejecución de pedido |
+| D-PC2-02 | CRM integrado en Odoo; cuatro módulos principales, validación/aprobación internas en Ventas y trazabilidad transversal | F-PC2-09; preservar PC1 y distinguir estándar de diseño |
 | D-PC2-03 | Schema cerrado, importes confiables desde Ventas y cálculo Decimal | Evitar inyección de precios y ambigüedad del contrato; tests |
 | D-PC2-04 | Identidad desde sesión, permisos por compañía/oportunidad y cliente revisado | Principio de acceso mínimo; pruebas locales, no ACL reales |
 | D-PC2-05 | Clave idempotente + unicidad de versión + resultado/auditoría atómicos | Evitar duplicados y decisiones sin evidencia; SQLite simula restricciones |
 | D-PC2-06 | Snapshot versionado, aceptación exacta y revalidación antes del pedido futuro | Prevenir aceptación obsoleta y confusión con disponibilidad garantizada |
 | D-PC2-07 | Gerencia independiente, aprobación vinculada a versión/total y vigencia | Prevenir autoaprobación y reutilización de autorizaciones |
 | D-PC2-08 | Distinguir promesa condicionada de falla técnica pendiente | No inventar stock/fecha ni convertir una caída en rechazo comercial |
+| D-PC2-09 | I08 actualiza seguimiento CRM con estado/causa/acción/responsable/plazo, atómico con decisión | S6 pp. 18–19; pruebas de replay, acceso, reanudación y rollback |
+| D-PC2-10 | Separar aceptación de solicitud y confirmación de pedido; schema admite referencia futura con estado explícito | S6 p. 14 y cierre de rúbrica; la simulación nunca confirma pedido |
+| D-PC2-11 | Andina se calibra sin aplicar precio/política MYS ni inventar fechas/autoridad | S6 pp. 25–30; calibración documental independiente |
+| D-PC2-12 | Dos métricas con fórmula, objeto/campos, propietario y vacíos | S6 p. 31; sin valores operativos por falta de datos reales |
 
 ## 4. Vacíos y validación humana
 

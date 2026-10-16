@@ -1,29 +1,37 @@
+test_inconsistent_partial_plan_is_rejected (test_andina.AndinaTests.test_inconsistent_partial_plan_is_rejected) ... ok
+test_known_quantities_reconcile_without_inventing_dates_or_approval (test_andina.AndinaTests.test_known_quantities_reconcile_without_inventing_dates_or_approval) ... ok
 test_acceptance_must_match_version_and_total (test_contrato.ContractTests.test_acceptance_must_match_version_and_total) ... ok
 test_approval_has_to_be_by_independent_manager_and_current_version (test_contrato.ContractTests.test_approval_has_to_be_by_independent_manager_and_current_version) ... ok
+test_crm_receives_one_follow_up_per_decision_and_replay_is_stable (test_contrato.ContractTests.test_crm_receives_one_follow_up_per_decision_and_replay_is_stable) ... ok
 test_customer_identity_ambiguity_blocks_transition (test_contrato.ContractTests.test_customer_identity_ambiguity_blocks_transition) ... ok
 test_dependency_failure_remains_pending_until_explicit_resume (test_contrato.ContractTests.test_dependency_failure_remains_pending_until_explicit_resume) ... ok
 test_draft_quotation_is_rejected (test_contrato.ContractTests.test_draft_quotation_is_rejected) ... ok
 test_expired_quotation_is_rejected (test_contrato.ContractTests.test_expired_quotation_is_rejected) ... ok
 test_failure_during_decision_rolls_back_request_and_events (test_contrato.ContractTests.test_failure_during_decision_rolls_back_request_and_events) ... ok
+test_feedback_failure_rolls_back_decision_and_audit (test_contrato.ContractTests.test_feedback_failure_rolls_back_decision_and_audit) ... ok
 test_forbidden_roles_and_scope_cannot_submit_or_replay (test_contrato.ContractTests.test_forbidden_roles_and_scope_cannot_submit_or_replay) ... ok
 test_foreign_company_is_denied_before_any_cache_access (test_contrato.ContractTests.test_foreign_company_is_denied_before_any_cache_access) ... ok
 test_json_schema_integer_numeric_representation_is_normalized (test_contrato.ContractTests.test_json_schema_integer_numeric_representation_is_normalized) ... ok
+test_missing_or_expired_channel_evidence_blocks_contact (test_contrato.ContractTests.test_missing_or_expired_channel_evidence_blocks_contact) ... ok
 test_new_key_cannot_duplicate_quotation_version (test_contrato.ContractTests.test_new_key_cannot_duplicate_quotation_version) ... ok
 test_normal_validates_without_operational_side_effects (test_contrato.ContractTests.test_normal_validates_without_operational_side_effects) ... ok
 test_parallel_retries_have_one_persistent_decision (test_contrato.ContractTests.test_parallel_retries_have_one_persistent_decision) ... ok
 test_partial_availability_is_not_an_accepted_order (test_contrato.ContractTests.test_partial_availability_is_not_an_accepted_order) ... ok
+test_partial_promise_includes_quantity_gap_and_requested_delivery (test_contrato.ContractTests.test_partial_promise_includes_quantity_gap_and_requested_delivery) ... ok
 test_payload_cannot_self_authorize_or_supply_prices (test_contrato.ContractTests.test_payload_cannot_self_authorize_or_supply_prices) ... ok
 test_price_tampering_is_rejected_even_if_acceptance_matches (test_contrato.ContractTests.test_price_tampering_is_rejected_even_if_acceptance_matches) ... ok
 test_required_fields_types_and_unknown_version (test_contrato.ContractTests.test_required_fields_types_and_unknown_version) ... ok
 test_resume_rechecks_current_version (test_contrato.ContractTests.test_resume_rechecks_current_version) ... ok
+test_resume_updates_crm_without_duplicate_tasks (test_contrato.ContractTests.test_resume_updates_crm_without_duplicate_tasks) ... ok
 test_same_key_different_payload_does_not_overwrite_original (test_contrato.ContractTests.test_same_key_different_payload_does_not_overwrite_original) ... ok
 test_same_key_replays_persisted_result_after_restart (test_contrato.ContractTests.test_same_key_replays_persisted_result_after_restart) ... ok
 test_same_sku_lines_are_aggregated_for_availability (test_contrato.ContractTests.test_same_sku_lines_are_aggregated_for_availability) ... ok
 test_stale_version_is_rejected (test_contrato.ContractTests.test_stale_version_is_rejected) ... ok
 test_unapproved_discount_rejects_and_escalates (test_contrato.ContractTests.test_unapproved_discount_rejects_and_escalates) ... ok
+test_unknown_payment_or_delivery_terms_cannot_be_accepted (test_contrato.ContractTests.test_unknown_payment_or_delivery_terms_cannot_be_accepted) ... ok
 test_wrong_customer_or_opportunity_link_is_rejected (test_contrato.ContractTests.test_wrong_customer_or_opportunity_link_is_rejected) ... ok
 
 ----------------------------------------------------------------------
-Ran 24 tests in 0.136s
+Ran 32 tests in 0.184s
 
 OK
