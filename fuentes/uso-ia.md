@@ -24,3 +24,7 @@ Los precios, descuento, existencias, fechas comerciales y campaña son [supuesto
 ## PC2 v2.1 · 16/10/2026 · revisión S6 y Word personal
 
 Codex analizó el PDF de Semana 6, simplificó la vista a cuatro módulos Odoo, distinguió canal manual y sistemas externos, revisó contratos 1.1 e I08, condiciones/plazos, calibración Andina y dos métricas. Actualizó la simulación/evidencias y las secciones 3 y 5 del Word de Jharolym con el mismo diagrama. Se conserva la plantilla y las secciones ajenas sin completar. La revisión humana sigue pendiente. No se instaló Odoo ni se ejecutaron servicios externos; los nuevos campos de pago, canal y plazo son supuestos declarados.
+
+## PC2 v2.1 · 16/10/2026 · redacción y diagrama del Word personal
+
+Se utilizó **Claude (Anthropic)** para reescribir en lenguaje más natural las secciones 3 y 5 del Word de Jharolym y la tabla de fuentes/IA, y para rehacer la Figura 1 como un flujo numerado (cliente → vendedor → CRM → Ventas → respuesta I08). No se cambiaron reglas, estados, interfaces ni resultados de prueba. El SVG del repositorio no se modificó. La revisión humana sigue pendiente.
