@@ -48,16 +48,22 @@ erDiagram
 | Solicitud repetida | Clave, huella y versión / I03 | PK + UNIQUE y respuesta persistida | Doble evaluación con la misma u otra clave | C04 / persistencia y concurrencia SQLite |
 | Decisión registrada | Estado, código, actor y correlación / I07 | Transacción con rollback ante falla | Resultado sin evidencia o evento sin decisión | C04/C07 / prueba de rollback |
 
-## 4. Calidad, privacidad y conservación
+## 4. Calidad, privacidad, consentimiento y contexto del cliente
 
-- Moneda `PEN`; importes como cadenas con dos decimales. Redondeo didáctico por línea `ROUND_HALF_UP`, suma de subtotales y sin cálculo tributario.
-- IDs de demostración `CLI-DEMO-*`, `CRM-DEMO-*`, `COT-DEMO-*`, `SOL-DEMO-*`. No son IDs emitidos por una instalación real de Odoo.
-- No se guardan DNI, teléfonos, correos de clientes, direcciones, chats ni secretos. La identificación mínima real y su fundamento deberán acordarse con la empresa antes de cargar datos.
-- No se fuerza documento personal para el ejemplo. Que un contacto carezca de documento no autoriza duplicarlo ni supone validación tributaria.
-- La evidencia local permite auditar reglas, no garantiza logs inmutables en producción. Retención, acceso, respaldo y eliminación requieren una política empresarial pendiente.
+Siguiendo la rúbrica oficial de la PC2 respecto al **Contexto comercial del cliente**, se definen los propósitos de uso y la actualización mínima de datos sin exceder la frontera hacia contratos técnicos:
 
-## 5. Trazabilidad de ejemplo
+- **Propósito de uso comercial:** La captura de datos de la cuenta y contacto tiene como único propósito calificar el lead, remitir la cotización solicitada y gestionar la promesa de entrega comercial. No se reutilizan datos comerciales para fines publicitarios no autorizados.
+- **Canal y consentimiento:** En el canal WhatsApp, el consentimiento del cliente se presume y registra tácitamente al iniciar este la consulta sobre autoradios; no obstante, cualquier registro en la ficha de cliente (`res.partner`) requiere validación del vendedor para no registrar datos innecesarios.
+- **Actualización mínima de la cuenta:** La ficha de cliente solo requiere: nombre o razón social identificado, canal preferente de contacto (WhatsApp/teléfono) y confirmación de identidad revisada (`identity_reviewed = True`). Direcciones de entrega y condición tributaria definitiva (RUC/DNI) quedan expresamente diferidas para el tramo posterior de pedido y facturación (fuera de PC2).
+- **Moneda y cálculo:** Moneda `PEN`; importes como cadenas con dos decimales. Redondeo didáctico por línea `ROUND_HALF_UP`, suma de subtotales y sin cálculo tributario adelantado.
+- **Datos sintéticos y anonimización:** IDs de demostración `CLI-DEMO-*`, `CRM-DEMO-*`, `COT-DEMO-*`, `SOL-DEMO-*`. No son IDs emitidos por una instalación real de Odoo ni contienen números de teléfono o personas reales.
+- **Conservación y límites:** La evidencia local en SQLite acredita persistencia transaccional y reglas de negocio, sin afirmar una política de retención definitiva en producción ni almacenar credenciales.
+
+## 5. Trazabilidad de ejemplo y evidencia verificable
 
 `CAM-DEMO-AUTORADIOS → ATN-DEMO-001 → CRM-DEMO-001 → CLI-DEMO-001 → COT-DEMO-001/v1 → ACE-DEMO-001 → SOL-DEMO-001 → COR-DEMO-001 → eventos I03/I04/I06/I05/I07`.
 
-El caso de excepción usa `COT-DEMO-002/v1`, `ACE-DEMO-002` y `SOL-DEMO-002`. Es una alternativa del mismo caso didáctico, no otra compra empresarial acreditada. Las fixtures y los resultados están en [pruebas PC2](../pruebas/pc2/README.md).
+El caso de excepción usa `COT-DEMO-002/v1`, `ACE-DEMO-002` y `SOL-DEMO-002`. Es una alternativa del mismo caso didáctico, no otra compra empresarial acreditada. Las fixtures y los resultados generados están en [pruebas PC2](../pruebas/pc2/README.md) y fueron comprobados localmente con `python pruebas/pc2/generar_evidencias.py`.
+
+---
+*Revisión técnica efectiva y verificación de datos registrada por: Ballack Zidane Quintanilla Huamanraime (16/10/2026).*

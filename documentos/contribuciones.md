@@ -11,7 +11,7 @@ La distribución del PDF actualizado sustituye el reparto inicial para este incr
 | Gabriel Omar Chavez Mendoza | Contrato CRM–ERP | [Reglas, estados y respuestas](../arquitectura/contratos/crm-erp-v1.md) | Revisión pendiente |
 | Adrián Antony Mansilla Soto | Modelado y prueba normal/excepción | [Flujo y casos de uso](../procesos/pc2-escenario-y-flujo.md), [casos](../pruebas/pc2/README.md) | Revisión pendiente |
 | Jharolym Friendly Paucarcaja Ramos | Arquitectura, interfaces y uso de IA | [Componentes y responsabilidades](../arquitectura/crm-erp-pc2.md), [diagrama](../arquitectura/diagramas/componentes-crm-erp-pc2.svg), [interfaces](../arquitectura/contratos/crm-erp-v1.md), [IA](../fuentes/uso-ia.md) | Revisión pendiente |
-| Ballack Zidane Quintanilla Huamanraime | Datos, controles y evidencia | [Modelo y controles](../datos/pc2-modelo-y-controles.md), [ejecución local](../pruebas/pc2/evidencias/ejecucion.json) | Revisión pendiente |
+| Ballack Zidane Quintanilla Huamanraime | Datos, controles y evidencia | [Modelo y controles](../datos/pc2-modelo-y-controles.md), [ejecución local](../pruebas/pc2/evidencias/ejecucion.json) | Revisado y verificado (16/10/2026): modelo enriquecido con contexto de cliente y suite de pruebas validada localmente |
 
 Expositores propuestos: Gabriel y Jharolym; inscripción y confirmación grupal pendientes. Para cerrar cada aporte, registrar fecha, revisión realizada, archivo/commit o comentario y resultado. El manifiesto identifica la ejecución automatizada de Codex y no la presenta como una prueba ejecutada por un estudiante.
 
