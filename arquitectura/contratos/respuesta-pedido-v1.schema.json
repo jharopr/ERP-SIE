@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mys:pc2:respuesta-pedido:1.0",
+  "title": "I03 Decisión de evaluación, sin efectos operativos",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "request_id", "correlation_id", "quotation_id", "quotation_version", "status", "code", "message", "responsible_role", "required_action", "total", "currency", "order_id", "conditions"],
+  "properties": {
+    "contract_version": {"const": "1.0"},
+    "request_id": {"$ref": "#/$defs/nullableIdentifier"},
+    "correlation_id": {"$ref": "#/$defs/nullableIdentifier"},
+    "quotation_id": {"$ref": "#/$defs/nullableIdentifier"},
+    "quotation_version": {"type": ["integer", "null"], "minimum": 1},
+    "status": {"enum": ["ACEPTADA", "RECHAZADA", "PROMESA_CONDICIONADA", "PENDIENTE"]},
+    "code": {"enum": ["VALIDADA", "DESCUENTO_SIN_APROBACION", "DISPONIBILIDAD_PARCIAL", "DEPENDENCIA_NO_DISPONIBLE", "CONTRATO_INVALIDO", "NO_AUTORIZADO", "IDEMPOTENCIA_CONFLICTO", "COTIZACION_YA_EVALUADA", "DATOS_INCONSISTENTES", "CLIENTE_NO_VALIDADO", "VERSION_OBSOLETA", "COTIZACION_NO_ENVIADA", "COTIZACION_VENCIDA", "ACEPTACION_INVALIDA", "PRECIO_INVALIDO"]},
+    "message": {"type": "string", "minLength": 1},
+    "responsible_role": {"enum": ["VENTAS", "GERENCIA", "ADMINISTRADOR_Y_VENTAS"]},
+    "required_action": {"type": "string", "minLength": 1},
+    "total": {"type": ["string", "null"], "pattern": "^[0-9]+\\.[0-9]{2}(?![\\s\\S])"},
+    "currency": {"enum": ["PEN", null]},
+    "order_id": {"type": "null"},
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["sku", "requested_quantity", "available_quantity", "promised_date", "requires_customer_acceptance"],
+        "properties": {
+          "sku": {"type": "string", "minLength": 1},
+          "requested_quantity": {"type": "integer", "minimum": 1},
+          "available_quantity": {"type": "integer", "minimum": 0},
+          "promised_date": {"type": "null"},
+          "requires_customer_acceptance": {"const": true}
+        }
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"status": {"const": "ACEPTADA"}}}, "then": {"properties": {"code": {"const": "VALIDADA"}, "total": {"type": "string"}, "currency": {"const": "PEN"}, "conditions": {"maxItems": 0}}}},
+    {"if": {"properties": {"status": {"const": "PROMESA_CONDICIONADA"}}}, "then": {"properties": {"code": {"const": "DISPONIBILIDAD_PARCIAL"}, "total": {"type": "string"}, "currency": {"const": "PEN"}, "conditions": {"minItems": 1}}}},
+    {"if": {"properties": {"status": {"const": "PENDIENTE"}}}, "then": {"properties": {"code": {"const": "DEPENDENCIA_NO_DISPONIBLE"}, "conditions": {"maxItems": 0}}}},
+    {"if": {"properties": {"status": {"const": "RECHAZADA"}}}, "then": {"properties": {"code": {"not": {"enum": ["VALIDADA", "DISPONIBILIDAD_PARCIAL", "DEPENDENCIA_NO_DISPONIBLE"]}}, "conditions": {"maxItems": 0}}}},
+    {"if": {"properties": {"code": {"not": {"const": "CONTRATO_INVALIDO"}}}}, "then": {"properties": {"request_id": {"type": "string"}, "correlation_id": {"type": "string"}, "quotation_id": {"type": "string"}, "quotation_version": {"type": "integer"}}}}
+  ],
+  "$defs": {
+    "nullableIdentifier": {"type": ["string", "null"], "minLength": 1, "maxLength": 64, "pattern": "^[A-Za-z0-9_-]+(?![\\s\\S])"}
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "case_id": "PC2-N01",
+  "kind": "SIMULACION_LOCAL_SIN_ODOO",
+  "actor": "VEN-DEMO-01",
+  "business_time": "2026-10-15T18:00:00-05:00",
+  "fixture_variant": "normal",
+  "expected": {
+    "status": "ACEPTADA",
+    "code": "VALIDADA",
+    "order_id": null
+  },
+  "obtained": {
+    "contract_version": "1.0",
+    "request_id": "SOL-DEMO-001",
+    "correlation_id": "COR-DEMO-001",
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "status": "ACEPTADA",
+    "code": "VALIDADA",
+    "message": "Solicitud validada; confirmación operativa pendiente.",
+    "responsible_role": "VENTAS",
+    "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+    "total": "1900.00",
+    "currency": "PEN",
+    "order_id": null,
+    "conditions": []
+  },
+  "passed": true,
+  "request": {
+    "contract_version": "1.0",
+    "company_id": "MYS-DEMO",
+    "request_id": "SOL-DEMO-001",
+    "correlation_id": "COR-DEMO-001",
+    "opportunity_id": "CRM-DEMO-001",
+    "customer_id": "CLI-DEMO-001",
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "acceptance_id": "ACE-DEMO-001"
+  },
+  "audit": [
+    {
+      "event_id": 1,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I03",
+      "event_type": "RECIBIDA",
+      "code": "RECIBIDA",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    },
+    {
+      "event_id": 2,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "SNAPSHOT_COMERCIAL",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    },
+    {
+      "event_id": 3,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I06",
+      "event_type": "CONSULTA",
+      "code": "POLITICA_DESCUENTO",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    },
+    {
+      "event_id": 4,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I05",
+      "event_type": "CONSULTA",
+      "code": "DISPONIBILIDAD",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    },
+    {
+      "event_id": 5,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-DEMO-001",
+      "correlation_id": "COR-DEMO-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "VALIDADA",
+      "occurred_at": "2026-10-15T18:00:00-05:00"
+    }
+  ],
+  "request_count": 1,
+  "masters_unchanged": true
+}

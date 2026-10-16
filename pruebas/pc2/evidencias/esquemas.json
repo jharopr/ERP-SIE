@@ -1,0 +1,28 @@
+{
+  "executed_at_utc": "2026-10-16T04:55:13.212844+00:00",
+  "validator": "jsonschema 4.26.0",
+  "draft": "2020-12",
+  "schema_count": 2,
+  "validated_files": [
+    "pruebas/pc2/fixtures/solicitud-excepcion.json",
+    "pruebas/pc2/fixtures/solicitud-normal.json",
+    "pruebas/pc2/evidencias/PC2-E01.json",
+    "pruebas/pc2/evidencias/PC2-N01.json",
+    "pruebas/pc2/evidencias/PC2-P01.json",
+    "pruebas/pc2/evidencias/PC2-T01.json"
+  ],
+  "request_consistency_cases": 149,
+  "invalid_response_cases": 4,
+  "passed": true,
+  "sha256": {
+    "arquitectura/contratos/solicitud-pedido-v1.schema.json": "f0ae93a6094a01439493e8f0083e4bfee259c5e494339b3dc5e5b76880f257ab",
+    "arquitectura/contratos/respuesta-pedido-v1.schema.json": "7b3b75cfe89cfd9c7b246ce4eae38534758c4136a7ec8e9d93beb80bb38b196c",
+    "pruebas/pc2/fixtures/solicitud-excepcion.json": "6d0da4d9873bf7c5ad0d3f9129b6daa45aa0fa6336d102d17debad50f4271d00",
+    "pruebas/pc2/fixtures/solicitud-normal.json": "b3cbff8c45e37bbb29a88645016f3b71d36982f9948331fad0baa68ea2bec88b",
+    "pruebas/pc2/evidencias/PC2-E01.json": "788bb276c2a2c4382f65bc94530027c00a7af874c7e2390f09be6e7fb2fa969c",
+    "pruebas/pc2/evidencias/PC2-N01.json": "bb60607f4fae54592ae0b77624d33a54356b8bb9e0f7ebde2c0534f2bd343129",
+    "pruebas/pc2/evidencias/PC2-P01.json": "e3c2a44b40a5e8c22a2a035c53b994bbb32fe9c9e9f51c3a3019bc87e7db98ed",
+    "pruebas/pc2/evidencias/PC2-T01.json": "209b2d7c96c15fae95014d383851e56e4529f54c1c3dd6f691312a4378936dfc",
+    "pruebas/pc2/validar_esquemas.py": "aeeb3164a05a3e32b76af3b5aba88323c15e928ab80a9fbd6a731533a7fe2f3d"
+  }
+}

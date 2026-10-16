@@ -1,5 +1,7 @@
 # Fuentes
 
+- [PC2: fuentes, decisiones y supuestos](pc2.md): rúbrica/plantilla, referencias oficiales, supuestos comerciales y vacíos pendientes de validar.
+
 - [Registro de fuentes](registro-fuentes.md): bibliografía, ubicación de evidencia, fecha y límite de uso.
 - [Uso de IA](uso-ia.md): herramienta, finalidad, alcance y control de revisión.
 

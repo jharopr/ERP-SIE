@@ -1,5 +1,7 @@
 # Ficha de implementación base del ERP
 
+> Línea base operativa de PC1. El [incremento PC2](crm-erp-pc2.md) incorpora CRM y gobierna la solicitud al ERP; su [contrato](contratos/crm-erp-v1.md) no confirma pedidos, reserva stock ni ejecuta las fases documentales descritas aquí.
+
 ## 1. Propósito
 
 Implementar una fuente única de información comercial para clientes, pedidos, inventario y ventas, con **Odoo como ERP central** y **UBLHUB como microservicio de documentos electrónicos**. La solución atiende dos canales: venta presencial registrada en el ERP y venta por WhatsApp móvil atendida manualmente.

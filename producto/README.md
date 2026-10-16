@@ -1,5 +1,7 @@
 # Producto
 
+Para el incremento PC2 se usa el [paquete comercial y contrato](../documentos/pc2/README.md) y su [simulación local](../pruebas/pc2/README.md). El frontend siguiente representa PC1 y no ejecuta los controles CRM–ERP.
+
 - [Backlog de implementación](backlog.md): trabajo priorizado y evidencia de cierre.
 - [Prototipo visual para Odoo](frontend/README.md): interfaz estática navegable e instrucciones de ejecución.
 

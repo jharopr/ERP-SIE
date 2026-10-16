@@ -2,6 +2,12 @@
 
 Los diagramas se complementan entre sí; cada notación responde una pregunta distinta y evita sobrecargar una sola imagen.
 
+## Incremento PC2
+
+El [diagrama de componentes CRM–ERP](componentes-crm-erp-pc2.svg), con [fuente Mermaid editable](componentes-crm-erp-pc2.mmd), define C01–C08 e I01–I07. Distingue componentes estándar y extensiones propuestas y conserva UBLHUB solo como continuidad. Es la vista que gobierna los [contratos PC2](../contratos/crm-erp-v1.md). La fuente Mermaid conserva la estructura semántica; el SVG es una composición manual de la misma vista, no una exportación automática del archivo Mermaid.
+
+El [flujo comercial y estados](../../procesos/pc2-escenario-y-flujo.md) y el [ERD de PC2](../../datos/pc2-modelo-y-controles.md) complementan esa vista. Las vistas siguientes corresponden a la línea base PC1, que incluye ejecución y facturación posteriores al incremento evaluable.
+
 | Diagrama | Notación | Pregunta que responde |
 | --- | --- | --- |
 | [Actores y casos de uso](actores-casos-uso.svg) | UML — casos de uso | ¿Quién usa cada capacidad? |

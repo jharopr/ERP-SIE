@@ -1,0 +1,39 @@
+flowchart TB
+    WA["Cliente / WhatsApp móvil<br/>Campaña y conversación hipotéticas"]
+    VE["Vendedor<br/>Registro manual; identidad de sesión"]
+    GE["Gerencia<br/>Aprueba excepciones sin autoaprobación"]
+    WA -->|"Atención humana; sin WhatsApp API"| VE
+
+    subgraph ODOO["Plataforma Odoo propuesta · no instalada · PC2 termina en la decisión de solicitud"]
+        direction TB
+        C01["C01 · CRM<br/>Lead / oportunidad · crm.lead"]
+        C02["C02 · Contactos<br/>Cliente único · res.partner"]
+        C03["C03 · Ventas y catálogo<br/>Cotización · sale.order / sale.order.line<br/>Versión + aceptación: extensión propuesta"]
+        C04["C04 · Control de transición<br/>Extensión propuesta · mys.crm.transition<br/>ACEPTADA / RECHAZADA / PROMESA / PENDIENTE"]
+        C05["C05 · Inventario<br/>Disponibilidad por SKU y ubicación<br/>Consulta sin reserva"]
+        C06["C06 · Autorizaciones comerciales<br/>Extensión propuesta · mys.discount.approval"]
+        C07["C07 · Seguridad y bitácora<br/>Sesión, grupos, reglas y compañía<br/>mys.transition.event: extensión propuesta"]
+        C08[("C08 · Persistencia Odoo / PostgreSQL<br/>C01–C07 acceden mediante ORM<br/>Unicidad y transacciones por implementar")]
+
+        C01 -->|"I01 · resolver cliente"| C02
+        C01 -->|"I02 · preparar cotización"| C03
+        C01 -->|"I03 · solicitar / consultar decisión"| C04
+        C04 -->|"I04 · leer snapshot y aceptación"| C03
+        C04 -->|"I05 · consultar disponibilidad"| C05
+        C04 -->|"I06 · verificar aprobación"| C06
+        C04 -->|"I07 · autorizar y auditar; aplica también a C01–C06"| C07
+        C07 ---|"C01–C07 → C08; ORM, sin acceso SQL desde clientes"| C08
+    end
+    VE --> C01
+    GE -->|"Decisión humana registrada"| C06
+    C03 -. "Continuidad de PC1; fuera de PC2" .-> AD["Adaptador Odoo–UBLHUB"]
+    AD -.-> UB["UBLHUB / ruta tributaria"]
+
+    classDef standard fill:#eaf2ff,stroke:#3265a8,color:#122742;
+    classDef proposed fill:#fff4df,stroke:#bd790e,color:#53370c;
+    classDef persistence fill:#e8f6ee,stroke:#328160,color:#163f31;
+    classDef context fill:#f2f4f7,stroke:#94a3b8,color:#475569;
+    class C01,C02,C03,C05 standard;
+    class C04,C06,C07 proposed;
+    class C08 persistence;
+    class WA,VE,GE,AD,UB context;

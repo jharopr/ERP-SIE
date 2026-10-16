@@ -2,6 +2,19 @@
 
 Este repositorio reúne el análisis del negocio, la comparación de soluciones y la arquitectura base para implementar un sistema de gestión en **IMPORTACIONES MYS HERMANOS S.A.C.** (RUC 20606915528).
 
+## Incremento vigente · PC2
+
+La [entrega PC2](documentos/pc2/README.md) incorpora **CRM de Odoo** y documenta el recorrido fuente/lead → oportunidad → cotización → solicitud de transición al ERP. El tramo termina en aceptación, rechazo o promesa condicionada; una falla técnica queda pendiente. Pedido operativo, facturación, entrega y posventa continúan fuera de esta evaluación.
+
+![Arquitectura de componentes CRM–ERP de PC2](arquitectura/diagramas/componentes-crm-erp-pc2.svg)
+
+- [Entrega integrada en cinco secciones](documentos/pc2/entrega-pc2.md).
+- [Componentes y sistemas de registro](arquitectura/crm-erp-pc2.md) → [contrato e interfaces I01–I07](arquitectura/contratos/crm-erp-v1.md).
+- [Escenario y flujos](procesos/pc2-escenario-y-flujo.md), [datos y controles](datos/pc2-modelo-y-controles.md), [fuentes y supuestos](fuentes/pc2.md).
+- [Prueba local reproducible y evidencias](pruebas/pc2/README.md): `python pruebas/pc2/generar_evidencias.py`.
+
+**Estado:** arquitectura propuesta y contrato simulado con datos sintéticos. No hay una instalación Odoo acreditada. Los precios/reglas son supuestos y las revisiones humanas del equipo están pendientes. La documentación operativa que sigue corresponde a la línea base de PC1 y su implementación futura.
+
 ## Situación y decisión
 
 - La empresa vende por dos canales: **atención presencial registrada directamente en el ERP** y **WhatsApp móvil**, hoy atendido manualmente.

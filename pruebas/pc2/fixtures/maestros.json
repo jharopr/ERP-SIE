@@ -1,0 +1,31 @@
+{
+  "notice": "Datos sintéticos. Hora de negocio fija para repetir la simulación; no es hora de ejecución ni una instalación de Odoo.",
+  "business_time": "2026-10-15T18:00:00-05:00",
+  "company_id": "MYS-DEMO",
+  "policy": {"max_seller_discount": "5.00"},
+  "actors": {
+    "VEN-DEMO-01": {"role": "VENTAS", "company_id": "MYS-DEMO", "opportunities": ["CRM-DEMO-001"]},
+    "VEN-DEMO-02": {"role": "VENTAS", "company_id": "MYS-DEMO", "opportunities": []},
+    "GER-DEMO-01": {"role": "GERENCIA", "company_id": "MYS-DEMO", "opportunities": []},
+    "ALM-DEMO-01": {"role": "ALMACEN", "company_id": "MYS-DEMO", "opportunities": []}
+  },
+  "customers": {
+    "CLI-DEMO-001": {"company_id": "MYS-DEMO", "name": "Cliente de demostración 001", "active": true, "identity_reviewed": true}
+  },
+  "opportunities": {
+    "CRM-DEMO-001": {"company_id": "MYS-DEMO", "customer_id": "CLI-DEMO-001", "type": "opportunity", "campaign": "CAM-DEMO-AUTORADIOS", "source": "PUBLICACION-DEMO", "channel": "WHATSAPP_MANUAL", "attention_reference": "ATN-DEMO-001"}
+  },
+  "products": {
+    "AUT-DEMO-001": {"company_id": "MYS-DEMO", "active": true, "name": "Autoradio genérico de demostración", "unit_price": "400.00", "currency": "PEN"}
+  },
+  "quotations": {
+    "COT-DEMO-001": {"company_id": "MYS-DEMO", "opportunity_id": "CRM-DEMO-001", "customer_id": "CLI-DEMO-001", "version": 1, "state": "sent", "currency": "PEN", "valid_until": "2026-10-16T23:59:59-05:00", "seller_id": "VEN-DEMO-01", "lines": [{"sku": "AUT-DEMO-001", "quantity": 5, "unit_price": "400.00", "discount_pct": "5.00"}], "total": "1900.00"},
+    "COT-DEMO-002": {"company_id": "MYS-DEMO", "opportunity_id": "CRM-DEMO-001", "customer_id": "CLI-DEMO-001", "version": 1, "state": "sent", "currency": "PEN", "valid_until": "2026-10-16T23:59:59-05:00", "seller_id": "VEN-DEMO-01", "lines": [{"sku": "AUT-DEMO-001", "quantity": 5, "unit_price": "400.00", "discount_pct": "10.00"}], "total": "1800.00"}
+  },
+  "acceptances": {
+    "ACE-DEMO-001": {"company_id": "MYS-DEMO", "quotation_id": "COT-DEMO-001", "quotation_version": 1, "customer_id": "CLI-DEMO-001", "total": "1900.00", "accepted_at": "2026-10-15T17:00:00-05:00"},
+    "ACE-DEMO-002": {"company_id": "MYS-DEMO", "quotation_id": "COT-DEMO-002", "quotation_version": 1, "customer_id": "CLI-DEMO-001", "total": "1800.00", "accepted_at": "2026-10-15T17:00:00-05:00"}
+  },
+  "approvals": [],
+  "availability": {"available": true, "company_id": "MYS-DEMO", "location_id": "ALM-DEMO", "quantities": {"AUT-DEMO-001": 8}}
+}

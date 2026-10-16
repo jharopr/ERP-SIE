@@ -1,0 +1,47 @@
+{
+  "executed_at_utc": "2026-10-16T04:55:12.670502+00:00",
+  "executor": "Codex (ejecución automatizada); revisión humana pendiente",
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows",
+    "database": "SQLite local en memoria"
+  },
+  "scope": "Contrato simulado; sin Odoo, PostgreSQL, WhatsApp API ni UBLHUB",
+  "tests": "unittest.txt",
+  "cases": [
+    {
+      "case_id": "PC2-N01",
+      "status": "ACEPTADA",
+      "code": "VALIDADA",
+      "passed": true
+    },
+    {
+      "case_id": "PC2-E01",
+      "status": "RECHAZADA",
+      "code": "DESCUENTO_SIN_APROBACION",
+      "passed": true
+    },
+    {
+      "case_id": "PC2-P01",
+      "status": "PROMESA_CONDICIONADA",
+      "code": "DISPONIBILIDAD_PARCIAL",
+      "passed": true
+    },
+    {
+      "case_id": "PC2-T01",
+      "status": "PENDIENTE",
+      "code": "DEPENDENCIA_NO_DISPONIBLE",
+      "passed": true
+    }
+  ],
+  "sha256": {
+    "pruebas/pc2/generar_evidencias.py": "dd8780bc3da69d4037fa100780d871950ad58cdf835a0e74364a1b02e81a2468",
+    "pruebas/pc2/simulador.py": "1ff28a81508498b74bc95d5a98be2dd1d3f484e2404b9bd547d19deba5e749f4",
+    "pruebas/pc2/test_contrato.py": "c06f95f5daf4cdb6d3effd9f5bc78be7fc1134aff153eebe7a85b949875f43c9",
+    "pruebas/pc2/fixtures/maestros.json": "d21425858b6d7f37bd24bccefbd4e31c1bd0b3f660456364106d6aa372fc956d",
+    "pruebas/pc2/fixtures/solicitud-excepcion.json": "6d0da4d9873bf7c5ad0d3f9129b6daa45aa0fa6336d102d17debad50f4271d00",
+    "pruebas/pc2/fixtures/solicitud-normal.json": "b3cbff8c45e37bbb29a88645016f3b71d36982f9948331fad0baa68ea2bec88b",
+    "arquitectura/contratos/respuesta-pedido-v1.schema.json": "7b3b75cfe89cfd9c7b246ce4eae38534758c4136a7ec8e9d93beb80bb38b196c",
+    "arquitectura/contratos/solicitud-pedido-v1.schema.json": "f0ae93a6094a01439493e8f0083e4bfee259c5e494339b3dc5e5b76880f257ab"
+  }
+}

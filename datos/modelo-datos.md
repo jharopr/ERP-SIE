@@ -1,5 +1,7 @@
 # Modelo de Datos
 
+> Modelo operativo de PC1. Para el tramo comercial evaluado en PC2, consultar [modelo y controles CRM–ERP](pc2-modelo-y-controles.md); allí se distinguen lead/oportunidad, cotización y solicitud del pedido operativo posterior.
+
 Este documento define las entidades principales, sus atributos mínimos y las relaciones que conforman el modelo de datos del proyecto (integración Odoo + UBLHUB).
 
 ## Diagrama Entidad-Relación (ERD)

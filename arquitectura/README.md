@@ -2,6 +2,8 @@
 
 Esta carpeta documenta la solución seleccionada para IMPORTACIONES MYS HERMANOS S.A.C.: **Odoo como ERP central** y **UBLHUB como microservicio de boletas, facturas y guías de remisión**.
 
+Para PC2, empezar por [Arquitectura CRM–ERP](crm-erp-pc2.md), su [diagrama de componentes](diagramas/componentes-crm-erp-pc2.svg) y el [contrato con siete interfaces](contratos/crm-erp-v1.md). Incorporan CRM integrado en Odoo y extensiones propuestas; el alcance termina en la respuesta a la solicitud. Los archivos de implementación base conservan el contexto operativo de PC1.
+
 ## Archivos
 
 | Archivo | Contenido |

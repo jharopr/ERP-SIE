@@ -1,0 +1,2 @@
+# Validador opcional de los contratos JSON Schema; simulador y unittest no lo necesitan.
+jsonschema>=4.18,<5
