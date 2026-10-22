@@ -7,3 +7,8 @@ evidencias/privadas/
 # Archivos locales y temporales
 *.tmp
 ~$*
+
+# Entregables y exportaciones locales
+/output/
+*.docx
+*.zip

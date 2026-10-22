@@ -5,7 +5,6 @@ Este repositorio reúne el análisis del negocio, la comparación de soluciones 
 ## Incremento vigente · PC2 (Consolidado Oficial v2.1)
 
 El documento principal de entrega consolidado conforme a la consigna oficial vigente (corte a la diapositiva 12 de la sesión 6) se encuentra en:
-- 📄 **Documento Consolidado (Word):** [`GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx`](GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx)
 - 📖 **Documento Consolidado (Markdown):** [`documentos/pc2/entrega-pc2.md`](documentos/pc2/entrega-pc2.md)
 - 👥 **Reparto y contribuciones del equipo:** [`documentos/contribuciones.md`](documentos/contribuciones.md)
 
@@ -13,7 +12,9 @@ Este incremento delimita el escenario evaluable al tramo comercial CRM (tienda f
 
 ## Examen parcial del 24 de octubre de 2026
 
-El [aporte de Benjamín al recorrido O2C](documentos/ep/benjamin/README.md) desarrolla la sección 3 del comité para público general nuevo en tienda física. Incluye [Word con la parte 3 completa](output/docx/GE703_EP_G7_BENJAMIN_PARTE_3_COMPLETA.docx), [contenido editable](documentos/ep/benjamin/aporte-benjamin.md), [panel local navegable](documentos/ep/benjamin/panel-benjamin.html), journeys, mapas, SIPOC, guion y [pruebas sintéticas](pruebas/ep-benjamin/evidencias/resultados.md). El alcance termina en la respuesta de evaluación CRM–ERP; P2P se conecta por una señal conceptual de reposición. La integración al panel único del grupo y la revisión humana siguen pendientes.
+El [aporte de Benjamín al recorrido O2C](documentos/ep/benjamin/README.md) desarrolla la sección 3 del comité para público general nuevo en tienda física. Incluye [contenido editable](documentos/ep/benjamin/aporte-benjamin.md), [informe imprimible](documentos/ep/benjamin/informe-benjamin.html), [panel local navegable](documentos/ep/benjamin/panel-benjamin.html), journeys, mapas, SIPOC, guion y [pruebas sintéticas](pruebas/ep-benjamin/evidencias/resultados.md). El alcance termina en la respuesta de evaluación CRM–ERP; P2P se conecta por una señal conceptual de reposición. La integración al panel único del grupo y la revisión humana siguen pendientes.
+
+Los entregables Word, ZIP y la carpeta `output/` se mantienen fuera del repositorio para evitar copias redundantes. Las fuentes editables se conservan en Markdown, HTML y los generadores correspondientes.
 
 ## Situación y decisión
 

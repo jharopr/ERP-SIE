@@ -5,7 +5,7 @@
 **Versión de Entrega:** PC2 v2.1 (Alineada con consigna vigente y corte a diapositiva 12 de Sesión 6)  
 **Fecha de Entrega:** 16/10/2026 · **Fecha de Exposición:** 17/10/2026 (Expositor único, máx. 10 minutos)  
 **Enlace al repositorio:** [github.com/jharopr/ERP-SIE](https://github.com/jharopr/ERP-SIE)  
-**Documento oficial consolidado Word:** [`GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx`](../../GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx)
+**Formato de la entrega consolidada en el repositorio:** Markdown (este documento).
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Reparto Vigente de PC2 (Alineado a Rúbrica Oficial y Plantilla G7)
 
-La siguiente tabla refleja la distribución oficial acordada y consolidada en el entregable final [`GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx`](../GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx), cumpliendo las 5 secciones requeridas por la consigna docente:
+La siguiente tabla refleja la distribución oficial acordada y consolidada en la [entrega PC2](pc2/entrega-pc2.md), cumpliendo las 5 secciones requeridas por la consigna docente:
 
 | Integrante | Responsabilidad Ajustada | Entregable Concreto y Aporte Verificable | Estado de Revisión |
 | :--- | :--- | :--- | :--- |

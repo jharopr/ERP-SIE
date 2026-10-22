@@ -18,15 +18,12 @@ def main():
         ROOT / 'documentos/pc2/entrega-pc2.md',
         ROOT / 'documentos/contexto-y-alcance.md',
         ROOT / 'macroproesos ERP/macroprocesos-o2c.md',
-        ROOT / 'output/pdf/GE703_EP_G7_Benjamin_Recorrido_O2C.pdf',
-        ROOT / 'output/docx/GE703_EP_G7_BENJAMIN_PARTE_3_COMPLETA.docx',
     ]
     instructions = '''APORTE DE BENJAMIN AL EXAMEN PARCIAL GE703 G7
 
 Descomprimir manteniendo las carpetas.
 Abrir documentos/ep/benjamin/panel-benjamin.html en el navegador.
-Leer output/pdf/GE703_EP_G7_Benjamin_Recorrido_O2C.pdf.
-Abrir output/docx/GE703_EP_G7_BENJAMIN_PARTE_3_COMPLETA.docx para la plantilla Word con la parte 3 completa.
+Abrir documentos/ep/benjamin/informe-benjamin.html para leer o imprimir el informe.
 Editar documentos/ep/benjamin/aporte-benjamin.md.
 
 Reproducir desde esta carpeta con Python 3:

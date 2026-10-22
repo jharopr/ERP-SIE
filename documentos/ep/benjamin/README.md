@@ -7,11 +7,11 @@
 
 Abrir [panel-benjamin.html](panel-benjamin.html) en un navegador para navegar el mapa integrado, los journeys, el flujo, la línea de tiempo y tres casos. Funciona localmente sin servidor ni conexión; es el bloque de Benjamin para incorporar al panel único del grupo.
 
-El [contenido editable completo](aporte-benjamin.md) incluye el texto de la plantilla, la fila de contribución, SIPOC, datos y controles, indicadores, guion de dos minutos, preparación de preguntas y matriz de los siete criterios de la rúbrica. El [informe HTML](informe-benjamin.html) conserva la versión imprimible; las figuras sustituyen las tablas que repiten el mismo contenido, cuyo detalle permanece en Markdown. El PDF está en [output/pdf](../../../output/pdf/GE703_EP_G7_Benjamin_Recorrido_O2C.pdf).
+El [contenido editable completo](aporte-benjamin.md) incluye el texto de la plantilla, la fila de contribución, SIPOC, datos y controles, indicadores, guion de dos minutos, preparación de preguntas y matriz de los siete criterios de la rúbrica. El [informe HTML](informe-benjamin.html) conserva la versión imprimible; las figuras sustituyen las tablas que repiten el mismo contenido, cuyo detalle permanece en Markdown. El PDF puede exportarse desde ese informe cuando sea necesario.
 
 ## Artefactos
 
-La [copia de la plantilla Word con la parte 3 completa](../../../output/docx/GE703_EP_G7_BENJAMIN_PARTE_3_COMPLETA.docx) incorpora las seis imágenes originales, explicaciones, matrices, resultados y guion. Conserva los demás apartados y el archivo original; se verificaron las 20 páginas con el motor de Word.
+El aporte se mantiene en Markdown y HTML junto con sus diagramas y evidencias. Las copias Word, PDF y ZIP de `output/` se retiraron para reducir archivos redundantes.
 
 | Archivo | Uso |
 | --- | --- |
@@ -38,11 +38,11 @@ python documentos/ep/benjamin/generar_material.py
 
 Solo el último comando requiere la biblioteca `markdown`; los dos anteriores usan la biblioteca estándar. El panel captura los resultados JSON al generarse: después de cambiar fixtures se deben regenerar evidencias y panel, en ese orden.
 
-El PDF se imprime desde el informe HTML con CSS de página A4 horizontal. Para conservar la composición, habilitar gráficos de fondo y respetar la orientación y márgenes definidos. La copia entregada se revisó mediante render de todas sus páginas.
+El PDF se imprime desde el informe HTML con CSS de página A4 horizontal. Para conservar la composición, habilitar gráficos de fondo y respetar la orientación y márgenes definidos. Las exportaciones locales se guardan fuera del control de versiones.
 
 ## Límites y tareas del equipo
 
-Se prepara un aporte individual y evidencias para el comité. Quedan por completar con el grupo el panel único accesible, el enlace de entrega, las intervenciones ajenas, la designación del vocal y el registro de su pregunta real. El documento original adjunto no se sobrescribe.
+Se prepara un aporte individual y evidencias para el comité. Quedan por completar con el grupo el panel único accesible, el enlace de entrega, las intervenciones ajenas, la designación del vocal y el registro de su pregunta real.
 
 Los valores de stock, precios, descuentos, cantidades, horas y emociones son académicos. El journey actual es una reconstrucción documental, no trabajo de campo nuevo. La regla del 5 % requiere confirmación del dueño; la disponibilidad normal 8 se declara como nueva fixture EP ante la discrepancia con el stock 5 del Word PC2. Odoo no está acreditado como desplegado; P2P se conecta mediante una señal conceptual, sin ejecutar compras. El límite es la respuesta de evaluación, con pedido nulo y sin reserva.
 
