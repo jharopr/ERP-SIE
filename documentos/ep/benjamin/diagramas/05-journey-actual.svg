@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1010" viewBox="0 0 1800 1010" role="img" aria-labelledby="title desc">
+<title id="title">Journey actual del cliente en tienda</title>
+<desc id="desc">Reconstrucción documental del diagnóstico. Fricciones y emociones son hipótesis por validar con clientes.</desc>
+<rect width="1800" height="1010" fill="#ffffff"/>
+<style>text{font-family:Segoe UI,Arial,sans-serif;fill:#173148}</style>
+<text x="42" y="57" font-size="34" font-weight="700" style="fill:#173148">Journey actual del cliente en tienda</text>
+<text x="42" y="95" font-size="19" font-weight="400" style="fill:#173148">Reconstrucción documental del diagnóstico. Fricciones y emociones son hipótesis por validar con clientes.</text>
+<rect x="212" y="125" width="253" height="47" rx="7" fill="#173148"/>
+<text x="226" y="155" font-size="21" font-weight="700" style="fill:#ffffff">1  Llegada</text>
+<rect x="469" y="125" width="253" height="47" rx="7" fill="#173148"/>
+<text x="483" y="155" font-size="21" font-weight="700" style="fill:#ffffff">2  Necesidad</text>
+<rect x="726" y="125" width="253" height="47" rx="7" fill="#173148"/>
+<text x="740" y="155" font-size="21" font-weight="700" style="fill:#ffffff">3  Disponibilidad</text>
+<rect x="983" y="125" width="253" height="47" rx="7" fill="#173148"/>
+<text x="997" y="155" font-size="21" font-weight="700" style="fill:#ffffff">4  Oferta</text>
+<rect x="1240" y="125" width="253" height="47" rx="7" fill="#173148"/>
+<text x="1254" y="155" font-size="21" font-weight="700" style="fill:#ffffff">5  Aceptación</text>
+<rect x="1497" y="125" width="253" height="47" rx="7" fill="#173148"/>
+<text x="1511" y="155" font-size="21" font-weight="700" style="fill:#ffffff">6  Respuesta</text>
+<text x="47" y="215" font-size="19" font-weight="700" style="fill:#173148">Cliente</text>
+<rect x="212" y="180" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="225" y="213" font-size="20" font-weight="400" style="fill:#173148">Pide orientación sobre</text>
+<text x="225" y="239" font-size="20" font-weight="400" style="fill:#173148">autoradios</text>
+<rect x="469" y="180" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="482" y="213" font-size="20" font-weight="400" style="fill:#173148">Explica cinco unidades y</text>
+<text x="482" y="239" font-size="20" font-weight="400" style="fill:#173148">uso final</text>
+<rect x="726" y="180" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="739" y="213" font-size="20" font-weight="400" style="fill:#173148">Pregunta si hay</text>
+<text x="739" y="239" font-size="20" font-weight="400" style="fill:#173148">disponibilidad</text>
+<rect x="983" y="180" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="996" y="213" font-size="20" font-weight="400" style="fill:#173148">Compara precio y</text>
+<text x="996" y="239" font-size="20" font-weight="400" style="fill:#173148">descuento</text>
+<rect x="1240" y="180" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="1253" y="213" font-size="20" font-weight="400" style="fill:#173148">Acepta o pide un ajuste</text>
+<rect x="1497" y="180" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="1510" y="213" font-size="20" font-weight="400" style="fill:#173148">Pregunta qué sigue</text>
+<text x="47" y="360" font-size="19" font-weight="700" style="fill:#173148">Interacción</text>
+<text x="47" y="385" font-size="19" font-weight="700" style="fill:#173148">visible</text>
+<rect x="212" y="325" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="225" y="358" font-size="20" font-weight="400" style="fill:#173148">Mostrador y vendedor</text>
+<rect x="469" y="325" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="482" y="358" font-size="20" font-weight="400" style="fill:#173148">Conversación presencial</text>
+<rect x="726" y="325" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="739" y="358" font-size="20" font-weight="400" style="fill:#173148">Consulta y respuesta</text>
+<text x="739" y="384" font-size="20" font-weight="400" style="fill:#173148">manual</text>
+<rect x="983" y="325" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="996" y="358" font-size="20" font-weight="400" style="fill:#173148">Oferta comunicada al</text>
+<text x="996" y="384" font-size="20" font-weight="400" style="fill:#173148">cliente</text>
+<rect x="1240" y="325" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="1253" y="358" font-size="20" font-weight="400" style="fill:#173148">Consulta al dueño si</text>
+<text x="1253" y="384" font-size="20" font-weight="400" style="fill:#173148">excede facultad</text>
+<rect x="1497" y="325" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="1510" y="358" font-size="20" font-weight="400" style="fill:#173148">Información del vendedor</text>
+<text x="47" y="505" font-size="19" font-weight="700" style="fill:#173148">Fricción a</text>
+<text x="47" y="530" font-size="19" font-weight="700" style="fill:#173148">validar</text>
+<rect x="212" y="470" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="225" y="503" font-size="20" font-weight="400" style="fill:#173148">Espera sin referencia de</text>
+<text x="225" y="529" font-size="20" font-weight="400" style="fill:#173148">atención</text>
+<rect x="469" y="470" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="482" y="503" font-size="20" font-weight="400" style="fill:#173148">Repetir datos o perder</text>
+<text x="482" y="529" font-size="20" font-weight="400" style="fill:#173148">contexto</text>
+<rect x="726" y="470" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="739" y="503" font-size="20" font-weight="400" style="fill:#173148">Stock sin fuente, hora o</text>
+<text x="739" y="529" font-size="20" font-weight="400" style="fill:#173148">distinción de reserva</text>
+<rect x="983" y="470" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="996" y="503" font-size="20" font-weight="400" style="fill:#173148">Versiones o condiciones</text>
+<text x="996" y="529" font-size="20" font-weight="400" style="fill:#173148">poco claras</text>
+<rect x="1240" y="470" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="1253" y="503" font-size="20" font-weight="400" style="fill:#173148">Aceptación ambigua y</text>
+<text x="1253" y="529" font-size="20" font-weight="400" style="fill:#173148">espera de autorización</text>
+<rect x="1497" y="470" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="1510" y="503" font-size="20" font-weight="400" style="fill:#173148">Confundir oferta con</text>
+<text x="1510" y="529" font-size="20" font-weight="400" style="fill:#173148">compra confirmada</text>
+<text x="47" y="650" font-size="19" font-weight="700" style="fill:#173148">Emoción</text>
+<text x="47" y="675" font-size="19" font-weight="700" style="fill:#173148">hipotética</text>
+<rect x="212" y="615" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="225" y="648" font-size="20" font-weight="400" style="fill:#173148">Interés y expectativa</text>
+<rect x="469" y="615" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="482" y="648" font-size="20" font-weight="400" style="fill:#173148">Interés con posible</text>
+<text x="482" y="674" font-size="20" font-weight="400" style="fill:#173148">esfuerzo</text>
+<rect x="726" y="615" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="739" y="648" font-size="20" font-weight="400" style="fill:#173148">Incertidumbre</text>
+<rect x="983" y="615" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="996" y="648" font-size="20" font-weight="400" style="fill:#173148">Evaluación y duda</text>
+<rect x="1240" y="615" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="1253" y="648" font-size="20" font-weight="400" style="fill:#173148">Espera o duda</text>
+<rect x="1497" y="615" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="1510" y="648" font-size="20" font-weight="400" style="fill:#173148">Incertidumbre sobre el</text>
+<text x="1510" y="674" font-size="20" font-weight="400" style="fill:#173148">siguiente paso</text>
+<text x="47" y="795" font-size="19" font-weight="700" style="fill:#173148">Qué contrastar</text>
+<rect x="212" y="760" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="225" y="793" font-size="20" font-weight="400" style="fill:#173148">Llegada y comienzo de</text>
+<text x="225" y="819" font-size="20" font-weight="400" style="fill:#173148">atención</text>
+<rect x="469" y="760" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="482" y="793" font-size="20" font-weight="400" style="fill:#173148">Necesidad y</text>
+<text x="482" y="819" font-size="20" font-weight="400" style="fill:#173148">compatibilidad</text>
+<text x="482" y="845" font-size="20" font-weight="400" style="fill:#173148">registrada</text>
+<rect x="726" y="760" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="739" y="793" font-size="20" font-weight="400" style="fill:#173148">SKU, ubicación, fuente y</text>
+<text x="739" y="819" font-size="20" font-weight="400" style="fill:#173148">hora</text>
+<rect x="983" y="760" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="996" y="793" font-size="20" font-weight="400" style="fill:#173148">Oferta, total y vigencia</text>
+<rect x="1240" y="760" width="253" height="140" rx="4" fill="#e9f4f8"/>
+<text x="1253" y="793" font-size="20" font-weight="400" style="fill:#173148">Versión y decisión del</text>
+<text x="1253" y="819" font-size="20" font-weight="400" style="fill:#173148">dueño</text>
+<rect x="1497" y="760" width="253" height="140" rx="4" fill="#f4f7fa"/>
+<text x="1510" y="793" font-size="20" font-weight="400" style="fill:#173148">Estado comunicado y</text>
+<text x="1510" y="819" font-size="20" font-weight="400" style="fill:#173148">responsable</text>
+<text x="42" y="953" font-size="18" font-weight="400" style="fill:#173148">No es un journey observado ni una medición de satisfacción. Se mantiene el corte previo al pedido para comparar.</text>
+<text x="42" y="985" font-size="17" font-weight="400" style="fill:#173148">IMPORTACIONES MYS HERMANOS S.A.C. · Benjamin Arancibia · GE703 G7 · Examen parcial 24/10/2026</text>
+</svg>

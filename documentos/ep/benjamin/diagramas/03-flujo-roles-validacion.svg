@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">Flujo por roles y reglas de la solicitud comercial del examen parcial</title>
+<desc id="desc">Caso didáctico de IMPORTACIONES MYS HERMANOS S.A.C. Cliente nuevo persona natural, público general y canal físico. Diseño y simulación local; Odoo no desplegado. Datos sintéticos.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#4A637A"/></marker><marker id="amberarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#87540A"/></marker><marker id="grayarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#ABB6C2"/></marker></defs>
+<style>text {font-family: "Segoe UI", Arial, sans-serif;} .title {font-weight:700;} </style>
+<rect width="1600" height="1000" fill="#FBFCFE"/>
+<rect x="36" y="30" width="47" height="47" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="59" y="62" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">03</text>
+<text x="102" y="61" font-size="30" fill="#15324A" font-weight="700" text-anchor="start">Flujo por roles · validación y excepciones</text>
+<text x="41" y="106" font-size="19" fill="#526578" font-weight="400" text-anchor="start">Representación funcional por responsabilidades. Odoo es un rol lógico simulado; la aceptación comercial no crea un pedido.</text>
+<rect x="35" y="135" width="365" height="765" rx="10" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<rect x="35" y="135" width="365" height="75" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="53" y="165" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">Cliente</text>
+<text x="53" y="192" font-size="17" fill="#FFFFFF" font-weight="400" text-anchor="start">Persona natural nueva</text>
+<rect x="425" y="135" width="365" height="765" rx="10" fill="#F1F4F7" stroke="#ABB6C2" stroke-width="1.5"/>
+<rect x="425" y="135" width="365" height="75" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="443" y="165" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">Vendedor</text>
+<text x="443" y="192" font-size="17" fill="#FFFFFF" font-weight="400" text-anchor="start">Atención presencial</text>
+<rect x="815" y="135" width="365" height="765" rx="10" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<rect x="815" y="135" width="365" height="75" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="833" y="165" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">Odoo · rol lógico</text>
+<text x="833" y="192" font-size="17" fill="#FFFFFF" font-weight="400" text-anchor="start">Validación local simulada</text>
+<rect x="1205" y="135" width="365" height="765" rx="10" fill="#F1F4F7" stroke="#ABB6C2" stroke-width="1.5"/>
+<rect x="1205" y="135" width="365" height="75" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="1223" y="165" font-size="23" fill="#FFFFFF" font-weight="700" text-anchor="start">Dueño / abastecimiento</text>
+<text x="1223" y="192" font-size="17" fill="#FFFFFF" font-weight="400" text-anchor="start">Autorización y reposición</text>
+<rect x="55" y="230" width="325" height="99" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="73" y="262" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Consulta física</text>
+<text x="73" y="291" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">5 autoradios para vehículos</text>
+<text x="73" y="316" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">familiares · walk-in</text>
+<rect x="445" y="230" width="325" height="99" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="463" y="262" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Identificar + registrar</text>
+<text x="463" y="291" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">CLI-DEMO-001 / LEAD-EP-001</text>
+<text x="463" y="316" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Sin campaña atribuida</text>
+<polyline points="380,274 445,274" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="445" y="345" width="325" height="81" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="463" y="377" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Crear oportunidad</text>
+<text x="463" y="406" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">OPP-DEMO-001 · solicitar stock</text>
+<polyline points="607,329 607,345" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="835" y="345" width="325" height="81" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="853" y="377" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Consultar disponibilidad</text>
+<text x="853" y="406" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Stock referencial: 8; sin reserva</text>
+<polyline points="770,385 835,385" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1225" y="345" width="325" height="150" rx="12" fill="#FFF4DC" stroke="#87540A" stroke-width="1.5"/>
+<text x="1243" y="377" font-size="20" fill="#87540A" font-weight="700" text-anchor="start">P2P conceptual [1]</text>
+<text x="1243" y="406" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">EP-S01: disponible 3; déficit 2</text>
+<text x="1243" y="431" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">PROMESA_CONDICIONADA</text>
+<text x="1243" y="456" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">REP-EP-001 · sin OC ni fecha</text>
+<text x="1243" y="481" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Tras controles conformes; sin compra</text>
+<rect x="445" y="465" width="325" height="94" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="463" y="497" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Cotizar versión 1</text>
+<text x="463" y="526" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">S/ 2 000 − S/ 100 = S/ 1 900</text>
+<text x="463" y="551" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Stock parcial: promesa condicionada</text>
+<polyline points="997,426 997,447 607,447 607,465" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="55" y="465" width="325" height="94" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="73" y="497" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Aceptar términos exactos</text>
+<text x="73" y="526" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">ACE-EP-001 acepta COT-DEMO-001</text>
+<text x="73" y="551" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Versión 1 y monto S/ 1 900</text>
+<polyline points="445,512 380,512" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="445" y="604" width="325" height="120" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="463" y="636" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Enviar solicitud al ERP</text>
+<text x="463" y="665" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Referencias CLI / OPP / COT</text>
+<text x="463" y="690" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Versión / ACE / SOL / COR</text>
+<text x="463" y="715" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Importes: snapshot de cotización</text>
+<polyline points="217,559 217,657 445,657" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="835" y="604" width="325" height="120" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="853" y="636" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">Validar reglas [1]</text>
+<text x="853" y="665" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Cliente y aceptación coherentes</text>
+<text x="853" y="690" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Precio y versión vigentes</text>
+<text x="853" y="715" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">5% permitido; stock informado</text>
+<polyline points="770,657 835,657" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1225" y="604" width="325" height="120" rx="12" fill="#FFF0EF" stroke="#9D3131" stroke-width="1.5"/>
+<text x="1243" y="636" font-size="20" fill="#9D3131" font-weight="700" text-anchor="start">Excepción de descuento</text>
+<text x="1243" y="665" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">10% exige aprobación del dueño</text>
+<text x="1243" y="690" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Si no existe: RECHAZADA</text>
+<text x="1243" y="715" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">No se crea pedido ni reserva</text>
+<polyline points="1160,657 1225,657" fill="none" stroke="#87540A" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#amberarrow)"/>
+<rect x="835" y="777" width="325" height="92" rx="12" fill="#EAF7EF" stroke="#176447" stroke-width="1.5"/>
+<text x="853" y="809" font-size="20" fill="#176447" font-weight="700" text-anchor="start">Resultado caso base</text>
+<text x="853" y="838" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Estado ACEPTADA · código VALIDADA</text>
+<text x="853" y="863" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">order_id: null</text>
+<polyline points="997,724 997,777" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="1012" y="739" font-size="16" fill="#176447" font-weight="400" text-anchor="start">5% y datos</text>
+<text x="1012" y="761" font-size="16" fill="#176447" font-weight="400" text-anchor="start">conformes</text>
+<rect x="445" y="777" width="325" height="92" rx="12" fill="#EAF7EF" stroke="#176447" stroke-width="1.5"/>
+<text x="463" y="809" font-size="20" fill="#176447" font-weight="700" text-anchor="start">Recibir y explicar respuesta</text>
+<text x="463" y="838" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">09:55:01 · solicitud validada</text>
+<text x="463" y="863" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">No equivale a una venta cerrada</text>
+<polyline points="835,823 770,823" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="40" y="914" width="1510" height="33" rx="7" fill="#FFF0EF" stroke="#9D3131" stroke-width="1.5"/>
+<text x="795" y="937" font-size="18" fill="#9D3131" font-weight="700" text-anchor="middle">FIN DEL BLOQUE EP · Detener antes de crear pedido, reservar stock o ejecutar procesos posteriores del O2C</text>
+<text x="42" y="961" font-size="17" fill="#526578" font-weight="400" text-anchor="start">Diseño / simulación local · Odoo no desplegado · cantidades, precios y stock sintéticos</text>
+<text x="42" y="986" font-size="16" fill="#526578" font-weight="400" text-anchor="start">IMPORTACIONES MYS HERMANOS S.A.C. · Público general · Canal físico walk-in · Continuidad PC2 v2.1</text>
+</svg>

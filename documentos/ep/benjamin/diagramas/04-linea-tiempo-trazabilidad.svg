@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Línea de tiempo y trazabilidad de la demostración comercial</title>
+<desc id="desc">Caso didáctico de IMPORTACIONES MYS HERMANOS S.A.C. Cliente nuevo persona natural, público general y canal físico. Diseño y simulación local; Odoo no desplegado. Datos sintéticos.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#4A637A"/></marker><marker id="amberarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#87540A"/></marker><marker id="grayarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#ABB6C2"/></marker></defs>
+<style>text {font-family: "Segoe UI", Arial, sans-serif;} .title {font-weight:700;} </style>
+<rect width="1600" height="900" fill="#FBFCFE"/>
+<rect x="36" y="30" width="47" height="47" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="59" y="62" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">04</text>
+<text x="102" y="61" font-size="30" fill="#15324A" font-weight="700" text-anchor="start">Línea de tiempo · una operación correlacionada</text>
+<text x="41" y="106" font-size="19" fill="#526578" font-weight="400" text-anchor="start">Fecha lógica didáctica: 24/10/2026 · zona horaria UTC−05:00 · COR-EP-001 · Cliente nuevo / público general / canal físico</text>
+<text x="45" y="148" font-size="19" fill="#526578" font-weight="400" text-anchor="start">Lectura: fila superior de izquierda a derecha; continúa por la fila inferior de derecha a izquierda.</text>
+<rect x="50" y="180" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="70" y="223" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:45</text>
+<text x="70" y="267" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">1 · Consulta física</text>
+<text x="70" y="306" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">5 autoradios para vehículos</text>
+<text x="70" y="335" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">familiares. Cliente nuevo</text>
+<text x="70" y="364" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">persona natural, walk-in.</text>
+<text x="70" y="387" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="435" y="180" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="455" y="223" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:46</text>
+<text x="455" y="267" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">2 · Cliente + lead</text>
+<text x="455" y="306" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">CLI-DEMO-001</text>
+<text x="455" y="335" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">LEAD-EP-001</text>
+<text x="455" y="364" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Canal físico; sin campaña.</text>
+<text x="455" y="387" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="820" y="180" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="840" y="223" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:48</text>
+<text x="840" y="267" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">3 · Oportunidad</text>
+<text x="840" y="306" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">OPP-DEMO-001</text>
+<text x="840" y="335" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Necesidad comercial trazada</text>
+<text x="840" y="364" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">al lead y al cliente.</text>
+<text x="840" y="387" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="1205" y="180" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="1225" y="223" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:50</text>
+<text x="1225" y="267" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">4 · Consulta de stock</text>
+<text x="1225" y="306" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">8 unidades referenciales</text>
+<text x="1225" y="335" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">para una solicitud de 5.</text>
+<text x="1225" y="364" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Sin reserva ni reposición.</text>
+<text x="1225" y="387" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="1205" y="505" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="1225" y="548" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:52</text>
+<text x="1225" y="592" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">5 · Cotización v1</text>
+<text x="1225" y="631" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">COT-DEMO-001 · versión 1</text>
+<text x="1225" y="660" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">5 × S/ 400 = S/ 2 000</text>
+<text x="1225" y="689" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">5% = S/ 100 → S/ 1 900</text>
+<text x="1225" y="712" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="820" y="505" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="840" y="548" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:54</text>
+<text x="840" y="592" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">6 · Aceptación</text>
+<text x="840" y="631" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">ACE-EP-001</text>
+<text x="840" y="660" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Acepta exactamente v1</text>
+<text x="840" y="689" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">y el monto S/ 1 900.</text>
+<text x="840" y="712" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="435" y="505" width="330" height="227" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="455" y="548" font-size="31" fill="#006C87" font-weight="700" text-anchor="start">09:55</text>
+<text x="455" y="592" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">7 · Envío solicitud</text>
+<text x="455" y="631" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">SOL-EP-N01</text>
+<text x="455" y="660" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Solicitud comercial a ERP</text>
+<text x="455" y="689" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Correlación COR-EP-001.</text>
+<text x="455" y="712" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<rect x="50" y="505" width="330" height="227" rx="12" fill="#EAF7EF" stroke="#176447" stroke-width="2"/>
+<text x="70" y="548" font-size="31" fill="#176447" font-weight="700" text-anchor="start">09:55:01</text>
+<text x="70" y="592" font-size="23" fill="#15324A" font-weight="700" text-anchor="start">8 · Respuesta lógica</text>
+<text x="70" y="631" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Estado: ACEPTADA</text>
+<text x="70" y="660" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Código: VALIDADA</text>
+<text x="70" y="689" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">order_id: null</text>
+<text x="70" y="712" font-size="16" fill="#526578" font-weight="400" text-anchor="start">COR-EP-001</text>
+<polyline points="380,292 435,292" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="765,292 820,292" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1150,292 1205,292" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1535,292 1565,292 1565,618 1535,618" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1205,618 1150,618" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="820,618 765,618" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="435,618 380,618" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="50" y="775" width="1485" height="56" rx="12" fill="#FFF0EF" stroke="#9D3131" stroke-width="1.5"/>
+<text x="792" y="809" font-size="20" fill="#9D3131" font-weight="700" text-anchor="middle">CORTE: aceptación de la solicitud, sin pedido creado, sin reserva y sin ejecución de factura, entrega o cobro.</text>
+<text x="42" y="861" font-size="17" fill="#526578" font-weight="400" text-anchor="start">Diseño / simulación local · Odoo no desplegado · cantidades, precios y stock sintéticos</text>
+<text x="42" y="886" font-size="16" fill="#526578" font-weight="400" text-anchor="start">IMPORTACIONES MYS HERMANOS S.A.C. · Público general · Canal físico walk-in · Continuidad PC2 v2.1</text>
+</svg>

@@ -1,0 +1,587 @@
+{
+  "case_id": "EP-N01",
+  "kind": "SIMULACION_LOCAL_SIN_ODOO",
+  "business_time": "2026-10-24T09:55:01-05:00",
+  "request": {
+    "contract_version": "1.0",
+    "company_id": "MYS-DEMO",
+    "request_id": "SOL-EP-N01",
+    "correlation_id": "COR-EP-001",
+    "opportunity_id": "OPP-DEMO-001",
+    "customer_id": "CLI-DEMO-001",
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "acceptance_id": "ACE-EP-001"
+  },
+  "expected": {
+    "status": "ACEPTADA",
+    "code": "VALIDADA",
+    "order_id": null,
+    "total": "1900.00",
+    "currency": "PEN",
+    "responsible_role": "VENTAS",
+    "conditions": []
+  },
+  "observed": {
+    "contract_version": "1.0",
+    "request_id": "SOL-EP-N01",
+    "correlation_id": "COR-EP-001",
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "status": "ACEPTADA",
+    "code": "VALIDADA",
+    "message": "Solicitud validada; confirmación operativa pendiente.",
+    "responsible_role": "VENTAS",
+    "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+    "total": "1900.00",
+    "currency": "PEN",
+    "order_id": null,
+    "conditions": []
+  },
+  "repeated_response": {
+    "code": "VALIDADA",
+    "conditions": [],
+    "contract_version": "1.0",
+    "correlation_id": "COR-EP-001",
+    "currency": "PEN",
+    "message": "Solicitud validada; confirmación operativa pendiente.",
+    "order_id": null,
+    "quotation_id": "COT-DEMO-001",
+    "quotation_version": 1,
+    "request_id": "SOL-EP-N01",
+    "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+    "responsible_role": "VENTAS",
+    "status": "ACEPTADA",
+    "total": "1900.00"
+  },
+  "request_count": 1,
+  "conceptual_p2p_signal": null,
+  "timeline": {
+    "kind": "LINEA_DE_TIEMPO_DIDACTICA_NO_OBSERVACION_EMPRESARIAL",
+    "notice": "Eventos previos al envío son narrativa sintética. Solo audit contiene eventos realmente ejecutados por el simulador: recepción, consultas y decisión comparten la transacción lógica 09:55:01; el reintento se audita 09:56:01. No son tiempos de desempeño medidos.",
+    "valid_until": "2026-10-24T18:00:00-05:00",
+    "events": [
+      {
+        "logical_time": "2026-10-24T09:45:00-05:00",
+        "actor": "Cliente / Ventas",
+        "object": "CLI-DEMO-001",
+        "event": "Consulta presencial y búsqueda de coincidencias",
+        "control": "Datos mínimos; identidad y segmentación sintéticas",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:46:00-05:00",
+        "actor": "Ventas",
+        "object": "LEAD-EP-001",
+        "event": "Registra necesidad de cinco autoradios para uso familiar",
+        "control": "Origen físico y visita espontánea; sin campaña",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:48:00-05:00",
+        "actor": "Ventas",
+        "object": "OPP-DEMO-001",
+        "event": "Califica y vincula la oportunidad",
+        "control": "Relación con lead y cliente único",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:50:00-05:00",
+        "actor": "Ventas / Inventario (lectura)",
+        "object": "RAD-7BT",
+        "event": "Consulta disponibilidad sintética en TIENDA-DEMO: 8 unidades",
+        "control": "Cada caso es independiente; consulta sin reserva ni fecha prometida",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:52:00-05:00",
+        "actor": "Ventas",
+        "object": "COT-DEMO-001 v1",
+        "event": "Prepara oferta de S/ 1900.00",
+        "control": "Cinco por S/ 400.00, descuento 5%; vence a las 18:00",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:54:00-05:00",
+        "actor": "Cliente sintético",
+        "object": "ACE-EP-001",
+        "event": "Acepta sintéticamente COT-DEMO-001 v1",
+        "control": "Misma versión, cliente e importe; no sustituye la autorización comercial",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:55:00-05:00",
+        "actor": "Ventas / Simulador",
+        "object": "SOL-EP-N01",
+        "event": "Somete solicitud al contrato 1.0",
+        "control": "Identidad de prueba fuera del mensaje; referencias correlacionadas",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:55:01-05:00",
+        "actor": "Simulador",
+        "object": "SOL-EP-N01",
+        "event": "Registra respuesta de evaluación",
+        "control": "Recepción y decisión auditadas en la misma transacción lógica; no confirma pedido ni reserva",
+        "correlation_id": "COR-EP-001"
+      },
+      {
+        "logical_time": "2026-10-24T09:56:01-05:00",
+        "actor": "Ventas / Simulador",
+        "object": "SOL-EP-N01",
+        "event": "Repite exactamente la misma solicitud",
+        "control": "Recupera respuesta original; una sola solicitud persistida",
+        "correlation_id": "COR-EP-001"
+      }
+    ]
+  },
+  "chain": [
+    "CLI-DEMO-001",
+    "LEAD-EP-001",
+    "OPP-DEMO-001",
+    "COT-DEMO-001 v1",
+    "ACE-EP-001",
+    "SOL-EP-N01"
+  ],
+  "audit": [
+    {
+      "event_id": 1,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-EP-N01",
+      "correlation_id": "COR-EP-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I03",
+      "event_type": "RECIBIDA",
+      "code": "RECIBIDA",
+      "occurred_at": "2026-10-24T09:55:01-05:00"
+    },
+    {
+      "event_id": 2,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-EP-N01",
+      "correlation_id": "COR-EP-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "SNAPSHOT_COMERCIAL",
+      "occurred_at": "2026-10-24T09:55:01-05:00"
+    },
+    {
+      "event_id": 3,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-EP-N01",
+      "correlation_id": "COR-EP-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I06",
+      "event_type": "CONSULTA",
+      "code": "POLITICA_DESCUENTO",
+      "occurred_at": "2026-10-24T09:55:01-05:00"
+    },
+    {
+      "event_id": 4,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-EP-N01",
+      "correlation_id": "COR-EP-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I05",
+      "event_type": "CONSULTA",
+      "code": "DISPONIBILIDAD",
+      "occurred_at": "2026-10-24T09:55:01-05:00"
+    },
+    {
+      "event_id": 5,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-EP-N01",
+      "correlation_id": "COR-EP-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "VALIDADA",
+      "occurred_at": "2026-10-24T09:55:01-05:00"
+    },
+    {
+      "event_id": 6,
+      "company_id": "MYS-DEMO",
+      "request_id": "SOL-EP-N01",
+      "correlation_id": "COR-EP-001",
+      "actor_id": "VEN-DEMO-01",
+      "interface_id": "I03",
+      "event_type": "REINTENTO",
+      "code": "VALIDADA",
+      "occurred_at": "2026-10-24T09:56:01-05:00"
+    }
+  ],
+  "checks": [
+    {
+      "check": "Entrada cumple validación del contrato 1.0",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "check": "Secuencia de códigos de la primera evaluación",
+      "expected": [
+        "RECIBIDA",
+        "SNAPSHOT_COMERCIAL",
+        "POLITICA_DESCUENTO",
+        "DISPONIBILIDAD",
+        "VALIDADA"
+      ],
+      "observed": [
+        "RECIBIDA",
+        "SNAPSHOT_COMERCIAL",
+        "POLITICA_DESCUENTO",
+        "DISPONIBILIDAD",
+        "VALIDADA"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Respuesta: status",
+      "expected": "ACEPTADA",
+      "observed": "ACEPTADA",
+      "passed": true
+    },
+    {
+      "check": "Respuesta: code",
+      "expected": "VALIDADA",
+      "observed": "VALIDADA",
+      "passed": true
+    },
+    {
+      "check": "Respuesta: order_id",
+      "expected": null,
+      "observed": null,
+      "passed": true
+    },
+    {
+      "check": "Respuesta: total",
+      "expected": "1900.00",
+      "observed": "1900.00",
+      "passed": true
+    },
+    {
+      "check": "Respuesta: currency",
+      "expected": "PEN",
+      "observed": "PEN",
+      "passed": true
+    },
+    {
+      "check": "Respuesta: responsible_role",
+      "expected": "VENTAS",
+      "observed": "VENTAS",
+      "passed": true
+    },
+    {
+      "check": "Respuesta: conditions",
+      "expected": [],
+      "observed": [],
+      "passed": true
+    },
+    {
+      "check": "Correlación respuesta/solicitud: contract_version",
+      "expected": "1.0",
+      "observed": "1.0",
+      "passed": true
+    },
+    {
+      "check": "Correlación respuesta/solicitud: request_id",
+      "expected": "SOL-EP-N01",
+      "observed": "SOL-EP-N01",
+      "passed": true
+    },
+    {
+      "check": "Correlación respuesta/solicitud: correlation_id",
+      "expected": "COR-EP-001",
+      "observed": "COR-EP-001",
+      "passed": true
+    },
+    {
+      "check": "Correlación respuesta/solicitud: quotation_id",
+      "expected": "COT-DEMO-001",
+      "observed": "COT-DEMO-001",
+      "passed": true
+    },
+    {
+      "check": "Correlación respuesta/solicitud: quotation_version",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "check": "Respuesta contiene exactamente campos del contrato",
+      "expected": [
+        "code",
+        "conditions",
+        "contract_version",
+        "correlation_id",
+        "currency",
+        "message",
+        "order_id",
+        "quotation_id",
+        "quotation_version",
+        "request_id",
+        "required_action",
+        "responsible_role",
+        "status",
+        "total"
+      ],
+      "observed": [
+        "code",
+        "conditions",
+        "contract_version",
+        "correlation_id",
+        "currency",
+        "message",
+        "order_id",
+        "quotation_id",
+        "quotation_version",
+        "request_id",
+        "required_action",
+        "responsible_role",
+        "status",
+        "total"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Estado admitido por contrato",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "check": "Código admitido por contrato",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "check": "Segmento físico de la fixture",
+      "expected": "PUBLICO_GENERAL_NUEVO",
+      "observed": "PUBLICO_GENERAL_NUEVO",
+      "passed": true
+    },
+    {
+      "check": "Canal físico y visita espontánea",
+      "expected": [
+        "FISICO",
+        "VISITA_ESPONTANEA"
+      ],
+      "observed": [
+        "FISICO",
+        "VISITA_ESPONTANEA"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Cadena cliente/lead/oportunidad",
+      "expected": [
+        "CLI-DEMO-001",
+        "OPP-DEMO-001",
+        "LEAD-EP-001"
+      ],
+      "observed": [
+        "CLI-DEMO-001",
+        "OPP-DEMO-001",
+        "LEAD-EP-001"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Cadena cotización y aceptación de la misma versión",
+      "expected": [
+        "CLI-DEMO-001",
+        "OPP-DEMO-001",
+        1,
+        "COT-DEMO-001",
+        1,
+        "1900.00"
+      ],
+      "observed": [
+        "CLI-DEMO-001",
+        "OPP-DEMO-001",
+        1,
+        "COT-DEMO-001",
+        1,
+        "1900.00"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Correlación de oportunidad",
+      "expected": "COR-EP-001",
+      "observed": "COR-EP-001",
+      "passed": true
+    },
+    {
+      "check": "Vigencia del día lógico simulado",
+      "expected": "2026-10-24T18:00:00-05:00",
+      "observed": "2026-10-24T18:00:00-05:00",
+      "passed": true
+    },
+    {
+      "check": "Cuadre de importe cotizado",
+      "expected": "1900.00",
+      "observed": "1900.00",
+      "passed": true
+    },
+    {
+      "check": "Cinco autoradios por S/ 400",
+      "expected": [
+        5,
+        "400.00"
+      ],
+      "observed": [
+        5,
+        "400.00"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Sin autorización del dueño inventada",
+      "expected": [],
+      "observed": [],
+      "passed": true
+    },
+    {
+      "check": "Reintento devuelve respuesta idéntica",
+      "expected": {
+        "contract_version": "1.0",
+        "request_id": "SOL-EP-N01",
+        "correlation_id": "COR-EP-001",
+        "quotation_id": "COT-DEMO-001",
+        "quotation_version": 1,
+        "status": "ACEPTADA",
+        "code": "VALIDADA",
+        "message": "Solicitud validada; confirmación operativa pendiente.",
+        "responsible_role": "VENTAS",
+        "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+        "total": "1900.00",
+        "currency": "PEN",
+        "order_id": null,
+        "conditions": []
+      },
+      "observed": {
+        "code": "VALIDADA",
+        "conditions": [],
+        "contract_version": "1.0",
+        "correlation_id": "COR-EP-001",
+        "currency": "PEN",
+        "message": "Solicitud validada; confirmación operativa pendiente.",
+        "order_id": null,
+        "quotation_id": "COT-DEMO-001",
+        "quotation_version": 1,
+        "request_id": "SOL-EP-N01",
+        "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+        "responsible_role": "VENTAS",
+        "status": "ACEPTADA",
+        "total": "1900.00"
+      },
+      "passed": true
+    },
+    {
+      "check": "Una sola solicitud tras el reintento",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "check": "Consulta recupera respuesta persistida",
+      "expected": {
+        "contract_version": "1.0",
+        "request_id": "SOL-EP-N01",
+        "correlation_id": "COR-EP-001",
+        "quotation_id": "COT-DEMO-001",
+        "quotation_version": 1,
+        "status": "ACEPTADA",
+        "code": "VALIDADA",
+        "message": "Solicitud validada; confirmación operativa pendiente.",
+        "responsible_role": "VENTAS",
+        "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+        "total": "1900.00",
+        "currency": "PEN",
+        "order_id": null,
+        "conditions": []
+      },
+      "observed": {
+        "code": "VALIDADA",
+        "conditions": [],
+        "contract_version": "1.0",
+        "correlation_id": "COR-EP-001",
+        "currency": "PEN",
+        "message": "Solicitud validada; confirmación operativa pendiente.",
+        "order_id": null,
+        "quotation_id": "COT-DEMO-001",
+        "quotation_version": 1,
+        "request_id": "SOL-EP-N01",
+        "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+        "responsible_role": "VENTAS",
+        "status": "ACEPTADA",
+        "total": "1900.00"
+      },
+      "passed": true
+    },
+    {
+      "check": "Una sola decisión auditada",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "check": "Un reintento auditado",
+      "expected": 1,
+      "observed": 1,
+      "passed": true
+    },
+    {
+      "check": "Bitácora correlacionada",
+      "expected": true,
+      "observed": true,
+      "passed": true
+    },
+    {
+      "check": "Tablas locales: sin pedidos ni reservas",
+      "expected": [
+        "audit",
+        "requests"
+      ],
+      "observed": [
+        "audit",
+        "requests"
+      ],
+      "passed": true
+    },
+    {
+      "check": "Maestros del simulador no modificados (SHA-256 canónico)",
+      "expected": "fbad8f8155d060da2bc0540709a2e308ec1f1e14f23152016198d5b03078f3a2",
+      "observed": "fbad8f8155d060da2bc0540709a2e308ec1f1e14f23152016198d5b03078f3a2",
+      "passed": true
+    },
+    {
+      "check": "Maestros fuente no modificados (SHA-256 canónico)",
+      "expected": "fbad8f8155d060da2bc0540709a2e308ec1f1e14f23152016198d5b03078f3a2",
+      "observed": "fbad8f8155d060da2bc0540709a2e308ec1f1e14f23152016198d5b03078f3a2",
+      "passed": true
+    },
+    {
+      "check": "Stock permanece sin reserva o descuento",
+      "expected": 8,
+      "observed": 8,
+      "passed": true
+    },
+    {
+      "check": "Señal P2P conceptual esperada",
+      "expected": null,
+      "observed": null,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "limitations": [
+    "No valida un journey observado, identidad de persona, política ni inventario reales.",
+    "No confirma pedido ni reserva stock; no ejecuta factura, boleta, pago, entrega, posventa o compra.",
+    "La línea de tiempo previa al envío es narrativa sintética, no log de un CRM operativo.",
+    "La comprobación de salida revisa estructura y expectativas del caso; no es validación completa con motor JSON Schema."
+  ]
+}

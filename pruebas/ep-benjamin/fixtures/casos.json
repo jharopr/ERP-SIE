@@ -1,0 +1,32 @@
+{
+  "notice": "Expectativas declaradas antes de ejecutar, independientes de las respuestas observadas. Cada caso usa una base efímera aislada; no son tres ventas del mismo cliente.",
+  "cases": [
+    {
+      "case_id": "EP-N01",
+      "variant": "normal",
+      "request": {"contract_version": "1.0", "company_id": "MYS-DEMO", "request_id": "SOL-EP-N01", "correlation_id": "COR-EP-001", "opportunity_id": "OPP-DEMO-001", "customer_id": "CLI-DEMO-001", "quotation_id": "COT-DEMO-001", "quotation_version": 1, "acceptance_id": "ACE-EP-001"},
+      "expected": {"status": "ACEPTADA", "code": "VALIDADA", "order_id": null, "total": "1900.00", "currency": "PEN", "responsible_role": "VENTAS", "conditions": []},
+      "expected_stock": 8,
+      "expected_audit_codes": ["RECIBIDA", "SNAPSHOT_COMERCIAL", "POLITICA_DESCUENTO", "DISPONIBILIDAD", "VALIDADA"],
+      "expected_signal": null
+    },
+    {
+      "case_id": "EP-S01",
+      "variant": "stock_parcial",
+      "request": {"contract_version": "1.0", "company_id": "MYS-DEMO", "request_id": "SOL-EP-S01", "correlation_id": "COR-EP-001", "opportunity_id": "OPP-DEMO-001", "customer_id": "CLI-DEMO-001", "quotation_id": "COT-DEMO-001", "quotation_version": 1, "acceptance_id": "ACE-EP-001"},
+      "expected": {"status": "PROMESA_CONDICIONADA", "code": "DISPONIBILIDAD_PARCIAL", "order_id": null, "total": "1900.00", "currency": "PEN", "responsible_role": "VENTAS", "conditions": [{"sku": "RAD-7BT", "requested_quantity": 5, "available_quantity": 3, "promised_date": null, "requires_customer_acceptance": true}]},
+      "expected_stock": 3,
+      "expected_audit_codes": ["RECIBIDA", "SNAPSHOT_COMERCIAL", "POLITICA_DESCUENTO", "DISPONIBILIDAD", "DISPONIBILIDAD_PARCIAL"],
+      "expected_signal": {"signal_id": "REP-EP-001", "source_case": "EP-S01", "correlation_id": "COR-EP-001", "request_id": "SOL-EP-S01", "opportunity_id": "OPP-DEMO-001", "quotation_id": "COT-DEMO-001", "quotation_version": 1, "sku": "RAD-7BT", "location_id": "TIENDA-DEMO", "requested_quantity": 5, "available_quantity": 3, "shortfall_quantity": 2, "observed_at": "2026-10-24T09:50:00-05:00", "source_snapshot_ref": "pruebas/ep-benjamin/evidencias/EP-S01-entrada.json", "responsible_role": "DUENO_ABASTECIMIENTO", "kind": "SENAL_CONCEPTUAL_EVALUACION_P2P", "purchase_order_id": null, "reservation_id": null, "promised_date": null, "automatic_action": false}
+    },
+    {
+      "case_id": "EP-E01",
+      "variant": "descuento_excepcional",
+      "request": {"contract_version": "1.0", "company_id": "MYS-DEMO", "request_id": "SOL-EP-E01", "correlation_id": "COR-EP-001", "opportunity_id": "OPP-DEMO-001", "customer_id": "CLI-DEMO-001", "quotation_id": "COT-DEMO-001", "quotation_version": 2, "acceptance_id": "ACE-EP-002"},
+      "expected": {"status": "RECHAZADA", "code": "DESCUENTO_SIN_APROBACION", "order_id": null, "total": null, "currency": null, "responsible_role": "GERENCIA", "conditions": []},
+      "expected_stock": 8,
+      "expected_audit_codes": ["RECIBIDA", "SNAPSHOT_COMERCIAL", "POLITICA_DESCUENTO", "DESCUENTO_SIN_APROBACION"],
+      "expected_signal": null
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">Mapa corporativo de procesos — IMPORTACIONES MYS HERMANOS S.A.C.</title>
+<desc id="desc">Caso didáctico de IMPORTACIONES MYS HERMANOS S.A.C. Cliente nuevo persona natural, público general y canal físico. Diseño y simulación local; Odoo no desplegado. Datos sintéticos.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#4A637A"/></marker><marker id="amberarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#87540A"/></marker><marker id="grayarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#ABB6C2"/></marker></defs>
+<style>text {font-family: "Segoe UI", Arial, sans-serif;} .title {font-weight:700;} </style>
+<rect width="1600" height="1000" fill="#FBFCFE"/>
+<rect x="36" y="30" width="47" height="47" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="59" y="62" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">01</text>
+<text x="102" y="61" font-size="30" fill="#15324A" font-weight="700" text-anchor="start">Mapa corporativo · nivel 1</text>
+<text x="41" y="106" font-size="19" fill="#526578" font-weight="400" text-anchor="start">Comercialización de autoradios: procesos estratégicos, misionales y de soporte. Propuesta analítica del caso.</text>
+<text x="52" y="157" font-size="20" fill="#15324A" font-weight="700" text-anchor="start">PROCESOS ESTRATÉGICOS</text>
+<rect x="55" y="180" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="73" y="212" font-size="21" fill="#4A637A" font-weight="700" text-anchor="start">Dirección del negocio</text>
+<text x="73" y="241" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Objetivos comerciales</text>
+<text x="73" y="266" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">y seguimiento del desempeño</text>
+<rect x="435" y="180" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="453" y="212" font-size="21" fill="#4A637A" font-weight="700" text-anchor="start">Gestión comercial</text>
+<text x="453" y="241" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Precios, descuentos</text>
+<text x="453" y="266" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">y propuesta de valor</text>
+<rect x="815" y="180" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="833" y="212" font-size="21" fill="#4A637A" font-weight="700" text-anchor="start">Planificación de compras</text>
+<text x="833" y="241" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Proveedores, reposición</text>
+<text x="833" y="266" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">y disponibilidad objetivo</text>
+<rect x="1195" y="180" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="1213" y="212" font-size="21" fill="#4A637A" font-weight="700" text-anchor="start">Control y mejora</text>
+<text x="1213" y="241" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Indicadores, riesgos</text>
+<text x="1213" y="266" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">y experiencia del cliente</text>
+<rect x="210" y="335" width="1160" height="245" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="2"/>
+<text x="232" y="370" font-size="21" fill="#006C87" font-weight="700" text-anchor="start">PROCESOS MISIONALES / CORE</text>
+<rect x="235" y="398" width="340" height="138" rx="12" fill="#FFFFFF" stroke="#006C87" stroke-width="1.5"/>
+<text x="253" y="430" font-size="21" fill="#006C87" font-weight="700" text-anchor="start">O2C · venta al cliente</text>
+<text x="253" y="459" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Consulta → cotización →</text>
+<text x="253" y="484" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">solicitud y respuesta ERP</text>
+<text x="253" y="509" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Resto O2C: contexto fuera EP</text>
+<rect x="625" y="398" width="340" height="138" rx="12" fill="#FFFFFF" stroke="#006C87" stroke-width="1.5"/>
+<text x="643" y="430" font-size="21" fill="#006C87" font-weight="700" text-anchor="start">Inventario comercial</text>
+<text x="643" y="459" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Consulta de disponibilidad</text>
+<text x="643" y="484" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">y control de existencias</text>
+<text x="643" y="509" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Sin reserva en la demo EP</text>
+<rect x="1015" y="398" width="330" height="138" rx="12" fill="#FFFFFF" stroke="#006C87" stroke-width="1.5"/>
+<text x="1033" y="430" font-size="21" fill="#006C87" font-weight="700" text-anchor="start">P2P · abastecimiento</text>
+<text x="1033" y="459" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">Necesidad → compra →</text>
+<text x="1033" y="484" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">recepción y pago proveedor</text>
+<text x="1033" y="509" font-size="19" fill="#15324A" font-weight="400" text-anchor="start">En EP: señal y evaluación</text>
+<polyline points="575,468 625,468" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="965,468 1015,468" fill="none" stroke="#87540A" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#amberarrow)"/>
+<text x="805" y="564" font-size="17" fill="#526578" font-weight="400" text-anchor="middle">Interacciones entre procesos; no representa una secuencia de producción</text>
+<rect x="28" y="401" width="157" height="156" rx="12" fill="#EAF7EF" stroke="#176447" stroke-width="1.5"/>
+<text x="46" y="433" font-size="20" fill="#176447" font-weight="700" text-anchor="start">Entrada</text>
+<text x="46" y="462" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Necesidad del</text>
+<text x="46" y="487" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">cliente nuevo</text>
+<text x="46" y="512" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">público general</text>
+<text x="46" y="537" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Canal físico</text>
+<polyline points="185,469 210,469" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1398" y="401" width="175" height="156" rx="12" fill="#EAF7EF" stroke="#176447" stroke-width="1.5"/>
+<text x="1416" y="433" font-size="19" fill="#176447" font-weight="700" text-anchor="start">Valor esperado</text>
+<text x="1416" y="462" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">Cotización clara</text>
+<text x="1416" y="487" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">y respuesta</text>
+<text x="1416" y="512" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">trazable para</text>
+<text x="1416" y="537" font-size="17" fill="#15324A" font-weight="400" text-anchor="start">decidir la compra</text>
+<polyline points="1370,469 1398,469" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<text x="52" y="635" font-size="20" fill="#15324A" font-weight="700" text-anchor="start">PROCESOS DE SOPORTE</text>
+<rect x="55" y="658" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="73" y="690" font-size="20" fill="#4A637A" font-weight="700" text-anchor="start">Administración y finanzas</text>
+<text x="73" y="719" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">Caja, registros y control</text>
+<text x="73" y="744" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">de obligaciones</text>
+<rect x="435" y="658" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="453" y="690" font-size="20" fill="#4A637A" font-weight="700" text-anchor="start">Sistemas y datos</text>
+<text x="453" y="719" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">Catálogo, clientes, versiones</text>
+<text x="453" y="744" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">y trazabilidad documental</text>
+<rect x="815" y="658" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="833" y="690" font-size="20" fill="#4A637A" font-weight="700" text-anchor="start">Gestión de personas</text>
+<text x="833" y="719" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">Roles, responsabilidades</text>
+<text x="833" y="744" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">y capacidades comerciales</text>
+<rect x="1195" y="658" width="350" height="120" rx="12" fill="#F1F4F7" stroke="#4A637A" stroke-width="1.5"/>
+<text x="1213" y="690" font-size="20" fill="#4A637A" font-weight="700" text-anchor="start">Cumplimiento y archivo</text>
+<text x="1213" y="719" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">Documentos, autorizaciones</text>
+<text x="1213" y="744" font-size="18" fill="#15324A" font-weight="400" text-anchor="start">y evidencias del proceso</text>
+<rect x="55" y="817" width="1490" height="82" rx="12" fill="#FFF4DC" stroke="#87540A" stroke-width="1.5"/>
+<text x="77" y="848" font-size="19" fill="#87540A" font-weight="400" text-anchor="start">Alcance seleccionado: O2C presencial de cliente persona natural NUEVA, desde consulta hasta respuesta a solicitud ERP.</text>
+<text x="77" y="875" font-size="19" fill="#87540A" font-weight="400" text-anchor="start">Empresa comercializadora: el mapa no incorpora manufactura. Los procesos de soporte y P2P se incluyen como contexto.</text>
+<text x="42" y="961" font-size="17" fill="#526578" font-weight="400" text-anchor="start">Diseño / simulación local · Odoo no desplegado · cantidades, precios y stock sintéticos</text>
+<text x="42" y="986" font-size="16" fill="#526578" font-weight="400" text-anchor="start">IMPORTACIONES MYS HERMANOS S.A.C. · Público general · Canal físico walk-in · Continuidad PC2 v2.1</text>
+</svg>

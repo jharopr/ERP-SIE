@@ -11,6 +11,10 @@ El documento principal de entrega consolidado conforme a la consigna oficial vig
 
 Este incremento delimita el escenario evaluable al tramo comercial CRM (tienda física, lead calificado, cotización versionada, 3 decisiones comerciales y 2 casos de análisis). El contrato técnico CRM–ERP y las simulaciones se conservan como investigación y trabajo técnico adicional de continuidad.
 
+## Examen parcial del 24 de octubre de 2026
+
+El [aporte de Benjamín al recorrido O2C](documentos/ep/benjamin/README.md) desarrolla la sección 3 del comité para público general nuevo en tienda física. Incluye [Word con la parte 3 completa](output/docx/GE703_EP_G7_BENJAMIN_PARTE_3_COMPLETA.docx), [contenido editable](documentos/ep/benjamin/aporte-benjamin.md), [panel local navegable](documentos/ep/benjamin/panel-benjamin.html), journeys, mapas, SIPOC, guion y [pruebas sintéticas](pruebas/ep-benjamin/evidencias/resultados.md). El alcance termina en la respuesta de evaluación CRM–ERP; P2P se conecta por una señal conceptual de reposición. La integración al panel único del grupo y la revisión humana siguen pendientes.
+
 ## Situación y decisión
 
 - La empresa vende por dos canales: **atención presencial registrada directamente en el ERP** y **WhatsApp móvil**, hoy atendido manualmente.
