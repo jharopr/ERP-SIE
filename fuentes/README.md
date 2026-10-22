@@ -1,5 +1,6 @@
 # Fuentes
 
+- [EP: arquitectura de Jharolym](ep-jharolym.md): reparto, continuidad de PC2, articulación con Benjamín, parámetros académicos, fuentes e IA.
 - [PC2: fuentes, decisiones y supuestos](pc2.md): rúbrica/plantilla, referencias oficiales, supuestos comerciales y vacíos pendientes de validar.
 
 - [Registro de fuentes](registro-fuentes.md): bibliografía, ubicación de evidencia, fecha y límite de uso.

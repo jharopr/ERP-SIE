@@ -12,6 +12,10 @@ Este incremento delimita el escenario evaluable al tramo comercial CRM (tienda f
 
 ## Examen parcial del 24 de octubre de 2026
 
+El [índice del parcial](documentos/ep/README.md) conecta los aportes desarrollados para el mismo caso de PC2: cliente nuevo del público general, tienda física y visita espontánea.
+
+El [aporte de Jharolym](documentos/ep/jharolym/README.md) desarrolla la sección 2, Arquitectura integrada. Incluye la [especificación de Odoo](arquitectura/crm-erp-ep.md), [diagrama con iconos](arquitectura/diagramas/componentes-crm-erp-ep.svg), [casos y puntos de control](arquitectura/diagramas/casos-arquitectura-ep.svg), sistemas de registro, interfaces, guion de tres minutos y [verificación reproducible](pruebas/ep-jharolym/README.md). Reutiliza las evidencias de Benjamín y conserva el límite de solicitud/respuesta.
+
 El [aporte de Benjamín al recorrido O2C](documentos/ep/benjamin/README.md) desarrolla la sección 3 del comité para público general nuevo en tienda física. Incluye [contenido editable](documentos/ep/benjamin/aporte-benjamin.md), [informe imprimible](documentos/ep/benjamin/informe-benjamin.html), [panel local navegable](documentos/ep/benjamin/panel-benjamin.html), journeys, mapas, SIPOC, guion y [pruebas sintéticas](pruebas/ep-benjamin/evidencias/resultados.md). El alcance termina en la respuesta de evaluación CRM–ERP; P2P se conecta por una señal conceptual de reposición. La integración al panel único del grupo y la revisión humana siguen pendientes.
 
 Los entregables Word, ZIP y la carpeta `output/` se mantienen fuera del repositorio para evitar copias redundantes. Las fuentes editables se conservan en Markdown, HTML y los generadores correspondientes.

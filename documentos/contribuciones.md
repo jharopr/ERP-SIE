@@ -19,3 +19,14 @@ La siguiente tabla refleja la distribución oficial acordada y consolidada en la
 * **Fecha:** Sábado 17/10/2026 (desde 09:30).
 * **Modalidad:** **Un único expositor** designado por el grupo (duración máxima: 10 minutos).
 * **Enfoque de defensa:** Centrado en el escenario comercial CRM, las 3 decisiones de negocio y el corte conceptual en la diapositiva 12 de la Sesión 6. Los aspectos de contratos técnicos quedan etiquetados como continuidad y trabajo futuro fuera del guion evaluable.
+
+## Aportes desarrollados para el examen parcial
+
+El reparto de PC2 anterior se conserva como antecedente. El [índice EP](ep/README.md) identifica el material preparado para el comité del 24/10/2026, con cliente nuevo en tienda física y nota individual.
+
+| Integrante | Sección y tiempo | Contribución verificable | Estado |
+| --- | --- | --- | --- |
+| Jharolym Friendly Paucarcaja Ramos | 2 Arquitectura integrada · 01:00–04:00 | [Aporte y guion](ep/jharolym/aporte-jharolym.md), [arquitectura](../arquitectura/crm-erp-ep.md), dos SVG con iconos, interfaces y sistemas de registro | Material preparado; revisión humana pendiente |
+| Benjamín Francis Arancibia Ynga | 3 Recorrido O2C · 04:00–06:00 | [Mapas, journeys, SIPOC, línea de tiempo y casos](ep/benjamin/README.md) | Material preparado; revisión humana pendiente |
+
+Jharolym ubica módulos, datos y controles; Benjamín muestra su recorrido con los mismos identificadores; Gabriel continúa con el contrato. Las evidencias sintéticas se mantienen en un solo bloque compartido, sin atribuir su ejecución como trabajo exclusivo de cada integrante.

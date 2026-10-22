@@ -1,5 +1,7 @@
 # Arquitectura de componentes CRM–ERP · PC2
 
+**Vista del parcial:** consultar la [arquitectura del cliente nuevo en tienda física](crm-erp-ep.md). Este archivo conserva el antecedente técnico preparado durante PC2; su diagrama histórico no sustituye la delimitación comercial de [PC2 v2.1](../documentos/pc2/entrega-pc2.md).
+
 **Empresa:** IMPORTACIONES MYS HERMANOS S.A.C. · **Versión:** PC2 v2.0, contrato 1.0 · **Fecha:** 15/10/2026.  
 **Responsable de revisión propuesto:** Jharolym Paucarcaja, coordinado con Gabriel Chavez.  
 **Estado:** diseño propuesto y simulación local. No hay una instalación de Odoo acreditada.
