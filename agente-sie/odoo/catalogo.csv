@@ -1,0 +1,16 @@
+sku,nombre,categoria,precio_pen,stock_fisico
+RAD-7BT,"Autoradio Bluetooth 7"" (genérico)",Autoradios,400.00,10
+RAD-10X,"Autoradio pantalla 10"" (genérico)",Autoradios,520.00,10
+RAD-1DIN,Autoradio 1 DIN USB/Bluetooth (genérico),Autoradios,120.00,25
+RAD-9AND,"Autoradio Android 9"" 2 GB/32 GB (genérico)",Autoradios,680.00,6
+RAD-CPLAY,"Autoradio 7"" CarPlay/Android Auto (genérico)",Autoradios,750.00,4
+CAM-RETRO,Cámara de retroceso HD (genérica),Accesorios,85.00,30
+PAR-6.5,"Parlantes coaxiales 6,5"" par (genéricos)",Audio,140.00,20
+PAR-6X9,"Parlantes 6x9"" par (genéricos)",Audio,190.00,12
+SUB-12,"Subwoofer 12"" (genérico)",Audio,350.00,5
+AMP-4CH,Amplificador 4 canales (genérico),Audio,420.00,4
+MAR-UNIV,Marco adaptador universal 2 DIN,Instalación,45.00,40
+ARN-ISO,Arnés conector ISO,Instalación,25.00,60
+ANT-AMFM,Antena AM/FM de techo,Accesorios,35.00,25
+CAB-RCA,Cable RCA 5 m,Instalación,30.00,35
+KIT-INST,Kit de instalación (cables y fusible),Instalación,60.00,15

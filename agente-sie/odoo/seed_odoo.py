@@ -14,7 +14,10 @@ actualiza en vez de duplicar. Las vigencias quedan en el día de ejecución.
 from __future__ import annotations
 
 import argparse
+import csv
+import json
 import os
+from pathlib import Path
 import sys
 import time
 import xmlrpc.client
@@ -26,6 +29,41 @@ from app.config import Config, ahora_lima  # noqa: E402
 from app.repositorio import Repositorio  # noqa: E402
 
 MODULOS = ["crm", "sale_management", "stock"]
+DIR_DATOS = Path(__file__).resolve().parent
+
+
+def cargar_catalogo():
+    """odoo/catalogo.csv: catálogo de la tienda (reemplazable por el real). Debe incluir los SKU de los casos PC3."""
+    cat = {}
+    with open(DIR_DATOS / "catalogo.csv", encoding="utf-8", newline="") as f:
+        for fila in csv.DictReader(f):
+            cat[fila["sku"].strip()] = {"nombre": fila["nombre"].strip(), "categoria": fila["categoria"].strip(),
+                                        "precio": float(fila["precio_pen"]), "fisico": int(fila["stock_fisico"])}
+    for sku, prod in E.PRODUCTOS.items():  # los casos PC3 dependen de estos valores exactos
+        if sku not in cat or cat[sku]["precio"] != prod["precio"] or cat[sku]["fisico"] != prod["fisico"]:
+            raise SystemExit(f"catalogo.csv debe mantener {sku} con precio {prod['precio']} y stock {prod['fisico']} (casos PC3)")
+    return cat
+
+
+def cargar_extra():
+    archivo = DIR_DATOS / "escenario_extra.json"
+    if not archivo.exists():
+        return {"clientes": {}, "ventas_confirmadas": [], "oportunidades": {}, "cotizaciones": []}
+    return json.loads(archivo.read_text(encoding="utf-8"))
+
+
+CAT = cargar_catalogo()
+EXTRA = cargar_extra()
+CLIENTES = {**{k: {"nombre": v["nombre"]} for k, v in E.CLIENTES.items()}, **EXTRA["clientes"]}
+OPORTUNIDADES = {**E.OPORTUNIDADES, **EXTRA["oportunidades"]}
+RESERVAS = [{"ref": r["ref"], "cliente": r["cliente"], "lineas": [{"sku": r["sku"], "cantidad": r["cantidad"]}]}
+            for r in E.RESERVAS] + EXTRA["ventas_confirmadas"]
+COTIZACIONES = E.COTIZACIONES + EXTRA["cotizaciones"]
+
+
+def total_esperado(cot):
+    return round(sum(round(CAT[l["sku"]]["precio"] * l["cantidad"] * (1 - l.get("descuento", 0) / 100), 2)
+                     for l in cot["lineas"]), 2)
 
 
 def log(msg):
@@ -134,26 +172,29 @@ def asegurar_vendedor(odoo):
 def asegurar_productos(odoo):
     campos = odoo.x("product.template", "fields_get", attributes=["type"])
     almacenable = {"type": "consu", "is_storable": True} if "is_storable" in campos else {"type": "product"}
-    ids = {}
-    for sku, p in E.PRODUCTOS.items():
+    ids, categorias = {}, {}
+    for nombre in sorted({p["categoria"] for p in CAT.values()}):
+        categorias[nombre], _ = odoo.upsert("product.category", [("name", "=", nombre)], {"name": nombre})
+    for sku, p in CAT.items():
         tmpl, _ = odoo.upsert("product.template", [("default_code", "=", sku)],
                               {"name": p["nombre"], "default_code": sku, "list_price": p["precio"], "sale_ok": True,
+                               "categ_id": categorias[p["categoria"]],
                                "taxes_id": [(6, 0, [])], "active": True, **almacenable})
         ids[sku] = odoo.buscar("product.product", [("product_tmpl_id", "=", tmpl)])[0]
-    log(f"productos {list(ids)} listos ({almacenable})")
+    log(f"{len(ids)} productos del catálogo listos ({almacenable})")
     return ids
 
 
 def asegurar_clientes(odoo):
     ids = {}
-    for ref, c in E.CLIENTES.items():
+    for ref, c in CLIENTES.items():
         ids[ref], _ = odoo.upsert("res.partner", [("ref", "=", ref)], {"name": c["nombre"], "ref": ref, "active": True})
     return ids
 
 
 def fijar_stock(odoo, productos, ubicacion):
     for sku, pid in productos.items():
-        objetivo = E.PRODUCTOS[sku]["fisico"]
+        objetivo = CAT[sku]["fisico"]
         quants = odoo.buscar("stock.quant", [("product_id", "=", pid), ("location_id", "=", ubicacion)])
         if quants:
             odoo.x("stock.quant", "write", quants[:1], {"inventory_quantity": objetivo}, context={"inventory_mode": True})
@@ -162,17 +203,17 @@ def fijar_stock(odoo, productos, ubicacion):
             qid = odoo.x("stock.quant", "create", {"product_id": pid, "location_id": ubicacion,
                                                    "inventory_quantity": objetivo}, context={"inventory_mode": True})
         llamar_tolerante(odoo, "stock.quant", "action_apply_inventory", [qid])
-    log("stock físico fijado en 10 y 10")
+    log(f"stock físico fijado para {len(productos)} productos")
 
 
 def lineas(productos, lista):
     return [(0, 0, {"product_id": productos[l["sku"]], "product_uom_qty": l["cantidad"],
-                    "price_unit": E.PRODUCTOS[l["sku"]]["precio"], "discount": l.get("descuento", 0.0),
+                    "price_unit": CAT[l["sku"]]["precio"], "discount": l.get("descuento", 0.0),
                     "tax_id": [(6, 0, [])]}) for l in lista]
 
 
 def asegurar_reservas(odoo, productos, clientes, vendedor, moneda):
-    for r in E.RESERVAS:
+    for r in RESERVAS:
         existentes = odoo.leer("sale.order", [("client_order_ref", "=", r["ref"])], ["state"])
         if existentes and existentes[0]["state"] == "sale":
             continue
@@ -181,17 +222,17 @@ def asegurar_reservas(odoo, productos, clientes, vendedor, moneda):
         else:
             oid = odoo.x("sale.order", "create", {
                 "partner_id": clientes[r["cliente"]], "client_order_ref": r["ref"], "user_id": vendedor,
-                "order_line": lineas(productos, [{"sku": r["sku"], "cantidad": r["cantidad"]}])})
+                "order_line": lineas(productos, r["lineas"])})
         llamar_tolerante(odoo, "sale.order", "action_confirm", [oid])
         entregas = odoo.leer("stock.picking", [("sale_id", "=", oid), ("state", "not in", ["done", "cancel"])], ["state"])
         if entregas:
             llamar_tolerante(odoo, "stock.picking", "action_assign", [p["id"] for p in entregas])
-    log("reservas de CLI-DEMO-002 confirmadas (2 × RAD-7BT, 7 × RAD-10X)")
+    log(f"{len(RESERVAS)} ventas confirmadas (generan las reservas de stock)")
 
 
 def asegurar_oportunidades(odoo, clientes):
     ids = {}
-    for opp, o in E.OPORTUNIDADES.items():
+    for opp, o in OPORTUNIDADES.items():
         ids[opp], _ = odoo.upsert("crm.lead", [("name", "=", opp)],
                                   {"name": opp, "type": "opportunity", "partner_id": clientes[o["cliente"]], "active": True})
     return ids
@@ -236,7 +277,7 @@ def asegurar_cotizacion(odoo, cot, productos, clientes, oportunidades, vendedor,
 
 def anular_versiones_extra(odoo, conocidas):
     """Versiones creadas durante una demo anterior (p. ej. COT-DEMO-004 v3) se anulan al refrescar."""
-    for base in {c["id"] for c in E.COTIZACIONES}:
+    for base in {c["id"] for c in COTIZACIONES}:
         for so in odoo.leer("sale.order", [("client_order_ref", "=like", f"{base} v%")], ["client_order_ref", "state"]):
             if so["client_order_ref"] not in conocidas and so["state"] != "cancel":
                 llamar_tolerante(odoo, "sale.order", "action_cancel", [so["id"]], {"disable_cancel_warning": True})
@@ -245,7 +286,11 @@ def anular_versiones_extra(odoo, conocidas):
 
 def verificar(odoo, productos, ubicacion):
     ok = True
-    esperado = {"RAD-7BT": (10, 2, 8), "RAD-10X": (10, 7, 3)}
+    reservado = {}
+    for r in RESERVAS:
+        for l in r["lineas"]:
+            reservado[l["sku"]] = reservado.get(l["sku"], 0) + l["cantidad"]
+    esperado = {sku: (p["fisico"], reservado.get(sku, 0), p["fisico"] - reservado.get(sku, 0)) for sku, p in CAT.items()}
     for sku, pid in productos.items():
         q = odoo.leer("stock.quant", [("product_id", "=", pid), ("location_id", "child_of", ubicacion)],
                       ["quantity", "reserved_quantity"])
@@ -255,6 +300,29 @@ def verificar(odoo, productos, ubicacion):
         ok &= fila == esperado[sku]
         log(f"{marca} {sku}: físico {fila[0]}, reservado {fila[1]}, disponible {fila[2]} (esperado {esperado[sku]})")
     return ok
+
+
+def registrar_extra_local(repo, ahora, totales):
+    """Clientes, oportunidades del vendedor y aceptaciones del escenario extra en la base de la compuerta."""
+    from datetime import timedelta
+    aceptado = (ahora - timedelta(minutes=5)).isoformat()
+    with repo.conexion() as db:
+        for ref, c in EXTRA["clientes"].items():
+            db.execute("INSERT INTO clientes_ext(ref,identity_reviewed,segmento) VALUES(?,1,?)"
+                       " ON CONFLICT(ref) DO UPDATE SET identity_reviewed=1, segmento=excluded.segmento",
+                       (ref, c["segmento"]))
+        fila = db.execute("SELECT opportunities_json FROM actores WHERE actor_id=?", (E.VENDEDOR,)).fetchone()
+        opps = sorted(set(json.loads(fila[0]) if fila else []) | set(EXTRA["oportunidades"]))
+        db.execute("UPDATE actores SET opportunities_json=? WHERE actor_id=?", (json.dumps(opps), E.VENDEDOR))
+        for cot in EXTRA["cotizaciones"]:
+            if not cot.get("aceptacion"):
+                continue
+            total = "%.2f" % totales[f"{cot['id']} v{cot['version']}"]
+            db.execute("INSERT INTO aceptaciones VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(acceptance_id) DO UPDATE SET"
+                       " total=excluded.total, accepted_at=excluded.accepted_at",
+                       (cot["aceptacion"], E.COMPANY_ID, cot["id"], cot["version"], cot["cliente"], total, aceptado, "SEED"))
+    n = sum(1 for c in EXTRA["cotizaciones"] if c.get("aceptacion"))
+    log(f"escenario extra: {len(EXTRA['clientes'])} clientes, {len(EXTRA['oportunidades'])} oportunidades, {n} aceptaciones")
 
 
 def crear_v3(odoo, repo, productos, clientes, oportunidades, vendedor, hoy, tiene_opp, ahora):
@@ -304,10 +372,12 @@ def main():
     asegurar_reservas(odoo, productos, clientes, vendedor, moneda)
     oportunidades = asegurar_oportunidades(odoo, clientes)
     conocidas = set()
-    for cot in E.COTIZACIONES:
+    totales = {}
+    for cot in COTIZACIONES:
         ref, final = asegurar_cotizacion(odoo, cot, productos, clientes, oportunidades, vendedor, hoy, tiene_opp)
         conocidas.add(ref)
-        esperado = E.total_cotizacion(cot)
+        totales[ref] = final["amount_total"]
+        esperado = total_esperado(cot)
         marca = "✓" if abs(final["amount_total"] - esperado) < 0.005 and final["state"] == cot["estado"] else "✗"
         log(f"{marca} {ref}: estado {final['state']}, total {final['amount_total']:.2f} {final['currency_id'][1]}"
             f" (esperado {esperado:.2f}, {cot['estado']})")
@@ -317,6 +387,7 @@ def main():
         repo.reiniciar_transacciones()
         log("base de la compuerta reiniciada (solicitudes, bitácora, REP, aprobaciones)")
     E.registrar_maestros_locales(repo, ahora, ubicacion)
+    registrar_extra_local(repo, ahora, totales)
     log(f"maestros locales registrados; aceptaciones con hora {ahora.isoformat()} − 5 min; "
         f"cotizaciones vigentes hasta {hoy} {config.hora_cierre_cotizacion}")
     if not verificar(odoo, productos, ubicacion):

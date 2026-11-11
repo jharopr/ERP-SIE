@@ -2,7 +2,7 @@
   "caso": "PC3-N01",
   "titulo": "Caso normal: cotización aceptada con stock disponible",
   "modo": "Docker: Odoo 18 + compuerta reales",
-  "ejecutado_utc": "2026-11-10T14:02:35.769482+00:00",
+  "ejecutado_utc": "2026-11-11T16:28:47.456467+00:00",
   "entrada": {
     "contract_version": "1.0",
     "company_id": "MYS-DEMO",
@@ -74,7 +74,7 @@
   "bitacora": [
     {
       "event_id": 1,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I03",
@@ -86,7 +86,7 @@
     },
     {
       "event_id": 2,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I04",
@@ -98,7 +98,7 @@
     },
     {
       "event_id": 3,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I06",
@@ -110,7 +110,7 @@
     },
     {
       "event_id": 4,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I05",
@@ -122,7 +122,7 @@
     },
     {
       "event_id": 5,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I07",

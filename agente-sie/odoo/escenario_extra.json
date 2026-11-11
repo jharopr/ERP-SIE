@@ -1,0 +1,40 @@
+{
+  "notice": "Datos SINTÉTICOS adicionales para ver el flujo con más productos. No son datos reales de MYS. Los casos PC3 (CLI-DEMO-001/002, COT-DEMO-001..004) viven en compuerta/app/escenario.py y no se tocan aquí.",
+  "clientes": {
+    "CLI-DEMO-003": {"nombre": "Taller Demo Norte (sintético)", "segmento": "MAYORISTA"},
+    "CLI-DEMO-004": {"nombre": "Consumidor Demo 004 (sintético)", "segmento": "CONSUMIDOR_FINAL"},
+    "CLI-DEMO-005": {"nombre": "Empresa Demo con RUC (sintética)", "segmento": "CLIENTE_FACTURA"},
+    "CLI-DEMO-006": {"nombre": "Cliente Recurrente Demo 006 (sintético)", "segmento": "RECURRENTE"}
+  },
+  "ventas_confirmadas": [
+    {"ref": "RES-DEMO-101", "cliente": "CLI-DEMO-003", "lineas": [{"sku": "RAD-1DIN", "cantidad": 4}, {"sku": "ARN-ISO", "cantidad": 6}]},
+    {"ref": "RES-DEMO-102", "cliente": "CLI-DEMO-005", "lineas": [{"sku": "SUB-12", "cantidad": 2}]},
+    {"ref": "RES-DEMO-103", "cliente": "CLI-DEMO-006", "lineas": [{"sku": "CAM-RETRO", "cantidad": 5}, {"sku": "PAR-6.5", "cantidad": 2}]}
+  ],
+  "oportunidades": {
+    "OPP-DEMO-101": {"cliente": "CLI-DEMO-003"},
+    "OPP-DEMO-102": {"cliente": "CLI-DEMO-004"},
+    "OPP-DEMO-103": {"cliente": "CLI-DEMO-005"},
+    "OPP-DEMO-104": {"cliente": "CLI-DEMO-006"},
+    "OPP-DEMO-105": {"cliente": "CLI-DEMO-004"}
+  },
+  "cotizaciones": [
+    {"id": "COT-DEMO-101", "version": 1, "oportunidad": "OPP-DEMO-101", "cliente": "CLI-DEMO-003", "estado": "sent",
+     "aceptacion": "ACE-DEMO-101", "esperado": "ACEPTADA (mayorista: 10 radios 1 DIN + marcos + arneses, 3 %)",
+     "lineas": [{"sku": "RAD-1DIN", "cantidad": 10, "descuento": 3.0}, {"sku": "MAR-UNIV", "cantidad": 10, "descuento": 3.0},
+                {"sku": "ARN-ISO", "cantidad": 10, "descuento": 3.0}]},
+    {"id": "COT-DEMO-102", "version": 1, "oportunidad": "OPP-DEMO-102", "cliente": "CLI-DEMO-004", "estado": "sent",
+     "aceptacion": "ACE-DEMO-102", "esperado": "ACEPTADA (consumidor final: CarPlay + cámara + kit, sin descuento)",
+     "lineas": [{"sku": "RAD-CPLAY", "cantidad": 1, "descuento": 0.0}, {"sku": "CAM-RETRO", "cantidad": 1, "descuento": 0.0},
+                {"sku": "KIT-INST", "cantidad": 1, "descuento": 0.0}]},
+    {"id": "COT-DEMO-103", "version": 1, "oportunidad": "OPP-DEMO-103", "cliente": "CLI-DEMO-005", "estado": "sent",
+     "aceptacion": "ACE-DEMO-103", "esperado": "PROMESA_CONDICIONADA (SUB-12: piden 4, disponibles 3)",
+     "lineas": [{"sku": "SUB-12", "cantidad": 4, "descuento": 5.0}, {"sku": "AMP-4CH", "cantidad": 4, "descuento": 5.0}]},
+    {"id": "COT-DEMO-104", "version": 1, "oportunidad": "OPP-DEMO-104", "cliente": "CLI-DEMO-006", "estado": "sent",
+     "aceptacion": "ACE-DEMO-104", "esperado": "RECHAZADA / DESCUENTO_SIN_APROBACION (8 % > 5 %)",
+     "lineas": [{"sku": "RAD-9AND", "cantidad": 2, "descuento": 8.0}, {"sku": "PAR-6X9", "cantidad": 2, "descuento": 8.0}]},
+    {"id": "COT-DEMO-105", "version": 1, "oportunidad": "OPP-DEMO-105", "cliente": "CLI-DEMO-004", "estado": "sent",
+     "esperado": "RECHAZADA / ACEPTACION_INVALIDA (enviada, el cliente aún no aceptó)",
+     "lineas": [{"sku": "PAR-6.5", "cantidad": 1, "descuento": 0.0}, {"sku": "ANT-AMFM", "cantidad": 1, "descuento": 0.0}]}
+  ]
+}

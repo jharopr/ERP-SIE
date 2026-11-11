@@ -2,7 +2,7 @@
   "caso": "PC3-E02",
   "titulo": "Descuento del 10 % sin aprobación del dueño",
   "modo": "Docker: Odoo 18 + compuerta reales",
-  "ejecutado_utc": "2026-11-10T14:02:38.630557+00:00",
+  "ejecutado_utc": "2026-11-11T16:28:50.719439+00:00",
   "entrada": {
     "contract_version": "1.0",
     "company_id": "MYS-DEMO",
@@ -89,8 +89,8 @@
     "signal_id": null,
     "destinatario": "DUENO",
     "resumen_hash": "20d5c73f298189b41bdff58bb3b7700f567bfa5072cb1931d53847d7049b5b6d",
-    "created_at": "2026-11-10T09:02:41-05:00",
-    "plazo_hasta": "2026-11-10T09:12:41-05:00",
+    "created_at": "2026-11-11T11:28:50-05:00",
+    "plazo_hasta": "2026-11-11T11:38:50-05:00",
     "estado": "ESPERANDO_DECISION",
     "decision": null,
     "decided_at": null
@@ -98,7 +98,7 @@
   "bitacora": [
     {
       "event_id": 1,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I03",
@@ -110,7 +110,7 @@
     },
     {
       "event_id": 2,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I04",
@@ -122,7 +122,7 @@
     },
     {
       "event_id": 3,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I06",
@@ -134,7 +134,7 @@
     },
     {
       "event_id": 4,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I05",
@@ -146,7 +146,7 @@
     },
     {
       "event_id": 5,
-      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "occurred_at": "2026-11-11T11:28:46-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I07",
@@ -158,7 +158,7 @@
     },
     {
       "event_id": 15,
-      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "occurred_at": "2026-11-11T11:28:48-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I03",
@@ -170,7 +170,7 @@
     },
     {
       "event_id": 16,
-      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "occurred_at": "2026-11-11T11:28:48-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I04",
@@ -182,7 +182,7 @@
     },
     {
       "event_id": 17,
-      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "occurred_at": "2026-11-11T11:28:48-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I06",
@@ -194,7 +194,7 @@
     },
     {
       "event_id": 18,
-      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "occurred_at": "2026-11-11T11:28:48-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I07",
@@ -206,7 +206,7 @@
     },
     {
       "event_id": 19,
-      "occurred_at": "2026-11-10T09:02:41-05:00",
+      "occurred_at": "2026-11-11T11:28:50-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "ESC",
@@ -221,7 +221,7 @@
     },
     {
       "event_id": 20,
-      "occurred_at": "2026-11-10T09:02:41-05:00",
+      "occurred_at": "2026-11-11T11:28:50-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "AGENTE",
