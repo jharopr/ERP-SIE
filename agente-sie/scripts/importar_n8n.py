@@ -28,7 +28,8 @@ for _flujo in (sys.stdout, sys.stderr):
 
 
 def compose(*args, entrada=None, check=True):
-    r = subprocess.run(["docker", "compose", *args], cwd=RAIZ, input=entrada, capture_output=True, text=True)
+    r = subprocess.run(["docker", "compose", *args], cwd=RAIZ, input=entrada, capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
     if check and r.returncode:
         print(r.stdout, r.stderr)
         raise SystemExit(f"Falló: docker compose {' '.join(args[:4])}…")

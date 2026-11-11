@@ -22,7 +22,9 @@ Vendedor ─chat─► n8n W1 (AI Agent + Gemini) ─HTTP, token VENTAS─► Co
 | [evidencias/resultados.md](evidencias/resultados.md) | Esperado vs observado |
 
 ## 1. Requisitos (≈ 5 min)
-- Docker Desktop (Windows/macOS) o Docker Engine con **Compose v2**, unos **8 GB de RAM libres** y unos 6 GB de disco para las imágenes.
+- **Linux** (Docker Engine + plugin Compose v2), **Windows** o **macOS** (Docker Desktop). Los contenedores son Linux en los tres casos.
+- **Memoria:** el stack usa unos 0,9 GB dentro de Docker (n8n 450 MB, Odoo 180 MB, Postgres 150 MB, compuerta 50 MB), pero el seed y la instalación de módulos tienen picos mayores. Recomendado: **8 GB de RAM en total o más**; con menos, cierre el navegador pesado, el IDE, etc. (en una PC de 7,3 GB, con 0,3 GB libres, fallaron procesos del sistema).
+- Unos 6 GB de disco para las imágenes.
 - Puertos **8069**, **8000** y **5678** libres (se cambian en `.env`).
 - **Python 3.10 o superior** en el equipo, para los scripts. El modo real usa solo la biblioteca estándar.
 - Internet para descargar imágenes y, si se usa el agente con IA, una **clave de Google Gemini** (Google AI Studio). Sin clave, la demo funciona con **W3**.
@@ -34,20 +36,21 @@ Vendedor ─chat─► n8n W1 (AI Agent + Gemini) ─HTTP, token VENTAS─► Co
 | n8n | `docker.n8n.io/n8nio/n8n:2.46.7` (stable al 10/11/2026) |
 | Compuerta | `python:3.12-slim` + `compuerta/requirements.txt` |
 
-## 2. Configurar `.env` (≈ 2 min)
-```powershell
-Copy-Item .env.example .env        # Linux/macOS: cp .env.example .env
-python -c "import secrets; [print(secrets.token_urlsafe(32)) for _ in range(6)]"
+## 2. Crear `.env` (≈ 1 min)
+Cada persona genera **su propio** `.env`, con claves aleatorias nuevas. No comparta el suyo: contiene contraseñas y tokens.
+```sh
+python3 scripts/generar_env.py --gemini "SU_CLAVE_GEMINI"   # Linux/macOS
+python scripts/generar_env.py --gemini "SU_CLAVE_GEMINI"    # Windows
 ```
-Reemplace **cada** `cambiar-esto` por uno de los valores generados. Los tres `TOKEN_*` deben ser distintos. `GEMINI_API_KEY` es opcional.
+Sin `--gemini`, todo funciona igual, salvo el chat W1 (use W3). La clave se obtiene en https://aistudio.google.com/apikey: es el valor que empieza con `AQ.` o `AIza`, no el nombre del proyecto `gen-lang-client-…`. Alternativa manual: copie `.env.example` a `.env` y reemplace cada `cambiar-esto`.
 
-## 3. Levantar los servicios (≈ 3–6 min la primera vez)
+## 3. Levantar los servicios (≈ 4 min la primera vez; medido en limpio: 3 min 45 s)
 ```powershell
 docker compose up -d --build
 docker compose ps                  # espere a que db, odoo, compuerta y n8n estén "healthy"
 ```
 
-## 4. Cargar los datos sintéticos (≈ 5 min la primera vez; medido: 4 min 39 s)
+## 4. Cargar los datos sintéticos (≈ 5–7 min la primera vez; medido: 4 min 39 s y 6 min 21 s)
 ```powershell
 docker compose exec -T compuerta python /seed/seed_odoo.py
 ```
@@ -135,5 +138,7 @@ Documentación interactiva en `http://localhost:8000/docs`. Todas las rutas, sal
 | Importación y publicación de W1–W3 por CLI en n8n 2.46.7 | ✓ verificado |
 | W3, modo determinista (formulario → compuerta → Odoo) | ✓ verificado |
 | W2, formulario del dueño (token GERENCIA, cierra el escalamiento) | ✓ verificado |
-| W1, conversación con Gemini y herramienta `escalar_al_dueno` → W2 | ⏳ pendiente de la clave de Gemini |
-| Prueba en limpio en otra PC siguiendo solo este README | ⏳ pendiente (equipo) |
+| W1, conversación con Gemini (`gemini-3.5-flash`) y `escalar_al_dueno` → W2 | ✓ N01 y E01 (`evidencias/agente_*.md`). Gemini puede tardar mucho cuando está saturado: plan B, W3 |
+| Prueba en limpio: clon nuevo desde GitHub, `.env` con `generar_env.py`, pasos 2→8 en bash (11/11/2026) | ✓ seed, n8n, verificación, 6/6 casos y agente; se corrigieron 2 fallas de consola en Windows |
+| Prueba en un equipo con Linux | ⏳ pendiente (equipo); los comandos son POSIX y los contenedores Linux |
+| Prueba en otra PC por un integrante | ⏳ pendiente (equipo) |
