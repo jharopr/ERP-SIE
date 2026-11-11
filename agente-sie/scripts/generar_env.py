@@ -33,7 +33,8 @@ def main():
     if destino.exists() and not args.forzar:
         raise SystemExit(".env ya existe; use --forzar para reemplazarlo (perderá acceso a datos creados con las claves anteriores)")
     texto = (RAIZ / ".env.example").read_text(encoding="utf-8")
-    texto = re.sub(r"cambiar-esto[\w-]*", lambda _: secrets.token_urlsafe(24), texto)
+    # Solo valores (VARIABLE=cambiar-esto…), no los comentarios que mencionan «cambiar-esto».
+    texto = re.sub(r"(?m)^(\w+=)cambiar-esto[\w-]*", lambda m: m.group(1) + secrets.token_urlsafe(24), texto)
     texto = re.sub(r"(?m)^GEMINI_API_KEY=.*$", f"GEMINI_API_KEY={args.gemini.strip()}", texto)
     destino.write_text(texto, encoding="utf-8", newline="\n")
     print(f"✓ {destino} creado con claves nuevas" + ("" if args.gemini else " (sin clave de Gemini)"))
