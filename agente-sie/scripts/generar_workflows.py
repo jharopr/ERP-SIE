@@ -138,7 +138,7 @@ def w1():
         nodo(agente, "@n8n/n8n-nodes-langchain.agent", 1.7, [400, 0],
              {"options": {"systemMessage": sistema, "maxIterations": 10}}),
         nodo("Modelo Gemini", "@n8n/n8n-nodes-langchain.lmChatGoogleGemini", 1, [120, 260],
-             {"modelName": "models/gemini-3.5-flash", "options": {"temperature": 0.1}},
+             {"modelName": "models/gemini-3.5-flash-lite", "options": {"temperature": 0.1}},
              credentials={"googlePalmApi": CRED["gemini"]}),
         nodo("Memoria (10 mensajes)", "@n8n/n8n-nodes-langchain.memoryBufferWindow", 1.3, [300, 260],
              {"contextWindowLength": 10}),
@@ -167,29 +167,33 @@ def w2():
             "if (!e.escalation_id) {\n"
             "  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n"
             "}\n"
-            f"const enlace = `{N8N_PUBLICO}/form/decision-dueno?escalation_id=${{e.escalation_id}}`;\n"
+            "const opciones = e.tipo === 'DESCUENTO' ? ['APROBADA', 'RECHAZADA']\n"
+            "  : ['OFRECER_PARCIAL', 'EVALUAR_REPOSICION', 'DESCARTAR'];\n"
+            f"const base = `{N8N_PUBLICO}/form/decision-dueno?escalation_id=${{e.escalation_id}}`;\n"
+            "// Un enlace por decisión: el formulario abre con ESC y decisión ya marcados; el dueño solo pulsa Submit.\n"
+            "const enlaces = Object.fromEntries(opciones.map(o => [o, `${base}&decision=${o}`]));\n"
             "return [{ json: {\n"
             "  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n"
             "  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n"
-            "  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlace_formulario_dueno: enlace,\n"
+            "  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlaces_un_clic_para_el_dueno: enlaces,\n"
             "  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n"
             "} }];")}),
         nodo("Formulario del dueño", "n8n-nodes-base.formTrigger", 2.2, [0, 300], {
             "formTitle": "Decisión del dueño · Agente SIE (demo)",
-            "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Descuento: APROBADA o RECHAZADA (vale solo para la nueva versión). Reposición: OFRECER_PARCIAL, EVALUAR_REPOSICION o DESCARTAR. Ninguna opción crea pedidos ni reservas.",
+            "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Revise la decisión ya marcada y pulse Submit. El motivo es opcional. Ninguna opción crea pedidos ni reservas.",
             "formFields": {"values": [
                 {"fieldLabel": "escalation_id", "placeholder": "ESC-PC3-001", "requiredField": True},
                 {"fieldLabel": "decision", "fieldType": "dropdown", "requiredField": True,
                  "fieldOptions": {"values": [{"option": o} for o in
                                              ("APROBADA", "RECHAZADA", "OFRECER_PARCIAL", "EVALUAR_REPOSICION", "DESCARTAR")]}},
-                {"fieldLabel": "motivo", "fieldType": "textarea", "requiredField": True,
+                {"fieldLabel": "motivo", "fieldType": "textarea", "requiredField": False,
                  "placeholder": "Motivo breve, sin datos personales"}]},
             "options": {"path": "decision-dueno"}}, webhookId=WEBHOOKS["dueno"]),
         nodo("Registrar decisión (GERENCIA)", "n8n-nodes-base.httpRequest", 4.2, [240, 300], {
             "method": "POST", "url": f"={COMPUERTA}/escalamientos/{{{{ $json.escalation_id.trim() }}}}/decision",
             "authentication": "genericCredentialType", "genericAuthType": "httpHeaderAuth",
             "sendBody": True, "specifyBody": "json",
-            "jsonBody": "={{ JSON.stringify({ decision: $json.decision, motivo: $json.motivo }) }}",
+            "jsonBody": "={{ JSON.stringify({ decision: $json.decision, motivo: ($json.motivo || '').trim().length >= 3 ? $json.motivo : 'Decisión del dueño sin comentario' }) }}",
             "options": {"response": {"response": {"neverError": True}}}},
              credentials={"httpHeaderAuth": CRED["gerencia"]}),
         nodo("Confirmación al dueño", "n8n-nodes-base.form", 1, [480, 300], {

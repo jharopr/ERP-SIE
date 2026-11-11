@@ -9,7 +9,7 @@
 | Python | 3.12 (imagen `python:3.12-slim`) | PSF License | |
 | FastAPI 0.115.6 · Uvicorn 0.32.1 · Pydantic 2.10.3 | `compuerta/requirements.txt` | MIT / BSD-3 / MIT | |
 | pytest · httpx · jsonschema | `compuerta/requirements-dev.txt` | MIT / BSD-3 / MIT | Solo para pruebas |
-| Modelo de lenguaje | Google Gemini (`models/gemini-3.5-flash`), configurable | Términos del proveedor | **Es responsabilidad de quien ejecuta**: cuenta, cuota y datos enviados |
+| Modelo de lenguaje | Google Gemini (`models/gemini-3.5-flash-lite`), configurable | Términos del proveedor | **Es responsabilidad de quien ejecuta**: cuenta, cuota y datos enviados |
 | Código del grupo (compuerta, scripts, flujos) | — | Uso académico GE703 | |
 
 ## Accesos y secretos

@@ -82,7 +82,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const e = $input.first().json;\nif (!e.escalation_id) {\n  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n}\nconst enlace = `http://localhost:5678/form/decision-dueno?escalation_id=${e.escalation_id}`;\nreturn [{ json: {\n  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlace_formulario_dueno: enlace,\n  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n} }];"
+        "jsCode": "const e = $input.first().json;\nif (!e.escalation_id) {\n  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n}\nconst opciones = e.tipo === 'DESCUENTO' ? ['APROBADA', 'RECHAZADA']\n  : ['OFRECER_PARCIAL', 'EVALUAR_REPOSICION', 'DESCARTAR'];\nconst base = `http://localhost:5678/form/decision-dueno?escalation_id=${e.escalation_id}`;\n// Un enlace por decisión: el formulario abre con ESC y decisión ya marcados; el dueño solo pulsa Submit.\nconst enlaces = Object.fromEntries(opciones.map(o => [o, `${base}&decision=${o}`]));\nreturn [{ json: {\n  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlaces_un_clic_para_el_dueno: enlaces,\n  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n} }];"
       },
       "id": "af9576d8-700d-5a53-976c-414ac05e03ee",
       "name": "Respuesta al agente",
@@ -96,7 +96,7 @@
     {
       "parameters": {
         "formTitle": "Decisión del dueño · Agente SIE (demo)",
-        "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Descuento: APROBADA o RECHAZADA (vale solo para la nueva versión). Reposición: OFRECER_PARCIAL, EVALUAR_REPOSICION o DESCARTAR. Ninguna opción crea pedidos ni reservas.",
+        "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Revise la decisión ya marcada y pulse Submit. El motivo es opcional. Ninguna opción crea pedidos ni reservas.",
         "formFields": {
           "values": [
             {
@@ -131,7 +131,7 @@
             {
               "fieldLabel": "motivo",
               "fieldType": "textarea",
-              "requiredField": true,
+              "requiredField": false,
               "placeholder": "Motivo breve, sin datos personales"
             }
           ]
@@ -158,7 +158,7 @@
         "genericAuthType": "httpHeaderAuth",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ decision: $json.decision, motivo: $json.motivo }) }}",
+        "jsonBody": "={{ JSON.stringify({ decision: $json.decision, motivo: ($json.motivo || '').trim().length >= 3 ? $json.motivo : 'Decisión del dueño sin comentario' }) }}",
         "options": {
           "response": {
             "response": {

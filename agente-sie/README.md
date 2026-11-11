@@ -138,7 +138,7 @@ Documentación interactiva en `http://localhost:8000/docs`. Todas las rutas, sal
 | Importación y publicación de W1–W3 por CLI en n8n 2.46.7 | ✓ verificado |
 | W3, modo determinista (formulario → compuerta → Odoo) | ✓ verificado |
 | W2, formulario del dueño (token GERENCIA, cierra el escalamiento) | ✓ verificado |
-| W1, conversación con Gemini (`gemini-3.5-flash`) y `escalar_al_dueno` → W2 | ✓ N01 y E01 (`evidencias/agente_*.md`). Gemini puede tardar mucho cuando está saturado: plan B, W3 |
+| W1, conversación con Gemini (`gemini-3.5-flash-lite`) y `escalar_al_dueno` → W2 | ✓ N01 y E01 (`evidencias/agente_*.md`). Gemini puede tardar mucho cuando está saturado: plan B, W3 |
 | Prueba en limpio: clon nuevo desde GitHub, `.env` con `generar_env.py`, pasos 2→8 en bash (11/11/2026) | ✓ seed, n8n, verificación, 6/6 casos y agente; se corrigieron 2 fallas de consola en Windows |
 | Prueba en un equipo con Linux | ⏳ pendiente (equipo); los comandos son POSIX y los contenedores Linux |
 | Prueba en otra PC por un integrante | ⏳ pendiente (equipo) |

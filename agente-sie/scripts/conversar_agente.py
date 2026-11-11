@@ -65,7 +65,7 @@ def main():
     sesion = f"evidencia-{caso.lower()}-{int(time.time())}"
     lineas = [f"# Conversación del agente · PC3-{caso}", "",
               f"- Fecha (UTC): {datetime.now(timezone.utc).isoformat(timespec='seconds')}",
-              "- Flujo: W1 (n8n 2.46.7) · modelo `gemini-3.5-flash` · compuerta y Odoo 18 reales · datos sintéticos",
+              "- Flujo: W1 (n8n 2.46.7) · modelo `gemini-3.5-flash-lite` · compuerta y Odoo 18 reales · datos sintéticos",
               f"- Sesión de chat: `{sesion}`", ""]
     ultimo = ""
     for mensaje in GUIONES[caso]:
