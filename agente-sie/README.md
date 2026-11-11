@@ -17,6 +17,7 @@ Vendedor ─chat─► n8n W1 (AI Agent + Gemini) ─HTTP, token VENTAS─► Co
 | [docs/DIAGNOSTICO_Y_RECUPERACION.md](docs/DIAGNOSTICO_Y_RECUPERACION.md) | Síntoma, causa, verificación y recuperación |
 | [docs/LICENCIAS_Y_ACCESOS.md](docs/LICENCIAS_Y_ACCESOS.md) | Licencias, credenciales y por qué no se incluyen claves |
 | [docs/USO_IA_Y_VALIDACION.md](docs/USO_IA_Y_VALIDACION.md) | Qué generó la IA, decisiones y validación |
+| [docs/FUENTES.md](docs/FUENTES.md) | Fuentes con fecha de acceso y declaración de uso de IA |
 | [datos_prueba/](datos_prueba/DATOS_SINTETICOS.md) | Escenario sintético y casos declarados antes de ejecutar |
 | [evidencias/resultados.md](evidencias/resultados.md) | Esperado vs observado |
 
