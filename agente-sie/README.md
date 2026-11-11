@@ -1,12 +1,12 @@
 # Agente SIE · PC3 · G7 Importaciones MYS Hermanos
 
-Agente de IA que **acompaña** al ERP en el proceso comercial: lleva una cotización aceptada hasta una respuesta trazable de la compuerta CRM–ERP v1.0, explica el resultado, escala al dueño las excepciones y deja todo en la bitácora. **No crea pedidos, no reserva stock, no aprueba descuentos y no promete fechas.** Todos los datos son sintéticos.
+Agente de IA que **acompaña** al ERP en el proceso comercial: lleva una cotización aceptada hasta una respuesta trazable de la compuerta CRM–ERP v1.0, explica el resultado, escala al dueño las excepciones y deja todo en la bitácora. **No crea pedidos, no reserva stock, no aprueba descuentos y no promete fechas.** El catálogo (nombres y precios de venta) es el real de la empresa; stock, clientes, cotizaciones y reservas son sintéticos.
 
 ```
 Vendedor ─chat─► n8n W1 (AI Agent + Gemini) ─HTTP, token VENTAS─► Compuerta FastAPI ─XML-RPC (lectura)─► Odoo 18 CE ─► PostgreSQL 16
                      │ escalar_al_dueno                          (R01–R12 del motor PC2, sin cambios;
                      ▼                                             SQLite: bitácora, REP, aprobaciones)
-                 n8n W2 ─ formulario del dueño ─ token GERENCIA ─►┘
+                 n8n W2 ─ correo automático al dueño (botones) ─► formulario de 1 clic ─ token GERENCIA ─►┘
                  n8n W3 = modo determinista sin IA (respaldo)
 ```
 
@@ -25,7 +25,7 @@ Vendedor ─chat─► n8n W1 (AI Agent + Gemini) ─HTTP, token VENTAS─► Co
 - **Linux** (Docker Engine + plugin Compose v2), **Windows** o **macOS** (Docker Desktop). Los contenedores son Linux en los tres casos.
 - **Memoria:** el stack usa unos 0,9 GB dentro de Docker (n8n 450 MB, Odoo 180 MB, Postgres 150 MB, compuerta 50 MB), pero el seed y la instalación de módulos tienen picos mayores. Recomendado: **8 GB de RAM en total o más**; con menos, cierre el navegador pesado, el IDE, etc. (en una PC de 7,3 GB, con 0,3 GB libres, fallaron procesos del sistema).
 - Unos 6 GB de disco para las imágenes.
-- Puertos **8069**, **8000** y **5678** libres (se cambian en `.env`).
+- Puertos **8069**, **8000**, **5678** y **8025** libres (se cambian en `.env`).
 - **Python 3.10 o superior** en el equipo, para los scripts. El modo real usa solo la biblioteca estándar.
 - Internet para descargar imágenes y, si se usa el agente con IA, una **clave de Google Gemini** (Google AI Studio). Sin clave, la demo funciona con **W3**.
 
@@ -35,6 +35,7 @@ Vendedor ─chat─► n8n W1 (AI Agent + Gemini) ─HTTP, token VENTAS─► Co
 | PostgreSQL | `postgres:16` |
 | n8n | `docker.n8n.io/n8nio/n8n:2.46.7` (stable al 10/11/2026) |
 | Compuerta | `python:3.12-slim` + `compuerta/requirements.txt` |
+| Mailpit (buzón local del dueño) | `axllent/mailpit:v1.31.6` |
 
 ## 2. Crear `.env` (≈ 1 min)
 Cada persona genera **su propio** `.env`, con claves aleatorias nuevas. No comparta el suyo: contiene contraseñas y tokens.
@@ -50,17 +51,19 @@ docker compose up -d --build
 docker compose ps                  # espere a que db, odoo, compuerta y n8n estén "healthy"
 ```
 
-## 4. Cargar los datos sintéticos (≈ 5–7 min la primera vez; medido: 4 min 39 s y 6 min 21 s)
+## 4. Cargar el catálogo y los datos de demostración (≈ 6–9 min la primera vez; con 169 productos: 4 min 23 s; luego ≈ 1 min)
 ```powershell
 docker compose exec -T compuerta python /seed/seed_odoo.py
 ```
 > **Git Bash en Windows:** anteponga `MSYS_NO_PATHCONV=1` a los comandos con rutas `/seed/…`; si no, Git Bash las convierte en rutas de Windows. En PowerShell no hace falta.
-Crea la base `mys_demo`, instala CRM, Ventas e Inventario y carga productos, stock, reservas, oportunidades y cotizaciones. Debe terminar con:
+Crea la base `mys_demo`, instala CRM, Ventas e Inventario y carga el catálogo de `odoo/catalogo.csv` (167 productos de la empresa + 2 genéricos de los casos PC3), stock, reservas, leads, oportunidades y cotizaciones. Debe terminar con:
 ```
-[seed] ✓ RAD-7BT: físico 10, reservado 2, disponible 8 (esperado (10, 2, 8))
-[seed] ✓ RAD-10X: físico 10, reservado 7, disponible 3 (esperado (10, 7, 3))
+[seed] ✓ RAD-10X: físico 10, reservado 7, disponible 3
+[seed] ✓ RAD-7BT: físico 10, reservado 2, disponible 8
+[seed] stock verificado: 163/163 productos coinciden con el catálogo
 [seed] seed completo
 ```
+Si la empresa entrega una lista de productos nueva: `py -3.11 scripts/importar_catalogo.py <lista.xlsx>` (requiere `pip install openpyxl`) y vuelva a ejecutar el seed. Ver [odoo/README.md](odoo/README.md).
 Odoo queda en `http://localhost:8069`, con el usuario y la clave `ODOO_USER` / `ODOO_PASSWORD` de `.env`.
 
 ## 5. Credenciales de n8n (≈ 3 min)
@@ -73,6 +76,7 @@ Odoo queda en `http://localhost:8069`, con el usuario y la clave `ODOO_USER` / `
 | `Compuerta VENTAS` | Header Auth | Name: `Authorization` · Value: `Bearer <TOKEN_VENTAS>` |
 | `Compuerta GERENCIA` | Header Auth | Name: `Authorization` · Value: `Bearer <TOKEN_GERENCIA>` |
 | `Gemini (Agente SIE)` | Google Gemini(PaLM) API | Host: `https://generativelanguage.googleapis.com` · API Key: su clave |
+| `Correo SIE (SMTP)` | SMTP | Host `mailpit`, puerto `1025`, sin usuario, SSL/TLS desactivado (o los datos de Gmail de `.env`) |
 
 Si `GEMINI_API_KEY` estaba vacía, cree a mano la credencial de Gemini aunque haya usado la opción automática.
 
@@ -85,6 +89,9 @@ Si `GEMINI_API_KEY` estaba vacía, cree a mano la credencial de Gemini aunque ha
 | W1 · chat del vendedor | `http://localhost:5678/webhook/6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01/chat` |
 | W2 · formulario del dueño | `http://localhost:5678/form/decision-dueno` |
 | W3 · modo determinista (sin IA) | `http://localhost:5678/form/modo-determinista` |
+| Buzón del dueño (Mailpit) | `http://localhost:8025` |
+
+**Aviso al dueño:** cuando hay una excepción, W2 envía un correo al dueño con el resumen y botones (*Aprobar* / *Rechazar*, o *Ofrecer parcial* / *Evaluar reposición* / *Descartar*). Cada botón abre una confirmación con todo marcado: un clic más y queda registrado con el token GERENCIA. Por defecto el correo llega al buzón local Mailpit; para que llegue a un correo real, complete `SMTP_*` y `CORREO_DUENO` en `.env` (Gmail con contraseña de aplicación) y ejecute de nuevo `python scripts/importar_n8n.py`. Para abrir los botones desde el celular, ponga en `N8N_URL_PUBLICA` la IP del equipo en la red local.
 
 ## 7. Demo
 Abra el chat de W1 y pegue los mensajes de [docs/GUION_DEMO.md](docs/GUION_DEMO.md). Por ejemplo:
@@ -125,7 +132,7 @@ Documentación interactiva en `http://localhost:8000/docs`. Todas las rutas, sal
 
 ## Cambios respecto de las instrucciones
 1. **E02 usa COT-DEMO-004** (v1 anulada, v2 al 10 %), para que N01 no quede obsoleto. Ver [DATOS_SINTETICOS.md](datos_prueba/DATOS_SINTETICOS.md).
-2. **W2 no bloquea al agente con un *Wait*.** El agente registra el escalamiento y entrega el enlace; el dueño decide en un formulario y la compuerta controla el plazo de 10 min (`SIN_DECISION`).
+2. **W2 no bloquea al agente con un *Wait*.** El agente registra el escalamiento y W2 **avisa al dueño por correo** (canal por defecto reproducible: Mailpit local, sin credenciales; Gmail opcional). El dueño decide en un formulario de un clic y la compuerta controla el plazo de 10 min (`SIN_DECISION`). El correo no registra nada con solo abrirse, porque los lectores de correo abren enlaces automáticamente.
 3. La herramienta opcional `buscar_contacto_odoo`, que habría sido el nodo Odoo, no se incluyó. El agente lee contactos por `consultar_cliente`, sin datos personales.
 
 ## Estado de verificación (10/11/2026, Windows 11 + Docker Desktop 29.2.1, 3,7 GB de RAM para Docker)
@@ -138,7 +145,9 @@ Documentación interactiva en `http://localhost:8000/docs`. Todas las rutas, sal
 | Importación y publicación de W1–W3 por CLI en n8n 2.46.7 | ✓ verificado |
 | W3, modo determinista (formulario → compuerta → Odoo) | ✓ verificado |
 | W2, formulario del dueño (token GERENCIA, cierra el escalamiento) | ✓ verificado |
-| W1, conversación con Gemini (`gemini-3.5-flash-lite`) y `escalar_al_dueno` → W2 | ✓ N01 y E01 (`evidencias/agente_*.md`). Gemini puede tardar mucho cuando está saturado: plan B, W3 |
+| W1, conversación con Gemini (`gemini-3.5-flash-lite`, respuesta en *streaming*) y `escalar_al_dueno` → W2 | ✓ N01, E01 y A01 (`evidencias/agente_*.md`), 3–7 s por mensaje (11/11/2026). Si Gemini se satura: plan B, W3 |
+| W2, correo automático al dueño (Mailpit) y decisión con un clic | ✓ verificado (11/11/2026) |
+| Catálogo real de la empresa (169 productos) en Odoo + 6 casos PC3 | ✓ 6/6 (11/11/2026) |
 | Prueba en limpio: clon nuevo desde GitHub, `.env` con `generar_env.py`, pasos 2→8 en bash (11/11/2026) | ✓ seed, n8n, verificación, 6/6 casos y agente; se corrigieron 2 fallas de consola en Windows |
 | Prueba en un equipo con Linux | ⏳ pendiente (equipo); los comandos son POSIX y los contenedores Linux |
 | Prueba en otra PC por un integrante | ⏳ pendiente (equipo) |

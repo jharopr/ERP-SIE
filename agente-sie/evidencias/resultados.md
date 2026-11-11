@@ -1,7 +1,7 @@
 # Resultados PC3 · esperado vs observado
 
 - **Modo:** Docker: Odoo 18 + compuerta reales
-- **Ejecución (UTC):** 2026-11-11T16:28:45.612391+00:00
+- **Ejecución (UTC):** 2026-11-11T21:34:24.083614+00:00
 - **Equipo:** Python 3.11.9 · Windows 10
 - **Casos:** 6/6 ✓
 - **Stock intacto antes/después:** ✓ (RAD-7BT: disp. 8, RAD-10X: disp. 3)

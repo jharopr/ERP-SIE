@@ -46,7 +46,7 @@
             },
             {
               "name": "X-Agent-Version",
-              "value": "w1-1.0"
+              "value": "w1-1.1"
             },
             {
               "name": "X-Prompt-Version",
@@ -82,10 +82,10 @@
     },
     {
       "parameters": {
-        "jsCode": "const e = $input.first().json;\nif (!e.escalation_id) {\n  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n}\nconst opciones = e.tipo === 'DESCUENTO' ? ['APROBADA', 'RECHAZADA']\n  : ['OFRECER_PARCIAL', 'EVALUAR_REPOSICION', 'DESCARTAR'];\nconst base = `http://localhost:5678/form/decision-dueno?escalation_id=${e.escalation_id}`;\n// Un enlace por decisión: el formulario abre con ESC y decisión ya marcados; el dueño solo pulsa Submit.\nconst enlaces = Object.fromEntries(opciones.map(o => [o, `${base}&decision=${o}`]));\nreturn [{ json: {\n  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlaces_un_clic_para_el_dueno: enlaces,\n  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n} }];"
+        "jsCode": "const e = $input.first().json;\nconst pedido = $('Desde el agente').first().json;\nif (!e.escalation_id) {\n  return [{ json: { avisar: false, estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n}\nconst etiquetas = { APROBADA: 'Aprobar', RECHAZADA: 'Rechazar', OFRECER_PARCIAL: 'Ofrecer entrega parcial',\n  EVALUAR_REPOSICION: 'Evaluar reposición', DESCARTAR: 'Descartar' };\nconst opciones = e.tipo === 'DESCUENTO' ? ['APROBADA', 'RECHAZADA'] : ['OFRECER_PARCIAL', 'EVALUAR_REPOSICION', 'DESCARTAR'];\nconst base = `http://localhost:5678/form/decision-dueno?escalation_id=${e.escalation_id}`;\n// Un enlace por decisión: el formulario abre con ESC y decisión ya marcados; el dueño confirma con un clic.\n// No se registra con solo abrir el enlace: los lectores de correo abren enlaces automáticamente.\nconst enlaces = Object.fromEntries(opciones.map(o => [o, `${base}&decision=${o}`]));\nconst esc = s => String(s ?? '—').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\nconst que = e.tipo === 'DESCUENTO' ? 'Descuento mayor al 5 % (requiere su aprobación)' : 'Falta stock (decida cómo atender)';\nconst botones = opciones.map((o, i) => `<a href=\"${enlaces[o]}\" style=\"display:inline-block;margin:4px 6px 4px 0;padding:10px 16px;border-radius:6px;text-decoration:none;color:#fff;background:${i === 0 ? '#1a7f37' : (o === 'RECHAZADA' || o === 'DESCARTAR' ? '#b42318' : '#475467')}\">${etiquetas[o]}</a>`).join('');\nconst fila = (k, v) => `<tr><td style=\"padding:4px 12px 4px 0;color:#475467\">${k}</td><td style=\"padding:4px 0\"><b>${esc(v)}</b></td></tr>`;\nconst html = `<div style=\"font-family:Arial,sans-serif;font-size:14px;color:#101828;max-width:560px\">\n<h2 style=\"margin:0 0 8px\">${que}</h2>\n<p style=\"margin:0 0 12px\">${esc(pedido.resumen)}</p>\n<table>${fila('Cotización', `${e.quotation_id} v${e.quotation_version}`)}${fila('Total verificado en Odoo', `S/ ${e.total}`)}\n${fila('Escalamiento', e.escalation_id)}${fila('Solicitud', e.request_id)}${e.signal_id ? fila('Señal de reposición', e.signal_id) : ''}\n${fila('Responder antes de', e.plazo_hasta)}</table>\n<p style=\"margin:16px 0 4px\">Elija una opción (se abre una confirmación de un clic):</p>${botones}\n<p style=\"margin:16px 0 0;color:#667085;font-size:12px\">Agente SIE · datos de demostración. Ninguna opción crea pedidos ni reservas en Odoo. Si no responde en 10 minutos, la oportunidad queda en seguimiento.</p></div>`;\nreturn [{ json: {\n  avisar: true, estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlaces, html,\n  asunto: `[MYS] ${e.tipo === 'DESCUENTO' ? 'Aprobar descuento' : 'Falta stock'}: ${e.quotation_id} v${e.quotation_version} · S/ ${e.total} (${e.escalation_id})`\n} }];"
       },
-      "id": "af9576d8-700d-5a53-976c-414ac05e03ee",
-      "name": "Respuesta al agente",
+      "id": "91f2d066-1b89-55b2-9a1e-a969ea8b282c",
+      "name": "Preparar aviso",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
@@ -95,8 +95,82 @@
     },
     {
       "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "avisar",
+              "leftValue": "={{ $json.avisar }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "0cd2cd87-4c2f-5848-accb-20829f8f456c",
+      "name": "¿Avisar al dueño?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        700,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fromEmail": "Agente SIE MYS <agente-sie@mys-demo.local>",
+        "toEmail": "dueno@mys-demo.local",
+        "subject": "={{ $json.asunto }}",
+        "emailFormat": "html",
+        "html": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "2d361a29-8d28-5951-a6a5-c9ef11e56422",
+      "name": "Correo al dueño",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        920,
+        -100
+      ],
+      "credentials": {
+        "smtp": {
+          "id": "smtpCorreoSIE001",
+          "name": "Correo SIE (SMTP)"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const a = $('Preparar aviso').first().json;\nif (!a.avisar) { const { avisar, ...resto } = a; return [{ json: resto }]; }\nlet correo = { enviado: false, detalle: 'no se intentó' };\ntry {\n  const r = $('Correo al dueño').first().json;\n  correo = r.error ? { enviado: false, detalle: String(r.error.message || r.error).slice(0, 160) } : { enviado: true };\n} catch (err) {}\nconst salida = {\n  estado: a.estado, escalation_id: a.escalation_id, tipo: a.tipo, signal_id: a.signal_id,\n  aprobacion_aplicaria_a_version: a.aprobacion_aplicaria_a_version, total_verificado: a.total_verificado, plazo_hasta: a.plazo_hasta,\n  aviso_al_dueno: correo.enviado ? 'Correo enviado automáticamente al dueño con los botones de decisión.'\n    : `No se pudo enviar el correo (${correo.detalle}). Reenvíe al dueño estos enlaces.`,\n  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n};\nif (!correo.enviado) salida.enlaces_para_el_dueno = a.enlaces;\nreturn [{ json: salida }];"
+      },
+      "id": "af9576d8-700d-5a53-976c-414ac05e03ee",
+      "name": "Respuesta al agente",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1140,
+        0
+      ]
+    },
+    {
+      "parameters": {
         "formTitle": "Decisión del dueño · Agente SIE (demo)",
-        "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Revise la decisión ya marcada y pulse Submit. El motivo es opcional. Ninguna opción crea pedidos ni reservas.",
+        "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Revise la decisión ya marcada y pulse «Confirmar decisión». El motivo es opcional. Ninguna opción crea pedidos ni reservas.",
         "formFields": {
           "values": [
             {
@@ -137,7 +211,8 @@
           ]
         },
         "options": {
-          "path": "decision-dueno"
+          "path": "decision-dueno",
+          "buttonLabel": "Confirmar decisión"
         }
       },
       "id": "0ffaeaa5-30e4-5c2c-bf99-2667d74e0b77",
@@ -212,6 +287,46 @@
       ]
     },
     "Registrar escalamiento": {
+      "main": [
+        [
+          {
+            "node": "Preparar aviso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar aviso": {
+      "main": [
+        [
+          {
+            "node": "¿Avisar al dueño?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Avisar al dueño?": {
+      "main": [
+        [
+          {
+            "node": "Correo al dueño",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respuesta al agente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Correo al dueño": {
       "main": [
         [
           {

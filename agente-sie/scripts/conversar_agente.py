@@ -39,8 +39,20 @@ def chat(sesion, texto):
     cuerpo = json.dumps({"action": "sendMessage", "sessionId": sesion, "chatInput": texto}).encode()
     req = urllib.request.Request(CHAT, data=cuerpo, headers={"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=300) as r:
-        datos = json.loads(r.read())
-    return datos.get("output", json.dumps(datos, ensure_ascii=False))
+        crudo = r.read().decode("utf-8")
+    try:  # modo «lastNode»: un solo JSON con «output»
+        datos = json.loads(crudo)
+        return datos.get("output", json.dumps(datos, ensure_ascii=False))
+    except json.JSONDecodeError:  # modo «streaming»: un JSON por fragmento ({"type": "item", "content": …})
+        partes = []
+        for linea in crudo.splitlines():
+            try:
+                fragmento = json.loads(linea)
+            except json.JSONDecodeError:
+                continue
+            if fragmento.get("type") == "item":
+                partes.append(fragmento.get("content", ""))
+        return "".join(partes)
 
 
 def decision_dueno(escalation_id, decision, motivo):

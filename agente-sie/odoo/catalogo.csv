@@ -1,16 +1,170 @@
-sku,nombre,categoria,precio_pen,stock_fisico
-RAD-7BT,"Autoradio Bluetooth 7"" (genérico)",Autoradios,400.00,10
-RAD-10X,"Autoradio pantalla 10"" (genérico)",Autoradios,520.00,10
-RAD-1DIN,Autoradio 1 DIN USB/Bluetooth (genérico),Autoradios,120.00,25
-RAD-9AND,"Autoradio Android 9"" 2 GB/32 GB (genérico)",Autoradios,680.00,6
-RAD-CPLAY,"Autoradio 7"" CarPlay/Android Auto (genérico)",Autoradios,750.00,4
-CAM-RETRO,Cámara de retroceso HD (genérica),Accesorios,85.00,30
-PAR-6.5,"Parlantes coaxiales 6,5"" par (genéricos)",Audio,140.00,20
-PAR-6X9,"Parlantes 6x9"" par (genéricos)",Audio,190.00,12
-SUB-12,"Subwoofer 12"" (genérico)",Audio,350.00,5
-AMP-4CH,Amplificador 4 canales (genérico),Audio,420.00,4
-MAR-UNIV,Marco adaptador universal 2 DIN,Instalación,45.00,40
-ARN-ISO,Arnés conector ISO,Instalación,25.00,60
-ANT-AMFM,Antena AM/FM de techo,Accesorios,35.00,25
-CAB-RCA,Cable RCA 5 m,Instalación,30.00,35
-KIT-INST,Kit de instalación (cables y fusible),Instalación,60.00,15
+sku,nombre,categoria,subcategoria,unidad,tipo,codigo_barras,precio_pen,stock_fisico
+RAD-7BT,"Autoradio Bluetooth 7"" (genérico, casos PC3)",Radios y Pantallas,Casos PC3 (genéricos),unidad,producto,,400.00,10
+RAD-10X,"Autoradio pantalla 10"" (genérico, casos PC3)",Radios y Pantallas,Casos PC3 (genéricos),unidad,producto,,520.00,10
+RCA12FT,3.6 METROS RCA ECO,Cables y Conexiones,Cables RCA y Adaptadores,unidad,producto,10000041,25.00,29
+Phd1yPkQ4,ALARMA PARA CARRO GOTA,Seguridad y Alarmas,Alarmas de Seguridad,unidad,producto,10000064,150.00,6
+TS-B351PRO,TWEETER BALA PIONEER PRO,Tweeters,Tweeters Tipo Bala,unidad,producto,10000065,250.00,6
+N3B.4,"3"" TWEETER BALA 200 RMS 300 WATTS 4 OHM",Tweeters,Tweeters Tipo Bala,unidad,producto,10000066,110.00,9
+FR6.4,"6.5"" ALTAVOZ DE RANGO MEDIO CON BULLET 100 RMS 400 WATTS 7POWER",Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000067,200.00,8
+COBRA-4GX,Kit de Instalación para Amplificador Strata Cobra-4GX 5000W,Cables y Conexiones,Kits de Instalación,unidad,producto,10000074,90.00,18
+BH-603CNT,"PARLANTE MEDIO 6.5"" CON TWEETER NEODIMIO BLACK HAWK BH-603CNT 500W",Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000081,320.00,16
+SWA10,"SUBWOOFER ACTIVO DE 10"" 400 RMS 800WATTS | 7POWER",Subwoofers,Subwoofers Activos,unidad,producto,10000001,440.00,5
+BASS 10,"SUBWOOFER ACTIVO DE 10"" 300 RMS 600WATTS | 7POWER",Subwoofers,Subwoofers Activos,unidad,producto,10000002,385.00,7
+VL12.4D,"12"" SUBWOOFER PLANO DUAL 4 OHM 300 RMS 600 WATTS | 7POWER",Subwoofers,Subwoofers Planos,unidad,producto,10000003,290.00,3
+VL-12.4S,"12"" SUBWOOFER PLANO 4 OHM 300 RMS 600 WATTS | 7POWER",Subwoofers,Subwoofers Planos,unidad,producto,10000004,290.00,5
+ZR12.4,"12"" SUBWOOFER DUAL 4 OHM 600RMS 1200WATTS | 7POWER",Subwoofers,Subwoofers Doble Bobina / Estándar,unidad,producto,10000005,360.00,2
+GX6.4B,"6.5"" MEDIO RANGO 140 RMS 480 WATTS 4 OHM | 7POWER",Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000006,220.00,18
+MD6,"6.5"" MEDIO COAXIAL CON DIF DE DRIVER 250 RM 500 WATTS 4 OHM | 7POWER",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000007,330.00,13
+MD8,"8"" MEDIO RANGO COAXIAL CON DIF DE DRIVER 300 RMS 600 WATTS 4 OHM | 7POWER",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000008,220.00,7
+GX8.4,"8"" MEDIO RANGO 180 RMS 540 WATTS 4 OHM | 7POWER",Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000009,150.00,9
+T3S,"3"" TWEETER BALA 200 RMS 300 WATTS 4 OHM | 7POWER",Tweeters,Tweeters Tipo Bala,unidad,producto,10000010,150.00,14
+GXT6.4,SET MEDIO RANGO CON TWEETER BALA | 7POWER,Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000011,280.00,18
+MK6.5C,"6.5"" COMPONENTE DE 2 VIAS 50 RMS 200 WATTS 4 OHM | 7POWER",Medios y Parlantes,Componentes,unidad,producto,10000012,195.00,13
+X-SQ6.5C,"6.5"" COMPONENTE SQ 250 RMS 400 WATTS 4 OHM | 7POWER",Medios y Parlantes,Componentes,unidad,producto,10000013,370.00,4
+16GA,CABLE DE PARLANTE CCA CALIBRE 16GA 100 METROS | 7POWER,Cables y Conexiones,Cables de Parlante y Subwoofer,metro,producto,10000014,3.50,150
+14GA,CABLE DE PARLANTE CCA CALIBRE 14GA 100 METROS | 7POWER,Cables y Conexiones,Cables de Parlante y Subwoofer,metro,producto,10000015,4.00,190
+12GA,CABLE DE SUBWOOFER CCA CALIBRE 12GA 100 METROS | 7POWER,Cables y Conexiones,Cables de Parlante y Subwoofer,metro,producto,10000016,5.00,190
+0GA,CABLE DE ALIMENTACIÓN CCA CALIBRE 0GA 15 METROS | 7POWER,Cables y Conexiones,Cables de Alimentación,metro,producto,10000017,30.00,230
+OFC-4GA,CABLE DE ALIMENTACIÓN OFC CALIBRE 4GA 30 METROS | 7POWER,Cables y Conexiones,Cables de Alimentación,metro,producto,10000018,35.00,180
+OFC-16GA,CABLE PARA PARLANTE OFC CALIBRE 16GA 100 METROS | 7POWER,Cables y Conexiones,Cables de Parlante y Subwoofer,metro,producto,10000019,6.00,180
+OFC-12GA,CABLE DE SUBWOOFER OFC CALIBRE 12GA 100 METROS | 7POWER,Cables y Conexiones,Cables de Parlante y Subwoofer,metro,producto,10000020,12.00,190
+TRS12.4,"12"" SUBWOOFER DUAL 4 OHM 750RMS 1500WATTS | 7POWER",Subwoofers,Subwoofers Doble Bobina / Estándar,unidad,producto,10000021,380.00,3
+TW4.4,"4"" TWEETER BALA 300 RMS 600 WATTS 4 OHM | 7POWER",Tweeters,Tweeters Tipo Bala,unidad,producto,10000022,150.00,7
+TW1N,"2.5"" TWEETER NEODIMIO 150 RMS 300 WATTS 4 OHM | 7POWER",Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000023,165.00,22
+EQ9,ECUALIZADOR DIGITAL 9 BANDAS | 7POWER,Ecualizadores,Ecualizadores Digitales / Paramétricos,unidad,producto,10000024,240.00,4
+WRX1K1,AMPLIFICADOR FULL RANGE 1CH * 1000 RMS 1 OHM | 7POWER,Amplificadores,Monoral (1 Canal),unidad,producto,10000025,450.00,5
+LGY-12.4D,"12"" SUBWOOFER DUAL 4 OHM 550RMS 1100WATTS | 7POWER",Subwoofers,Subwoofers Doble Bobina / Estándar,unidad,producto,10000026,300.00,6
+T-628,"6.5"" PARLANTE 4 VIAS 50 RMS 280 WATTS 4 OHM | 7POWER",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000027,120.00,7
+RCA2M1H,30 CM RCA TIPO Y 2MACHOS 1HEMBRA 10 UNIDADES | 7POWER,Cables y Conexiones,Cables RCA y Adaptadores,unidad,producto,10000028,10.50,26
+RCA6FT,1.80 M 10 UNIDADES RCA ECO | 7POWER,Cables y Conexiones,Cables RCA y Adaptadores,unidad,producto,10000029,11.00,10
+ZR6,"6.5"" MEDIO RANGO COAXIAL CON DIF DE DRIVER 250 RM 500 WATTS 4 OHM | 7POWER",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000030,340.00,7
+T1R,"TWEETER DOMO 1.38"" DE 50 RMS - 100 WATTS 4 OHM | 7POWER",Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000031,65.00,6
+GT4.D,AMPLIFICADOR DIGITAL 4CH*120 RMS - 3000 WATTS | MS,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000032,340.00,4
+GT5.D,AMPLIFICADOR DIGITAL 4CH * 120 + 1CH * 320 RMS 4000WATTS | MS,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000033,480.00,7
+EVO.1XXL,AMPLIFICADOR DIGITAL MONORAL 1CH * 2000 RMS 6000WATTS | 7POWER,Amplificadores,Monoral (1 Canal),unidad,producto,10000034,490.00,2
+MS200-9,PANTALLA ANDROID 4+64GB 8 NÚCLEOS CON CHIP,Radios y Pantallas,Pantallas Android,unidad,producto,10000035,490.00,8
+MS100-9,PANTALLA ANDROID 4+64GB 4 NÚCLEOS,Radios y Pantallas,Pantallas Android,unidad,producto,10000036,370.00,6
+MS300-9,PANTALLA ANDROID 4+64GB* 8 NÚCLEOS CON CHIP,Radios y Pantallas,Pantallas Android,unidad,producto,10000037,450.00,6
+MS200-10,PANTALLA ANDROID 4+64GB 8 NÚCLEOS CON CHIP,Radios y Pantallas,Pantallas Android,unidad,producto,10000038,490.00,7
+MS100-10,PANTALLA ANDROID 4+64GB 4 NÚCLEOS,Radios y Pantallas,Pantallas Android,unidad,producto,10000039,370.00,12
+MS300-10,PANTALLA ANDROID 4+64GB* 8 NÚCLEOS CON CHIP,Radios y Pantallas,Pantallas Android,unidad,producto,10000040,450.00,5
+TS-W312D4,"PIONEER TS-W312D4 SUBWOOFER 12"" 1600W",Subwoofers,Subwoofers Doble Bobina / Estándar,unidad,producto,10000042,360.00,2
+TS-A6998S,PIONEER TS-A6998S PARLANTES 6X9 5V 750W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000043,370.00,7
+TS-A6997S,PIONEER TS-A6997S PARLANTES 6X9 5V 750W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000044,390.00,5
+TS-A6978S,PIONEER TS-A6978S PARLANTES 6X9 4V 650W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000045,280.00,7
+TS-A6977S,PIONEER TS-A6977S PARLANTES 6X9 4V 650W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000046,290.00,10
+TS-A6968S,PIONEER TS-A6968S PARLANTES 6X9 4V 450W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000047,250.00,10
+TS-A6967S,PIONEER TS-A6967S PARLANTES 6X9 4V 450W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000048,260.00,16
+TS-R6951S,PIONEER TS-R6951S PARLANTES 6X9 3V 400W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000049,260.00,11
+TS-A1688S,PIONEER TS-A1688S PARLANTES 16C 4V 350W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000050,260.00,9
+TS-A1687S,PIONEER TS-A1687S PARLANTES 16C 4V 350W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000051,310.00,13
+TS-A1678S,PIONEER TS-A1678S PARLANTES 16C 3V 320W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000052,220.00,14
+TS-R1651S-2,PIONEER TS-R1651S-2 PARLANTES 16CM 300W,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000053,210.00,18
+TS-G1620F-2,PIONEER TS-G1620F-2 PARLANTES DE 16CM,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000054,180.00,14
+TS-G1610F-2,PIONEER TS-G1610F-2 PARLANTES DE 16CM,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000055,155.00,14
+TS-F1634R,PIONEER TS-F1634R PARLANTES 16CM 200W 2V,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000056,160.00,17
+TS-F1034R,PIONEER TS-F1034R PARLANTES 10CM 2 VIAS,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000057,140.00,7
+TS-M651PRO,PIONEER TS-M651PRO PARLANTES MEDIO 500 W,Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000058,400.00,17
+TS-6900PRO,PIONEER TS-6900PRO PARLANTES 6X9 OVALAD,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000068,500.00,17
+TS-A1608C,PIONEER TS-A1608C PARLANTES 16C 2V 350W,Medios y Parlantes,Componentes,unidad,producto,10000069,410.00,17
+TS-651C,PIONEER TS-651C PARLANTES COMP 390W,Medios y Parlantes,Componentes,unidad,producto,10000070,345.00,12
+GM-D9705,PIONEER GM-D9705 AMPLIFICADOR CLAS D 5C,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000071,1200.00,7
+GM-A6704,PIONEER GM-A6704 AMPLIFICADOR 4CH,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000072,550.00,5
+TS-A3000LS4,"PIONEER TS-A3000LS4 SUBWOOFER DELG 12""",Subwoofers,Subwoofers Planos,unidad,producto,10000073,540.00,3
+BH-117D,AMPLIFICADOR BLACK HAWK BH-117D,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000075,490.00,7
+BH-114,AMPLIFICADOR BLACK HAWK BH-114,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000076,380.00,6
+TS-S261,TWEETER MAR TS-S261,Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000077,25.00,20
+BH-TW10,"MINI TWEETER 1"" BLACK HAWK BH-TW10",Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000078,27.00,22
+BH-16AWGCCA,ROLLO DE CABLE CALIBRE 16 BLACK HAWK BH-16AWG,Cables y Conexiones,Cables de Parlante y Subwoofer,metro,producto,10000079,1.10,210
+BH-1M2F,CABLE RCA TIPO Y (1 MACHO A 2 HEMBRAS) OFC BLACK HAWK BH-1M2F,Cables y Conexiones,Cables RCA y Adaptadores,unidad,producto,10000080,7.50,17
+BH-117SD,AMPLIFICADOR PARA AUTO BLACK HAWK BH-117SD,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000082,480.00,3
+BH-849EQ,ECUALIZADOR BLACK HAWK BH-849EQ,Ecualizadores,Ecualizadores Digitales / Paramétricos,unidad,producto,10000083,240.00,4
+BH-604BCH,"PARLANTE 6.5"" BLACK HAWK BH-604BCH",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000084,230.00,4
+BH-FR114REV200,AMPLIFICADOR BLACK HAWK BH-FR114REV200,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000085,500.00,7
+BH-605CNG,PARLANTES BLACK HAWK BH-605CNG,Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000086,300.00,14
+BH-FR117,AMPLIFICADOR BLACK HAWK BH-FR117,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000088,490.00,2
+BH-117,AMPLIFICADOR BLACK HAWK BH-117,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000089,460.00,6
+BH-604BN PRO,PARLANTE MEDIO BLACK HAWK BH-604BN PRO,Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000090,300.00,16
+BH-119,AMPLIFICADOR BLACK HAWK BH-119,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000091,460.00,6
+BH-FS2,PORTAFUSIBLE BLACK HAWK BH-FS2,Accesorios Automotrices,Portafusibles,unidad,producto,10000092,60.00,11
+BH-F4S,BLOQUE DISTRIBUCION BLACK HAWK BH-F4S,Accesorios Automotrices,Portafusibles,unidad,producto,10000093,75.00,7
+AD-C17,ALDEEPO AD-C17 CARGADOR DE AUTO PDUSB 65W QC3.0,Accesorios Automotrices,Cargadores y Electrónica,unidad,producto,10000094,30.00,15
+GTR-6.5C,"COMPONENTE DE 2 VÍAS 6.5"" 75 RMS 250W | 7POWER",Medios y Parlantes,Componentes,unidad,producto,10000095,305.00,11
+7PRO-MD69,"6X9"" MEDIO RANGO 2 VÍAS CON DRIVER TIPO BALA 275 RMS 550W | 7POWER",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000096,300.00,17
+ION.4,AMPLIFICADOR MULTICANAL ION.4 | 7POWER,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000097,550.00,4
+ION.5,AMPLIFICADOR MULTICANAL ION.5 | 7POWER,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000098,650.00,3
+EVO.1XL,AMPLIFICADOR MONOBLOCK EVOLUTION 1XL 4500W | 7POWER,Amplificadores,Monoral (1 Canal),unidad,producto,10000099,500.00,6
+ZX1,"TWEETER DOMO DE PEI 1.1"" 50 RMS 100W | 7POWER",Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000100,100.00,7
+RCA-1M2H,30 CM RCA TIPO Y 1MACHO 2HEMBRAS 10 UNIDADES 7POWER,Cables y Conexiones,Cables RCA y Adaptadores,unidad,producto,10000101,10.50,26
+CLUB6520,"PARLANTES COAXIALES 6.5"" 150W CLUB 6520 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000102,320.00,16
+CLUB44F,"PARLANTES COAXIALES 4"" 105W CLUB 44F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000103,300.00,18
+STAGE3427F,"PARLANTES COAXIALES 4"" 150W STAGE3 427F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000104,260.00,13
+STAGE3627F,"PARLANTES COAXIALES 6.5"" 225W STAGE3 627F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000105,260.00,12
+STAGE3637F,"PARLANTES COAXIALES 3 VÍAS 6.5"" 225W STAGE3 637F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000106,280.00,16
+BASSPRONANO,SUBWOOFER ACTIVO COMPACTO BASS PRO NANO | JBL,Subwoofers,Subwoofers Activos,unidad,producto,10000107,1115.00,5
+STAGE368MF,"PARLANTES COAXIALES 3 VÍAS 6.5"" 560W STAGE3 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000108,320.00,15
+STAGE3607CF,"COMPONENTES DE 2 VÍAS 6.5"" 250W STAGE3 607CF | JBL",Medios y Parlantes,Componentes,unidad,producto,10000109,250.00,14
+STAGE2604C,"COMPONENTES DE 2 VÍAS 6.5"" 270W STAGE2 604C | JBL",Medios y Parlantes,Componentes,unidad,producto,10000110,350.00,9
+STAGE265F,"PARLANTES COAXIALES 6.5"" 240W STAGE2 65F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000111,250.00,10
+STAGE368F,"PARLANTES COAXIALES 6.5"" 560W STAGE3 68F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000112,320.00,18
+STAGE2634,"PARLANTES COAXIALES 6.5"" 250W STAGE2 634 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000113,260.00,10
+GTO609C,"COMPONENTES 2 VÍAS 6.5"" 270W GTO 609C | JBL",Medios y Parlantes,Componentes,unidad,producto,10000114,460.00,6
+STAGE2624,"PARLANTES COAXIALES 2 VÍAS 6.5"" 240W STAGE2 624 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000115,200.00,14
+STAGE265M,"PARLANTES COAXIALES 3 VÍAS 6.5"" 480W STAGE2 65M | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000116,270.00,6
+STAGE368CF,"COMPONENTES 2 VÍAS 6.5"" 760W STAGE3 68CF | JBL",Medios y Parlantes,Componentes,unidad,producto,10000117,420.00,6
+STAGE348F,"PARLANTES COAXIALES 4"" 400W STAGE3 48F | JBL",Medios y Parlantes,Coaxiales / Multivía,par,producto,10000118,290.00,12
+STAGE265C,"COMPONENTES 2 VÍAS 6.5"" 720W STAGE2 65C | JBL",Medios y Parlantes,Componentes,unidad,producto,10000119,350.00,9
+STAGE2524,"PARLANTES COAXIALES 2 VÍAS 5.25"" 210W STAGE2 524 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000120,250.00,9
+STAGE2424,"PARLANTES COAXIALES 2 VÍAS 4"" 150W STAGE2 424 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000121,200.00,8
+STAGE3527F,"PARLANTES COAXIALES 2 VÍAS 5.25"" 200W STAGE3 527F | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000122,270.00,13
+GTO629,"PARLANTES COAXIALES 2 VÍAS 6.5"" 180W GTO 629 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000123,450.00,9
+GT5-12D,"SUBWOOFER 12"" DOBLE BOBINA 1100W GT5-12D | JBL",Subwoofers,Subwoofers Doble Bobina / Estándar,unidad,producto,10000125,370.00,7
+GTO602C,"COMPONENTES 2 VÍAS 6.5"" GTO 602C | JBL",Medios y Parlantes,Componentes,unidad,producto,10000126,400.00,8
+PYTHON4000.5D,AMPLIFICADOR 5 CANALES CLASE D 4000W PYTHON 4000.5D | STRATA,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000128,470.00,3
+SSK4ANL,KIT DE INSTALACIÓN PARA AMPLIFICADOR CALIBRE 4 1000W STINGER SELECT,Cables y Conexiones,Kits de Instalación,kit,producto,10000130,250.00,23
+SX-AWG42,KIT DE INSTALACIÓN PARA AMPLIFICADOR CALIBRE 4 DE 2 CANALES SX-AWG42 SOUNDMAX,Cables y Conexiones,Kits de Instalación,kit,producto,10000131,120.00,9
+DSK165.3,"COMPONENTES 2 VÍAS 6.5"" 160W DSK 165.3 | HERTZ",Medios y Parlantes,Componentes,unidad,producto,10000124,430.00,18
+DCX165.3,"PARLANTES COAXIALES 2 VÍAS 6.5"" 120W DCX 165.3 | HERTZ",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000129,220.00,7
+PYTHON5.MINI,AMPLIFICADOR MULTICANAL COMPACTO PYTHON 5.MINI | STRATA,Amplificadores,Multicanal (4 y 5 Canales),unidad,producto,10000132,400.00,7
+VIPER654,"PARLANTES COAXIALES 4 VÍAS 6.5"" 320W VIPER 654 | STRATA",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000133,180.00,13
+VIPER40,"PARLANTES COAXIALES 4 VÍAS 4"" 250W VIPER 40 | STRATA",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000134,160.00,16
+GTO402,"PARLANTES COAXIALES 2 VÍAS 4"" GTO 402 | JBL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000135,150.00,16
+TX350,TWEETER DE SINTONIZACIÓN 40MM 350W TX 350 7POWER,Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000136,30.00,13
+R3S,SUPER TWEETER TIPO BALA 220W RMS R3S 7POWER,Tweeters,Tweeters Tipo Bala,unidad,producto,10000137,150.00,9
+MA260,"TWEETER DOMO 1"" 120W MA260",Tweeters,Tweeters Tipo Domo / Neodimio,unidad,producto,10000138,25.00,22
+K-DRS-22,"PARLANTES DUAL CONO 6.5"" 300W K-DRS-22 MARK III KUERL",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000139,80.00,18
+SX-TA21,SUPER TWEETER TIPO BALA 200W SX-TA21 SOUNDMAX,Tweeters,Tweeters Tipo Bala,unidad,producto,10000140,100.00,8
+D-D5501,"PARLANTES COAXIALES 2 VÍAS 6.5"" 2000W D-D5501 DEMGEL",Medios y Parlantes,Coaxiales / Multivía,par,producto,10000141,120.00,4
+TB1,"TWEETERS 1"" 200W TB1 7POWER",Tweeters,Tweeters Tipo Bala,par,producto,10000142,100.00,17
+FREON134A-CH,GAS REFRIGERANTE FREON 134A (R-134a) 340g CHEMOURS,Aire Acondicionado,Gases Refrigerantes,unidad,producto,10000144,65.00,12
+R134A-IGR,GAS REFRIGERANTE R134A 340g IGR,Aire Acondicionado,Gases Refrigerantes,unidad,producto,10000145,50.00,8
+INS-PANTALLA,SERVICIO DE INSTALACIÓN DE PANTALLA MULTIMEDIA,Servicios,Instalación y Mano de Obra,servicio,servicio,10000146,80.00,0
+SSLOC2,CONVERTIDOR DE ALTA Y BAJA 2 CANALES SSLOC2 STINGER SELEC,Accesorios Automotrices,Convertidores de Señal (Alta y Baja),unidad,producto,10000143,80.00,9
+SD-9955NEC,"PANTALLA MULTIMEDIA ANDROID 9"" QLED 4GB RAM 32GB ROM LONGSTAR",Radios y Pantallas,Pantallas Android,unidad,producto,10000152,430.00,5
+SD-YT0905PRO,"PANTALLA MULTIMEDIA ANDROID 9"" QLED 8GB RAM 256GB ROM PRO LONGSTAR",Radios y Pantallas,Pantallas Android,unidad,producto,10000153,430.00,6
+INS-PANTALLA-SC,SERVICIO DE INSTALACIÓN DE PANTALLA MULTIMEDIA (SIN CÁMARA),Servicios,Instalación y Mano de Obra,unidad,servicio,10000147,50.00,0
+INS-PARLANTES,SERVICIO DE INSTALACIÓN DE PARLANTES,Servicios,Instalación y Mano de Obra,par,servicio,10000148,30.00,0
+INS-EQUIPO-SONIDO,SERVICIO DE INSTALACIÓN DE EQUIPAMIENTO DE SONIDO (AMPLIFICADOR Y SUBWOOFER),Servicios,Instalación y Mano de Obra,unidad,servicio,10000149,120.00,0
+INS-AC,SERVICIO DE INSTALACIÓN Y/O MANTENIMIENTO DE AIRE ACONDICIONADO,Servicios,Instalación y Mano de Obra,unidad,servicio,10000150,40.00,0
+SRV-OTROS,SERVICIO TÉCNICO MISCELÁNEO / OTROS,Servicios,Instalación y Mano de Obra,unidad,servicio,10000151,30.00,0
+MVH-S235BT,AUTORADIO RECEPTOR DE MEDIOS DIGITALES BLUETOOTH MVH-S235BT PIONEER,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000154,350.00,7
+MVH-S325BT,AUTORADIO BLUETOOTH SMART SYNC MVH-S325BT PIONEER,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000155,450.00,7
+D-D4704,AUTORADIO BLUETOOTH PANEL DESMONTABLE D-D4704 X-BASS,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000156,100.00,7
+TS-S22,TWEETER DE ALUMINIO 38MM 600W TS-S22 PCINENER,Tweeters,Tweeters Tipo Bala,unidad,producto,10000157,75.00,23
+SX-TA30,SUPER TWEETER TIPO BALA 200W SX-TA30 SOUNDMAX,Tweeters,Tweeters Tipo Bala,unidad,producto,10000158,125.00,20
+DG-TW404,"SUPER TWEETER DE ALUMINIO 4"" 400W DG-TW404 DIGITE",Tweeters,Tweeters Tipo Bala,unidad,producto,10000159,80.00,16
+RS-NF04,FILTRO DE RUIDO PROFESIONAL RCA RS-NF04 REISS AUDIO,Accesorios Automotrices,Filtros y Supresores de Ruido,unidad,producto,10000160,50.00,10
+R3-12,"SUBWOOFER 12"" 2500W REFERENCE R3-12 SOUNDSTREAM",Subwoofers,Subwoofers Doble Bobina / Estándar,unidad,producto,10000161,450.00,7
+VENOM65PRO,"PARLANTE MEDIO RANGO 6.5"" 500W VENOM 65PRO STRATA",Medios y Parlantes,Medios Rangos (Midranges),par,producto,10000127,220.00,10
+LS-YT7007PRO,"PANTALLA MULTIMEDIA ANDROID 7"" QLED 8GB RAM 256GB ROM PRO LONGSTAR",Radios y Pantallas,Pantallas Android,unidad,producto,10000162,320.00,7
+DDX-D4423BT,PANTALLA MULTIMEDIA MP5 4x60W DDX-D4423BT X-BASS,Radios y Pantallas,Pantallas Android,unidad,producto,10000163,180.00,4
+D-D4703,AUTORADIO BLUETOOTH PANEL DESMONTABLE D-D4703 DEMGEL,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000164,120.00,3
+CX-65A,"PARLANTES COAXIALES 6.5"" 350W CX-65A NITRO",Medios y Parlantes,Coaxiales / Multivía,unidad,producto,10000165,130.00,4
+SOT200-10,PANTALLA ANDROID 4x32GB* 8 NÚCLEOS CON CHIP,Radios y Pantallas,Pantallas Android,unidad,producto,1000166,650.00,3
+SOT100-9,PANTALLA ANDROID 4x64GB* 8 NÚCLEOS SIN CHIP,Radios y Pantallas,Pantallas Android,unidad,producto,1000167,420.00,5
+BH-608G,"PARLANTE MEDIO RANGO 8"" 550W PRO MIDRANGE BH-608G BLACK HAWK",Medios y Parlantes,Medios Rangos (Midranges),unidad,producto,10000087,180.00,8
+DEH-S4250BT,PIONEER DEH-S4250BT AUTORRADIO USB/BT,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000059,440.00,5
+MVH-S215BT,PIONEER MVH-S215BT AUTORRADIO BT/MP3/USB,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000060,280.00,12
+DEH-S1250UB,PIONEER DEH-S1250UB AUTORRADIO CD/USB,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000061,340.00,12
+MVH-S145BT,PIONEER MVH-S145BT AUTORADIO BT7SB7MP3,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000062,270.00,3
+DEH-X5000BT,PIONEER DEH X 5000BT AUTORADIO CD/BT7USB,Radios y Pantallas,Autorradios 1 DIN,unidad,producto,10000063,490.00,11

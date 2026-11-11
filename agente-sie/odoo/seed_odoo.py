@@ -33,11 +33,20 @@ DIR_DATOS = Path(__file__).resolve().parent
 
 
 def cargar_catalogo():
-    """odoo/catalogo.csv: catálogo de la tienda (reemplazable por el real). Debe incluir los SKU de los casos PC3."""
+    """odoo/catalogo.csv: catálogo de la tienda (scripts/importar_catalogo.py lo genera desde el Excel de la empresa).
+
+    Columnas obligatorias: sku, nombre, categoria, precio_pen, stock_fisico.
+    Opcionales: subcategoria, unidad (unidad|par|kit|metro|servicio), tipo (producto|servicio), codigo_barras.
+    Debe incluir los SKU de los casos PC3 con su precio y stock.
+    """
     cat = {}
     with open(DIR_DATOS / "catalogo.csv", encoding="utf-8", newline="") as f:
         for fila in csv.DictReader(f):
             cat[fila["sku"].strip()] = {"nombre": fila["nombre"].strip(), "categoria": fila["categoria"].strip(),
+                                        "subcategoria": (fila.get("subcategoria") or "").strip(),
+                                        "unidad": (fila.get("unidad") or "unidad").strip(),
+                                        "tipo": (fila.get("tipo") or "producto").strip(),
+                                        "barras": (fila.get("codigo_barras") or "").strip(),
                                         "precio": float(fila["precio_pen"]), "fisico": int(fila["stock_fisico"])}
     for sku, prod in E.PRODUCTOS.items():  # los casos PC3 dependen de estos valores exactos
         if sku not in cat or cat[sku]["precio"] != prod["precio"] or cat[sku]["fisico"] != prod["fisico"]:
@@ -48,8 +57,8 @@ def cargar_catalogo():
 def cargar_extra():
     archivo = DIR_DATOS / "escenario_extra.json"
     if not archivo.exists():
-        return {"clientes": {}, "ventas_confirmadas": [], "oportunidades": {}, "cotizaciones": []}
-    return json.loads(archivo.read_text(encoding="utf-8"))
+        return {"clientes": {}, "leads": [], "ventas_confirmadas": [], "oportunidades": {}, "cotizaciones": []}
+    return {"leads": [], **json.loads(archivo.read_text(encoding="utf-8"))}
 
 
 CAT = cargar_catalogo()
@@ -172,16 +181,37 @@ def asegurar_vendedor(odoo):
 def asegurar_productos(odoo):
     campos = odoo.x("product.template", "fields_get", attributes=["type"])
     almacenable = {"type": "consu", "is_storable": True} if "is_storable" in campos else {"type": "product"}
-    ids, categorias = {}, {}
+    servicio = {"type": "service", **({"is_storable": False} if "is_storable" in campos else {})}
+    uom = {"unidad": odoo.ref("uom.product_uom_unit"), "metro": odoo.ref("uom.product_uom_meter")}
+    # Categorías de dos niveles (categoría / subcategoría), como en la lista de la empresa.
+    categorias = {}
     for nombre in sorted({p["categoria"] for p in CAT.values()}):
-        categorias[nombre], _ = odoo.upsert("product.category", [("name", "=", nombre)], {"name": nombre})
+        categorias[nombre], _ = odoo.upsert("product.category", [("name", "=", nombre), ("parent_id", "=", False)],
+                                            {"name": nombre})
+    for padre, sub in sorted({(p["categoria"], p["subcategoria"]) for p in CAT.values() if p["subcategoria"]}):
+        categorias[(padre, sub)], _ = odoo.upsert("product.category", [("name", "=", sub), ("parent_id", "=", categorias[padre])],
+                                                  {"name": sub, "parent_id": categorias[padre]})
+    existentes = {t["default_code"]: t["id"] for t in odoo.leer("product.template", [("default_code", "in", list(CAT))],
+                                                                ["default_code"])}
+    nuevos = 0
     for sku, p in CAT.items():
-        tmpl, _ = odoo.upsert("product.template", [("default_code", "=", sku)],
-                              {"name": p["nombre"], "default_code": sku, "list_price": p["precio"], "sale_ok": True,
-                               "categ_id": categorias[p["categoria"]],
-                               "taxes_id": [(6, 0, [])], "active": True, **almacenable})
-        ids[sku] = odoo.buscar("product.product", [("product_tmpl_id", "=", tmpl)])[0]
-    log(f"{len(ids)} productos del catálogo listos ({almacenable})")
+        unidad = uom["metro"] if p["unidad"] == "metro" and uom["metro"] else uom["unidad"]
+        valores = {"name": p["nombre"], "default_code": sku, "list_price": p["precio"], "sale_ok": True,
+                   "categ_id": categorias[(p["categoria"], p["subcategoria"])] if p["subcategoria"] else categorias[p["categoria"]],
+                   "uom_id": unidad, "uom_po_id": unidad, "barcode": p["barras"] or False,
+                   "taxes_id": [(6, 0, [])], "active": True, **(servicio if p["tipo"] == "servicio" else almacenable)}
+        if sku in existentes:
+            odoo.x("product.template", "write", [existentes[sku]], valores)
+        else:
+            existentes[sku] = odoo.x("product.template", "create", valores)
+            nuevos += 1
+    fuera = odoo.buscar("product.template", [("default_code", "!=", False), ("default_code", "not in", list(CAT)),
+                                             ("active", "=", True)])
+    if fuera:  # productos de un catálogo anterior: se archivan (no se borran: pueden tener historial)
+        odoo.x("product.template", "write", fuera, {"active": False})
+        log(f"{len(fuera)} productos que ya no están en el catálogo fueron archivados")
+    ids = {v["default_code"]: v["id"] for v in odoo.leer("product.product", [("default_code", "in", list(CAT))], ["default_code"])}
+    log(f"{len(ids)} productos del catálogo listos ({nuevos} nuevos, {len(categorias)} categorías)")
     return ids
 
 
@@ -192,18 +222,33 @@ def asegurar_clientes(odoo):
     return ids
 
 
+def con_stock(productos):
+    return {sku: pid for sku, pid in productos.items() if CAT[sku]["tipo"] != "servicio"}
+
+
 def fijar_stock(odoo, productos, ubicacion):
-    for sku, pid in productos.items():
+    """Ajuste de inventario agrupado: solo toca los productos cuyo físico difiere del catálogo."""
+    almacenables = con_stock(productos)
+    quants = {}
+    for q in odoo.leer("stock.quant", [("product_id", "in", list(almacenables.values())), ("location_id", "=", ubicacion)],
+                       ["product_id", "quantity"]):
+        quants.setdefault(q["product_id"][0], q)
+    modo = {"inventory_mode": True}
+    por_aplicar = []
+    for sku, pid in almacenables.items():
         objetivo = CAT[sku]["fisico"]
-        quants = odoo.buscar("stock.quant", [("product_id", "=", pid), ("location_id", "=", ubicacion)])
-        if quants:
-            odoo.x("stock.quant", "write", quants[:1], {"inventory_quantity": objetivo}, context={"inventory_mode": True})
-            qid = quants[0]
+        q = quants.get(pid)
+        if q and int(q["quantity"]) == objetivo:
+            continue
+        if q:
+            odoo.x("stock.quant", "write", [q["id"]], {"inventory_quantity": objetivo}, context=modo)
+            por_aplicar.append(q["id"])
         else:
-            qid = odoo.x("stock.quant", "create", {"product_id": pid, "location_id": ubicacion,
-                                                   "inventory_quantity": objetivo}, context={"inventory_mode": True})
-        llamar_tolerante(odoo, "stock.quant", "action_apply_inventory", [qid])
-    log(f"stock físico fijado para {len(productos)} productos")
+            por_aplicar.append(odoo.x("stock.quant", "create", {"product_id": pid, "location_id": ubicacion,
+                                                                "inventory_quantity": objetivo}, context=modo))
+    if por_aplicar:
+        llamar_tolerante(odoo, "stock.quant", "action_apply_inventory", por_aplicar)
+    log(f"stock físico fijado para {len(almacenables)} productos ({len(por_aplicar)} ajustados)")
 
 
 def lineas(productos, lista):
@@ -214,9 +259,17 @@ def lineas(productos, lista):
 
 def asegurar_reservas(odoo, productos, clientes, vendedor, moneda):
     for r in RESERVAS:
-        existentes = odoo.leer("sale.order", [("client_order_ref", "=", r["ref"])], ["state"])
+        existentes = odoo.leer("sale.order", [("client_order_ref", "=", r["ref"])], ["state", "order_line"])
         if existentes and existentes[0]["state"] == "sale":
-            continue
+            actuales = sorted((l["product_id"][0], int(l["product_uom_qty"])) for l in
+                              odoo.leer("sale.order.line", [("order_id", "=", existentes[0]["id"])], ["product_id", "product_uom_qty"]))
+            deseadas = sorted((productos[l["sku"]], l["cantidad"]) for l in r["lineas"])
+            if actuales == deseadas:
+                continue
+            # El catálogo cambió: se anula la venta anterior (libera su reserva) y se crea otra con el contenido nuevo.
+            llamar_tolerante(odoo, "sale.order", "action_cancel", [existentes[0]["id"]], {"disable_cancel_warning": True})
+            odoo.x("sale.order", "write", [existentes[0]["id"]], {"client_order_ref": f"{r['ref']} (anulada por cambio de catálogo)"})
+            existentes = []
         if existentes:
             oid = existentes[0]["id"]
         else:
@@ -235,6 +288,10 @@ def asegurar_oportunidades(odoo, clientes):
     for opp, o in OPORTUNIDADES.items():
         ids[opp], _ = odoo.upsert("crm.lead", [("name", "=", opp)],
                                   {"name": opp, "type": "opportunity", "partner_id": clientes[o["cliente"]], "active": True})
+    for lead in EXTRA["leads"]:  # leads aún sin convertir: muestran el paso «lead → oportunidad» en el CRM
+        existentes = odoo.leer("crm.lead", [("name", "=", lead["nombre"])], ["type"])
+        if not existentes:
+            odoo.x("crm.lead", "create", {"name": lead["nombre"], "type": "lead", "contact_name": lead["contacto"]})
     return ids
 
 
@@ -291,15 +348,23 @@ def verificar(odoo, productos, ubicacion):
         for l in r["lineas"]:
             reservado[l["sku"]] = reservado.get(l["sku"], 0) + l["cantidad"]
     esperado = {sku: (p["fisico"], reservado.get(sku, 0), p["fisico"] - reservado.get(sku, 0)) for sku, p in CAT.items()}
-    for sku, pid in productos.items():
-        q = odoo.leer("stock.quant", [("product_id", "=", pid), ("location_id", "child_of", ubicacion)],
-                      ["quantity", "reserved_quantity"])
-        fisico, reservado = sum(x["quantity"] for x in q), sum(x["reserved_quantity"] for x in q)
-        fila = (int(fisico), int(reservado), int(fisico - reservado))
-        marca = "✓" if fila == esperado[sku] else "✗"
-        ok &= fila == esperado[sku]
-        log(f"{marca} {sku}: físico {fila[0]}, reservado {fila[1]}, disponible {fila[2]} (esperado {esperado[sku]})")
-    return ok
+    almacenables = con_stock(productos)
+    totales = {pid: [0.0, 0.0] for pid in almacenables.values()}
+    for q in odoo.leer("stock.quant", [("product_id", "in", list(totales)), ("location_id", "child_of", ubicacion)],
+                       ["product_id", "quantity", "reserved_quantity"]):
+        totales[q["product_id"][0]][0] += q["quantity"]
+        totales[q["product_id"][0]][1] += q["reserved_quantity"]
+    errores = 0
+    for sku, pid in almacenables.items():
+        fisico, reservado_odoo = totales[pid]
+        fila = (int(fisico), int(reservado_odoo), int(fisico - reservado_odoo))
+        if fila != esperado[sku]:
+            errores += 1
+            log(f"✗ {sku}: físico {fila[0]}, reservado {fila[1]}, disponible {fila[2]} (esperado {esperado[sku]})")
+        elif esperado[sku][1] or sku in E.PRODUCTOS:  # se muestran solo los que tienen reservas
+            log(f"✓ {sku}: físico {fila[0]}, reservado {fila[1]}, disponible {fila[2]}")
+    log(f"stock verificado: {len(almacenables) - errores}/{len(almacenables)} productos coinciden con el catálogo")
+    return ok and not errores
 
 
 def registrar_extra_local(repo, ahora, totales):

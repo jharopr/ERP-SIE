@@ -49,17 +49,20 @@ Cada versión es un `sale.order` con `client_order_ref = "<id> v<n>"`. La versi�
 ## Casos
 Los casos se declararon antes de ejecutar, en [`casos_pc3.json`](casos_pc3.json): N01 normal, E01 faltante, E02 descuento sin aprobación, F01 dependencia caída, I01 reintento y A01 inyección. Los resultados observados están en [`evidencias/resultados.md`](../evidencias/resultados.md).
 
-## Catálogo ampliado y escenario extra (para ver el flujo con más datos)
-> Provisional: se reemplaza por el catálogo real de MYS cuando el equipo lo entregue. Basta con editar [`odoo/catalogo.csv`](../odoo/catalogo.csv) (columnas `sku,nombre,categoria,precio_pen,stock_fisico`) y volver a ejecutar el seed. El seed exige que RAD-7BT y RAD-10X mantengan precio y stock, porque de ellos dependen los casos PC3.
+## Catálogo real y escenario extra (para ver el flujo con más datos)
+> **Catálogo:** 167 productos **reales** de la empresa (lista `LISTA_PRODUCTOS_EMPRESA_18717.xlsx`, entregada el 11/11/2026): nombre, SKU (código interno), categoría, unidad, código de barras y **precio de venta**. No se carga el precio de costo. **Stock, clientes, oportunidades, cotizaciones y reservas siguen siendo sintéticos.** Conversión: `scripts/importar_catalogo.py` → [`odoo/catalogo.csv`](../odoo/catalogo.csv); detalle en [`odoo/README.md`](../odoo/README.md).
 
-**15 productos sintéticos** en 4 categorías (Autoradios, Audio, Accesorios, Instalación), con precios de S/ 25 a S/ 750. Cinco ventas confirmadas generan reservas: RAD-7BT 2, RAD-10X 7, RAD-1DIN 4, ARN-ISO 6, SUB-12 2, CAM-RETRO 5 y PAR-6.5 2.
+- 169 productos en Odoo: 167 de la empresa + RAD-7BT y RAD-10X (genéricos, de los casos PC3), en 11 categorías y 25 subcategorías. Seis son servicios (sin stock) y los cables se venden por metro.
+- El stock sintético es fijo por SKU, dentro de un rango por categoría (por ejemplo, subwoofers de 2 a 8 y tweeters de 6 a 24).
+- Tres ventas confirmadas de otros clientes generan reservas: MVH-S215BT 4, TS-G1620F-2 4, TS-A3000LS4 1, STAGE2634 2 y SD-YT0905PRO 1.
+- Dos **leads sin convertir** (LEAD-DEMO-201 y 202) muestran el paso «lead → oportunidad» en el CRM.
 
-[`odoo/escenario_extra.json`](../odoo/escenario_extra.json) agrega 4 clientes (taller mayorista, consumidor final, empresa con RUC y recurrente) y 5 cotizaciones para probar el agente:
+[`odoo/escenario_extra.json`](../odoo/escenario_extra.json) agrega 4 clientes sintéticos (taller mayorista, consumidor final, empresa con RUC y recurrente) y 5 cotizaciones con productos reales:
 
-| Cotización | Oportunidad / Cliente | Aceptación | Contenido | Total (S/) | Resultado esperado (verificado 11/11/2026) |
+| Cotización | Oportunidad / Cliente | Aceptación | Contenido | Total (S/) | Resultado (verificado 11/11/2026) |
 |---|---|---|---|---|---|
-| COT-DEMO-101 v1 | OPP-DEMO-101 / CLI-DEMO-003 | ACE-DEMO-101 | 10 RAD-1DIN + 10 MAR-UNIV + 10 ARN-ISO, 3 % | 1 843,00 | ACEPTADA / VALIDADA |
-| COT-DEMO-102 v1 | OPP-DEMO-102 / CLI-DEMO-004 | ACE-DEMO-102 | RAD-CPLAY + CAM-RETRO + KIT-INST | 895,00 | ACEPTADA / VALIDADA |
-| COT-DEMO-103 v1 | OPP-DEMO-103 / CLI-DEMO-005 | ACE-DEMO-103 | 4 SUB-12 + 4 AMP-4CH, 5 % | 2 926,00 | PROMESA_CONDICIONADA (SUB-12: 3 de 4) + REP |
-| COT-DEMO-104 v1 | OPP-DEMO-104 / CLI-DEMO-006 | ACE-DEMO-104 | 2 RAD-9AND + 2 PAR-6X9, 8 % | 1 600,80 | RECHAZADA / DESCUENTO_SIN_APROBACION |
-| COT-DEMO-105 v1 | OPP-DEMO-105 / CLI-DEMO-004 | — (no aceptada) | PAR-6.5 + ANT-AMFM | 175,00 | RECHAZADA / ACEPTACION_INVALIDA |
+| COT-DEMO-101 v1 | OPP-DEMO-101 / CLI-DEMO-003 | ACE-DEMO-101 | 6 autorradios Pioneer MVH-S215BT + 6 pares de parlantes Pioneer TS-G1620F-2, 3 % | 2 677,20 | ACEPTADA / VALIDADA |
+| COT-DEMO-102 v1 | OPP-DEMO-102 / CLI-DEMO-004 | ACE-DEMO-102 | Pantalla Android 9" SD-YT0905PRO + parlantes JBL STAGE2634 | 690,00 | ACEPTADA / VALIDADA |
+| COT-DEMO-103 v1 | OPP-DEMO-103 / CLI-DEMO-005 | ACE-DEMO-103 | 3 subwoofers Pioneer TS-A3000LS4 + 3 amplificadores GM-A6704, 5 % | 3 106,50 | PROMESA_CONDICIONADA (TS-A3000LS4: 2 de 3) + REP; aviso al dueño |
+| COT-DEMO-104 v1 | OPP-DEMO-104 / CLI-DEMO-006 | ACE-DEMO-104 | 2 componentes JBL GTO609C + amplificador ION.4, 8 % | 1 352,40 | RECHAZADA / DESCUENTO_SIN_APROBACION; aviso al dueño |
+| COT-DEMO-105 v1 | OPP-DEMO-105 / CLI-DEMO-004 | — (no aceptada) | Autorradio Pioneer DEH-S4250BT + filtro RS-NF04 | 490,00 | RECHAZADA / ACEPTACION_INVALIDA |

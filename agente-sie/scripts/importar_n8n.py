@@ -18,7 +18,7 @@ import sys
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "scripts"))
-from generar_workflows import CRED, IDS  # noqa: E402
+from generar_workflows import CORREO_DUENO, CORREO_REMITENTE, CRED, IDS, N8N_PUBLICO  # noqa: E402
 from ejecutar_casos import leer_env  # noqa: E402
 
 # Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
@@ -42,6 +42,12 @@ def main():
         {**CRED["ventas"], "type": "httpHeaderAuth", "data": {"name": "Authorization", "value": f"Bearer {env['TOKEN_VENTAS']}"}},
         {**CRED["gerencia"], "type": "httpHeaderAuth", "data": {"name": "Authorization", "value": f"Bearer {env['TOKEN_GERENCIA']}"}},
     ]
+    # Correo del aviso al dueño (W2). Sin datos en .env: buzón local Mailpit, sin usuario.
+    credenciales.append({**CRED["smtp"], "type": "smtp", "data": {
+        "user": env.get("SMTP_USUARIO", ""), "password": env.get("SMTP_CLAVE", ""),
+        "host": env.get("SMTP_HOST") or "mailpit", "port": int(env.get("SMTP_PORT") or 1025),
+        "secure": (env.get("SMTP_SEGURO") or "false").lower() == "true",
+        "disableStartTls": (env.get("SMTP_HOST") or "mailpit") == "mailpit"}})
     if env.get("GEMINI_API_KEY"):
         credenciales.append({**CRED["gemini"], "type": "googlePalmApi",
                              "data": {"host": "https://generativelanguage.googleapis.com", "apiKey": env["GEMINI_API_KEY"]}})
@@ -53,8 +59,21 @@ def main():
     print(f"✓ credenciales importadas: {', '.join(c['name'] for c in credenciales)}")
     if not env.get("GEMINI_API_KEY"):
         print("  · falta la credencial «Gemini (Agente SIE)»: créela en n8n (README paso 5) o use W3")
-    compose("exec", "-T", "n8n", "n8n", "import:workflow", "--separate", "--input=/workflows")
-    print("✓ flujos W1, W2 y W3 importados")
+    # Se personalizan correo del dueño, remitente y URL pública (de .env) en una copia temporal dentro del contenedor.
+    cambios = {N8N_PUBLICO: (env.get("N8N_URL_PUBLICA") or N8N_PUBLICO).rstrip("/"),
+               CORREO_DUENO: env.get("CORREO_DUENO") or CORREO_DUENO,
+               CORREO_REMITENTE: env.get("CORREO_REMITENTE") or CORREO_REMITENTE}
+    compose("exec", "-T", "n8n", "sh", "-c", "rm -rf /tmp/agente-sie-wf && mkdir -p /tmp/agente-sie-wf")
+    try:
+        for archivo in sorted((RAIZ / "n8n" / "workflows").glob("*.json")):
+            texto = archivo.read_text(encoding="utf-8")
+            for de, a in cambios.items():
+                texto = texto.replace(de, a)
+            compose("exec", "-T", "n8n", "sh", "-c", f"cat > /tmp/agente-sie-wf/{archivo.name}", entrada=texto)
+        compose("exec", "-T", "n8n", "n8n", "import:workflow", "--separate", "--input=/tmp/agente-sie-wf")
+    finally:
+        compose("exec", "-T", "n8n", "rm", "-rf", "/tmp/agente-sie-wf", check=False)
+    print(f"✓ flujos W1, W2 y W3 importados (aviso al dueño → {cambios[CORREO_DUENO]}, enlaces → {cambios[N8N_PUBLICO]})")
     for clave in ("W2", "W3", "W1"):
         r = compose("exec", "-T", "n8n", "n8n", "publish:workflow", f"--id={IDS[clave]}", check=False)
         if r.returncode:  # versiones sin «publish»: activar con update:workflow

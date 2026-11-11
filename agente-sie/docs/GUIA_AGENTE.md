@@ -16,7 +16,7 @@ Ayudar al vendedor a llevar una cotización aceptada hasta una **respuesta traza
 ## Salidas
 - **Respuesta tipificada** v1.0, con `status`, `code`, `responsible_role`, `required_action`, `total` y `conditions`, explicada en español con el bloque *Resultado · Motivo · Quién actúa · Siguiente paso · IDs*.
 - **Señal de reposición** `REP-PC3-00n` cuando falta stock. Se calcula como faltante = max(0, pedido − disponible), lleva `automatic_action = false` y no compra ni reserva nada.
-- **Escalamiento** `ESC-PC3-00n`, con el enlace del formulario del dueño.
+- **Escalamiento** `ESC-PC3-00n`. W2 avisa al dueño **por correo automático** con botones de decisión; si el correo falla, el agente entrega los enlaces para reenviarlos.
 - **Borrador de mensaje al cliente**, sin fechas ni compromisos que el ERP no haya dado.
 - **Eventos en la bitácora**.
 
@@ -39,7 +39,7 @@ Todas son *HTTP Request Tool* hacia `http://compuerta:8000` y usan la credencial
 | `reanudar_solicitud` | `POST /solicitudes/{id}/reanudar` | Reevalúa solo si está PENDIENTE |
 | `ver_bitacora` | `GET /bitacora?correlation_id=` | Lectura |
 | `consultar_escalamiento` | `GET /escalamientos/{id}` | Lectura. Es la única prueba válida de una decisión del dueño |
-| `escalar_al_dueno` | *Call n8n Workflow Tool* → W2 → `POST /escalamientos` | Registra que la excepción espera al dueño. **No decide** |
+| `escalar_al_dueno` | *Call n8n Workflow Tool* → W2 → `POST /escalamientos` → correo al dueño | Registra que la excepción espera al dueño y le avisa por correo. **No decide** |
 
 El agente **no tiene** ninguna herramienta para aprobar ni para decidir reposiciones.
 
@@ -63,8 +63,8 @@ El rol sale del token y **nunca del cuerpo** de la petición. `approver_id` tamb
 ## Escalamiento
 | Código | Destinatario | Mecanismo | Decisiones |
 |---|---|---|---|
-| `DESCUENTO_SIN_APROBACION` | Dueño | W2: formulario `/form/decision-dueno` | APROBADA / RECHAZADA. La aprobación vale **solo para la versión siguiente** (v3), con una nueva aceptación y una nueva solicitud |
-| `DISPONIBILIDAD_PARCIAL` | Dueño y abastecimiento | W2: el mismo formulario | OFRECER_PARCIAL / EVALUAR_REPOSICION / DESCARTAR |
+| `DESCUENTO_SIN_APROBACION` | Dueño | W2: correo con botones → formulario `/form/decision-dueno` (1 clic) | APROBADA / RECHAZADA. La aprobación vale **solo para la versión siguiente** (v3), con una nueva aceptación y una nueva solicitud |
+| `DISPONIBILIDAD_PARCIAL` | Dueño y abastecimiento | W2: el mismo correo y formulario | OFRECER_PARCIAL / EVALUAR_REPOSICION / DESCARTAR |
 | `DEPENDENCIA_NO_DISPONIBLE` | Administrador | El agente informa; el administrador recupera Odoo y luego se reanuda | — |
 | `IDEMPOTENCIA_CONFLICTO` | Administrador y ventas | Se consulta la solicitud original | — |
 

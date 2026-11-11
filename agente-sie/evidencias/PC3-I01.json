@@ -2,7 +2,7 @@
   "caso": "PC3-I01",
   "titulo": "Reintento idéntico de SOL-PC3-N01",
   "modo": "Docker: Odoo 18 + compuerta reales",
-  "ejecutado_utc": "2026-11-11T16:28:53.316186+00:00",
+  "ejecutado_utc": "2026-11-11T21:35:10.113592+00:00",
   "entrada": {
     "contract_version": "1.0",
     "company_id": "MYS-DEMO",
@@ -54,7 +54,7 @@
   "bitacora": [
     {
       "event_id": 1,
-      "occurred_at": "2026-11-11T11:28:46-05:00",
+      "occurred_at": "2026-11-11T16:34:27-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I03",
@@ -66,7 +66,7 @@
     },
     {
       "event_id": 2,
-      "occurred_at": "2026-11-11T11:28:46-05:00",
+      "occurred_at": "2026-11-11T16:34:27-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I04",
@@ -78,7 +78,7 @@
     },
     {
       "event_id": 3,
-      "occurred_at": "2026-11-11T11:28:46-05:00",
+      "occurred_at": "2026-11-11T16:34:27-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I06",
@@ -90,7 +90,7 @@
     },
     {
       "event_id": 4,
-      "occurred_at": "2026-11-11T11:28:46-05:00",
+      "occurred_at": "2026-11-11T16:34:27-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I05",
@@ -102,7 +102,7 @@
     },
     {
       "event_id": 5,
-      "occurred_at": "2026-11-11T11:28:46-05:00",
+      "occurred_at": "2026-11-11T16:34:27-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I07",
@@ -114,7 +114,7 @@
     },
     {
       "event_id": 15,
-      "occurred_at": "2026-11-11T11:28:48-05:00",
+      "occurred_at": "2026-11-11T16:34:29-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I03",
@@ -126,7 +126,7 @@
     },
     {
       "event_id": 16,
-      "occurred_at": "2026-11-11T11:28:48-05:00",
+      "occurred_at": "2026-11-11T16:34:29-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I04",
@@ -138,7 +138,7 @@
     },
     {
       "event_id": 17,
-      "occurred_at": "2026-11-11T11:28:48-05:00",
+      "occurred_at": "2026-11-11T16:34:29-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I06",
@@ -150,7 +150,7 @@
     },
     {
       "event_id": 18,
-      "occurred_at": "2026-11-11T11:28:48-05:00",
+      "occurred_at": "2026-11-11T16:34:29-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "I07",
@@ -162,7 +162,7 @@
     },
     {
       "event_id": 19,
-      "occurred_at": "2026-11-11T11:28:50-05:00",
+      "occurred_at": "2026-11-11T16:34:30-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "ESC",
@@ -177,7 +177,7 @@
     },
     {
       "event_id": 20,
-      "occurred_at": "2026-11-11T11:28:50-05:00",
+      "occurred_at": "2026-11-11T16:34:30-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-E02",
       "interface_id": "AGENTE",
@@ -192,8 +192,8 @@
       }
     },
     {
-      "event_id": 31,
-      "occurred_at": "2026-11-11T11:28:52-05:00",
+      "event_id": 29,
+      "occurred_at": "2026-11-11T16:35:10-05:00",
       "correlation_id": "COR-PC3-001",
       "request_id": "SOL-PC3-N01",
       "interface_id": "I03",

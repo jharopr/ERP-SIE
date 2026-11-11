@@ -24,14 +24,18 @@ for _flujo in (sys.stdout, sys.stderr):
 RAIZ = Path(__file__).resolve().parents[1]
 SALIDA = RAIZ / "n8n" / "workflows"
 COMPUERTA = "http://compuerta:8000"
+# Valores por defecto; scripts/importar_n8n.py los reemplaza con N8N_URL_PUBLICA, CORREO_DUENO y CORREO_REMITENTE de .env.
 N8N_PUBLICO = "http://localhost:5678"
-AGENT_VERSION = "w1-1.0"
+CORREO_DUENO = "dueno@mys-demo.local"
+CORREO_REMITENTE = "agente-sie@mys-demo.local"
+AGENT_VERSION = "w1-1.1"
 
 IDS = {"W1": "agSIEw1Agente001", "W2": "agSIEw2Escalam01", "W3": "agSIEw3Determ001"}
 CRED = {
     "ventas": {"id": "cmpVentasAgSIE01", "name": "Compuerta VENTAS"},
     "gerencia": {"id": "cmpGerenciaSIE01", "name": "Compuerta GERENCIA"},
     "gemini": {"id": "geminiAgenteSIE1", "name": "Gemini (Agente SIE)"},
+    "smtp": {"id": "smtpCorreoSIE001", "name": "Correo SIE (SMTP)"},
 }
 WEBHOOKS = {"chat": "6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01", "dueno": "6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b02",
             "w3": "6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b03"}
@@ -117,7 +121,7 @@ def w1():
     ]
     escalar = nodo("escalar_al_dueno", "@n8n/n8n-nodes-langchain.toolWorkflow", 2, [1440, y], {
         "name": "escalar_al_dueno",
-        "description": "Escala al dueño una excepción (tipo DESCUENTO para DESCUENTO_SIN_APROBACION, REPOSICION para DISPONIBILIDAD_PARCIAL). Registra el escalamiento y devuelve el enlace del formulario del dueño. No aprueba nada.",
+        "description": "Escala al dueño una excepción (tipo DESCUENTO para DESCUENTO_SIN_APROBACION, REPOSICION para DISPONIBILIDAD_PARCIAL). Registra el escalamiento y AVISA AL DUEÑO POR CORREO con botones de decisión. Devuelve el ESC y si el correo salió. No aprueba nada.",
         "workflowId": {"__rl": True, "value": IDS["W2"], "mode": "id"},
         "workflowInputs": {
             "mappingMode": "defineBelow",
@@ -129,14 +133,17 @@ def w1():
                         "canBeUsedToMatch": True, "type": "string", "removed": False} for c in ("tipo", "request_id", "resumen")],
             "attemptToConvertTypes": False, "convertFieldsToString": False}})
     nodos = [
-        nodo("Chat del vendedor", "@n8n/n8n-nodes-langchain.chatTrigger", 1.1, [0, 0], {
+        nodo("Chat del vendedor", "@n8n/n8n-nodes-langchain.chatTrigger", 1.3, [0, 0], {
             "public": True, "mode": "hostedChat",
             "initialMessages": "Hola, soy el Agente SIE (datos de demostración). Indícame cliente, cotización, versión, aceptación, SOL y COR.",
+            # «streaming»: la respuesta aparece mientras el modelo la escribe, no al final.
             "options": {"title": "Agente SIE · MYS (demo)", "subtitle": "Acompaña al ERP; no confirma pedidos.",
-                        "inputPlaceholder": "Ej.: CLI-DEMO-001 aceptó COT-DEMO-001 v1 (ACE-PC3-001)…"}},
+                        "inputPlaceholder": "Ej.: CLI-DEMO-001 aceptó COT-DEMO-001 v1 (ACE-PC3-001)…",
+                        "responseMode": "streaming"}},
              webhookId=WEBHOOKS["chat"]),
-        nodo(agente, "@n8n/n8n-nodes-langchain.agent", 1.7, [400, 0],
-             {"options": {"systemMessage": sistema, "maxIterations": 10}}),
+        nodo(agente, "@n8n/n8n-nodes-langchain.agent", 3.1, [400, 0],
+             {"promptType": "auto", "text": "={{ $json.chatInput }}",
+              "options": {"systemMessage": sistema, "maxIterations": 10, "enableStreaming": True}}),
         nodo("Modelo Gemini", "@n8n/n8n-nodes-langchain.lmChatGoogleGemini", 1, [120, 260],
              {"modelName": "models/gemini-3.5-flash-lite", "options": {"temperature": 0.1}},
              credentials={"googlePalmApi": CRED["gemini"]}),
@@ -162,25 +169,67 @@ def w2():
             "jsonBody": "={{ JSON.stringify({ tipo: $json.tipo, request_id: $json.request_id, resumen: $json.resumen }) }}",
             "options": {"response": {"response": {"neverError": True}}}},
              credentials={"httpHeaderAuth": CRED["ventas"]}),
-        nodo("Respuesta al agente", "n8n-nodes-base.code", 2, [480, 0], {"jsCode": (
+        nodo("Preparar aviso", "n8n-nodes-base.code", 2, [480, 0], {"jsCode": (
             "const e = $input.first().json;\n"
+            "const pedido = $('Desde el agente').first().json;\n"
             "if (!e.escalation_id) {\n"
-            "  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n"
+            "  return [{ json: { avisar: false, estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n"
             "}\n"
-            "const opciones = e.tipo === 'DESCUENTO' ? ['APROBADA', 'RECHAZADA']\n"
-            "  : ['OFRECER_PARCIAL', 'EVALUAR_REPOSICION', 'DESCARTAR'];\n"
+            "const etiquetas = { APROBADA: 'Aprobar', RECHAZADA: 'Rechazar', OFRECER_PARCIAL: 'Ofrecer entrega parcial',\n"
+            "  EVALUAR_REPOSICION: 'Evaluar reposición', DESCARTAR: 'Descartar' };\n"
+            "const opciones = e.tipo === 'DESCUENTO' ? ['APROBADA', 'RECHAZADA'] : ['OFRECER_PARCIAL', 'EVALUAR_REPOSICION', 'DESCARTAR'];\n"
             f"const base = `{N8N_PUBLICO}/form/decision-dueno?escalation_id=${{e.escalation_id}}`;\n"
-            "// Un enlace por decisión: el formulario abre con ESC y decisión ya marcados; el dueño solo pulsa Submit.\n"
+            "// Un enlace por decisión: el formulario abre con ESC y decisión ya marcados; el dueño confirma con un clic.\n"
+            "// No se registra con solo abrir el enlace: los lectores de correo abren enlaces automáticamente.\n"
             "const enlaces = Object.fromEntries(opciones.map(o => [o, `${base}&decision=${o}`]));\n"
+            "const esc = s => String(s ?? '—').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c]));\n"
+            "const que = e.tipo === 'DESCUENTO' ? 'Descuento mayor al 5 % (requiere su aprobación)' : 'Falta stock (decida cómo atender)';\n"
+            "const botones = opciones.map((o, i) => `<a href=\"${enlaces[o]}\" style=\"display:inline-block;margin:4px 6px 4px 0;padding:10px 16px;border-radius:6px;text-decoration:none;color:#fff;background:${i === 0 ? '#1a7f37' : (o === 'RECHAZADA' || o === 'DESCARTAR' ? '#b42318' : '#475467')}\">${etiquetas[o]}</a>`).join('');\n"
+            "const fila = (k, v) => `<tr><td style=\"padding:4px 12px 4px 0;color:#475467\">${k}</td><td style=\"padding:4px 0\"><b>${esc(v)}</b></td></tr>`;\n"
+            "const html = `<div style=\"font-family:Arial,sans-serif;font-size:14px;color:#101828;max-width:560px\">\n"
+            "<h2 style=\"margin:0 0 8px\">${que}</h2>\n"
+            "<p style=\"margin:0 0 12px\">${esc(pedido.resumen)}</p>\n"
+            "<table>${fila('Cotización', `${e.quotation_id} v${e.quotation_version}`)}${fila('Total verificado en Odoo', `S/ ${e.total}`)}\n"
+            "${fila('Escalamiento', e.escalation_id)}${fila('Solicitud', e.request_id)}${e.signal_id ? fila('Señal de reposición', e.signal_id) : ''}\n"
+            "${fila('Responder antes de', e.plazo_hasta)}</table>\n"
+            "<p style=\"margin:16px 0 4px\">Elija una opción (se abre una confirmación de un clic):</p>${botones}\n"
+            "<p style=\"margin:16px 0 0;color:#667085;font-size:12px\">Agente SIE · datos de demostración. Ninguna opción crea pedidos ni reservas en Odoo. Si no responde en 10 minutos, la oportunidad queda en seguimiento.</p></div>`;\n"
             "return [{ json: {\n"
-            "  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n"
+            "  avisar: true, estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n"
             "  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n"
-            "  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlaces_un_clic_para_el_dueno: enlaces,\n"
-            "  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n"
+            "  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlaces, html,\n"
+            "  asunto: `[MYS] ${e.tipo === 'DESCUENTO' ? 'Aprobar descuento' : 'Falta stock'}: ${e.quotation_id} v${e.quotation_version} · S/ ${e.total} (${e.escalation_id})`\n"
             "} }];")}),
+        nodo("¿Avisar al dueño?", "n8n-nodes-base.if", 2.2, [700, 0], {
+            "conditions": {"options": {"caseSensitive": True, "leftValue": "", "typeValidation": "loose", "version": 2},
+                           "conditions": [{"id": "avisar", "leftValue": "={{ $json.avisar }}", "rightValue": True,
+                                           "operator": {"type": "boolean", "operation": "true", "singleValue": True}}],
+                           "combinator": "and"}, "options": {}}),
+        nodo("Correo al dueño", "n8n-nodes-base.emailSend", 2.1, [920, -100], {
+            "fromEmail": f"Agente SIE MYS <{CORREO_REMITENTE}>", "toEmail": CORREO_DUENO,
+            "subject": "={{ $json.asunto }}", "emailFormat": "html", "html": "={{ $json.html }}",
+            "options": {"appendAttribution": False}},
+             credentials={"smtp": CRED["smtp"]}, onError="continueRegularOutput"),
+        nodo("Respuesta al agente", "n8n-nodes-base.code", 2, [1140, 0], {"jsCode": (
+            "const a = $('Preparar aviso').first().json;\n"
+            "if (!a.avisar) { const { avisar, ...resto } = a; return [{ json: resto }]; }\n"
+            "let correo = { enviado: false, detalle: 'no se intentó' };\n"
+            "try {\n"
+            "  const r = $('Correo al dueño').first().json;\n"
+            "  correo = r.error ? { enviado: false, detalle: String(r.error.message || r.error).slice(0, 160) } : { enviado: true };\n"
+            "} catch (err) {}\n"
+            "const salida = {\n"
+            "  estado: a.estado, escalation_id: a.escalation_id, tipo: a.tipo, signal_id: a.signal_id,\n"
+            "  aprobacion_aplicaria_a_version: a.aprobacion_aplicaria_a_version, total_verificado: a.total_verificado, plazo_hasta: a.plazo_hasta,\n"
+            "  aviso_al_dueno: correo.enviado ? 'Correo enviado automáticamente al dueño con los botones de decisión.'\n"
+            "    : `No se pudo enviar el correo (${correo.detalle}). Reenvíe al dueño estos enlaces.`,\n"
+            "  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n"
+            "};\n"
+            "if (!correo.enviado) salida.enlaces_para_el_dueno = a.enlaces;\n"
+            "return [{ json: salida }];")}),
         nodo("Formulario del dueño", "n8n-nodes-base.formTrigger", 2.2, [0, 300], {
             "formTitle": "Decisión del dueño · Agente SIE (demo)",
-            "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Revise la decisión ya marcada y pulse Submit. El motivo es opcional. Ninguna opción crea pedidos ni reservas.",
+            "formDescription": "Solo el dueño (GER-DEMO-01) usa este formulario. Revise la decisión ya marcada y pulse «Confirmar decisión». El motivo es opcional. Ninguna opción crea pedidos ni reservas.",
             "formFields": {"values": [
                 {"fieldLabel": "escalation_id", "placeholder": "ESC-PC3-001", "requiredField": True},
                 {"fieldLabel": "decision", "fieldType": "dropdown", "requiredField": True,
@@ -188,7 +237,7 @@ def w2():
                                              ("APROBADA", "RECHAZADA", "OFRECER_PARCIAL", "EVALUAR_REPOSICION", "DESCARTAR")]}},
                 {"fieldLabel": "motivo", "fieldType": "textarea", "requiredField": False,
                  "placeholder": "Motivo breve, sin datos personales"}]},
-            "options": {"path": "decision-dueno"}}, webhookId=WEBHOOKS["dueno"]),
+            "options": {"path": "decision-dueno", "buttonLabel": "Confirmar decisión"}}, webhookId=WEBHOOKS["dueno"]),
         nodo("Registrar decisión (GERENCIA)", "n8n-nodes-base.httpRequest", 4.2, [240, 300], {
             "method": "POST", "url": f"={COMPUERTA}/escalamientos/{{{{ $json.escalation_id.trim() }}}}/decision",
             "authentication": "genericCredentialType", "genericAuthType": "httpHeaderAuth",
@@ -202,7 +251,11 @@ def w2():
             "completionMessage": "={{ $json.resultado ? `${$json.escalation_id}: ${$json.resultado.status || $json.resultado.decision}. Queda en la bitácora; no se creó pedido ni reserva.` : JSON.stringify($json.detail || $json) }}",
             "options": {}}),
     ]
-    conexiones = {"Desde el agente": main_("Registrar escalamiento"), "Registrar escalamiento": main_("Respuesta al agente"),
+    conexiones = {"Desde el agente": main_("Registrar escalamiento"), "Registrar escalamiento": main_("Preparar aviso"),
+                  "Preparar aviso": main_("¿Avisar al dueño?"),
+                  "¿Avisar al dueño?": {"main": [[{"node": "Correo al dueño", "type": "main", "index": 0}],
+                                                [{"node": "Respuesta al agente", "type": "main", "index": 0}]]},
+                  "Correo al dueño": main_("Respuesta al agente"),
                   "Formulario del dueño": main_("Registrar decisión (GERENCIA)"),
                   "Registrar decisión (GERENCIA)": main_("Confirmación al dueño")}
     return flujo("W2", "W2 · Escalamiento al dueño", nodos, conexiones)
