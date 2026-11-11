@@ -15,6 +15,11 @@ import sys
 import time
 import urllib.request
 
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
+
 RAIZ = Path(__file__).resolve().parents[1]
 CHAT = "http://localhost:5678/webhook/6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01/chat"
 GUIONES = {

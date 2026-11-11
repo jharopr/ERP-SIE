@@ -22,6 +22,11 @@ import time
 import urllib.error
 import urllib.request
 
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
+
 RAIZ = Path(__file__).resolve().parents[1]
 EVID = RAIZ / "evidencias"
 CASOS = {c["id"]: c for c in json.loads((RAIZ / "datos_prueba" / "casos_pc3.json").read_text(encoding="utf-8"))["casos"]}

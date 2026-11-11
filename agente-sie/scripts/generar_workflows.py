@@ -9,10 +9,17 @@ crea desde .env, o el docente las crea a mano con esos mismos nombres (README).
 
 from __future__ import annotations
 
+import sys
+
 import json
 from pathlib import Path
 import re
 import uuid
+
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
 
 RAIZ = Path(__file__).resolve().parents[1]
 SALIDA = RAIZ / "n8n" / "workflows"

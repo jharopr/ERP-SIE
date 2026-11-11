@@ -9,10 +9,17 @@ no comparta su .env (contiene contraseñas y tokens).
 
 from __future__ import annotations
 
+import sys
+
 import argparse
 from pathlib import Path
 import re
 import secrets
+
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
 
 RAIZ = Path(__file__).resolve().parents[1]
 

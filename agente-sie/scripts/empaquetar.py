@@ -11,6 +11,11 @@ from pathlib import Path
 import sys
 import zipfile
 
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
+
 RAIZ = Path(__file__).resolve().parents[1]
 NOMBRE = "GE703_PC3_Agente_G7_MYS"
 EXCLUIR_DIR = {"__pycache__", ".pytest_cache", "data", ".git"}

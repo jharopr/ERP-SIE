@@ -21,6 +21,11 @@ sys.path.insert(0, str(RAIZ / "scripts"))
 from generar_workflows import CRED, IDS  # noqa: E402
 from ejecutar_casos import leer_env  # noqa: E402
 
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
+
 
 def compose(*args, entrada=None, check=True):
     r = subprocess.run(["docker", "compose", *args], cwd=RAIZ, input=entrada, capture_output=True, text=True)

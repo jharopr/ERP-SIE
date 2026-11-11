@@ -11,6 +11,11 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "scripts"))
 from ejecutar_casos import leer_env  # noqa: E402
 
+# Consolas de Windows (cp1252) no imprimen «✓»: se fuerza UTF-8 sin abortar.
+for _flujo in (sys.stdout, sys.stderr):
+    if hasattr(_flujo, "reconfigure"):
+        _flujo.reconfigure(encoding="utf-8", errors="replace")
+
 env = leer_env()
 chequeos = {
     "Odoo": f"http://localhost:{env.get('ODOO_PORT', '8069')}/web/health",
