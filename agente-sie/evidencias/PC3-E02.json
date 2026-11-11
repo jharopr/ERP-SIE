@@ -1,0 +1,239 @@
+{
+  "caso": "PC3-E02",
+  "titulo": "Descuento del 10 % sin aprobación del dueño",
+  "modo": "Docker: Odoo 18 + compuerta reales",
+  "ejecutado_utc": "2026-11-10T14:02:38.630557+00:00",
+  "entrada": {
+    "contract_version": "1.0",
+    "company_id": "MYS-DEMO",
+    "request_id": "SOL-PC3-E02",
+    "correlation_id": "COR-PC3-001",
+    "opportunity_id": "OPP-DEMO-001",
+    "customer_id": "CLI-DEMO-001",
+    "quotation_id": "COT-DEMO-004",
+    "quotation_version": 2,
+    "acceptance_id": "ACE-PC3-003"
+  },
+  "respuesta": {
+    "respuesta": {
+      "contract_version": "1.0",
+      "request_id": "SOL-PC3-E02",
+      "correlation_id": "COR-PC3-001",
+      "quotation_id": "COT-DEMO-004",
+      "quotation_version": 2,
+      "status": "RECHAZADA",
+      "code": "DESCUENTO_SIN_APROBACION",
+      "message": "El descuento supera el 5 % y no tiene aprobación válida.",
+      "responsible_role": "GERENCIA",
+      "required_action": "Gerencia debe decidir; después preparar nueva versión y aceptación.",
+      "total": null,
+      "currency": null,
+      "order_id": null,
+      "conditions": []
+    },
+    "senales_reposicion": []
+  },
+  "chequeos": {
+    "status": {
+      "esperado": "RECHAZADA",
+      "observado": "RECHAZADA",
+      "ok": true
+    },
+    "code": {
+      "esperado": "DESCUENTO_SIN_APROBACION",
+      "observado": "DESCUENTO_SIN_APROBACION",
+      "ok": true
+    },
+    "responsible_role": {
+      "esperado": "GERENCIA",
+      "observado": "GERENCIA",
+      "ok": true
+    },
+    "total": {
+      "esperado": null,
+      "observado": null,
+      "ok": true
+    },
+    "order_id": {
+      "esperado": null,
+      "observado": null,
+      "ok": true
+    },
+    "conditions": {
+      "esperado": [],
+      "observado": [],
+      "ok": true
+    },
+    "sin_consulta_stock": {
+      "esperado": true,
+      "observado": true,
+      "ok": true
+    },
+    "aprobacion_aplicaria_a_v3": {
+      "esperado": 3,
+      "observado": 3,
+      "ok": true
+    }
+  },
+  "ok": true,
+  "escalamiento": {
+    "escalation_id": "ESC-PC3-002",
+    "company_id": "MYS-DEMO",
+    "tipo": "DESCUENTO",
+    "request_id": "SOL-PC3-E02",
+    "correlation_id": "COR-PC3-001",
+    "quotation_id": "COT-DEMO-004",
+    "quotation_version": 2,
+    "version_aprobacion": 3,
+    "total": "1800.00",
+    "signal_id": null,
+    "destinatario": "DUENO",
+    "resumen_hash": "20d5c73f298189b41bdff58bb3b7700f567bfa5072cb1931d53847d7049b5b6d",
+    "created_at": "2026-11-10T09:02:41-05:00",
+    "plazo_hasta": "2026-11-10T09:12:41-05:00",
+    "estado": "ESPERANDO_DECISION",
+    "decision": null,
+    "decided_at": null
+  },
+  "bitacora": [
+    {
+      "event_id": 1,
+      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-N01",
+      "interface_id": "I03",
+      "event_type": "RECIBIDA",
+      "code": "RECIBIDA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "HUMANO",
+      "detalle": null
+    },
+    {
+      "event_id": 2,
+      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-N01",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "SNAPSHOT_COMERCIAL",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 3,
+      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-N01",
+      "interface_id": "I06",
+      "event_type": "CONSULTA",
+      "code": "POLITICA_DESCUENTO",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 4,
+      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-N01",
+      "interface_id": "I05",
+      "event_type": "CONSULTA",
+      "code": "DISPONIBILIDAD",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 5,
+      "occurred_at": "2026-11-10T09:02:38-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-N01",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "VALIDADA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 15,
+      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I03",
+      "event_type": "RECIBIDA",
+      "code": "RECIBIDA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "HUMANO",
+      "detalle": null
+    },
+    {
+      "event_id": 16,
+      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "SNAPSHOT_COMERCIAL",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 17,
+      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I06",
+      "event_type": "CONSULTA",
+      "code": "POLITICA_DESCUENTO",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 18,
+      "occurred_at": "2026-11-10T09:02:39-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "DESCUENTO_SIN_APROBACION",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 19,
+      "occurred_at": "2026-11-10T09:02:41-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "ESC",
+      "event_type": "ESCALADO",
+      "code": "DESCUENTO",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "AGENTE",
+      "detalle": {
+        "destinatario": "DUENO",
+        "escalation_id": "ESC-PC3-002"
+      }
+    },
+    {
+      "event_id": 20,
+      "occurred_at": "2026-11-10T09:02:41-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "AGENTE",
+      "event_type": "HERRAMIENTA_AGENTE",
+      "code": "escalar_al_dueno",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "AGENTE",
+      "detalle": {
+        "agent_version": "",
+        "input_hash": "9144d84cb05a995f1a6b6ea2f9a4c15b3569f8ebd41b0b3725e7c51e8e3e133a",
+        "prompt_version": ""
+      }
+    }
+  ]
+}
