@@ -1,0 +1,92 @@
+{
+  "id": "mysErrorOdoo001",
+  "name": "W5 · Estado privado del proveedor",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b1148f7c-6c03-5827-aef2-c5e2ca1ecf44",
+      "name": "Error del chat",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const e=JSON.stringify($input.first().json.execution?.error || $input.first().json); const code=/429|quota|too many|many requests/i.test(e)?'CUOTA_AGOTADA':/api.?key|401|403|unauthenticated/i.test(e)?'API_KEY_RECHAZADA':'MODELO_NO_DISPONIBLE'; return [{json:{code}}];"
+      },
+      "id": "f92256ea-5706-5915-89e6-86fe06fe7a18",
+      "name": "Clasificar sin secretos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://odoo:8069/mys/agent/provider-error",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "7245d1cb-6f73-5a6b-bc55-08319ea0e364",
+      "name": "Actualizar estado en Odoo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "mysWebhookOdoo1",
+          "name": "Entrada privada desde Odoo"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error del chat": {
+      "main": [
+        [
+          {
+            "node": "Clasificar sin secretos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Clasificar sin secretos": {
+      "main": [
+        [
+          {
+            "node": "Actualizar estado en Odoo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima",
+    "saveManualExecutions": true
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "generado_por": "scripts/generar_workflows.py",
+    "datos": "sintéticos"
+  }
+}

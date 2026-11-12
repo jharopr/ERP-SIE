@@ -1,0 +1,26 @@
+<odoo>
+    <record id="rule_eval_company" model="ir.rule">
+        <field name="name">Evaluaciones de la compañía</field><field name="model_id" ref="model_mys_evaluation"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_eval_seller" model="ir.rule">
+        <field name="name">Vendedor: sus evaluaciones</field><field name="model_id" ref="model_mys_evaluation"/>
+        <field name="groups" eval="[(4, ref('group_mys_seller'))]"/><field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_eval_manager" model="ir.rule">
+        <field name="name">Dueño: todas las evaluaciones de su compañía</field><field name="model_id" ref="model_mys_evaluation"/>
+        <field name="groups" eval="[(4, ref('group_mys_manager'))]"/><field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+    <record id="rule_decision_company" model="ir.rule">
+        <field name="name">Decisiones de la compañía</field><field name="model_id" ref="model_mys_decision"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_decision_seller" model="ir.rule">
+        <field name="name">Vendedor: seguimiento de sus solicitudes</field><field name="model_id" ref="model_mys_decision"/>
+        <field name="groups" eval="[(4, ref('group_mys_seller'))]"/><field name="domain_force">[('user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_decision_manager" model="ir.rule">
+        <field name="name">Dueño: decisiones de su compañía</field><field name="model_id" ref="model_mys_decision"/>
+        <field name="groups" eval="[(4, ref('group_mys_manager'))]"/><field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

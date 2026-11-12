@@ -1,0 +1,968 @@
+{
+  "ejecutado_utc": "2026-11-11T23:25:26.760433+00:00",
+  "entorno": "Odoo 18 + PostgreSQL 16 + FastAPI + n8n + Nginx reales en Docker",
+  "comprobaciones": [
+    {
+      "comprobacion": "50 productos del catálogo en Odoo",
+      "observado": 50,
+      "esperado": 50,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Cuenta técnica no es usuario interno con permisos heredados",
+      "observado": true,
+      "esperado": true,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en res.partner",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en res.partner",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en res.partner",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en crm.lead",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en crm.lead",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en crm.lead",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en sale.order",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en sale.order",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en sale.order",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en sale.order.line",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en sale.order.line",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en sale.order.line",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en product.product",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en product.product",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en product.product",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en product.template",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en product.template",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en product.template",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso write en stock.quant",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso create en stock.quant",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Integración sin permiso unlink en stock.quant",
+      "observado": false,
+      "esperado": false,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Panel lee 50 productos de Odoo real",
+      "observado": 50,
+      "esperado": 50,
+      "correcto": true
+    },
+    {
+      "comprobacion": "50 precios disponibles",
+      "observado": true,
+      "esperado": true,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Tres casos con productos del catálogo",
+      "observado": 3,
+      "esperado": 3,
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-001 resultado comercial",
+      "observado": "ACEPTADA",
+      "esperado": "ACEPTADA",
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-001 no crea pedido",
+      "observado": null,
+      "esperado": null,
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-001 reintento estable",
+      "observado": {
+        "respuesta": {
+          "code": "VALIDADA",
+          "conditions": [],
+          "contract_version": "1.0",
+          "correlation_id": "COR-CAT-001",
+          "currency": "PEN",
+          "message": "Solicitud validada; confirmación operativa pendiente.",
+          "order_id": null,
+          "quotation_id": "COT-CAT-001",
+          "quotation_version": 1,
+          "request_id": "SOL-CAT-001",
+          "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+          "responsible_role": "VENTAS",
+          "status": "ACEPTADA",
+          "total": "3087.50"
+        },
+        "senales_reposicion": []
+      },
+      "esperado": {
+        "respuesta": {
+          "code": "VALIDADA",
+          "conditions": [],
+          "contract_version": "1.0",
+          "correlation_id": "COR-CAT-001",
+          "currency": "PEN",
+          "message": "Solicitud validada; confirmación operativa pendiente.",
+          "order_id": null,
+          "quotation_id": "COT-CAT-001",
+          "quotation_version": 1,
+          "request_id": "SOL-CAT-001",
+          "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+          "responsible_role": "VENTAS",
+          "status": "ACEPTADA",
+          "total": "3087.50"
+        },
+        "senales_reposicion": []
+      },
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-002 resultado comercial",
+      "observado": "PROMESA_CONDICIONADA",
+      "esperado": "PROMESA_CONDICIONADA",
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-002 no crea pedido",
+      "observado": null,
+      "esperado": null,
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-002 reintento estable",
+      "observado": {
+        "respuesta": {
+          "code": "DISPONIBILIDAD_PARCIAL",
+          "conditions": [
+            {
+              "available_quantity": 3,
+              "promised_date": null,
+              "requested_quantity": 5,
+              "requires_customer_acceptance": true,
+              "sku": "DEH-X5000BT"
+            }
+          ],
+          "contract_version": "1.0",
+          "correlation_id": "COR-CAT-002",
+          "currency": "PEN",
+          "message": "Disponibilidad insuficiente para lo cotizado.",
+          "order_id": null,
+          "quotation_id": "COT-CAT-002",
+          "quotation_version": 1,
+          "request_id": "SOL-CAT-002",
+          "required_action": "Revisar cantidad/plazo con el cliente; nueva versión y aceptación.",
+          "responsible_role": "VENTAS",
+          "status": "PROMESA_CONDICIONADA",
+          "total": "2327.50"
+        },
+        "senales_reposicion": [
+          {
+            "signal_id": "REP-PC3-002",
+            "company_id": "MYS-DEMO",
+            "request_id": "SOL-CAT-002",
+            "correlation_id": "COR-CAT-002",
+            "sku": "DEH-X5000BT",
+            "requested": 5,
+            "available": 3,
+            "faltante": 2,
+            "automatic_action": 0,
+            "estado": "ABIERTA",
+            "created_at": "2026-11-11T18:24:10-05:00"
+          }
+        ]
+      },
+      "esperado": {
+        "respuesta": {
+          "code": "DISPONIBILIDAD_PARCIAL",
+          "conditions": [
+            {
+              "available_quantity": 3,
+              "promised_date": null,
+              "requested_quantity": 5,
+              "requires_customer_acceptance": true,
+              "sku": "DEH-X5000BT"
+            }
+          ],
+          "contract_version": "1.0",
+          "correlation_id": "COR-CAT-002",
+          "currency": "PEN",
+          "message": "Disponibilidad insuficiente para lo cotizado.",
+          "order_id": null,
+          "quotation_id": "COT-CAT-002",
+          "quotation_version": 1,
+          "request_id": "SOL-CAT-002",
+          "required_action": "Revisar cantidad/plazo con el cliente; nueva versión y aceptación.",
+          "responsible_role": "VENTAS",
+          "status": "PROMESA_CONDICIONADA",
+          "total": "2327.50"
+        },
+        "senales_reposicion": [
+          {
+            "signal_id": "REP-PC3-002",
+            "company_id": "MYS-DEMO",
+            "request_id": "SOL-CAT-002",
+            "correlation_id": "COR-CAT-002",
+            "sku": "DEH-X5000BT",
+            "requested": 5,
+            "available": 3,
+            "faltante": 2,
+            "automatic_action": 0,
+            "estado": "ABIERTA",
+            "created_at": "2026-11-11T18:24:10-05:00"
+          }
+        ]
+      },
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-003 resultado comercial",
+      "observado": "RECHAZADA",
+      "esperado": "RECHAZADA",
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-003 no crea pedido",
+      "observado": null,
+      "esperado": null,
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-003 reintento estable",
+      "observado": {
+        "respuesta": {
+          "code": "DESCUENTO_SIN_APROBACION",
+          "conditions": [],
+          "contract_version": "1.0",
+          "correlation_id": "COR-CAT-003",
+          "currency": null,
+          "message": "El descuento supera el 5 % y no tiene aprobación válida.",
+          "order_id": null,
+          "quotation_id": "COT-CAT-003",
+          "quotation_version": 1,
+          "request_id": "SOL-CAT-003",
+          "required_action": "Gerencia debe decidir; después preparar nueva versión y aceptación.",
+          "responsible_role": "GERENCIA",
+          "status": "RECHAZADA",
+          "total": null
+        },
+        "senales_reposicion": []
+      },
+      "esperado": {
+        "respuesta": {
+          "code": "DESCUENTO_SIN_APROBACION",
+          "conditions": [],
+          "contract_version": "1.0",
+          "correlation_id": "COR-CAT-003",
+          "currency": null,
+          "message": "El descuento supera el 5 % y no tiene aprobación válida.",
+          "order_id": null,
+          "quotation_id": "COT-CAT-003",
+          "quotation_version": 1,
+          "request_id": "SOL-CAT-003",
+          "required_action": "Gerencia debe decidir; después preparar nueva versión y aceptación.",
+          "responsible_role": "GERENCIA",
+          "status": "RECHAZADA",
+          "total": null
+        },
+        "senales_reposicion": []
+      },
+      "correcto": true
+    },
+    {
+      "comprobacion": "CAT-003 rechazo previo a I05",
+      "observado": true,
+      "esperado": true,
+      "correcto": true
+    },
+    {
+      "comprobacion": "Inventario de los 50 productos intacto",
+      "observado": {
+        "SOT200-10": [
+          27.0,
+          0.0,
+          27.0
+        ],
+        "DEH-X5000BT": [
+          3.0,
+          0.0,
+          3.0
+        ],
+        "MS200-9": [
+          41.0,
+          0.0,
+          41.0
+        ],
+        "MVH-S325BT": [
+          48.0,
+          0.0,
+          48.0
+        ],
+        "DEH-S4250BT": [
+          24.0,
+          0.0,
+          24.0
+        ],
+        "SD-9955NEC": [
+          31.0,
+          0.0,
+          31.0
+        ],
+        "SD-YT0905PRO": [
+          38.0,
+          0.0,
+          38.0
+        ],
+        "SOT100-9": [
+          45.0,
+          0.0,
+          45.0
+        ],
+        "MVH-S235BT": [
+          21.0,
+          0.0,
+          21.0
+        ],
+        "DEH-S1250UB": [
+          28.0,
+          0.0,
+          28.0
+        ],
+        "LS-YT7007PRO": [
+          35.0,
+          0.0,
+          35.0
+        ],
+        "MVH-S215BT": [
+          42.0,
+          0.0,
+          42.0
+        ],
+        "MVH-S145BT": [
+          49.0,
+          0.0,
+          49.0
+        ],
+        "DDX-D4423BT": [
+          25.0,
+          0.0,
+          25.0
+        ],
+        "D-D4703": [
+          32.0,
+          0.0,
+          32.0
+        ],
+        "D-D4704": [
+          39.0,
+          0.0,
+          39.0
+        ],
+        "GM-D9705": [
+          46.0,
+          0.0,
+          46.0
+        ],
+        "ION-5": [
+          22.0,
+          0.0,
+          22.0
+        ],
+        "GM-A6704": [
+          29.0,
+          0.0,
+          29.0
+        ],
+        "ION-4": [
+          36.0,
+          0.0,
+          36.0
+        ],
+        "BH-FR114REV200": [
+          43.0,
+          0.0,
+          43.0
+        ],
+        "EVO-1XL": [
+          50.0,
+          0.0,
+          50.0
+        ],
+        "BH-117D": [
+          26.0,
+          0.0,
+          26.0
+        ],
+        "BH-FR117": [
+          33.0,
+          0.0,
+          33.0
+        ],
+        "BASSPRONANO": [
+          40.0,
+          0.0,
+          40.0
+        ],
+        "TS-A3000LS4": [
+          47.0,
+          0.0,
+          47.0
+        ],
+        "R3-12": [
+          23.0,
+          0.0,
+          23.0
+        ],
+        "SWA10": [
+          30.0,
+          0.0,
+          30.0
+        ],
+        "BASS-10": [
+          37.0,
+          0.0,
+          37.0
+        ],
+        "TRS12-4": [
+          44.0,
+          0.0,
+          44.0
+        ],
+        "GT5-12D": [
+          20.0,
+          0.0,
+          20.0
+        ],
+        "TS-W312D4": [
+          27.0,
+          0.0,
+          27.0
+        ],
+        "TS-6900PRO": [
+          34.0,
+          0.0,
+          34.0
+        ],
+        "GTO609C": [
+          41.0,
+          0.0,
+          41.0
+        ],
+        "GTO629": [
+          48.0,
+          0.0,
+          48.0
+        ],
+        "DSK165-3": [
+          24.0,
+          0.0,
+          24.0
+        ],
+        "STAGE368CF": [
+          31.0,
+          0.0,
+          31.0
+        ],
+        "TS-A1608C": [
+          38.0,
+          0.0,
+          38.0
+        ],
+        "GTO602C": [
+          45.0,
+          0.0,
+          45.0
+        ],
+        "TS-M651PRO": [
+          21.0,
+          0.0,
+          21.0
+        ],
+        "TS-B351PRO": [
+          28.0,
+          0.0,
+          28.0
+        ],
+        "TW1N": [
+          35.0,
+          0.0,
+          35.0
+        ],
+        "R3S": [
+          42.0,
+          0.0,
+          42.0
+        ],
+        "SSK4ANL": [
+          49.0,
+          0.0,
+          49.0
+        ],
+        "SX-AWG42": [
+          25.0,
+          0.0,
+          25.0
+        ],
+        "COBRA-4GX": [
+          32.0,
+          0.0,
+          32.0
+        ],
+        "PHD1YPKQ4": [
+          39.0,
+          0.0,
+          39.0
+        ],
+        "SSLOC2": [
+          46.0,
+          0.0,
+          46.0
+        ],
+        "BH-F4S": [
+          22.0,
+          0.0,
+          22.0
+        ],
+        "BH-849EQ": [
+          29.0,
+          0.0,
+          29.0
+        ]
+      },
+      "esperado": {
+        "SOT200-10": [
+          27.0,
+          0.0,
+          27.0
+        ],
+        "DEH-X5000BT": [
+          3.0,
+          0.0,
+          3.0
+        ],
+        "MS200-9": [
+          41.0,
+          0.0,
+          41.0
+        ],
+        "MVH-S325BT": [
+          48.0,
+          0.0,
+          48.0
+        ],
+        "DEH-S4250BT": [
+          24.0,
+          0.0,
+          24.0
+        ],
+        "SD-9955NEC": [
+          31.0,
+          0.0,
+          31.0
+        ],
+        "SD-YT0905PRO": [
+          38.0,
+          0.0,
+          38.0
+        ],
+        "SOT100-9": [
+          45.0,
+          0.0,
+          45.0
+        ],
+        "MVH-S235BT": [
+          21.0,
+          0.0,
+          21.0
+        ],
+        "DEH-S1250UB": [
+          28.0,
+          0.0,
+          28.0
+        ],
+        "LS-YT7007PRO": [
+          35.0,
+          0.0,
+          35.0
+        ],
+        "MVH-S215BT": [
+          42.0,
+          0.0,
+          42.0
+        ],
+        "MVH-S145BT": [
+          49.0,
+          0.0,
+          49.0
+        ],
+        "DDX-D4423BT": [
+          25.0,
+          0.0,
+          25.0
+        ],
+        "D-D4703": [
+          32.0,
+          0.0,
+          32.0
+        ],
+        "D-D4704": [
+          39.0,
+          0.0,
+          39.0
+        ],
+        "GM-D9705": [
+          46.0,
+          0.0,
+          46.0
+        ],
+        "ION-5": [
+          22.0,
+          0.0,
+          22.0
+        ],
+        "GM-A6704": [
+          29.0,
+          0.0,
+          29.0
+        ],
+        "ION-4": [
+          36.0,
+          0.0,
+          36.0
+        ],
+        "BH-FR114REV200": [
+          43.0,
+          0.0,
+          43.0
+        ],
+        "EVO-1XL": [
+          50.0,
+          0.0,
+          50.0
+        ],
+        "BH-117D": [
+          26.0,
+          0.0,
+          26.0
+        ],
+        "BH-FR117": [
+          33.0,
+          0.0,
+          33.0
+        ],
+        "BASSPRONANO": [
+          40.0,
+          0.0,
+          40.0
+        ],
+        "TS-A3000LS4": [
+          47.0,
+          0.0,
+          47.0
+        ],
+        "R3-12": [
+          23.0,
+          0.0,
+          23.0
+        ],
+        "SWA10": [
+          30.0,
+          0.0,
+          30.0
+        ],
+        "BASS-10": [
+          37.0,
+          0.0,
+          37.0
+        ],
+        "TRS12-4": [
+          44.0,
+          0.0,
+          44.0
+        ],
+        "GT5-12D": [
+          20.0,
+          0.0,
+          20.0
+        ],
+        "TS-W312D4": [
+          27.0,
+          0.0,
+          27.0
+        ],
+        "TS-6900PRO": [
+          34.0,
+          0.0,
+          34.0
+        ],
+        "GTO609C": [
+          41.0,
+          0.0,
+          41.0
+        ],
+        "GTO629": [
+          48.0,
+          0.0,
+          48.0
+        ],
+        "DSK165-3": [
+          24.0,
+          0.0,
+          24.0
+        ],
+        "STAGE368CF": [
+          31.0,
+          0.0,
+          31.0
+        ],
+        "TS-A1608C": [
+          38.0,
+          0.0,
+          38.0
+        ],
+        "GTO602C": [
+          45.0,
+          0.0,
+          45.0
+        ],
+        "TS-M651PRO": [
+          21.0,
+          0.0,
+          21.0
+        ],
+        "TS-B351PRO": [
+          28.0,
+          0.0,
+          28.0
+        ],
+        "TW1N": [
+          35.0,
+          0.0,
+          35.0
+        ],
+        "R3S": [
+          42.0,
+          0.0,
+          42.0
+        ],
+        "SSK4ANL": [
+          49.0,
+          0.0,
+          49.0
+        ],
+        "SX-AWG42": [
+          25.0,
+          0.0,
+          25.0
+        ],
+        "COBRA-4GX": [
+          32.0,
+          0.0,
+          32.0
+        ],
+        "PHD1YPKQ4": [
+          39.0,
+          0.0,
+          39.0
+        ],
+        "SSLOC2": [
+          46.0,
+          0.0,
+          46.0
+        ],
+        "BH-F4S": [
+          22.0,
+          0.0,
+          22.0
+        ],
+        "BH-849EQ": [
+          29.0,
+          0.0,
+          29.0
+        ]
+      },
+      "correcto": true
+    },
+    {
+      "comprobacion": "n8n protege form/decision-dueno",
+      "observado": 401,
+      "esperado": 401,
+      "correcto": true
+    },
+    {
+      "comprobacion": "n8n protege form/modo-determinista",
+      "observado": 401,
+      "esperado": 401,
+      "correcto": true
+    },
+    {
+      "comprobacion": "n8n protege webhook/6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01/chat",
+      "observado": 401,
+      "esperado": 401,
+      "correcto": true
+    }
+  ],
+  "casos_catalogo": [
+    {
+      "caso": "CAT-001",
+      "respuesta": {
+        "code": "VALIDADA",
+        "conditions": [],
+        "contract_version": "1.0",
+        "correlation_id": "COR-CAT-001",
+        "currency": "PEN",
+        "message": "Solicitud validada; confirmación operativa pendiente.",
+        "order_id": null,
+        "quotation_id": "COT-CAT-001",
+        "quotation_version": 1,
+        "request_id": "SOL-CAT-001",
+        "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+        "responsible_role": "VENTAS",
+        "status": "ACEPTADA",
+        "total": "3087.50"
+      }
+    },
+    {
+      "caso": "CAT-002",
+      "respuesta": {
+        "code": "DISPONIBILIDAD_PARCIAL",
+        "conditions": [
+          {
+            "available_quantity": 3,
+            "promised_date": null,
+            "requested_quantity": 5,
+            "requires_customer_acceptance": true,
+            "sku": "DEH-X5000BT"
+          }
+        ],
+        "contract_version": "1.0",
+        "correlation_id": "COR-CAT-002",
+        "currency": "PEN",
+        "message": "Disponibilidad insuficiente para lo cotizado.",
+        "order_id": null,
+        "quotation_id": "COT-CAT-002",
+        "quotation_version": 1,
+        "request_id": "SOL-CAT-002",
+        "required_action": "Revisar cantidad/plazo con el cliente; nueva versión y aceptación.",
+        "responsible_role": "VENTAS",
+        "status": "PROMESA_CONDICIONADA",
+        "total": "2327.50"
+      }
+    },
+    {
+      "caso": "CAT-003",
+      "respuesta": {
+        "code": "DESCUENTO_SIN_APROBACION",
+        "conditions": [],
+        "contract_version": "1.0",
+        "correlation_id": "COR-CAT-003",
+        "currency": null,
+        "message": "El descuento supera el 5 % y no tiene aprobación válida.",
+        "order_id": null,
+        "quotation_id": "COT-CAT-003",
+        "quotation_version": 1,
+        "request_id": "SOL-CAT-003",
+        "required_action": "Gerencia debe decidir; después preparar nueva versión y aceptación.",
+        "responsible_role": "GERENCIA",
+        "status": "RECHAZADA",
+        "total": null
+      }
+    }
+  ],
+  "correcto": true
+}

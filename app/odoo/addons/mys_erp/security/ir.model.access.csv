@@ -1,0 +1,21 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+mys_read_partner,MYS contactos lectura,base.model_res_partner,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_lead,MYS CRM lectura,crm.model_crm_lead,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_sale,MYS cotizaciones lectura,sale.model_sale_order,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_sale_line,MYS líneas lectura,sale.model_sale_order_line,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_product,MYS productos lectura,product.model_product_product,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_template,MYS catálogo lectura,product.model_product_template,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_quant,MYS stock lectura,stock.model_stock_quant,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_user,MYS usuarios lectura,base.model_res_users,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_currency,MYS moneda lectura,base.model_res_currency,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_location,MYS ubicación lectura,stock.model_stock_location,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_company,MYS empresa lectura,base.model_res_company,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_uom,MYS unidad lectura,uom.model_uom_uom,mys_erp.group_agente_lectura,1,0,0,0
+mys_read_category,MYS categoría lectura,product.model_product_category,mys_erp.group_agente_lectura,1,0,0,0
+mys_eval_seller,MYS evaluaciones vendedor,model_mys_evaluation,mys_erp.group_mys_seller,1,0,0,0
+mys_eval_manager,MYS evaluaciones dueño,model_mys_evaluation,mys_erp.group_mys_manager,1,0,0,0
+mys_decision_seller,MYS seguimiento vendedor,model_mys_decision,mys_erp.group_mys_seller,1,0,0,0
+mys_decision_manager,MYS decisiones dueño,model_mys_decision,mys_erp.group_mys_manager,1,1,0,0
+mys_quant_seller,MYS stock vendedor,stock.model_stock_quant,mys_erp.group_mys_seller,1,0,0,0
+mys_location_seller,MYS ubicaciones vendedor,stock.model_stock_location,mys_erp.group_mys_seller,1,0,0,0
+mys_warehouse_seller,MYS almacenes vendedor,stock.model_stock_warehouse,mys_erp.group_mys_seller,1,0,0,0

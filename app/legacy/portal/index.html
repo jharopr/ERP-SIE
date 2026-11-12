@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#132a29"><title>MYS | Operación comercial</title>
+  <link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
+</head>
+<body>
+<div id="login" class="login-shell">
+  <section class="login-story">
+    <a class="brand" href="/"><span class="monogram">M</span><span>MYS <b>HERMANOS</b></span></a>
+    <div><span class="eyebrow light">IMPORTACIONES · AUDIO AUTOMOTRIZ</span><h1>Una operación.<br>Todos conectados.</h1><p>Del primer contacto a una decisión comercial clara. Clientes, catálogo y disponibilidad, con el respaldo de Odoo y el Agente SIE.</p></div>
+    <div class="story-footer"><span>GRUPO 7 / GE703</span><span>LIMA, PERÚ</span></div>
+  </section>
+  <section class="login-side"><form id="login-form" class="login-card">
+    <span class="eyebrow">ESPACIO DE TRABAJO</span><h2>Bienvenido a MYS</h2><p>Ingresa con tu acceso local de demostración.</p>
+    <label for="role">Tu función</label><select id="role"><option value="VENTAS">Asesor de ventas</option><option value="GERENCIA">Dueño / Gerencia</option></select>
+    <label for="password">Contraseña</label><input id="password" type="password" autocomplete="current-password" required placeholder="Tu contraseña de acceso">
+    <button class="primary" type="submit">Ingresar al sistema <span>→</span></button>
+    <p id="login-error" class="error" role="alert"></p><div class="login-note"><span class="dot amber"></span> Entorno de prueba · Inventario y clientes sintéticos</div>
+  </form></section>
+</div>
+<div id="workspace" class="workspace" hidden>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="monogram">M</span><span>MYS <b>HERMANOS</b></span></a>
+    <div class="side-label">GESTIÓN COMERCIAL</div>
+    <nav aria-label="Navegación principal">
+      <button data-page="inicio" class="nav active"><span>◫</span> Vista general</button>
+      <button data-page="catalogo" class="nav"><span>▤</span> Catálogo <small>50</small></button>
+      <button data-page="casos" class="nav"><span>⇄</span> Evaluación comercial</button>
+      <button data-page="decisiones" class="nav"><span>◇</span> Decisiones del dueño</button>
+      <button data-page="bitacora" class="nav"><span>≡</span> Trazabilidad</button>
+    </nav>
+    <div class="side-label">HERRAMIENTAS</div>
+    <a id="link-odoo" class="nav" target="_blank" rel="noopener"><span>↗</span> Abrir Odoo</a>
+    <a id="link-agente" class="nav" target="_blank" rel="noopener"><span>✳</span> Agente SIE</a>
+    <div class="sidebar-bottom"><div class="avatar">G7</div><div><strong id="role-label">Ventas</strong><small>Demostración local</small></div><button id="logout" title="Cerrar sesión" aria-label="Cerrar sesión">↪</button></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><span>Importaciones MYS Hermanos <span class="slash">/</span> <b id="breadcrumb">Vista general</b></span><span class="env-badge"><span class="dot amber"></span> Entorno de prueba</span></header>
+    <div class="page-content">
+      <div id="notice" class="notice" role="status" hidden></div>
+      <section id="page-inicio" class="page">
+        <div class="page-heading"><div><span class="eyebrow">TU OPERACIÓN, EN UN VISTAZO</span><h1>Vista general</h1><p>Del cliente a la respuesta comercial, con cada decisión a la vista.</p></div><button class="secondary refresh">↻ Actualizar</button></div>
+        <div class="hero"><div><span class="hero-label">CONEXIÓN CENTRAL</span><h2>El dato vive en Odoo.<br>La decisión tiene respaldo.</h2><p>Consulta el catálogo, evalúa una cotización y escala al dueño cuando corresponda.</p><button class="cream" data-open="casos">Evaluar una cotización <span>→</span></button></div><div class="hero-diagram"><div>CLIENTE</div><span>↓</span><div>CRM + VENTAS</div><span>↓</span><div class="highlight">COMPUERTA SIE <small>Reglas · Control · Evidencia</small></div><span>↓</span><div class="split"><span>RESPUESTA</span><span>DUEÑO</span></div></div></div>
+        <div class="stats"><article><span>Catálogo seleccionado</span><strong>50 <small>productos</small></strong><p>9 líneas de audio y accesorios</p></article><article><span>Solicitudes evaluadas</span><strong id="stat-requests">—</strong><p>Decisiones guardadas, sin duplicados</p></article><article><span>Necesidades de reposición</span><strong id="stat-signals">—</strong><p>Señales para evaluación humana</p></article><article><span>Estado de Odoo</span><strong id="stat-odoo" class="status-text">Consultando</strong><p id="odoo-version">Conectividad con el ERP</p></article></div>
+        <div class="section-title"><h2>Continúa tu trabajo</h2><span>Un mismo recorrido, responsabilidades claras</span></div>
+        <div class="quick-grid"><button class="quick" data-open="catalogo"><span class="quick-symbol">▤</span><h3>Explora el catálogo</h3><p>Precio y disponibilidad actual leídos desde Odoo.</p><span class="text-link">Ver productos →</span></button><button class="quick" data-open="casos"><span class="quick-symbol">⇄</span><h3>Prueba los escenarios</h3><p>Normal, faltante y descuento excepcional con trazabilidad.</p><span class="text-link">Evaluar casos →</span></button><button class="quick" data-open="decisiones"><span class="quick-symbol">◇</span><h3>Revisa excepciones</h3><p>El vendedor escala. El dueño registra su decisión.</p><span class="text-link">Ver decisiones →</span></button></div>
+        <div class="scope-note"><span>i</span><p>La evaluación termina en una respuesta. El agente no confirma pedidos, no reserva inventario, no aprueba descuentos y no promete fechas.</p></div>
+      </section>
+      <section id="page-catalogo" class="page" hidden>
+        <div class="page-heading"><div><span class="eyebrow">PRODUCTOS Y DISPONIBILIDAD</span><h1>Catálogo comercial <sup>50</sup></h1><p>Nombres y precios del catálogo suministrado. Existencias de demostración.</p></div><button class="secondary" id="refresh-catalog">↻ Actualizar stock</button></div>
+        <div class="filters"><input id="search" type="search" placeholder="Buscar producto, código o categoría…" aria-label="Buscar productos"><select id="category" aria-label="Filtrar categoría"><option value="">Todas las categorías</option></select><span id="catalog-count">50 referencias</span></div>
+        <p id="catalog-source" class="table-note">Consultando Odoo…</p><div class="table-wrap"><table><thead><tr><th>Producto</th><th>Categoría</th><th>Precio PEN</th><th>Físico</th><th>Reservado</th><th>Disponible</th></tr></thead><tbody id="products"></tbody></table></div>
+        <p class="table-note">Selección por cobertura de categorías y precio de referencia. No representa un ranking de ventas o rotación. Los dos SKU académicos PC3 se conservan adicionalmente en Odoo.</p>
+      </section>
+      <section id="page-casos" class="page" hidden>
+        <div class="page-heading"><div><span class="eyebrow">CRM → ERP</span><h1>Evaluación comercial</h1><p>Ejecuta una solicitud y revisa la respuesta de las reglas deterministas.</p></div><span class="pill">Sin pedido ni reserva</span></div>
+        <div id="cases" class="case-grid"></div><div id="case-result" hidden></div>
+      </section>
+      <section id="page-decisiones" class="page" hidden>
+        <div class="page-heading"><div><span class="eyebrow">ESCALAMIENTO HUMANO</span><h1>Decisiones del dueño</h1><p>Los descuentos y la reposición requieren una decisión independiente.</p></div><button class="secondary refresh">↻ Actualizar</button></div>
+        <div id="escalations"></div>
+      </section>
+      <section id="page-bitacora" class="page" hidden>
+        <div class="page-heading"><div><span class="eyebrow">CADA DECISIÓN DEJA EVIDENCIA</span><h1>Trazabilidad</h1><p>Consulta los eventos por su identificador de correlación.</p></div></div>
+        <form id="audit-form" class="filters"><input id="correlation" value="COR-PC3-001" aria-label="Identificador de correlación" placeholder="COR-PC3-001" required><button class="primary">Consultar eventos</button></form><div id="audit-events"></div>
+      </section>
+    </div><footer>IMPORTACIONES MYS HERMANOS <span>Odoo Community · Agente SIE · GE703 / G7</span></footer>
+  </main>
+</div>
+</body></html>

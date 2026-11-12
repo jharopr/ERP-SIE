@@ -1,0 +1,34 @@
+<odoo>
+    <record id="view_producto_mys_form" model="ir.ui.view">
+        <field name="name">product.template.mys.procedencia</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Procedencia MYS" name="mys_procedencia">
+                    <group>
+                        <group><field name="mys_catalogo"/><field name="mys_codigo_fuente"/><field name="mys_prioridad_demo"/><field name="mys_precio_mayorista"/></group>
+                        <group><field name="mys_archivo_fuente"/><field name="mys_fila_fuente"/><field name="mys_lote_sha256"/><field name="mys_datos_sinteticos"/></group>
+                    </group>
+                    <p>Los precios y nombres provienen del catálogo suministrado. El inventario y las operaciones cargadas son de prueba. La selección no acredita ventas ni rotación.</p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="view_catalogo_mys_list" model="ir.ui.view">
+        <field name="name">product.template.mys.catalogo.list</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <list string="50 productos seleccionados" default_order="mys_prioridad_demo,id">
+                <field name="mys_prioridad_demo" string="Orden"/>
+                <field name="default_code"/>
+                <field name="name"/>
+                <field name="categ_id"/>
+                <field name="list_price"/>
+                <field name="qty_available"/>
+                <field name="mys_disponible"/>
+                <field name="mys_datos_sinteticos"/>
+            </list>
+        </field>
+    </record>
+</odoo>

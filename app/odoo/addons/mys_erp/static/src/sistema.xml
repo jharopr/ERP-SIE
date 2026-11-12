@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="mys.WebClient" t-inherit="web.WebClient" t-inherit-mode="extension">
+        <xpath expr="//ActionContainer" position="before"><MysSidebar/></xpath>
+    </t>
+    <t t-name="mys.Sidebar">
+        <aside t-if="state.session" class="mys_sidebar" t-att-class="{'mys_mobile_open': state.mobile}">
+            <button class="mys_mobile_toggle" t-on-click="() => state.mobile = !state.mobile" aria-label="Abrir menú"><i class="fa fa-bars"/></button>
+            <div class="mys_brand"><img src="/mys_erp/static/img/ms-power.svg" alt="MS Power Audio"/><span>IMPORTACIONES MYS HERMANOS</span></div>
+            <div class="mys_nav_label">GESTIÓN INTEGRADA</div>
+            <nav aria-label="Módulos MYS"><button t-foreach="nav" t-as="item" t-key="item[0]" t-on-click="() => this.go(item)" t-att-class="{'active': state.active === item[0]}">
+                <i t-att-class="'fa ' + item[2]"/><span t-esc="item[1]"/><span t-if="item[0] === 'agent'" class="mys_dot" t-att-class="{'enabled': state.session.agent.enabled}"/>
+            </button></nav>
+            <div class="mys_account"><strong t-esc="state.session.name"/><span t-esc="state.session.role === 'GERENCIA' ? 'Dueño / Gerencia' : 'Vendedor'"/>
+                <a href="/web/session/logout?redirect=/web/login"><i class="fa fa-sign-out"/> Cerrar sesión</a></div>
+        </aside>
+    </t>
+    <t t-name="mys.Workspace">
+        <div class="mys_workspace">
+            <header class="mys_page_head"><div><span class="mys_eyebrow">IMPORTACIONES MYS HERMANOS</span>
+                <h1 t-esc="state.page === 'agent' ? 'Agente SIE' : state.page === 'trace' ? 'Trazabilidad' : 'Tu operación, en un solo lugar.'"/>
+                <p t-if="state.page === 'home'">Del primer contacto a la evaluación comercial, con decisiones que dejan evidencia.</p>
+                <p t-if="state.page === 'trace'">Consulta las reglas aplicadas y quién actuó en cada paso.</p>
+                <p t-if="state.page === 'agent'">Consulta productos, disponibilidad y solicitudes con tu sesión de Odoo.</p>
+            </div><span class="mys_demo_badge">● Entorno de prueba</span></header>
+            <div t-if="state.error" class="alert alert-danger" role="alert" t-esc="state.error"/>
+            <div t-if="!state.data and !state.error" class="mys_loading">Cargando tu espacio…</div>
+            <t t-if="state.data">
+                <div t-if="state.data.warning" class="alert alert-warning" t-esc="state.data.warning"/>
+                <t t-if="state.page === 'home'">
+                    <div class="mys_stats"><button t-foreach="cards" t-as="card" t-key="card[2]" t-on-click="() => this.go(card[2])"><span t-esc="card[0]"/><strong t-esc="card[1]"/><small>Abrir módulo ↗</small></button></div>
+                    <section class="mys_rules_card"><span class="mys_eyebrow">REGLAS COMERCIALES</span><h2>Una oferta clara. Una decisión responsable.</h2>
+                        <div class="mys_steps"><div><b>01 · Vendedor</b><p>Prepara la cotización y registra la aceptación del cliente.</p></div><div><b>02 · Reglas</b><p>Validan cliente, versión, descuento, vigencia y stock en ese orden.</p></div><div><b>03 · Dueño</b><p>Aprueba o rechaza descuentos mayores al 5 % y decide ante faltantes.</p></div></div>
+                        <p class="mys_notice">Evaluar no crea pedidos ni reservas. Una aprobación exige una nueva versión, aceptación del cliente y evaluación.</p>
+                        <button class="btn btn-primary" t-on-click="() => this.go('sales')">Trabajar una cotización →</button>
+                    </section>
+                    <section class="mys_recent"><div class="mys_section_title"><h2>Últimas evaluaciones</h2><button t-on-click="() => this.go('evaluations')">Ver todas →</button></div>
+                        <div t-if="!state.data.evaluations.length" class="mys_empty">Aún no hay evaluaciones. Abre Ventas / Cotizaciones para comenzar.</div>
+                        <button t-foreach="state.data.evaluations" t-as="e" t-key="e.id" class="mys_result_row" t-on-click="() => this.openEvaluation(e.id)"><div><b t-esc="e.order_id[1]"/><small t-esc="e.code"/></div><span class="mys_status" t-esc="e.status"/><i class="fa fa-angle-right"/></button>
+                    </section>
+                </t>
+                <section t-if="state.page === 'trace'" class="mys_trace">
+                    <form t-on-submit.prevent="trace" class="mys_query"><input t-model="state.correlation" class="form-control" placeholder="Ej.: COR-PC3-001" required="required" maxlength="64"/><button class="btn btn-primary">Consultar eventos</button></form>
+                    <div t-if="state.queried and !state.events.length" class="mys_empty">No hay eventos accesibles para esta correlación.</div>
+                    <ol class="mys_timeline"><li t-foreach="state.events" t-as="e" t-key="e.event_id"><div class="mys_event_code" t-esc="e.code"/><p><b t-esc="e.event_type"/> · <span t-esc="e.interface_id"/></p><small><span t-esc="e.occurred_at"/> · <span t-esc="e.actor_id"/> · <span t-esc="e.actor_type"/></small></li></ol>
+                </section>
+                <section t-if="state.page === 'agent'" class="mys_chat">
+                    <div class="mys_agent_status" t-att-class="{'enabled': state.data.agent.enabled}"><span class="mys_dot" t-att-class="{'enabled': state.data.agent.enabled}"/><b t-esc="state.data.agent.code === 'CUOTA_AGOTADA' ? 'Agente sin cuota' : state.data.agent.enabled ? 'Agente habilitado' : 'Agente deshabilitado'"/><span t-esc="state.data.agent.message"/></div>
+                    <div class="mys_chat_messages" aria-live="polite">
+                        <div t-if="!state.messages.length" class="mys_chat_welcome"><i class="fa fa-commenting-o"/><h2>¿Qué necesitas consultar?</h2><p>Prueba: «Busca radios con pantalla» o «Consulta el stock de RAD-7BT».</p><small>El agente acompaña la gestión. Las aprobaciones se realizan en Decisiones del dueño.</small></div>
+                        <div t-foreach="state.messages" t-as="m" t-key="m.id" class="mys_bubble" t-att-class="m.role"><b t-esc="m.role === 'user' ? 'Tú' : 'Agente SIE'"/><div t-esc="m.text"/></div>
+                        <div t-if="state.sending" class="mys_bubble agent">Consultando…</div><div t-ref="chatEnd"/>
+                    </div>
+                    <form t-on-submit.prevent="send" class="mys_chat_input"><textarea t-model="state.message" t-on-keydown="keydown" t-att-disabled="!state.data.agent.enabled || state.sending" placeholder="Escribe tu consulta…" maxlength="4000" rows="2" aria-label="Mensaje al agente"/><button class="btn btn-primary" t-att-disabled="!state.data.agent.enabled || state.sending || !state.message.trim()">Enviar <i class="fa fa-arrow-up"/></button></form>
+                </section>
+            </t>
+            <footer class="mys_footer">MS Power Audio · Importaciones MYS Hermanos <span>Odoo Community · Agente SIE · GE703 / G7</span></footer>
+        </div>
+    </t>
+</templates>

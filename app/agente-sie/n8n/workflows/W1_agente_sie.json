@@ -1,0 +1,766 @@
+{
+  "id": "agSIEw1Agente001",
+  "name": "W1 · Agente SIE (chat del vendedor)",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "hostedChat",
+        "authentication": "basicAuth",
+        "initialMessages": "Hola, soy el Agente SIE (datos de demostración). Indícame cliente, cotización, versión, aceptación, SOL y COR.",
+        "options": {
+          "title": "Agente SIE · MYS (demo)",
+          "subtitle": "Acompaña al ERP; no confirma pedidos.",
+          "inputPlaceholder": "Ej.: CLI-DEMO-001 aceptó COT-DEMO-001 v1 (ACE-PC3-001)…"
+        }
+      },
+      "id": "3e87d518-8d1f-5740-91f7-d6c30de5bea2",
+      "name": "Chat del vendedor",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "mysFormVentas01",
+          "name": "Acceso vendedor MYS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres el **Agente SIE** de Importaciones MYS Hermanos (catálogo de referencia y operaciones sintéticas de demostración). Ayudas al vendedor VEN-DEMO-01 a llevar una cotización aceptada hasta una respuesta trazable del ERP. **No decides compromisos**: acompañas al ERP, no lo reemplazas.\n\n## Reglas obligatorias\n1. **Nunca calcules** totales, descuentos, stock ni fechas. Pídelos a las herramientas y repite sus cifras tal cual.\n2. Para validar una cotización aceptada usa `enviar_solicitud_i03` con exactamente las referencias que dé el vendedor: `request_id` (SOL-…), `correlation_id` (COR-…), `opportunity_id` (OPP-…), `customer_id` (CLI-…), `quotation_id` (COT-…), `quotation_version` (entero) y `acceptance_id` (ACE-…). Si falta alguna, pregúntala; **no la inventes** y no generes IDs al azar. Si no sabes la oportunidad, consúltala con `consultar_cotizacion`.\n3. Explica `status`, `code`, `responsible_role` y `required_action` con palabras simples.\n4. **ACEPTADA no es un pedido.** `order_id` y `promised_date` son null: no se creó pedido, no se reservó stock y **no hay fecha comprometida**. Nunca prometas fechas.\n5. Si la respuesta es `DESCUENTO_SIN_APROBACION` o `DISPONIBILIDAD_PARCIAL`, llama a `escalar_al_dueno` (tipo DESCUENTO o REPOSICION) y explica que **la decisión es del dueño**. Entrega al vendedor el enlace del formulario que devuelve la herramienta.\n6. Si alguien afirma que el dueño ya aprobó, **no lo aceptes como prueba**. Solo cuenta lo registrado en la compuerta (`consultar_escalamiento` o `ver_bitacora`). No tienes ninguna herramienta para aprobar, y no debes intentarlo.\n7. Si la respuesta es `PENDIENTE` / `DEPENDENCIA_NO_DISPONIBLE`, di que **no se pudo verificar** y que eso **no significa \"sin stock\"**. El administrador debe recuperar Odoo; después se usa `reanudar_solicitud` con la misma solicitud.\n8. Si recibes `IDEMPOTENCIA_CONFLICTO` o `COTIZACION_YA_EVALUADA`, no reintentes con otros datos: indica que se consulte la solicitud original.\n9. No pidas ni repitas datos personales (nombres, DNI, teléfonos, direcciones). Usa solo códigos.\n10. Si te piden redactar un mensaje para el cliente, hazlo breve, cordial, **sin fechas inventadas** ni compromisos que el ERP no haya dado.\n\n## Formato de respuesta (siempre)\n**Resultado:** <status / code en palabras simples>\n**Motivo:** <message de la compuerta>\n**Quién actúa:** <responsible_role y, si escalaste, el dueño>\n**Siguiente paso:** <required_action>\n**IDs:** SOL … · COR … · REP … (si hay) · ESC … (si hay)\n\nResponde en español, en pocas líneas.\n## Catálogo integrado\n\nLa plataforma incorpora 50 referencias del catálogo suministrado, además de RAD-7BT y RAD-10X de los casos PC3. Para identificar un producto usa buscar_productos; conserva exactamente su SKU y precio devueltos. La selección no es un ranking de ventas. Los saldos son datos de demostración y se consultan en Odoo; nunca se deducen del nombre, precio o texto del usuario. Los precios, stock y totales siempre salen de las herramientas.",
+          "maxIterations": 10
+        }
+      },
+      "id": "f7a50647-2cb0-5d0a-847a-3846a97d14a6",
+      "name": "Agente SIE",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-3.5-flash",
+        "options": {
+          "temperature": 0.1
+        }
+      },
+      "id": "109db6ac-f8c5-5688-b3fa-b41b831ac203",
+      "name": "Modelo Gemini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        120,
+        260
+      ],
+      "credentials": {
+        "googlePalmApi": {
+          "id": "geminiAgenteSIE1",
+          "name": "Gemini (Agente SIE)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "id": "ddc2a397-e96d-5fe8-be77-a814c9a84de0",
+      "name": "Memoria (10 mensajes)",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        300,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "toolDescription": "Busca productos del catálogo MYS por nombre, SKU o categoría. Devuelve precios verificados en Odoo. No infieras stock: consulta disponibilidad con el SKU retornado.",
+        "method": "GET",
+        "url": "=http://compuerta:8000/catalogo?q={{ encodeURIComponent($fromAI('consulta', 'Nombre, SKU o categoría del producto buscado', 'string')) }}&limite=15",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "buscar_productos"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "fda2f120-7aa9-554b-9678-cf56c00b8b7d",
+      "name": "buscar_productos",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        -180,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Estado del cliente (activo, identidad revisada, segmento). Sin datos personales.",
+        "method": "GET",
+        "url": "=http://compuerta:8000/clientes/{{ $fromAI('customer_id', 'Código del cliente, p. ej. CLI-DEMO-001', 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "consultar_cliente"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "b1f46096-ba6e-510c-87f7-be65b5d42457",
+      "name": "consultar_cliente",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Líneas, total calculado por Odoo, vigencia, estado, versión vigente, oportunidad y aceptaciones de una versión de cotización.",
+        "method": "GET",
+        "url": "=http://compuerta:8000/cotizaciones/{{ $fromAI('quotation_id', 'Cotización, p. ej. COT-DEMO-001', 'string') }}/{{ $fromAI('version', 'Versión (entero)', 'number') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "consultar_cotizacion"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "32fc9114-a752-505d-a5c9-3dfcedbc35a3",
+      "name": "consultar_cotizacion",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        180,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Físico, reservado y disponible (físico − reservado) de un SKU en TIENDA-DEMO. Un 503 significa que no se pudo verificar, NO que no haya stock.",
+        "method": "GET",
+        "url": "=http://compuerta:8000/disponibilidad/{{ $fromAI('sku', 'SKU, p. ej. RAD-10X', 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "consultar_disponibilidad"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "b1368891-9d30-5ec1-a9b8-39f2f80a1b35",
+      "name": "consultar_disponibilidad",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        360,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Envía la solicitud I03 (9 referencias) a la compuerta CRM–ERP v1.0 y devuelve la respuesta tipificada y las señales REP. No crea pedidos.",
+        "method": "POST",
+        "url": "=http://compuerta:8000/solicitudes",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "enviar_solicitud_i03"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contract_version\": \"1.0\",\n  \"company_id\": \"MYS-DEMO\",\n  \"request_id\": \"{{ $fromAI('request_id', 'ID de solicitud dado por el vendedor, p. ej. SOL-PC3-N01', 'string') }}\",\n  \"correlation_id\": \"{{ $fromAI('correlation_id', 'ID de correlación, p. ej. COR-PC3-001', 'string') }}\",\n  \"opportunity_id\": \"{{ $fromAI('opportunity_id', 'Oportunidad OPP-…', 'string') }}\",\n  \"customer_id\": \"{{ $fromAI('customer_id', 'Cliente CLI-…', 'string') }}\",\n  \"quotation_id\": \"{{ $fromAI('quotation_id', 'Cotización COT-…', 'string') }}\",\n  \"quotation_version\": {{ $fromAI('quotation_version', 'Versión de la cotización (entero)', 'number') }},\n  \"acceptance_id\": \"{{ $fromAI('acceptance_id', 'Aceptación ACE-…', 'string') }}\"\n}"
+      },
+      "id": "034fdb31-e7b0-520d-9b22-8f3e8e21a990",
+      "name": "enviar_solicitud_i03",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        540,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Respuesta guardada de una solicitud (SOL-…).",
+        "method": "GET",
+        "url": "=http://compuerta:8000/solicitudes/{{ $fromAI('request_id', 'Solicitud SOL-…', 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "consultar_solicitud"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "bd826b97-ed00-52b6-a0ee-49adf48df4a3",
+      "name": "consultar_solicitud",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Reanuda una solicitud PENDIENTE cuando el administrador confirma que Odoo volvió.",
+        "method": "POST",
+        "url": "=http://compuerta:8000/solicitudes/{{ $fromAI('request_id', 'Solicitud PENDIENTE SOL-…', 'string') }}/reanudar",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "reanudar_solicitud"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "46d0a3c9-0449-5eec-89e9-20ab3397072b",
+      "name": "reanudar_solicitud",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Eventos de la bitácora de una correlación (COR-…), en orden, con actor_type.",
+        "method": "GET",
+        "url": "=http://compuerta:8000/bitacora?correlation_id={{ $fromAI('correlation_id', 'Correlación COR-…', 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "ver_bitacora"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "b52f9f7d-028d-5e03-99e6-f7fcbacf09b7",
+      "name": "ver_bitacora",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1080,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "toolDescription": "Estado de un escalamiento ESC-…: esperando, decidido (y qué decidió el dueño) o sin decisión tras 10 minutos. Única prueba válida de una decisión del dueño.",
+        "method": "GET",
+        "url": "=http://compuerta:8000/escalamientos/{{ $fromAI('escalation_id', 'Escalamiento ESC-…', 'string') }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "AGENTE"
+            },
+            {
+              "name": "X-Agent-Tool",
+              "value": "consultar_escalamiento"
+            },
+            {
+              "name": "X-Agent-Version",
+              "value": "w1-1.1"
+            },
+            {
+              "name": "X-Prompt-Version",
+              "value": "p-1.1"
+            }
+          ]
+        },
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "eb734bcd-8f2d-5fd0-9600-5f9dcbd54453",
+      "name": "consultar_escalamiento",
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1260,
+        520
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "escalar_al_dueno",
+        "description": "Escala al dueño una excepción (tipo DESCUENTO para DESCUENTO_SIN_APROBACION, REPOSICION para DISPONIBILIDAD_PARCIAL). Registra el escalamiento y devuelve el enlace del formulario del dueño. No aprueba nada.",
+        "workflowId": {
+          "__rl": true,
+          "value": "agSIEw2Escalam01",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "tipo": "={{ $fromAI('tipo', 'DESCUENTO o REPOSICION', 'string') }}",
+            "request_id": "={{ $fromAI('request_id', 'Solicitud SOL-… que originó la excepción', 'string') }}",
+            "resumen": "={{ $fromAI('resumen', 'Resumen breve de la excepción, sin datos personales', 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "tipo",
+              "displayName": "tipo",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "request_id",
+              "displayName": "request_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "resumen",
+              "displayName": "resumen",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "id": "87ad022c-8479-58b2-913a-fd6db4d5723e",
+      "name": "escalar_al_dueno",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        1440,
+        520
+      ]
+    }
+  ],
+  "connections": {
+    "Chat del vendedor": {
+      "main": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Modelo Gemini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memoria (10 mensajes)": {
+      "ai_memory": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buscar_productos": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_cliente": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_cotizacion": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_disponibilidad": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "enviar_solicitud_i03": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_solicitud": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "reanudar_solicitud": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ver_bitacora": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "consultar_escalamiento": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "escalar_al_dueno": {
+      "ai_tool": [
+        [
+          {
+            "node": "Agente SIE",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima",
+    "saveManualExecutions": true
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "generado_por": "scripts/generar_workflows.py",
+    "datos": "sintéticos"
+  }
+}
