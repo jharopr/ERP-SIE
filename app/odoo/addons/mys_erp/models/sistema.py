@@ -1,5 +1,6 @@
 """Interfaz nativa y controles de negocio. El motor R01–R12 permanece en la compuerta."""
 import base64
+import html
 import hashlib
 import hmac
 import json
@@ -349,6 +350,7 @@ class Evaluation(models.Model):
 
 class Decision(models.Model):
     _name = 'mys.decision'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Decisión del dueño MYS'
     _order = 'id desc'
     _rec_name = 'escalation_id'
@@ -370,10 +372,74 @@ class Decision(models.Model):
     new_order_id = fields.Many2one('sale.order', 'Nueva versión', readonly=True)
     _sql_constraints = [('unique_escalation', 'unique(escalation_id)', 'El escalamiento ya está registrado.')]
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        # Llega igual si la excepción se escaló con el botón del vendedor o desde el chat del agente.
+        for record in records.filtered(lambda r: r.state == 'ESPERANDO_DECISION'):
+            record.sudo()._mys_avisar_dueno()
+        return records
+
     def write(self, vals):
         if not self.env.su and (set(vals) - {'motivo'} or not self.env['mys.gateway']._manager()):
             raise AccessError(_('Solo el dueño puede registrar el motivo. La decisión usa los botones autorizados.'))
-        return super().write(vals)
+        result = super().write(vals)
+        if vals.get('state') and vals['state'] != 'ESPERANDO_DECISION':
+            # Decidida, vencida o sin decisión: la tarea pendiente del dueño se cierra.
+            self.sudo().activity_unlink(['mail.mail_activity_data_todo'])
+        return result
+
+    def _mys_duenos(self):
+        """Usuarios con rol de dueño (no la cuenta técnica de administración) y distintos del vendedor."""
+        group = self.env.ref('mys_erp.group_mys_manager')
+        campo = 'group_ids' if 'group_ids' in self.env['res.users']._fields else 'groups_id'
+        excluidos = self.env.ref('base.user_admin') | self.env.ref('base.user_root') | self.user_id
+        return self.env['res.users'].sudo().search([(campo, 'in', group.id), ('share', '=', False)]) - excluidos
+
+    def _mys_enlace(self):
+        base = (os.environ.get('PUBLIC_APP_URL') or
+                self.env['ir.config_parameter'].sudo().get_param('web.base.url', 'http://localhost:8069')).rstrip('/')
+        return '%s/odoo/mys.decision/%s' % (base, self.id)
+
+    def _mys_avisar_dueno(self):
+        """Tarea en Odoo + correo al dueño. Un fallo de correo no impide registrar la excepción."""
+        self.ensure_one()
+        duenos = self._mys_duenos()
+        if not duenos:
+            return
+        que = 'Aprobar descuento mayor al 5 %' if self.tipo == 'DESCUENTO' else 'Decidir faltante de stock'
+        cotizacion = '%s v%s' % (self.order_id.mys_quotation_id or self.order_id.name, self.order_id.mys_version or '')
+        resumen = '%s · %s · S/ %s (%s)' % (que, cotizacion, self.total or '—', self.escalation_id)
+        enlace = self._mys_enlace()
+        e = html.escape
+        for dueno in duenos:
+            self.with_context(mail_activity_quick_update=True).activity_schedule(
+                'mail.mail_activity_data_todo', user_id=dueno.id, summary=resumen[:120],
+                note='Vence: %s (hora Lima). Revise y pulse el botón de decisión.' % (self.deadline or '—'))
+        filas = ''.join('<tr><td style="padding:4px 12px 4px 0;color:#475467">%s</td><td><b>%s</b></td></tr>' % (e(k), e(str(v)))
+                        for k, v in [('Cotización', cotizacion), ('Cliente', self.order_id.partner_id.display_name),
+                                     ('Vendedor', self.user_id.name), ('Total verificado', 'S/ %s' % (self.total or '—')),
+                                     ('Escalamiento', self.escalation_id), ('Responder antes de', self.deadline or '—')])
+        cuerpo = ('<div style="font-family:Arial,sans-serif;font-size:14px;color:#101828;max-width:560px">'
+                  '<h2 style="margin:0 0 8px">%s</h2><p>El vendedor solicitó su decisión en el sistema MYS.</p>'
+                  '<table>%s</table>'
+                  '<p style="margin:20px 0"><a href="%s" style="padding:10px 18px;border-radius:6px;background:#1a7f37;'
+                  'color:#fff;text-decoration:none">Abrir la decisión en Odoo</a></p>'
+                  '<p style="color:#667085;font-size:12px">Ingrese con su usuario de dueño. Ninguna opción crea pedidos '
+                  'ni reservas. Si no decide en 10 minutos, la oportunidad queda en seguimiento.</p></div>') % (
+                      e(que), filas, e(enlace))
+        destinos = [d.email for d in duenos if d.email]
+        if destinos:
+            try:
+                mail = self.env['mail.mail'].sudo().create({
+                    'subject': '[MYS] ' + resumen, 'body_html': cuerpo, 'email_to': ','.join(destinos),
+                    'email_from': os.environ.get('CORREO_REMITENTE') or self.env.company.email or 'agente-sie@mys-demo.local',
+                    'auto_delete': False})
+                mail.send(raise_exception=False)
+            except Exception:  # noqa: BLE001 - el aviso es complementario a la tarea en Odoo
+                pass
+        self.message_post(body=_('Aviso enviado al dueño (%s): tarea en Odoo%s.') % (
+            ', '.join(duenos.mapped('name')), ' y correo' if destinos else ''), subtype_xmlid='mail.mt_note')
 
     def _decide(self, decision):
         self.ensure_one()

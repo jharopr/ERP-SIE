@@ -2,7 +2,7 @@
 
 **La entrada única es http://localhost:8088.** Odoo 18 Community muestra el menú lateral de MS Power Audio / Importaciones MYS Hermanos: Contactos, Leads, CRM / Oportunidades, Inventario, Ventas / Cotizaciones, Catálogo, Evaluación comercial, Decisiones del dueño, Trazabilidad y Agente SIE.
 
-El portal anterior fue sustituido por vistas y componentes nativos del addon `mys_erp`. Se conserva como referencia en `legacy/portal/`, sin publicarse. El agente existente continúa en `agente-sie/`; conserva el motor R01–R12, el contrato I03 de nueve campos y los cuatro estados. Los 50 productos proceden del Excel suministrado; clientes, stock y operaciones son de prueba. Además se conservan dos SKU académicos.
+El portal anterior fue sustituido por vistas y componentes nativos del addon `mys_erp`. Se conserva como referencia en `legacy/portal/`, sin publicarse. El agente existente continúa en `agente-sie/`; conserva el motor R01–R12, el contrato I03 de nueve campos y los cuatro estados. El catálogo completo (167 productos) procede del Excel suministrado; las primeras 50 referencias son las de demostración. Clientes, stock y operaciones son de prueba. Además se conservan dos SKU académicos.
 
 ## Ingreso
 
@@ -49,12 +49,27 @@ Después de cambiar código, `.env` o una contraseña humana, ejecutar otra vez 
 3. Tras obtener la aceptación real del cliente, pulsar **2. Registrar aceptación**. Esto registra la evidencia indicada por el vendedor; no simula una firma del cliente.
 4. Pulsar **3. Evaluar reglas**. Hasta 5 % no requiere excepción; más de 5 % produce `RECHAZADA / DESCUENTO_SIN_APROBACION` si no existe autorización válida. El resultado muestra motivo, siguiente paso, condiciones y correlación.
 5. El vendedor pulsa **Solicitar decisión del dueño**. Puede seguir el estado, pero no ve botones de aprobar ni tiene permiso para invocarlos por RPC.
-6. El dueño ingresa con su cuenta, abre **Decisiones del dueño**, escribe el motivo y pulsa **Aprobar descuento** o **Rechazar descuento**. La solicitud tiene un plazo de diez minutos. Una solicitud vencida puede volver a escalarse desde la evaluación.
+6. **El dueño recibe un aviso automático**: una tarea pendiente en Odoo (icono del reloj) y un correo con el resumen, el total verificado, el plazo y el botón **Abrir la decisión en Odoo**. Llega igual si la excepción se escaló con el botón o desde el chat del agente. El dueño ingresa con su cuenta, abre la decisión (o **Decisiones del dueño**), escribe el motivo y pulsa **Aprobar descuento** o **Rechazar descuento**. La solicitud tiene un plazo de diez minutos. Una solicitud vencida puede volver a escalarse desde la evaluación.
 7. Si se aprueba, Odoo crea **una cotización nueva en borrador con versión siguiente**, mismo importe y vendedor. No crea un pedido confirmado. El vendedor abre esa versión, la prepara/envía, registra una **nueva aceptación** del cliente y evalúa de nuevo. La autorización vale solo para la versión y total exactos.
 
 Una versión ya evaluada queda protegida contra cambios y borrado por las cuentas comerciales. Se corrige con **Nueva versión**. Una evaluación `PENDIENTE` se puede reanudar con el mismo botón de evaluar. Ningún resultado crea pedidos, reserva stock, compra ni promete fechas. El botón nativo de confirmar está bloqueado en el servidor para este alcance de demostración.
 
 Para faltantes, el resultado es `PROMESA_CONDICIONADA`; el dueño puede indicar ofrecer parcial, evaluar reposición o descartar. Estas decisiones no ejecutan compras ni reservas.
+
+## Aviso al dueño por correo
+
+Por defecto los correos llegan al buzón local **Mailpit**: http://localhost:8025, sin cuenta ni configuración. Para que lleguen a un correo real, complete en `app/.env`:
+
+```dotenv
+CORREO_DUENO=<correo del dueño>
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_SEGURO=true
+SMTP_USUARIO=<cuenta>@gmail.com
+SMTP_CLAVE=<contraseña de aplicación de 16 letras, no la clave normal>
+```
+
+y ejecute `python scripts/iniciar.py`. Los avisos automáticos de Odoo que genera la carga de datos («Te asignaron…», «Cambio de contraseña») se cancelan para no llenar el buzón; solo salen los avisos `[MYS]`. La tarea del dueño se cierra sola cuando decide o vence el plazo.
 
 ## Agente integrado y estado de Gemini
 
@@ -64,7 +79,7 @@ En `app/.env`:
 
 ```dotenv
 GEMINI_API_KEY=<clave de la cuenta de prueba>
-GEMINI_MODEL=models/gemini-3.5-flash
+GEMINI_MODEL=models/gemini-3.5-flash-lite
 ```
 
 La clave suministrada está en el `.env` local y en la credencial cifrada de n8n. No se incluye en Git, documentación ni en el navegador. Para aplicar un cambio ejecutar `python scripts/iniciar.py`.
@@ -113,7 +128,7 @@ app/
   compose.yaml                  PostgreSQL, Odoo, compuerta, n8n y Nginx
   odoo/addons/mys_erp/           menú, vistas, roles, reglas de edición, chat y controladores
   agente-sie/                   motor, contrato, herramientas, workflows y pruebas existentes
-  datos/                        catálogo de 50 productos y procedencia
+  datos/                        catálogo completo (167 productos) y procedencia
   nginx/                        entrada única hacia Odoo
   scripts/                      arranque, actualización, sincronización, pruebas y respaldo
   docs/                         arquitectura efectiva y despliegue

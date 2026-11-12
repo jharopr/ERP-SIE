@@ -19,7 +19,7 @@
         <field name="name">product.template.mys.catalogo.list</field>
         <field name="model">product.template</field>
         <field name="arch" type="xml">
-            <list string="50 productos seleccionados" default_order="mys_prioridad_demo,id">
+            <list string="Catálogo MYS" default_order="mys_prioridad_demo,id">
                 <field name="mys_prioridad_demo" string="Orden"/>
                 <field name="default_code"/>
                 <field name="name"/>

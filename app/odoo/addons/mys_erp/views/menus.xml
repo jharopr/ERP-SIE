@@ -1,6 +1,6 @@
 <odoo>
     <record id="action_catalogo_mys" model="ir.actions.act_window">
-        <field name="name">Catálogo MYS - 50 referencias</field>
+        <field name="name">Catálogo MYS</field>
         <field name="res_model">product.template</field>
         <field name="view_mode">list,form</field>
         <field name="view_id" ref="view_catalogo_mys_list"/>
@@ -26,7 +26,7 @@
         <field name="domain">[('client_order_ref', '=like', 'COT-%')]</field>
     </record>
     <menuitem id="menu_mys" name="MYS Hermanos" sequence="5" groups="base.group_user"/>
-    <menuitem id="menu_mys_catalogo" name="Catálogo de 50 productos" parent="menu_mys" action="action_catalogo_mys" sequence="10"/>
+    <menuitem id="menu_mys_catalogo" name="Catálogo de productos" parent="menu_mys" action="action_catalogo_mys" sequence="10"/>
     <menuitem id="menu_mys_clientes" name="Clientes" parent="menu_mys" action="action_contactos_mys" sequence="20"/>
     <menuitem id="menu_mys_oportunidades" name="Oportunidades" parent="menu_mys" action="action_oportunidades_mys" sequence="30"/>
     <menuitem id="menu_mys_cotizaciones" name="Cotizaciones y versiones" parent="menu_mys" action="action_cotizaciones_mys" sequence="40"/>

@@ -23,7 +23,9 @@ def main():
     required = {'ODOO_READER_USER': 'sie-lectura', 'ODOO_READER_PASSWORD': None,
                 'ODOO_SELLER_PASSWORD': 'ven-demo-01', 'ODOO_OWNER_PASSWORD': 'ger-demo-01',
                 'TOKEN_ODOO': None, 'TOKEN_AGENTE': None, 'ODOO_BRIDGE_SECRET': None, 'N8N_WEBHOOK_SECRET': None,
-                'GEMINI_MODEL': 'models/gemini-3.5-flash',
+                'GEMINI_MODEL': 'models/gemini-3.5-flash-lite',
+                'CORREO_DUENO': 'dueno@mys-demo.local', 'CORREO_REMITENTE': 'agente-sie@mys-demo.local',
+                'SMTP_HOST': 'mailpit', 'SMTP_PORT': '1025', 'SMTP_SEGURO': 'false',
                 'APP_PORT': '8088', 'COTIZACION_HORA_CIERRE': '23:59',
                 'N8N_OWNER_EMAIL': 'admin@mys.local', 'N8N_OWNER_PASSWORD': None}
     for key, value in list(env.items()):

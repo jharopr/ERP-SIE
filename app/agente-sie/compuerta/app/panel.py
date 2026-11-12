@@ -30,7 +30,7 @@ class Login(BaseModel):
 def registrar_panel(app, config, repo, fuente, ejecutar, escalar, decidir, reloj):
     sessions, attempts = {}, {}
     lock = threading.RLock()
-    catalog_path = Path(os.environ.get('CATALOGO_PATH', '/catalogo/productos_50.json'))
+    catalog_path = Path(os.environ.get('CATALOGO_PATH', '/catalogo/productos.json'))
     cases_path = Path(config.database).parent / 'casos_catalogo.json'
     pc3_path = Path(__file__).resolve().parents[2] / 'datos_prueba' / 'casos_pc3.json'
     # El Dockerfile copia los casos de demostración a esta ubicación.

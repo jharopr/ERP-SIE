@@ -37,7 +37,14 @@ services:
       N8N_INTERNAL_URL: http://n8n:5678
       N8N_WEBHOOK_SECRET: ${N8N_WEBHOOK_SECRET:?Falta secreto del webhook}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
-      GEMINI_MODEL: ${GEMINI_MODEL:-models/gemini-3.5-flash}
+      GEMINI_MODEL: ${GEMINI_MODEL:-models/gemini-3.5-flash-lite}
+      PUBLIC_APP_URL: http://localhost:${APP_PORT:-8088}
+      SMTP_HOST: ${SMTP_HOST:-mailpit}
+      SMTP_PORT: ${SMTP_PORT:-1025}
+      SMTP_SEGURO: ${SMTP_SEGURO:-false}
+      SMTP_USUARIO: ${SMTP_USUARIO:-}
+      SMTP_CLAVE: ${SMTP_CLAVE:-}
+      CORREO_REMITENTE: ${CORREO_REMITENTE:-agente-sie@mys-demo.local}
     entrypoint: [/bin/bash, /opt/mys/iniciar_odoo.sh]
     volumes:
       - odoo-data:/var/lib/odoo
@@ -68,6 +75,7 @@ services:
       ODOO_MASTER_PASSWORD: ${ODOO_MASTER_PASSWORD}
       ODOO_SELLER_PASSWORD: ${ODOO_SELLER_PASSWORD}
       ODOO_OWNER_PASSWORD: ${ODOO_OWNER_PASSWORD}
+      CORREO_DUENO: ${CORREO_DUENO:-dueno@mys-demo.local}
       ODOO_IDIOMA: ${ODOO_IDIOMA:-es_PE}
       ODOO_TIMEOUT: '8'
       TOKEN_VENTAS: ${TOKEN_VENTAS}
@@ -78,7 +86,7 @@ services:
       ODOO_BRIDGE_SECRET: ${ODOO_BRIDGE_SECRET}
       COTIZACION_HORA_CIERRE: ${COTIZACION_HORA_CIERRE:-23:59}
       COMPUERTA_DB: /data/compuerta.sqlite3
-      CATALOGO_PATH: /catalogo/productos_50.json
+      CATALOGO_PATH: /catalogo/productos.json
       PUBLIC_ODOO_URL: http://localhost:${ODOO_PORT:-8069}
       PUBLIC_N8N_URL: http://localhost:${N8N_PORT:-5678}
       TZ: America/Lima
@@ -131,6 +139,16 @@ services:
       interval: 15s
       timeout: 4s
       retries: 10
+    restart: unless-stopped
+
+  # Buzón LOCAL del dueño para la demo (http://localhost:8025). Con Gmail en .env queda sin uso.
+  mailpit:
+    image: axllent/mailpit:v1.31.6
+    ports:
+      - '127.0.0.1:${MAILPIT_PORT:-8025}:8025'
+    environment:
+      MP_MAX_MESSAGES: 500
+      TZ: America/Lima
     restart: unless-stopped
 
 volumes:

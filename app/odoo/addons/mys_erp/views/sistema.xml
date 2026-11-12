@@ -68,7 +68,7 @@
                     <group><field name="state"/><field name="total"/><field name="target_version"/><field name="deadline"/><field name="company_id" groups="base.group_multi_company"/></group></group>
                 <group><field name="motivo" placeholder="Motivo de la decisión (obligatorio)" readonly="state != 'ESPERANDO_DECISION'" groups="mys_erp.group_mys_manager"/>
                     <field name="decision"/><field name="approver_id"/><field name="new_order_id"/></group>
-            </sheet></form></field>
+            </sheet><chatter/></form></field>
     </record>
     <record id="sale_form_mys" model="ir.ui.view">
         <field name="name">sale.order.mys.rules</field><field name="model">sale.order</field><field name="inherit_id" ref="sale.view_order_form"/>

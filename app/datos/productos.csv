@@ -1,0 +1,168 @@
+﻿source_row,nombre,codigo_original,sku,precio_venta,precio_mayorista,costo_referencia,unidad_original,unidad,tipo,barcode,categoria,subcategoria,columna_categoria,clasificacion_inferida,prioridad_demo,fuente,stock_demo,stock_es_sintetico,moneda
+162,PANTALLA ANDROID 4x32GB* 8 NÚCLEOS CON CHIP,SOT200-10,SOT200-10,650.00,650.00,300.00,NIU,unidad,producto,1000166,Radios y Pantallas,Pantallas Android,Q,False,1,catalogo_empresa,27,True,PEN
+169,PIONEER DEH X 5000BT AUTORADIO CD/BT7USB,DEH-X5000BT,DEH-X5000BT,490.00,430.00,376.00,NIU,unidad,producto,10000063,Radios y Pantallas,Autorradios 1 DIN,Q,False,2,catalogo_empresa,3,True,PEN
+44,PANTALLA ANDROID 4+64GB 8 NÚCLEOS CON CHIP,MS200-9,MS200-9,490.00,370.00,201.30,NIU,unidad,producto,10000035,Radios y Pantallas,Pantallas Android,Q,False,3,catalogo_empresa,41,True,PEN
+150,AUTORADIO BLUETOOTH SMART SYNC MVH-S325BT PIONEER,MVH-S325BT,MVH-S325BT,450.00,450.00,295.00,NIU,unidad,producto,10000155,Radios y Pantallas,Autorradios 1 DIN,Q,False,4,catalogo_empresa,48,True,PEN
+165,PIONEER DEH-S4250BT AUTORRADIO USB/BT,DEH-S4250BT,DEH-S4250BT,440.00,405.00,330.55,NIU,unidad,producto,10000059,Radios y Pantallas,Autorradios 1 DIN,Q,False,5,catalogo_empresa,24,True,PEN
+142,"PANTALLA MULTIMEDIA ANDROID 9"" QLED 4GB RAM 32GB ROM LONGSTAR",SD-9955NEC,SD-9955NEC,430.00,430.00,200.00,NIU,unidad,producto,10000152,Radios y Pantallas,Pantallas Android,Q,False,6,catalogo_empresa,31,True,PEN
+143,"PANTALLA MULTIMEDIA ANDROID 9"" QLED 8GB RAM 256GB ROM PRO LONGSTAR",SD-YT0905PRO,SD-YT0905PRO,430.00,430.00,200.00,NIU,unidad,producto,10000153,Radios y Pantallas,Pantallas Android,Q,False,7,catalogo_empresa,38,True,PEN
+163,PANTALLA ANDROID 4x64GB* 8 NÚCLEOS SIN CHIP,SOT100-9,SOT100-9,420.00,420.00,200.00,NIU,unidad,producto,1000167,Radios y Pantallas,Pantallas Android,Q,False,8,catalogo_empresa,45,True,PEN
+149,AUTORADIO RECEPTOR DE MEDIOS DIGITALES BLUETOOTH MVH-S235BT PIONEER,MVH-S235BT,MVH-S235BT,350.00,350.00,220.00,NIU,unidad,producto,10000154,Radios y Pantallas,Autorradios 1 DIN,Q,False,9,catalogo_empresa,21,True,PEN
+167,PIONEER DEH-S1250UB AUTORRADIO CD/USB,DEH-S1250UB,DEH-S1250UB,340.00,310.00,250.00,NIU,unidad,producto,10000061,Radios y Pantallas,Autorradios 1 DIN,Q,False,10,catalogo_empresa,28,True,PEN
+158,"PANTALLA MULTIMEDIA ANDROID 7"" QLED 8GB RAM 256GB ROM PRO LONGSTAR",LS-YT7007PRO,LS-YT7007PRO,320.00,320.00,200.00,NIU,unidad,producto,10000162,Radios y Pantallas,Pantallas Android,Q,False,11,catalogo_empresa,35,True,PEN
+166,PIONEER MVH-S215BT AUTORRADIO BT/MP3/USB,MVH-S215BT,MVH-S215BT,280.00,250.00,206.41,NIU,unidad,producto,10000060,Radios y Pantallas,Autorradios 1 DIN,Q,False,12,catalogo_empresa,42,True,PEN
+168,PIONEER MVH-S145BT AUTORADIO BT7SB7MP3,MVH-S145BT,MVH-S145BT,270.00,240.00,190.00,NIU,unidad,producto,10000062,Radios y Pantallas,Autorradios 1 DIN,Q,False,13,catalogo_empresa,49,True,PEN
+159,PANTALLA MULTIMEDIA MP5 4x60W DDX-D4423BT X-BASS,DDX-D4423BT,DDX-D4423BT,180.00,180.00,90.00,NIU,unidad,producto,10000163,Radios y Pantallas,Pantallas Android,Q,False,14,catalogo_empresa,25,True,PEN
+160,AUTORADIO BLUETOOTH PANEL DESMONTABLE D-D4703 DEMGEL,D-D4703,D-D4703,120.00,120.00,60.00,NIU,unidad,producto,10000164,Radios y Pantallas,Autorradios 1 DIN,Q,False,15,catalogo_empresa,32,True,PEN
+151,AUTORADIO BLUETOOTH PANEL DESMONTABLE D-D4704 X-BASS,D-D4704,D-D4704,100.00,100.00,60.00,NIU,unidad,producto,10000156,Radios y Pantallas,Autorradios 1 DIN,Q,False,16,catalogo_empresa,39,True,PEN
+70,PIONEER GM-D9705 AMPLIFICADOR CLAS D 5C,GM-D9705,GM-D9705,1200.00,1100.00,937.31,NIU,unidad,producto,10000071,Amplificadores,Multicanal (4 y 5 Canales),P,False,17,catalogo_empresa,46,True,PEN
+94,AMPLIFICADOR MULTICANAL ION.5 | 7POWER,ION.5,ION-5,650.00,630.00,420.00,NIU,unidad,producto,10000098,Amplificadores,Multicanal (4 y 5 Canales),P,False,18,catalogo_empresa,22,True,PEN
+71,PIONEER GM-A6704 AMPLIFICADOR 4CH,GM-A6704,GM-A6704,550.00,480.00,401.91,NIU,unidad,producto,10000072,Amplificadores,Multicanal (4 y 5 Canales),P,False,19,catalogo_empresa,29,True,PEN
+93,AMPLIFICADOR MULTICANAL ION.4 | 7POWER,ION.4,ION-4,550.00,480.00,320.00,NIU,unidad,producto,10000097,Amplificadores,Multicanal (4 y 5 Canales),P,False,20,catalogo_empresa,36,True,PEN
+82,AMPLIFICADOR BLACK HAWK BH-FR114REV200,BH-FR114REV200,BH-FR114REV200,500.00,437.00,380.00,NIU,unidad,producto,10000085,Amplificadores,Multicanal (4 y 5 Canales),P,False,21,catalogo_empresa,43,True,PEN
+95,AMPLIFICADOR MONOBLOCK EVOLUTION 1XL 4500W | 7POWER,EVO.1XL,EVO-1XL,500.00,450.00,300.00,NIU,unidad,producto,10000099,Amplificadores,Monoral (1 Canal),P,False,22,catalogo_empresa,50,True,PEN
+73,AMPLIFICADOR BLACK HAWK BH-117D,BH-117D,BH-117D,490.00,425.50,370.00,NIU,unidad,producto,10000075,Amplificadores,Multicanal (4 y 5 Canales),P,False,23,catalogo_empresa,26,True,PEN
+84,AMPLIFICADOR BLACK HAWK BH-FR117,BH-FR117,BH-FR117,490.00,425.50,370.00,NIU,unidad,producto,10000088,Amplificadores,Multicanal (4 y 5 Canales),P,False,24,catalogo_empresa,33,True,PEN
+103,SUBWOOFER ACTIVO COMPACTO BASS PRO NANO | JBL,BASSPRONANO,BASSPRONANO,1115.00,1115.00,737.00,NIU,unidad,producto,10000107,Subwoofers,Subwoofers Activos,O,False,25,catalogo_empresa,40,True,PEN
+72,"PIONEER TS-A3000LS4 SUBWOOFER DELG 12""",TS-A3000LS4,TS-A3000LS4,540.00,500.00,421.74,NIU,unidad,producto,10000073,Subwoofers,Subwoofers Planos,O,False,26,catalogo_empresa,47,True,PEN
+156,"SUBWOOFER 12"" 2500W REFERENCE R3-12 SOUNDSTREAM",R3-12,R3-12,450.00,450.00,300.00,NIU,unidad,producto,10000161,Subwoofers,Subwoofers Doble Bobina / Estándar,O,False,27,catalogo_empresa,23,True,PEN
+10,"SUBWOOFER ACTIVO DE 10"" 400 RMS 800WATTS | 7POWER",SWA10,SWA10,440.00,370.00,320.00,NIU,unidad,producto,10000001,Subwoofers,Subwoofers Activos,O,False,28,catalogo_empresa,30,True,PEN
+11,"SUBWOOFER ACTIVO DE 10"" 300 RMS 600WATTS | 7POWER",BASS 10,BASS-10,385.00,325.00,275.00,NIU,unidad,producto,10000002,Subwoofers,Subwoofers Activos,O,False,29,catalogo_empresa,37,True,PEN
+30,"12"" SUBWOOFER DUAL 4 OHM 750RMS 1500WATTS | 7POWER",TRS12.4,TRS12-4,380.00,315.00,260.00,NIU,unidad,producto,10000021,Subwoofers,Subwoofers Doble Bobina / Estándar,O,False,30,catalogo_empresa,44,True,PEN
+120,"SUBWOOFER 12"" DOBLE BOBINA 1100W GT5-12D | JBL",GT5-12D,GT5-12D,370.00,370.00,238.00,NIU,unidad,producto,10000125,Subwoofers,Subwoofers Doble Bobina / Estándar,O,False,31,catalogo_empresa,20,True,PEN
+50,"PIONEER TS-W312D4 SUBWOOFER 12"" 1600W",TS-W312D4,TS-W312D4,360.00,310.00,234.74,NIU,unidad,producto,10000042,Subwoofers,Subwoofers Doble Bobina / Estándar,O,False,32,catalogo_empresa,27,True,PEN
+67,PIONEER TS-6900PRO PARLANTES 6X9 OVALAD,TS-6900PRO,TS-6900PRO,500.00,450.00,387.94,NIU,unidad,producto,10000068,Medios y Parlantes,Coaxiales / Multivía,N,False,33,catalogo_empresa,34,True,PEN
+110,"COMPONENTES 2 VÍAS 6.5"" 270W GTO 609C | JBL",GTO609C,GTO609C,460.00,460.00,318.00,NIU,unidad,producto,10000114,Medios y Parlantes,Componentes,N,False,34,catalogo_empresa,41,True,PEN
+119,"PARLANTES COAXIALES 2 VÍAS 6.5"" 180W GTO 629 | JBL",GTO629,GTO629,450.00,450.00,302.00,NIU,unidad,producto,10000123,Medios y Parlantes,Coaxiales / Multivía,N,False,35,catalogo_empresa,48,True,PEN
+125,"COMPONENTES 2 VÍAS 6.5"" 160W DSK 165.3 | HERTZ",DSK165.3,DSK165-3,430.00,430.00,306.00,NIU,unidad,producto,10000124,Medios y Parlantes,Componentes,N,False,36,catalogo_empresa,24,True,PEN
+113,"COMPONENTES 2 VÍAS 6.5"" 760W STAGE3 68CF | JBL",STAGE368CF,STAGE368CF,420.00,420.00,268.00,NIU,unidad,producto,10000117,Medios y Parlantes,Componentes,N,False,37,catalogo_empresa,31,True,PEN
+68,PIONEER TS-A1608C PARLANTES 16C 2V 350W,TS-A1608C,TS-A1608C,410.00,360.00,302.91,NIU,unidad,producto,10000069,Medios y Parlantes,Componentes,N,False,38,catalogo_empresa,38,True,PEN
+121,"COMPONENTES 2 VÍAS 6.5"" GTO 602C | JBL",GTO602C,GTO602C,400.00,400.00,250.00,NIU,unidad,producto,10000126,Medios y Parlantes,Componentes,N,False,39,catalogo_empresa,45,True,PEN
+66,PIONEER TS-M651PRO PARLANTES MEDIO 500 W,TS-M651PRO,TS-M651PRO,400.00,350.00,294.00,NIU,unidad,producto,10000058,Medios y Parlantes,Medios Rangos (Midranges),N,False,40,catalogo_empresa,21,True,PEN
+5,TWEETER BALA PIONEER PRO,TS-B351PRO,TS-B351PRO,250.00,250.00,180.00,NIU,unidad,producto,10000065,Tweeters,Tweeters Tipo Bala,M,False,41,catalogo_empresa,28,True,PEN
+32,"2.5"" TWEETER NEODIMIO 150 RMS 300 WATTS 4 OHM | 7POWER",TW1N,TW1N,165.00,135.00,85.00,NIU,unidad,producto,10000023,Tweeters,Tweeters Tipo Domo / Neodimio,M,False,42,catalogo_empresa,35,True,PEN
+132,SUPER TWEETER TIPO BALA 220W RMS R3S 7POWER,R3S,R3S,150.00,150.00,70.00,NIU,unidad,producto,10000137,Tweeters,Tweeters Tipo Bala,M,False,43,catalogo_empresa,42,True,PEN
+123,KIT DE INSTALACIÓN PARA AMPLIFICADOR CALIBRE 4 1000W STINGER SELECT,SSK4ANL,SSK4ANL,250.00,250.00,120.00,KT,kit,producto,10000130,Cables y Conexiones,Kits de Instalación,K,False,44,catalogo_empresa,49,True,PEN
+124,KIT DE INSTALACIÓN PARA AMPLIFICADOR CALIBRE 4 DE 2 CANALES SX-AWG42 SOUNDMAX,SX-AWG42,SX-AWG42,120.00,120.00,60.00,KT,kit,producto,10000131,Cables y Conexiones,Kits de Instalación,K,False,45,catalogo_empresa,25,True,PEN
+8,Kit de Instalación para Amplificador Strata Cobra-4GX 5000W,COBRA-4GX,COBRA-4GX,90.00,90.00,40.00,NIU,unidad,producto,10000074,Cables y Conexiones,Kits de Instalación,K,False,46,catalogo_empresa,32,True,PEN
+4,ALARMA PARA CARRO GOTA,Phd1yPkQ4,PHD1YPKQ4,150.00,150.00,,NIU,unidad,producto,10000064,Seguridad y Alarmas,Alarmas de Seguridad,L,False,47,catalogo_empresa,39,True,PEN
+141,CONVERTIDOR DE ALTA Y BAJA 2 CANALES SSLOC2 STINGER SELEC,SSLOC2,SSLOC2,80.00,80.00,35.00,NIU,unidad,producto,10000143,Accesorios Automotrices,Convertidores de Señal (Alta y Baja),S,False,48,catalogo_empresa,46,True,PEN
+89,BLOQUE DISTRIBUCION BLACK HAWK BH-F4S,BH-F4S,BH-F4S,75.00,57.50,50.00,NIU,unidad,producto,10000093,Accesorios Automotrices,Portafusibles,S,False,49,catalogo_empresa,22,True,PEN
+80,ECUALIZADOR BLACK HAWK BH-849EQ,BH-849EQ,BH-849EQ,240.00,161.00,140.00,NIU,unidad,producto,10000083,Ecualizadores,Ecualizadores Digitales / Paramétricos,R,False,50,catalogo_empresa,29,True,PEN
+90,ALDEEPO AD-C17 CARGADOR DE AUTO PDUSB 65W QC3.0,AD-C17,AD-C17,30.00,30.00,12.00,NIU,unidad,producto,10000094,Accesorios Automotrices,Cargadores y Electrónica,S,False,51,catalogo_empresa,36,True,PEN
+88,PORTAFUSIBLE BLACK HAWK BH-FS2,BH-FS2,BH-FS2,60.00,46.00,40.00,NIU,unidad,producto,10000092,Accesorios Automotrices,Portafusibles,S,False,52,catalogo_empresa,43,True,PEN
+155,FILTRO DE RUIDO PROFESIONAL RCA RS-NF04 REISS AUDIO,RS-NF04,RS-NF04,50.00,50.00,25.00,NIU,unidad,producto,10000160,Accesorios Automotrices,Filtros y Supresores de Ruido,S,False,53,catalogo_empresa,50,True,PEN
+138,GAS REFRIGERANTE FREON 134A (R-134a) 340g CHEMOURS,FREON134A-CH,FREON134A-CH,65.00,65.00,28.00,NIU,unidad,producto,10000144,Aire Acondicionado,Gases Refrigerantes,T,False,54,catalogo_empresa,26,True,PEN
+139,GAS REFRIGERANTE R134A 340g IGR,R134A-IGR,R134A-IGR,50.00,50.00,20.00,NIU,unidad,producto,10000145,Aire Acondicionado,Gases Refrigerantes,T,False,55,catalogo_empresa,33,True,PEN
+74,AMPLIFICADOR BLACK HAWK BH-114,BH-114,BH-114,380.00,322.00,280.00,NIU,unidad,producto,10000076,Amplificadores,Multicanal (4 y 5 Canales),P,False,56,catalogo_empresa,40,True,PEN
+85,AMPLIFICADOR BLACK HAWK BH-117,BH-117,BH-117,460.00,391.00,340.00,NIU,unidad,producto,10000089,Amplificadores,Multicanal (4 y 5 Canales),P,False,57,catalogo_empresa,47,True,PEN
+79,AMPLIFICADOR PARA AUTO BLACK HAWK BH-117SD,BH-117SD,BH-117SD,480.00,414.00,360.00,NIU,unidad,producto,10000082,Amplificadores,Multicanal (4 y 5 Canales),P,False,58,catalogo_empresa,23,True,PEN
+87,AMPLIFICADOR BLACK HAWK BH-119,BH-119,BH-119,460.00,391.00,340.00,NIU,unidad,producto,10000091,Amplificadores,Multicanal (4 y 5 Canales),P,False,59,catalogo_empresa,30,True,PEN
+43,AMPLIFICADOR DIGITAL MONORAL 1CH * 2000 RMS 6000WATTS | 7POWER,EVO.1XXL,EVO-1XXL,490.00,410.00,350.00,NIU,unidad,producto,10000034,Amplificadores,Monoral (1 Canal),P,False,60,catalogo_empresa,37,True,PEN
+41,AMPLIFICADOR DIGITAL 4CH*120 RMS - 3000 WATTS | MS,GT4.D,GT4-D,340.00,270.00,220.00,NIU,unidad,producto,10000032,Amplificadores,Multicanal (4 y 5 Canales),P,False,61,catalogo_empresa,44,True,PEN
+42,AMPLIFICADOR DIGITAL 4CH * 120 + 1CH * 320 RMS 4000WATTS | MS,GT5.D,GT5-D,480.00,400.00,340.00,NIU,unidad,producto,10000033,Amplificadores,Multicanal (4 y 5 Canales),P,False,62,catalogo_empresa,20,True,PEN
+122,AMPLIFICADOR 5 CANALES CLASE D 4000W PYTHON 4000.5D | STRATA,PYTHON4000.5D,PYTHON4000-5D,470.00,470.00,310.00,NIU,unidad,producto,10000128,Amplificadores,Multicanal (4 y 5 Canales),P,False,63,catalogo_empresa,27,True,PEN
+127,AMPLIFICADOR MULTICANAL COMPACTO PYTHON 5.MINI | STRATA,PYTHON5.MINI,PYTHON5-MINI,400.00,400.00,250.00,NIU,unidad,producto,10000132,Amplificadores,Multicanal (4 y 5 Canales),P,False,64,catalogo_empresa,34,True,PEN
+34,AMPLIFICADOR FULL RANGE 1CH * 1000 RMS 1 OHM | 7POWER,WRX1K1,WRX1K1,450.00,390.00,330.00,NIU,unidad,producto,10000025,Amplificadores,Monoral (1 Canal),P,False,65,catalogo_empresa,41,True,PEN
+26,CABLE DE ALIMENTACIÓN CCA CALIBRE 0GA 15 METROS | 7POWER,0GA,0GA,30.00,25.00,13.33,MTK,metro,producto,10000017,Cables y Conexiones,Cables de Alimentación,K,False,66,catalogo_empresa,480,True,PEN
+25,CABLE DE SUBWOOFER CCA CALIBRE 12GA 100 METROS | 7POWER,12GA,12GA,5.00,3.00,1.30,MTK,metro,producto,10000016,Cables y Conexiones,Cables de Parlante y Subwoofer,K,False,67,catalogo_empresa,240,True,PEN
+24,CABLE DE PARLANTE CCA CALIBRE 14GA 100 METROS | 7POWER,14GA,14GA,4.00,3.00,1.00,MTK,metro,producto,10000015,Cables y Conexiones,Cables de Parlante y Subwoofer,K,False,68,catalogo_empresa,310,True,PEN
+23,CABLE DE PARLANTE CCA CALIBRE 16GA 100 METROS | 7POWER,16GA,16GA,3.50,2.50,0.75,MTK,metro,producto,10000014,Cables y Conexiones,Cables de Parlante y Subwoofer,K,False,69,catalogo_empresa,380,True,PEN
+77,ROLLO DE CABLE CALIBRE 16 BLACK HAWK BH-16AWG,BH-16AWGCCA,BH-16AWGCCA,1.10,0.80,0.70,MTR,metro,producto,10000079,Cables y Conexiones,Cables de Parlante y Subwoofer,K,False,70,catalogo_empresa,450,True,PEN
+78,CABLE RCA TIPO Y (1 MACHO A 2 HEMBRAS) OFC BLACK HAWK BH-1M2F,BH-1M2F,BH-1M2F,7.50,5.75,5.00,NIU,unidad,producto,10000080,Cables y Conexiones,Cables RCA y Adaptadores,K,False,71,catalogo_empresa,21,True,PEN
+29,CABLE DE SUBWOOFER OFC CALIBRE 12GA 100 METROS | 7POWER,OFC-12GA,OFC-12GA,12.00,9.00,4.90,MTK,metro,producto,10000020,Cables y Conexiones,Cables de Parlante y Subwoofer,K,False,72,catalogo_empresa,280,True,PEN
+28,CABLE PARA PARLANTE OFC CALIBRE 16GA 100 METROS | 7POWER,OFC-16GA,OFC-16GA,6.00,4.50,2.00,MTK,metro,producto,10000019,Cables y Conexiones,Cables de Parlante y Subwoofer,K,False,73,catalogo_empresa,350,True,PEN
+27,CABLE DE ALIMENTACIÓN OFC CALIBRE 4GA 30 METROS | 7POWER,OFC-4GA,OFC-4GA,35.00,30.00,17.33,MTK,metro,producto,10000018,Cables y Conexiones,Cables de Alimentación,K,False,74,catalogo_empresa,420,True,PEN
+97,30 CM RCA TIPO Y 1MACHO 2HEMBRAS 10 UNIDADES 7POWER,RCA-1M2H,RCA-1M2H,10.50,10.50,4.50,NIU,unidad,producto,10000101,Cables y Conexiones,Cables RCA y Adaptadores,K,False,75,catalogo_empresa,49,True,PEN
+3,3.6 METROS RCA ECO,RCA12FT,RCA12FT,25.00,25.00,12.00,NIU,unidad,producto,10000041,Cables y Conexiones,Cables RCA y Adaptadores,K,False,76,catalogo_empresa,25,True,PEN
+37,30 CM RCA TIPO Y 2MACHOS 1HEMBRA 10 UNIDADES | 7POWER,RCA2M1H,RCA2M1H,10.50,85.00,4.50,NIU,unidad,producto,10000028,Cables y Conexiones,Cables RCA y Adaptadores,K,False,77,catalogo_empresa,32,True,PEN
+38,1.80 M 10 UNIDADES RCA ECO | 7POWER,RCA6FT,RCA6FT,11.00,95.00,6.00,NIU,unidad,producto,10000029,Cables y Conexiones,Cables RCA y Adaptadores,K,False,78,catalogo_empresa,39,True,PEN
+33,ECUALIZADOR DIGITAL 9 BANDAS | 7POWER,EQ9,EQ9,240.00,190.00,140.00,NIU,unidad,producto,10000024,Ecualizadores,Ecualizadores Digitales / Paramétricos,R,True,79,catalogo_empresa,46,True,PEN
+92,"6X9"" MEDIO RANGO 2 VÍAS CON DRIVER TIPO BALA 275 RMS 550W | 7POWER",7PRO-MD69,7PRO-MD69,300.00,270.00,135.00,NIU,unidad,producto,10000096,Medios y Parlantes,Coaxiales / Multivía,N,False,80,catalogo_empresa,22,True,PEN
+9,"PARLANTE MEDIO 6.5"" CON TWEETER NEODIMIO BLACK HAWK BH-603CNT 500W",BH-603CNT,BH-603CNT,320.00,320.00,200.00,NIU,unidad,producto,10000081,Medios y Parlantes,Medios Rangos (Midranges),N,False,81,catalogo_empresa,29,True,PEN
+81,"PARLANTE 6.5"" BLACK HAWK BH-604BCH",BH-604BCH,BH-604BCH,230.00,149.50,130.00,NIU,unidad,producto,10000084,Medios y Parlantes,Coaxiales / Multivía,N,False,82,catalogo_empresa,36,True,PEN
+86,PARLANTE MEDIO BLACK HAWK BH-604BN PRO,BH-604BN PRO,BH-604BN-PRO,300.00,230.00,200.00,NIU,unidad,producto,10000090,Medios y Parlantes,Medios Rangos (Midranges),N,False,83,catalogo_empresa,43,True,PEN
+83,PARLANTES BLACK HAWK BH-605CNG,BH-605CNG,BH-605CNG,300.00,230.00,200.00,NIU,unidad,producto,10000086,Medios y Parlantes,Coaxiales / Multivía,N,False,84,catalogo_empresa,50,True,PEN
+164,"PARLANTE MEDIO RANGO 8"" 550W PRO MIDRANGE BH-608G BLACK HAWK",BH-608G,BH-608G,180.00,180.00,90.00,NIU,unidad,producto,10000087,Medios y Parlantes,Medios Rangos (Midranges),N,False,85,catalogo_empresa,26,True,PEN
+99,"PARLANTES COAXIALES 4"" 105W CLUB 44F | JBL",CLUB44F,CLUB44F,300.00,300.00,160.00,NIU,unidad,producto,10000103,Medios y Parlantes,Coaxiales / Multivía,N,False,86,catalogo_empresa,33,True,PEN
+98,"PARLANTES COAXIALES 6.5"" 150W CLUB 6520 | JBL",CLUB6520,CLUB6520,320.00,320.00,184.00,NIU,unidad,producto,10000102,Medios y Parlantes,Coaxiales / Multivía,N,False,87,catalogo_empresa,40,True,PEN
+161,"PARLANTES COAXIALES 6.5"" 350W CX-65A NITRO",CX-65A,CX-65A,130.00,130.00,60.00,NIU,unidad,producto,10000165,Medios y Parlantes,Coaxiales / Multivía,N,False,88,catalogo_empresa,47,True,PEN
+136,"PARLANTES COAXIALES 2 VÍAS 6.5"" 2000W D-D5501 DEMGEL",D-D5501,D-D5501,120.00,120.00,60.00,PR,par,producto,10000141,Medios y Parlantes,Coaxiales / Multivía,N,False,89,catalogo_empresa,23,True,PEN
+126,"PARLANTES COAXIALES 2 VÍAS 6.5"" 120W DCX 165.3 | HERTZ",DCX165.3,DCX165-3,220.00,220.00,100.00,NIU,unidad,producto,10000129,Medios y Parlantes,Coaxiales / Multivía,N,False,90,catalogo_empresa,30,True,PEN
+7,"6.5"" ALTAVOZ DE RANGO MEDIO CON BULLET 100 RMS 400 WATTS 7POWER",FR6.4,FR6-4,200.00,200.00,100.00,NIU,unidad,producto,10000067,Medios y Parlantes,Medios Rangos (Midranges),N,False,91,catalogo_empresa,37,True,PEN
+130,"PARLANTES COAXIALES 2 VÍAS 4"" GTO 402 | JBL",GTO402,GTO402,150.00,150.00,90.00,NIU,unidad,producto,10000135,Medios y Parlantes,Coaxiales / Multivía,N,False,92,catalogo_empresa,44,True,PEN
+91,"COMPONENTE DE 2 VÍAS 6.5"" 75 RMS 250W | 7POWER",GTR-6.5C,GTR-6-5C,305.00,280.00,140.00,NIU,unidad,producto,10000095,Medios y Parlantes,Componentes,N,False,93,catalogo_empresa,20,True,PEN
+15,"6.5"" MEDIO RANGO 140 RMS 480 WATTS 4 OHM | 7POWER",GX6.4B,GX6-4B,220.00,170.00,120.00,NIU,unidad,producto,10000006,Medios y Parlantes,Medios Rangos (Midranges),N,False,94,catalogo_empresa,27,True,PEN
+18,"8"" MEDIO RANGO 180 RMS 540 WATTS 4 OHM | 7POWER",GX8.4,GX8-4,150.00,120.00,70.00,NIU,unidad,producto,10000009,Medios y Parlantes,Medios Rangos (Midranges),N,False,95,catalogo_empresa,34,True,PEN
+20,SET MEDIO RANGO CON TWEETER BALA | 7POWER,GXT6.4,GXT6-4,280.00,230.00,180.00,NIU,unidad,producto,10000011,Medios y Parlantes,Medios Rangos (Midranges),N,False,96,catalogo_empresa,41,True,PEN
+134,"PARLANTES DUAL CONO 6.5"" 300W K-DRS-22 MARK III KUERL",K-DRS-22,K-DRS-22,80.00,80.00,40.00,NIU,unidad,producto,10000139,Medios y Parlantes,Coaxiales / Multivía,N,False,97,catalogo_empresa,48,True,PEN
+16,"6.5"" MEDIO COAXIAL CON DIF DE DRIVER 250 RM 500 WATTS 4 OHM | 7POWER",MD6,MD6,330.00,260.00,210.00,NIU,unidad,producto,10000007,Medios y Parlantes,Coaxiales / Multivía,N,False,98,catalogo_empresa,24,True,PEN
+17,"8"" MEDIO RANGO COAXIAL CON DIF DE DRIVER 300 RMS 600 WATTS 4 OHM | 7POWER",MD8,MD8,220.00,170.00,120.00,NIU,unidad,producto,10000008,Medios y Parlantes,Coaxiales / Multivía,N,False,99,catalogo_empresa,31,True,PEN
+21,"6.5"" COMPONENTE DE 2 VIAS 50 RMS 200 WATTS 4 OHM | 7POWER",MK6.5C,MK6-5C,195.00,145.00,95.00,NIU,unidad,producto,10000012,Medios y Parlantes,Componentes,N,False,100,catalogo_empresa,38,True,PEN
+117,"PARLANTES COAXIALES 2 VÍAS 4"" 150W STAGE2 424 | JBL",STAGE2424,STAGE2424,200.00,200.00,118.00,NIU,unidad,producto,10000121,Medios y Parlantes,Coaxiales / Multivía,N,False,101,catalogo_empresa,45,True,PEN
+116,"PARLANTES COAXIALES 2 VÍAS 5.25"" 210W STAGE2 524 | JBL",STAGE2524,STAGE2524,250.00,250.00,124.00,NIU,unidad,producto,10000120,Medios y Parlantes,Coaxiales / Multivía,N,False,102,catalogo_empresa,21,True,PEN
+106,"COMPONENTES DE 2 VÍAS 6.5"" 270W STAGE2 604C | JBL",STAGE2604C,STAGE2604C,350.00,350.00,194.00,NIU,unidad,producto,10000110,Medios y Parlantes,Componentes,N,False,103,catalogo_empresa,28,True,PEN
+111,"PARLANTES COAXIALES 2 VÍAS 6.5"" 240W STAGE2 624 | JBL",STAGE2624,STAGE2624,200.00,200.00,118.00,NIU,unidad,producto,10000115,Medios y Parlantes,Coaxiales / Multivía,N,False,104,catalogo_empresa,35,True,PEN
+109,"PARLANTES COAXIALES 6.5"" 250W STAGE2 634 | JBL",STAGE2634,STAGE2634,260.00,260.00,134.00,NIU,unidad,producto,10000113,Medios y Parlantes,Coaxiales / Multivía,N,False,105,catalogo_empresa,42,True,PEN
+115,"COMPONENTES 2 VÍAS 6.5"" 720W STAGE2 65C | JBL",STAGE265C,STAGE265C,350.00,350.00,218.00,NIU,unidad,producto,10000119,Medios y Parlantes,Componentes,N,False,106,catalogo_empresa,49,True,PEN
+107,"PARLANTES COAXIALES 6.5"" 240W STAGE2 65F | JBL",STAGE265F,STAGE265F,250.00,250.00,124.00,NIU,unidad,producto,10000111,Medios y Parlantes,Coaxiales / Multivía,N,False,107,catalogo_empresa,25,True,PEN
+112,"PARLANTES COAXIALES 3 VÍAS 6.5"" 480W STAGE2 65M | JBL",STAGE265M,STAGE265M,270.00,270.00,140.00,NIU,unidad,producto,10000116,Medios y Parlantes,Coaxiales / Multivía,N,False,108,catalogo_empresa,32,True,PEN
+100,"PARLANTES COAXIALES 4"" 150W STAGE3 427F | JBL",STAGE3427F,STAGE3427F,260.00,260.00,134.00,NIU,unidad,producto,10000104,Medios y Parlantes,Coaxiales / Multivía,N,False,109,catalogo_empresa,39,True,PEN
+114,"PARLANTES COAXIALES 4"" 400W STAGE3 48F | JBL",STAGE348F,STAGE348F,290.00,290.00,150.00,PR,par,producto,10000118,Medios y Parlantes,Coaxiales / Multivía,N,False,110,catalogo_empresa,46,True,PEN
+118,"PARLANTES COAXIALES 2 VÍAS 5.25"" 200W STAGE3 527F | JBL",STAGE3527F,STAGE3527F,270.00,270.00,140.00,NIU,unidad,producto,10000122,Medios y Parlantes,Coaxiales / Multivía,N,False,111,catalogo_empresa,22,True,PEN
+105,"COMPONENTES DE 2 VÍAS 6.5"" 250W STAGE3 607CF | JBL",STAGE3607CF,STAGE3607CF,250.00,250.00,144.00,NIU,unidad,producto,10000109,Medios y Parlantes,Componentes,N,False,112,catalogo_empresa,29,True,PEN
+101,"PARLANTES COAXIALES 6.5"" 225W STAGE3 627F | JBL",STAGE3627F,STAGE3627F,260.00,260.00,134.00,NIU,unidad,producto,10000105,Medios y Parlantes,Coaxiales / Multivía,N,False,113,catalogo_empresa,36,True,PEN
+102,"PARLANTES COAXIALES 3 VÍAS 6.5"" 225W STAGE3 637F | JBL",STAGE3637F,STAGE3637F,280.00,280.00,144.00,NIU,unidad,producto,10000106,Medios y Parlantes,Coaxiales / Multivía,N,False,114,catalogo_empresa,43,True,PEN
+108,"PARLANTES COAXIALES 6.5"" 560W STAGE3 68F | JBL",STAGE368F,STAGE368F,320.00,320.00,167.00,NIU,unidad,producto,10000112,Medios y Parlantes,Coaxiales / Multivía,N,False,115,catalogo_empresa,50,True,PEN
+104,"PARLANTES COAXIALES 3 VÍAS 6.5"" 560W STAGE3 | JBL",STAGE368MF,STAGE368MF,320.00,320.00,184.00,NIU,unidad,producto,10000108,Medios y Parlantes,Coaxiales / Multivía,N,False,116,catalogo_empresa,26,True,PEN
+36,"6.5"" PARLANTE 4 VIAS 50 RMS 280 WATTS 4 OHM | 7POWER",T-628,T-628,120.00,105.00,55.00,NIU,unidad,producto,10000027,Medios y Parlantes,Coaxiales / Multivía,N,False,117,catalogo_empresa,33,True,PEN
+69,PIONEER TS-651C PARLANTES COMP 390W,TS-651C,TS-651C,345.00,310.00,240.82,NIU,unidad,producto,10000070,Medios y Parlantes,Componentes,N,False,118,catalogo_empresa,40,True,PEN
+60,PIONEER TS-A1678S PARLANTES 16C 3V 320W,TS-A1678S,TS-A1678S,220.00,200.00,160.38,NIU,unidad,producto,10000052,Medios y Parlantes,Coaxiales / Multivía,N,False,119,catalogo_empresa,47,True,PEN
+59,PIONEER TS-A1687S PARLANTES 16C 4V 350W,TS-A1687S,TS-A1687S,310.00,270.00,206.28,NIU,unidad,producto,10000051,Medios y Parlantes,Coaxiales / Multivía,N,False,120,catalogo_empresa,23,True,PEN
+58,PIONEER TS-A1688S PARLANTES 16C 4V 350W,TS-A1688S,TS-A1688S,260.00,240.00,185.91,NIU,unidad,producto,10000050,Medios y Parlantes,Coaxiales / Multivía,N,False,121,catalogo_empresa,30,True,PEN
+56,PIONEER TS-A6967S PARLANTES 6X9 4V 450W,TS-A6967S,TS-A6967S,260.00,225.00,151.33,NIU,unidad,producto,10000048,Medios y Parlantes,Coaxiales / Multivía,N,False,122,catalogo_empresa,37,True,PEN
+55,PIONEER TS-A6968S PARLANTES 6X9 4V 450W,TS-A6968S,TS-A6968S,250.00,220.00,139.23,NIU,unidad,producto,10000047,Medios y Parlantes,Coaxiales / Multivía,N,False,123,catalogo_empresa,44,True,PEN
+54,PIONEER TS-A6977S PARLANTES 6X9 4V 650W,TS-A6977S,TS-A6977S,290.00,250.00,180.95,NIU,unidad,producto,10000046,Medios y Parlantes,Coaxiales / Multivía,N,False,124,catalogo_empresa,20,True,PEN
+53,PIONEER TS-A6978S PARLANTES 6X9 4V 650W,TS-A6978S,TS-A6978S,280.00,240.00,168.37,NIU,unidad,producto,10000045,Medios y Parlantes,Coaxiales / Multivía,N,False,125,catalogo_empresa,27,True,PEN
+52,PIONEER TS-A6997S PARLANTES 6X9 5V 750W,TS-A6997S,TS-A6997S,390.00,340.00,277.98,NIU,unidad,producto,10000044,Medios y Parlantes,Coaxiales / Multivía,N,False,126,catalogo_empresa,34,True,PEN
+51,PIONEER TS-A6998S PARLANTES 6X9 5V 750W,TS-A6998S,TS-A6998S,370.00,330.00,255.75,NIU,unidad,producto,10000043,Medios y Parlantes,Coaxiales / Multivía,N,False,127,catalogo_empresa,41,True,PEN
+65,PIONEER TS-F1034R PARLANTES 10CM 2 VIAS,TS-F1034R,TS-F1034R,140.00,110.00,63.61,NIU,unidad,producto,10000057,Medios y Parlantes,Coaxiales / Multivía,N,False,128,catalogo_empresa,48,True,PEN
+64,PIONEER TS-F1634R PARLANTES 16CM 200W 2V,TS-F1634R,TS-F1634R,160.00,125.00,76.33,NIU,unidad,producto,10000056,Medios y Parlantes,Coaxiales / Multivía,N,False,129,catalogo_empresa,24,True,PEN
+63,PIONEER TS-G1610F-2 PARLANTES DE 16CM,TS-G1610F-2,TS-G1610F-2,155.00,120.00,65.69,NIU,unidad,producto,10000055,Medios y Parlantes,Coaxiales / Multivía,N,False,130,catalogo_empresa,31,True,PEN
+62,PIONEER TS-G1620F-2 PARLANTES DE 16CM,TS-G1620F-2,TS-G1620F-2,180.00,140.00,93.50,NIU,unidad,producto,10000054,Medios y Parlantes,Coaxiales / Multivía,N,False,131,catalogo_empresa,38,True,PEN
+61,PIONEER TS-R1651S-2 PARLANTES 16CM 300W,TS-R1651S-2,TS-R1651S-2,210.00,160.00,121.79,NIU,unidad,producto,10000053,Medios y Parlantes,Coaxiales / Multivía,N,False,132,catalogo_empresa,45,True,PEN
+57,PIONEER TS-R6951S PARLANTES 6X9 3V 400W,TS-R6951S,TS-R6951S,260.00,220.00,155.21,NIU,unidad,producto,10000049,Medios y Parlantes,Coaxiales / Multivía,N,False,133,catalogo_empresa,21,True,PEN
+157,"PARLANTE MEDIO RANGO 6.5"" 500W VENOM 65PRO STRATA",VENOM65PRO,VENOM65PRO,220.00,220.00,100.00,PR,par,producto,10000127,Medios y Parlantes,Medios Rangos (Midranges),N,False,134,catalogo_empresa,28,True,PEN
+129,"PARLANTES COAXIALES 4 VÍAS 4"" 250W VIPER 40 | STRATA",VIPER40,VIPER40,160.00,160.00,100.00,NIU,unidad,producto,10000134,Medios y Parlantes,Coaxiales / Multivía,N,False,135,catalogo_empresa,35,True,PEN
+128,"PARLANTES COAXIALES 4 VÍAS 6.5"" 320W VIPER 654 | STRATA",VIPER654,VIPER654,180.00,180.00,100.00,NIU,unidad,producto,10000133,Medios y Parlantes,Coaxiales / Multivía,N,False,136,catalogo_empresa,42,True,PEN
+22,"6.5"" COMPONENTE SQ 250 RMS 400 WATTS 4 OHM | 7POWER",X-SQ6.5C,X-SQ6-5C,370.00,310.00,250.00,NIU,unidad,producto,10000013,Medios y Parlantes,Componentes,N,False,137,catalogo_empresa,49,True,PEN
+39,"6.5"" MEDIO RANGO COAXIAL CON DIF DE DRIVER 250 RM 500 WATTS 4 OHM | 7POWER",ZR6,ZR6,340.00,270.00,220.00,NIU,unidad,producto,10000030,Medios y Parlantes,Coaxiales / Multivía,N,False,138,catalogo_empresa,25,True,PEN
+48,PANTALLA ANDROID 4+64GB 4 NÚCLEOS,MS100-10,MS100-10,370.00,300.00,137.20,NIU,unidad,producto,10000039,Radios y Pantallas,Pantallas Android,Q,True,139,catalogo_empresa,32,True,PEN
+45,PANTALLA ANDROID 4+64GB 4 NÚCLEOS,MS100-9,MS100-9,370.00,300.00,131.20,NIU,unidad,producto,10000036,Radios y Pantallas,Pantallas Android,Q,True,140,catalogo_empresa,39,True,PEN
+47,PANTALLA ANDROID 4+64GB 8 NÚCLEOS CON CHIP,MS200-10,MS200-10,490.00,370.00,212.30,NIU,unidad,producto,10000038,Radios y Pantallas,Pantallas Android,Q,True,141,catalogo_empresa,46,True,PEN
+49,PANTALLA ANDROID 4+64GB* 8 NÚCLEOS CON CHIP,MS300-10,MS300-10,450.00,340.00,206.30,NIU,unidad,producto,10000040,Radios y Pantallas,Pantallas Android,Q,True,142,catalogo_empresa,22,True,PEN
+46,PANTALLA ANDROID 4+64GB* 8 NÚCLEOS CON CHIP,MS300-9,MS300-9,450.00,340.00,184.90,NIU,unidad,producto,10000037,Radios y Pantallas,Pantallas Android,Q,True,143,catalogo_empresa,29,True,PEN
+147,SERVICIO DE INSTALACIÓN Y/O MANTENIMIENTO DE AIRE ACONDICIONADO,INS-AC,INS-AC,40.00,40.00,40.00,NIU,unidad,servicio,10000150,Servicios,Instalación y Mano de Obra,U,False,144,catalogo_empresa,0,True,PEN
+146,SERVICIO DE INSTALACIÓN DE EQUIPAMIENTO DE SONIDO (AMPLIFICADOR Y SUBWOOFER),INS-EQUIPO-SONIDO,INS-EQUIPO-SONIDO,120.00,120.00,120.00,NIU,unidad,servicio,10000149,Servicios,Instalación y Mano de Obra,U,False,145,catalogo_empresa,0,True,PEN
+140,SERVICIO DE INSTALACIÓN DE PANTALLA MULTIMEDIA,INS-PANTALLA,INS-PANTALLA,80.00,80.00,80.00,ZZ,servicio,servicio,10000146,Servicios,Instalación y Mano de Obra,U,False,146,catalogo_empresa,0,True,PEN
+144,SERVICIO DE INSTALACIÓN DE PANTALLA MULTIMEDIA (SIN CÁMARA),INS-PANTALLA-SC,INS-PANTALLA-SC,50.00,50.00,50.00,NIU,unidad,servicio,10000147,Servicios,Instalación y Mano de Obra,U,False,147,catalogo_empresa,0,True,PEN
+145,SERVICIO DE INSTALACIÓN DE PARLANTES,INS-PARLANTES,INS-PARLANTES,30.00,30.00,30.00,PR,par,servicio,10000148,Servicios,Instalación y Mano de Obra,U,False,148,catalogo_empresa,0,True,PEN
+148,SERVICIO TÉCNICO MISCELÁNEO / OTROS,SRV-OTROS,SRV-OTROS,30.00,30.00,30.00,NIU,unidad,servicio,10000151,Servicios,Instalación y Mano de Obra,U,True,149,catalogo_empresa,0,True,PEN
+35,"12"" SUBWOOFER DUAL 4 OHM 550RMS 1100WATTS | 7POWER",LGY-12.4D,LGY-12-4D,300.00,250.00,200.00,NIU,unidad,producto,10000026,Subwoofers,Subwoofers Doble Bobina / Estándar,O,False,150,catalogo_empresa,47,True,PEN
+13,"12"" SUBWOOFER PLANO 4 OHM 300 RMS 600 WATTS | 7POWER",VL-12.4S,VL-12-4S,290.00,240.00,190.00,NIU,unidad,producto,10000004,Subwoofers,Subwoofers Planos,O,False,151,catalogo_empresa,23,True,PEN
+12,"12"" SUBWOOFER PLANO DUAL 4 OHM 300 RMS 600 WATTS | 7POWER",VL12.4D,VL12-4D,290.00,240.00,190.00,NIU,unidad,producto,10000003,Subwoofers,Subwoofers Planos,O,False,152,catalogo_empresa,30,True,PEN
+14,"12"" SUBWOOFER DUAL 4 OHM 600RMS 1200WATTS | 7POWER",ZR12.4,ZR12-4,360.00,310.00,260.00,NIU,unidad,producto,10000005,Subwoofers,Subwoofers Doble Bobina / Estándar,O,False,153,catalogo_empresa,37,True,PEN
+76,"MINI TWEETER 1"" BLACK HAWK BH-TW10",BH-TW10,BH-TW10,27.00,20.70,18.00,NIU,unidad,producto,10000078,Tweeters,Tweeters Tipo Domo / Neodimio,M,False,154,catalogo_empresa,44,True,PEN
+154,"SUPER TWEETER DE ALUMINIO 4"" 400W DG-TW404 DIGITE",DG-TW404,DG-TW404,80.00,80.00,40.00,NIU,unidad,producto,10000159,Tweeters,Tweeters Tipo Bala,M,False,155,catalogo_empresa,20,True,PEN
+133,"TWEETER DOMO 1"" 120W MA260",MA260,MA260,25.00,25.00,10.00,NIU,unidad,producto,10000138,Tweeters,Tweeters Tipo Domo / Neodimio,M,False,156,catalogo_empresa,27,True,PEN
+6,"3"" TWEETER BALA 200 RMS 300 WATTS 4 OHM",N3B.4,N3B-4,110.00,110.00,65.00,NIU,unidad,producto,10000066,Tweeters,Tweeters Tipo Bala,M,False,157,catalogo_empresa,34,True,PEN
+135,SUPER TWEETER TIPO BALA 200W SX-TA21 SOUNDMAX,SX-TA21,SX-TA21,100.00,100.00,60.00,NIU,unidad,producto,10000140,Tweeters,Tweeters Tipo Bala,M,False,158,catalogo_empresa,41,True,PEN
+153,SUPER TWEETER TIPO BALA 200W SX-TA30 SOUNDMAX,SX-TA30,SX-TA30,125.00,125.00,60.00,NIU,unidad,producto,10000158,Tweeters,Tweeters Tipo Bala,M,False,159,catalogo_empresa,48,True,PEN
+40,"TWEETER DOMO 1.38"" DE 50 RMS - 100 WATTS 4 OHM | 7POWER",T1R,T1R,65.00,50.00,30.00,NIU,unidad,producto,10000031,Tweeters,Tweeters Tipo Domo / Neodimio,M,True,160,catalogo_empresa,24,True,PEN
+19,"3"" TWEETER BALA 200 RMS 300 WATTS 4 OHM | 7POWER",T3S,T3S,150.00,120.00,70.00,NIU,unidad,producto,10000010,Tweeters,Tweeters Tipo Bala,M,False,161,catalogo_empresa,31,True,PEN
+137,"TWEETERS 1"" 200W TB1 7POWER",TB1,TB1,100.00,100.00,50.00,PR,par,producto,10000142,Tweeters,Tweeters Tipo Bala,M,False,162,catalogo_empresa,38,True,PEN
+152,TWEETER DE ALUMINIO 38MM 600W TS-S22 PCINENER,TS-S22,TS-S22,75.00,75.00,35.00,NIU,unidad,producto,10000157,Tweeters,Tweeters Tipo Bala,M,False,163,catalogo_empresa,45,True,PEN
+75,TWEETER MAR TS-S261,TS-S261,TS-S261,25.00,11.50,10.00,NIU,unidad,producto,10000077,Tweeters,Tweeters Tipo Domo / Neodimio,M,False,164,catalogo_empresa,21,True,PEN
+31,"4"" TWEETER BALA 300 RMS 600 WATTS 4 OHM | 7POWER",TW4.4,TW4-4,150.00,120.00,70.00,NIU,unidad,producto,10000022,Tweeters,Tweeters Tipo Bala,M,False,165,catalogo_empresa,28,True,PEN
+131,TWEETER DE SINTONIZACIÓN 40MM 350W TX 350 7POWER,TX350,TX350,30.00,30.00,12.00,NIU,unidad,producto,10000136,Tweeters,Tweeters Tipo Domo / Neodimio,M,False,166,catalogo_empresa,35,True,PEN
+96,"TWEETER DOMO DE PEI 1.1"" 50 RMS 100W | 7POWER",ZX1,ZX1,100.00,100.00,40.00,NIU,unidad,producto,10000100,Tweeters,Tweeters Tipo Domo / Neodimio,M,False,167,catalogo_empresa,42,True,PEN

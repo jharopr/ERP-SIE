@@ -7,3 +7,7 @@ evidencias/privadas/
 # Archivos locales y temporales
 *.tmp
 ~$*
+
+# Secretos locales: cada persona genera el suyo (nunca se suben)
+.env
+**/.env

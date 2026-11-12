@@ -1,4 +1,4 @@
-"""Inicializa Odoo y el Agente SIE, instala MYS y carga el catálogo de 50 productos.
+"""Inicializa Odoo y el Agente SIE, instala MYS y carga el catálogo completo de la empresa.
 
 Ejecutar en compuerta: python /plataforma/seed_sistema.py [--reiniciar].
 --reiniciar limpia solamente las transacciones de la demo del agente. No elimina
@@ -21,7 +21,7 @@ from app import escenario as E
 from app.config import Config, ahora_lima
 from app.repositorio import Repositorio
 
-CATALOGO = Path(os.environ.get('CATALOGO_PATH', '/catalogo/productos_50.json'))
+CATALOGO = Path(os.environ.get('CATALOGO_PATH', '/catalogo/productos.json'))
 
 
 def instalar_mys(odoo):
@@ -51,6 +51,7 @@ def usuarios(odoo):
                                          'mys_erp.group_mys_manager']]
     owner, _ = odoo.upsert('res.users', [('login', '=', 'ger-demo-01')],
                           {'name': 'Dueño Demo MYS', 'login': 'ger-demo-01', 'password': os.environ['ODOO_OWNER_PASSWORD'],
+                           'email': os.environ.get('CORREO_DUENO') or 'dueno@mys-demo.local',
                            group_field: [(6, 0, [g for g in owner_groups if g])], 'action_id': home})
     admin = odoo.buscar('res.users', [('login', '=', os.environ['ODOO_USER'])])[0]
     odoo.x('res.users', 'write', [admin], {group_field: [(4, odoo.ref('mys_erp.group_mys_manager'))], 'action_id': home})
@@ -60,13 +61,24 @@ def usuarios(odoo):
 
 def catalogo(odoo, data, ubicacion):
     ids = {}
+    # Categorías una sola vez (dos niveles, como en la lista de la empresa).
+    padres, categorias = {}, {}
+    for nombre in sorted({p['categoria'] for p in data['productos']}):
+        padres[nombre], _ = odoo.upsert('product.category', [('name', '=', nombre), ('parent_id', '=', False)],
+                                        {'name': nombre})
+    for padre, sub in sorted({(p['categoria'], p['subcategoria']) for p in data['productos']}):
+        categorias[(padre, sub)], _ = odoo.upsert('product.category', [('name', '=', sub), ('parent_id', '=', padres[padre])],
+                                                  {'name': sub, 'parent_id': padres[padre]})
+    uom = {'unidad': odoo.ref('uom.product_uom_unit'), 'metro': odoo.ref('uom.product_uom_meter')}
+    existentes = {t['default_code']: t['id'] for t in odoo.leer('product.template',
+                  [('default_code', 'in', [p['sku'] for p in data['productos']])], ['default_code'])}
     for p in data['productos']:
-        parent, _ = odoo.upsert('product.category', [('name', '=', p['categoria']), ('parent_id', '=', False)],
-                               {'name': p['categoria']})
-        category, _ = odoo.upsert('product.category', [('name', '=', p['subcategoria']), ('parent_id', '=', parent)],
-                                 {'name': p['subcategoria'], 'parent_id': parent})
+        servicio = p.get('tipo') == 'servicio'
+        unidad = uom['metro'] if p.get('unidad') == 'metro' and uom['metro'] else uom['unidad']
+        category = categorias[(p['categoria'], p['subcategoria'])]
         values = {'name': p['nombre'], 'default_code': p['sku'], 'list_price': float(p['precio_venta']),
-                  'type': 'consu', 'is_storable': True, 'sale_ok': True, 'purchase_ok': True,
+                  'type': 'service' if servicio else 'consu', 'is_storable': not servicio,
+                  'uom_id': unidad, 'uom_po_id': unidad, 'sale_ok': True, 'purchase_ok': True,
                   'taxes_id': [(6, 0, [])], 'supplier_taxes_id': [(6, 0, [])], 'categ_id': category,
                   'mys_catalogo': True, 'mys_datos_sinteticos': True, 'mys_codigo_fuente': p['codigo_original'],
                   'mys_fila_fuente': p['source_row'], 'mys_archivo_fuente': data['metadata']['archivo_fuente'],
@@ -74,14 +86,33 @@ def catalogo(odoo, data, ubicacion):
                   'mys_precio_mayorista': float(p['precio_mayorista'] or p['precio_venta']), 'active': True}
         if p['costo_referencia'] is not None:
             values['standard_price'] = float(p['costo_referencia'])
-        template, _ = odoo.upsert('product.template', [('default_code', '=', p['sku'])], values)
-        product = odoo.buscar('product.product', [('product_tmpl_id', '=', template)])[0]
-        ids[p['sku']] = product
-        # No crea ni modifica reservas. Los saldos objetivo son explícitamente de prueba.
-        quant, _ = odoo.upsert('stock.quant', [('product_id', '=', product), ('location_id', '=', ubicacion)],
-                              {'product_id': product, 'location_id': ubicacion, 'inventory_quantity': p['stock_demo']})
-        legacy.llamar_tolerante(odoo, 'stock.quant', 'action_apply_inventory', [quant])
-    legacy.log(f'Catálogo cargado: {len(ids)} referencias de empresa + 2 SKU académicos PC3.')
+        if p['sku'] in existentes:
+            odoo.x('product.template', 'write', [existentes[p['sku']]], values)
+        else:
+            existentes[p['sku']] = odoo.x('product.template', 'create', values)
+    ids = {v['default_code']: v['id'] for v in odoo.leer('product.product',
+           [('default_code', 'in', [p['sku'] for p in data['productos']])], ['default_code'])}
+    # No crea ni modifica reservas. Los saldos objetivo son explícitamente de prueba.
+    # Un solo ajuste de inventario para los productos cuyo saldo difiere (los servicios no tienen stock).
+    almacenables = {p['sku']: p for p in data['productos'] if p.get('tipo') != 'servicio'}
+    quants = {q['product_id'][0]: q for q in odoo.leer('stock.quant',
+              [('product_id', 'in', [ids[s] for s in almacenables]), ('location_id', '=', ubicacion)],
+              ['product_id', 'quantity'])}
+    por_aplicar = []
+    for sku, p in almacenables.items():
+        q = quants.get(ids[sku])
+        if q and int(q['quantity']) == p['stock_demo']:
+            continue
+        if q:
+            odoo.x('stock.quant', 'write', [q['id']], {'inventory_quantity': p['stock_demo']}, context={'inventory_mode': True})
+            por_aplicar.append(q['id'])
+        else:
+            por_aplicar.append(odoo.x('stock.quant', 'create', {'product_id': ids[sku], 'location_id': ubicacion,
+                                                                'inventory_quantity': p['stock_demo']},
+                                      context={'inventory_mode': True}))
+    if por_aplicar:
+        legacy.llamar_tolerante(odoo, 'stock.quant', 'action_apply_inventory', por_aplicar)
+    legacy.log(f'Catálogo cargado: {len(ids)} referencias de empresa ({len(por_aplicar)} saldos ajustados) + 2 SKU académicos PC3.')
     return ids
 
 
@@ -147,18 +178,30 @@ def datos_comerciales(odoo, repo, data, productos, vendedor, ubicacion):
     legacy.log('8 clientes, 1 proveedor, 6 leads y 3 oportunidades/cotizaciones de catálogo preparados.')
 
 
+def limpiar_notificaciones(odoo):
+    """Cancela los avisos automáticos que el propio seed genera en Odoo («Te asignaron S000…»,
+    «Cambio de contraseña»): con correo activo llenarían el buzón del dueño en cada arranque.
+    Nunca toca los avisos de decisión ([MYS] …) ni correos ya enviados."""
+    ids = odoo.buscar('mail.mail', [('state', 'in', ['outgoing', 'exception']), ('subject', 'not like', '[MYS]%')])
+    if ids:
+        odoo.x('mail.mail', 'write', ids, {'state': 'cancel'})  # cancelados: no se envían; el historial queda
+        legacy.log(f'{len(ids)} avisos automáticos del seed cancelados (asignaciones y cambios de contraseña).')
+
+
 def main():
     data = json.loads(CATALOGO.read_text(encoding='utf-8'))
-    if len(data['productos']) != 50 or len({p['sku'] for p in data['productos']}) != 50:
-        raise RuntimeError('Se requieren exactamente 50 productos de catálogo con SKU únicos.')
+    total = len(data['productos'])
+    if total < 50 or len({p['sku'] for p in data['productos']}) != total:
+        raise RuntimeError('El catálogo requiere al menos 50 productos (los de demostración) con SKU únicos.')
     if '--reiniciar' not in sys.argv and '--crear-v3' not in sys.argv:
         config = Config.desde_entorno()
         existing = legacy.Odoo(config.odoo_url, config.odoo_db, os.environ['ODOO_USER'], os.environ['ODOO_PASSWORD'])
         if config.odoo_db in existing.proxy('/xmlrpc/2/db').list():
             existing.conectar()
             modules = existing.leer('ir.module.module', [('name', '=', 'mys_erp')], ['state'])
-            if modules and modules[0]['state'] == 'installed' and len(existing.buscar('product.template', [('mys_catalogo', '=', True)])) == 50:
+            if modules and modules[0]['state'] == 'installed' and len(existing.buscar('product.template', [('mys_catalogo', '=', True)])) == total:
                 usuarios(existing)
+                limpiar_notificaciones(existing)
                 print('Instalación existente: usuarios sincronizados. Cotizaciones, versiones, stock y decisiones conservados.', flush=True)
                 return
     # Mantiene todos los casos y reglas del paquete existente. Instala el addon como
@@ -185,7 +228,8 @@ def main():
                    (E.VENDEDOR, str(seller)))
     products = catalogo(odoo, data, location)
     datos_comerciales(odoo, repo, data, products, seller, location)
-    print('SISTEMA MYS LISTO: 50 referencias de catálogo, 2 SKU PC3, Odoo y Agente SIE conectados.', flush=True)
+    limpiar_notificaciones(odoo)
+    print(f'SISTEMA MYS LISTO: {total} referencias de catálogo, 2 SKU PC3, Odoo y Agente SIE conectados.', flush=True)
 
 
 if __name__ == '__main__':

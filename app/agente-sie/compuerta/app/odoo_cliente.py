@@ -98,25 +98,31 @@ class OdooCliente:
         pedidos = self._leer("sale.order", [("client_order_ref", "=like", f"{quotation_id} v%")],
                              ["client_order_ref", "state", "currency_id", "validity_date", "user_id",
                               "partner_id", "opportunity_id", "amount_total", "order_line"])
+        pedidos = [(p, m) for p in pedidos if (m := patron.match(p["client_order_ref"] or ""))]
+        if not pedidos:
+            return []
+        # Lecturas agrupadas (una por modelo, no una por versión): menos viajes a Odoo, misma información.
+        todas = self._leer("sale.order.line", [("order_id", "in", [p["id"] for p, _ in pedidos]),
+                                               ("display_type", "=", False)],
+                           ["order_id", "product_id", "product_uom_qty", "price_unit", "discount"])
+        ids_producto = sorted({_id(l["product_id"]) for l in todas if l["product_id"]})
+        codigos = {f["id"]: f["default_code"] for f in
+                   self._leer("product.product", [("id", "in", ids_producto)], ["default_code"])} if ids_producto else {}
+        ids_lead = sorted({_id(p["opportunity_id"]) for p, _ in pedidos if p.get("opportunity_id")})
+        referencias = {f["id"]: f["mys_reference"] for f in
+                       self._leer("crm.lead", [("id", "in", ids_lead)], ["mys_reference"])} if ids_lead else {}
+        ids_cliente = sorted({_id(p["partner_id"]) for p, _ in pedidos if p["partner_id"]})
+        refs = {f["id"]: f["ref"] or None for f in
+                self._leer("res.partner", [("id", "in", ids_cliente)], ["ref"])} if ids_cliente else {}
         resultado = []
-        for p in pedidos:
-            m = patron.match(p["client_order_ref"] or "")
-            if not m:
-                continue
-            lineas = self._leer("sale.order.line", [("order_id", "=", p["id"]), ("display_type", "=", False)],
-                                ["product_id", "product_uom_qty", "price_unit", "discount"])
-            ids_producto = [_id(l["product_id"]) for l in lineas]
-            codigos = {f["id"]: f["default_code"] for f in
-                       self._leer("product.product", [("id", "in", ids_producto)], ["default_code"])}
-            oportunidad = None
-            if p.get('opportunity_id'):
-                lead = self._leer('crm.lead', [('id', '=', _id(p['opportunity_id']))], ['mys_reference'])
-                oportunidad = lead[0]['mys_reference'] if lead else None
+        for p, m in pedidos:
+            lineas = [l for l in todas if _id(l["order_id"]) == p["id"]]
             resultado.append({
                 "version": int(m.group(1)), "state": p["state"], "currency": _nombre(p["currency_id"]),
                 "validity_date": p["validity_date"] or None,
                 "seller_login": None, "seller_odoo_id": _id(p["user_id"]),
-                "customer_ref": self._ref_partner(_id(p["partner_id"])), "opportunity_id": oportunidad,
+                "customer_ref": refs.get(_id(p["partner_id"])),
+                "opportunity_id": referencias.get(_id(p["opportunity_id"])) if p.get("opportunity_id") else None,
                 "amount_total": p["amount_total"],
                 "lines": [{"sku": codigos.get(_id(l["product_id"])), "quantity": l["product_uom_qty"],
                            "unit_price": l["price_unit"], "discount_pct": l["discount"]} for l in lineas],
@@ -131,12 +137,11 @@ class OdooCliente:
 
     def stock(self, skus: list[str], ubicacion_odoo_id: int) -> dict:
         """Físico y reservado por SKU dentro de la ubicación interna de la tienda."""
-        filas = self._leer("stock.quant", [("product_id.default_code", "in", list(skus)),
-                                           ("location_id", "child_of", ubicacion_odoo_id)],
-                           ["product_id", "quantity", "reserved_quantity"])
-        ids = {_id(f["product_id"]) for f in filas}
         codigos = {f["id"]: f["default_code"] for f in
-                   self._leer("product.product", [("id", "in", list(ids))], ["default_code"])} if ids else {}
+                   self._leer("product.product", [("default_code", "in", list(skus))], ["default_code"])}
+        filas = self._leer("stock.quant", [("product_id", "in", list(codigos)),
+                                           ("location_id", "child_of", ubicacion_odoo_id)],
+                           ["product_id", "quantity", "reserved_quantity"]) if codigos else []
         resultado = {sku: {"fisico": 0.0, "reservado": 0.0} for sku in skus}
         for f in filas:
             sku = codigos.get(_id(f["product_id"]))

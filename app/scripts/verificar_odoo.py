@@ -3,6 +3,7 @@
 Crea una familia COT-MYS de prueba para validar rechazo → dueño → nueva versión aceptada.
 Requiere servicios iniciados. No reinicia ni elimina datos.
 """
+from pathlib import Path
 import json
 import re
 import uuid
@@ -59,13 +60,15 @@ def main():
     html = anonymous.get('/web/login').text
     ok('Login nativo con marca MS Power', 'ms-power.svg' in html and 'csrf_token' in html)
     workspace = seller.rpc('/mys/workspace')
-    ok('50 productos conservados', workspace['counts']['products'] == 50)
+    import json
+    total = len(json.loads((Path(__file__).resolve().parents[1] / 'datos' / 'productos.json').read_text(encoding='utf-8'))['productos'])
+    ok(f'{total} productos del catálogo conservados', workspace['counts']['products'] == total)
     ok('Leads y contactos visibles', workspace['counts']['leads'] >= 6 and workspace['counts']['contacts'] >= 8)
     product_view = seller.call('product.template', 'get_views', [], views=[[False, 'form']], options={})
     ok('Vistas nativas de productos accesibles al vendedor', bool(product_view))
     stock = seller.call('product.template', 'search_read', [[['mys_catalogo', '=', True]]],
-                       fields=['name', 'qty_available', 'mys_disponible'], limit=50)
-    ok('Inventario de las 50 referencias accesible', len(stock) == 50)
+                       fields=['name', 'qty_available', 'mys_disponible'])
+    ok('Inventario del catálogo accesible', len(stock) == total)
     sales_view = seller.call('sale.order', 'get_views', [], views=[[False, 'form']], options={})
     sales_xml = ET.fromstring(sales_view['views']['form']['arch'])
     confirms = sales_xml.findall(".//button[@name='action_confirm']")

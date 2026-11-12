@@ -43,7 +43,11 @@ def masters_para(variante):
 
 @pytest.mark.skipif(not ORIGINAL.exists(), reason="Fuera del repositorio ERP-SIE no hay original para comparar")
 def test_motor_es_copia_exacta():
-    assert hashlib.sha256(COPIA.read_bytes()).hexdigest() == hashlib.sha256(ORIGINAL.read_bytes()).hexdigest()
+    # Se ignoran los fines de línea: en Windows, app/.gitattributes fuerza LF y pruebas/ queda en CRLF
+    # (en git ambos archivos son el mismo blob).
+    def huella(ruta):
+        return hashlib.sha256(ruta.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+    assert huella(COPIA) == huella(ORIGINAL)
 
 
 @pytest.mark.parametrize("caso,archivo,variante,status,code", CASOS)

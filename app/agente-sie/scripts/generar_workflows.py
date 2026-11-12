@@ -146,7 +146,7 @@ def w1():
         nodo(agente, "@n8n/n8n-nodes-langchain.agent", 1.7, [400, 0],
              {"options": {"systemMessage": sistema, "maxIterations": 10}}),
         nodo("Modelo Gemini", "@n8n/n8n-nodes-langchain.lmChatGoogleGemini", 1, [120, 260],
-             {"modelName": "models/gemini-3.5-flash", "options": {"temperature": 0.1}},
+             {"modelName": "models/gemini-3.5-flash-lite", "options": {"temperature": 0.1}},
              credentials={"googlePalmApi": CRED["gemini"]}),
         nodo("Memoria (10 mensajes)", "@n8n/n8n-nodes-langchain.memoryBufferWindow", 1.3, [300, 260],
              {"contextWindowLength": 10}),
@@ -298,7 +298,7 @@ def w4():
             envfile = RAIZ.parent / '.env'
             values = dict(line.split('=', 1) for line in envfile.read_text(encoding='utf-8').splitlines()
                           if '=' in line and not line.lstrip().startswith('#')) if envfile.exists() else {}
-            node['parameters']['modelName'] = values.get('GEMINI_MODEL', 'models/gemini-3.5-flash')
+            node['parameters']['modelName'] = values.get('GEMINI_MODEL', 'models/gemini-3.5-flash-lite')
     nodes += [
         nodo('Entrada Odoo', 'n8n-nodes-base.webhook', 2, [0, -200],
              {'httpMethod': 'POST', 'path': 'mys-agente-integrado', 'authentication': 'headerAuth',

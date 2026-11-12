@@ -24,7 +24,7 @@ Odoo contiene Contactos, CRM (leads y oportunidades), Ventas e Inventario y el a
 - **Modelos `mys.evaluation` y `mys.decision`:** reflejan los resultados de la compuerta para mostrarlos en Odoo. `workspace` sincroniza también resultados y solicitudes de revisión originados por herramientas del agente. No sustituyen al registro de decisiones del motor.
 - **n8n:** orquesta las herramientas del agente. W4 (chat privado) y W5 (errores del proveedor) están publicados; W1/W2/W3 se conservan despublicados como referencia. No guarda una segunda copia del inventario.
 
-Los 50 productos conservan SKU, fila y hash del Excel suministrado. Su selección equilibra categorías y precios, sin afirmar una clasificación real de ventas. Stock, clientes y operaciones son sintéticos. Además se mantienen dos productos y dos reservas de otro cliente del escenario PC3.
+Los 167 productos conservan SKU, fila y hash del Excel suministrado. Las primeras 50 referencias (demostración) equilibran categorías y precios, sin afirmar una clasificación real de ventas; los 8 productos sin categoría en el Excel se clasifican por su descripción y quedan registrados en `datos/procedencia.json`. Los servicios no tienen stock y los cables se venden por metro. Stock, clientes y operaciones son sintéticos. Además se mantienen dos productos y dos reservas de otro cliente del escenario PC3.
 
 ## Roles y controles del servidor
 
@@ -49,5 +49,7 @@ Las decisiones de reposición expresan ofrecer parcial, evaluar reposición o de
 `compose.yaml` conserva el nombre `agente-sie` y sus volúmenes, para reutilizar la instalación anterior. Nginx recibe en 8088 y pasa HTTP y WebSocket a Odoo con `proxy_mode=True`. Las rutas `/api/` del portal anterior responden 404; su backend solo puede habilitarse expresamente para pruebas históricas con `ENABLE_LEGACY_PORTAL=true`.
 
 Los puertos de diagnóstico 8069, 8000 y 5678 están ligados a `127.0.0.1`. Son servicios de una aplicación integrada; el usuario no necesita iniciar sesión en cada uno. El arranque normal actualiza el addon y las cuentas sin refrescar transacciones ni saldos. Los cambios de contraseñas humanas se aplican en Odoo y `.env`; los secretos técnicos son independientes.
+
+Cuando se crea una «Decisión del dueño» (botón del vendedor o sincronización de un escalamiento del chat), Odoo programa una tarea al dueño y le envía un correo con el enlace `/odoo/mys.decision/<id>`; el envío usa el SMTP de `.env` (Mailpit por defecto) y su fallo no impide registrar la excepción.
 
 La consulta de estado Gemini distingue ausencia de clave, rechazo, modelo no disponible, cuota y problemas de red. Una clave verificada no garantiza cuota de generación. La indisponibilidad del chat no interrumpe los módulos nativos ni las reglas deterministas.

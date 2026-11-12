@@ -1,11 +1,11 @@
 {
     'name': 'MYS - Gestión comercial integrada',
-    'version': '18.0.2.0.0',
+    'version': '18.0.2.1.0',
     'category': 'Sales/CRM',
     'summary': 'Catálogo trazable, datos demo y acceso de lectura del Agente SIE',
     'author': 'Grupo 7 - Importaciones MYS Hermanos',
     'license': 'LGPL-3',
-    'depends': ['contacts', 'crm', 'sale_management', 'sale_crm', 'sale_stock', 'purchase_stock'],
+    'depends': ['mail', 'contacts', 'crm', 'sale_management', 'sale_crm', 'sale_stock', 'purchase_stock'],
     'data': ['security/grupos.xml', 'security/ir.model.access.csv', 'security/reglas.xml', 'security/sistema.xml',
              'views/producto.xml', 'views/contacto.xml', 'views/menus.xml',
              'views/sistema.xml', 'views/login.xml'],

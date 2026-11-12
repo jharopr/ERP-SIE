@@ -19,7 +19,7 @@ _PROVIDER_MESSAGES = {
 
 def _provider_failure(code):
     key = os.environ.get('GEMINI_API_KEY', '').strip()
-    model = os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash')
+    model = os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash-lite')
     failure = {'configured': bool(key), 'enabled': False, 'model': model, 'code': code, 'message': _PROVIDER_MESSAGES[code]}
     cache_key = hashlib.sha256((key + model).encode()).hexdigest()
     _AGENT_CACHE[cache_key] = (time.monotonic() + (3600 if code == 'CUOTA_AGOTADA' else 60), failure)
@@ -48,7 +48,7 @@ class Sistema(http.Controller):
 
     def _agent_status(self):
         key = os.environ.get('GEMINI_API_KEY', '').strip()
-        model = os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash')
+        model = os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash-lite')
         result = {'configured': bool(key), 'enabled': False, 'model': model, 'code': 'SIN_API_KEY',
                   'message': 'Deshabilitado: falta GEMINI_API_KEY en app/.env.'}
         if not key:

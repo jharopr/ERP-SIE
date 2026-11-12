@@ -6,10 +6,10 @@
     "Chat requiere sesión Odoo",
     "Portal anterior retirado",
     "Login nativo con marca MS Power",
-    "50 productos conservados",
+    "167 productos del catálogo conservados",
     "Leads y contactos visibles",
     "Vistas nativas de productos accesibles al vendedor",
-    "Inventario de las 50 referencias accesible",
+    "Inventario del catálogo accesible",
     "Confirmación nativa oculta en el formulario comercial",
     "Vendedor no ve aprobar; dueño sí lo ve",
     "Cliente y oportunidad nuevos funcionan con referencias generadas por Odoo",
@@ -37,12 +37,12 @@
   "agent_status": {
     "configured": true,
     "enabled": true,
-    "model": "models/gemini-3.5-flash",
+    "model": "models/gemini-3.5-flash-lite",
     "code": "HABILITADO",
     "message": "API key verificada. Agente disponible."
   },
-  "test_order_id": 20,
-  "new_version_order_id": 21,
-  "evaluation_id": 13,
-  "decision_id": 8
+  "test_order_id": 11,
+  "new_version_order_id": 12,
+  "evaluation_id": 1,
+  "decision_id": 1
 }
