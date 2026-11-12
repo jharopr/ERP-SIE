@@ -1,0 +1,514 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Recorrido O2C para el examen parcial</title><style>
+*{box-sizing:border-box} body{margin:0;background:#edf1f4;color:#1d2a37;font:16px/1.5 "Segoe UI",Arial,sans-serif}
+a{color:#006882} main{max-width:1220px;margin:36px auto} .sheet{background:white;margin:24px 0;padding:38px 48px;box-shadow:0 3px 16px #17314812;}
+.meta{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#617081;margin-bottom:14px}
+h1,h2,h3{color:#000;line-height:1.2;break-after:avoid}h1{font-size:36px}h2{font-size:27px;margin:0 0 20px}h3{font-size:19px;margin:20px 0 10px}
+p{margin:10px 0} table{width:100%;border-collapse:collapse;font-size:14px;line-height:1.35;margin:18px 0}th,td{border:1px solid #d9d9d9;padding:10px 11px;vertical-align:middle;text-align:left}th{background:#173148;color:#fff}tbody tr:nth-child(even){background:#f1f6f9}
+tr{break-inside:avoid}thead{display:table-header-group} img{display:block;width:100%;height:auto;margin:18px auto 12px;max-height:610px;object-fit:contain;break-inside:avoid}p:has(>img){break-inside:avoid}
+pre{white-space:pre-wrap;background:#f3f5f7;padding:14px;border:1px solid #d9d9d9}code{font-family:Consolas,monospace;font-size:.91em;overflow-wrap:anywhere}li{margin:9px 0}.pagefoot{font-size:11px;color:#677786;margin-top:24px}
+@page{size:A4 landscape;margin:12mm 14mm}
+@media print{body{background:#fff;font-size:10.5pt;line-height:1.35}main{max-width:none;margin:0}.sheet{padding:0;margin:0;box-shadow:none;break-before:page;min-height:0}.sheet:first-child{break-before:auto}.meta{font-size:8pt;margin:0 0 3mm}h1{font-size:25pt}h2{font-size:18pt;margin-bottom:4mm}h3{font-size:12pt;margin:3mm 0 2mm}p{margin:2mm 0}table{font-size:9.1pt;line-height:1.28;margin:3mm 0}th,td{padding:2mm 2.2mm}img{max-height:137mm;margin:2mm auto;object-fit:contain}a{color:#18546b;text-decoration:none}.pagefoot{display:none}li{margin:2mm 0}pre{font-size:9pt;padding:3mm}}
+</style><main><section class="sheet" id="s1"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h1>Recorrido O2C para el examen parcial</h1><h3>La decisión que defiende Benjamin</h3>
+<p>Proponemos aprobar de forma condicionada un recorrido comercial trazable para <strong>un cliente nuevo del público general que visita la tienda física</strong>. La necesidad se registra, se convierte en una oportunidad, recibe una cotización versionada y, tras su aceptación, origina una solicitud de evaluación al ERP. La respuesta conserva identificadores y motivos. Si falta disponibilidad, se registra una necesidad de reposición para evaluación de P2P; esa señal no autoriza una compra ni una fecha de atención.</p>
+<p>El éxito del diseño se comprueba al reconstruir <strong>cliente → lead → oportunidad → cotización y versión → aceptación → solicitud → respuesta</strong>, identificando al responsable y el control de cada transición. La aceptación comercial del cliente y el estado <code>ACEPTADA</code> de la solicitud son hechos distintos; ninguno confirma automáticamente un pedido ni reserva inventario.</p>
+<h3>Texto para la sección 3 de la plantilla Word</h3>
+<p><strong>Responsable:</strong> Benjamín Francis Arancibia Ynga. <strong>Evidencia:</strong> panel local, mapa integrado O2C–P2P, línea de tiempo y resultados EP-N01 y EP-S01. <strong>Desarrollo:</strong> Un cliente nuevo del público general llega al local de Importaciones MYS Hermanos S.A.C. y solicita cinco autoradios para uso final. Ventas registra <code>CLI-DEMO-001</code>, califica <code>LEAD-EP-001</code>, vincula <code>OPP-DEMO-001</code> y presenta <code>COT-DEMO-001 v1</code>. La base académica de 5 × S/ 400 es S/ 2,000; el descuento permitido en la simulación del 5 % equivale a S/ 100 y deja S/ 1,900. La consulta de ocho unidades disponibles registra fuente y hora, sin reserva. El cliente acepta esa versión vigente; Ventas envía <code>SOL-EP-N01</code> y la evaluación devuelve estado <code>ACEPTADA</code>, código <code>VALIDADA</code> y <code>order_id = null</code>. En la variante con tres unidades disponibles, la diferencia de dos unidades origina <code>REP-EP-001</code>, una señal de necesidad de reposición que el dueño y el responsable funcional de abastecimiento deben evaluar. No se crea orden de compra ni se promete plazo. El recorrido evaluado termina en la respuesta documentada; pedido confirmado, reserva, entrega, facturación y cobro corresponden a incrementos posteriores.</p>
+<h3>Fila para la matriz de integrantes</h3>
+<table>
+<thead>
+<tr>
+<th>Integrante</th>
+<th>Contribución verificable</th>
+<th>Decisión que defenderá</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Arancibia Ynga, Benjamin Francis</td>
+<td>Mapa O2C–P2P, journeys actual y propuesto, SIPOC, flujo por roles, línea de tiempo y evidencias EP-N01 y EP-S01</td>
+<td>Mantener una cadena trazable hasta la respuesta a la solicitud y activar evaluación de reposición ante faltante, sin comprometer stock ni compras</td>
+</tr>
+</tbody>
+</table><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 01</div></section>
+<section class="sheet" id="s2"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>2 Alcance y continuidad del proyecto</h2>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Decisión conservada o ampliada</th>
+<th>Límite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PC1</td>
+<td>Odoo como núcleo propuesto para contactos, ventas e inventario; UBLHUB para emisión futura</td>
+<td>Arquitectura documentada; no acredita instalación</td>
+</tr>
+<tr>
+<td>PC2 v2.1</td>
+<td>Cliente nuevo, persona natural, visita espontánea, cotización y decisiones comerciales</td>
+<td>El caso evaluable terminaba antes de solicitar el pedido; sin reserva</td>
+</tr>
+<tr>
+<td>Examen parcial</td>
+<td>Se explicita la solicitud CRM–ERP, sus datos, controles y respuestas, conectada con O2C y P2P</td>
+<td>Se evalúa el diseño y una simulación local; no se confirma pedido ni se ejecuta P2P</td>
+</tr>
+</tbody>
+</table>
+<p>El segmento seleccionado es consumidor final; cinco unidades para vehículos familiares <strong>no convierten al cliente en mayorista</strong>. El canal es el mostrador físico y la fuente es visita espontánea. No se atribuyen campañas ni captación por WhatsApp. El medio de contacto solo se recoge si es necesario y autorizado; no se exige correo ni se publican datos personales.</p>
+<p>O2C completo significa llevar la necesidad comercial hasta el cobro aplicado y el tratamiento de sus excepciones. P2P completo va de una necesidad de abastecimiento autorizada al pago conciliado al proveedor. Conocer ambos extremos permite explicar su relación; el parcial desarrolla únicamente el tramo comercial hasta la respuesta de transición. Los tramos posteriores aparecen como contexto, sin secuencia operativa detallada.</p>
+<p><strong>Parámetros de la recreación EP:</strong> 24/10/2026, hora Perú <code>-05:00</code>; 5 autoradios de SKU sintético <code>RAD-7BT</code>; precio final académico S/ 400; moneda PEN; descuento ordinario 5 %; disponibilidad normal 8 y variante de faltante 3; vigencia hasta las 18:00. No se descompone IGV ni se calcula un documento tributario. Contado y boleta son condiciones comerciales previstas por validar; no se registra un pago ni una emisión.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 02</div></section>
+<section class="sheet graph-sheet" id="s3"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>3 Mapa integrado O2C y P2P</h2>
+<p><img alt="Mapa integrado O2C y P2P" src="diagramas/02-mapa-integrado-o2c-p2p.svg" /></p>
+<p>El evento conector es la <strong>disponibilidad insuficiente de una necesidad trazable</strong>. En EP-S01, <code>max(0, 5 − 3) = 2</code> unidades faltantes originan <code>REP-EP-001</code>, vinculada a la oportunidad, solicitud y snapshot. El dueño y abastecimiento evalúan existencias, compras pendientes y presupuesto; la señal no aprueba compras ni plazos. Una recepción futura validada podría actualizar stock para O2C. Ese retorno es contexto y no se ejecuta aquí.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 03</div></section>
+<section class="sheet graph-sheet" id="s4"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>4 Mapa de procesos de nivel uno</h2>
+<p><img alt="Mapa de procesos de Importaciones MYS Hermanos" src="diagramas/01-mapa-corporativo.svg" /></p>
+<p>La empresa comercializa autoradios y accesorios. Estrategia fija precios y autorizaciones; los procesos operativos conectan cliente, disponibilidad y abastecimiento; soporte aporta personas, datos y control. Se adapta el caso docente a comercio, sin incorporar fabricación. Ventas, Inventario y Abastecimiento son <strong>funciones del diseño</strong>, no departamentos comprobados. Una persona puede asumir varias funciones; el dueño conserva la decisión independiente sobre excepciones de precio.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 04</div></section>
+<section class="sheet" id="s5"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>5 SIPOC del tramo evaluado</h2>
+<p><strong>Propósito:</strong> transformar una consulta física en una respuesta comercial trazable, conservando la versión aceptada y las restricciones de disponibilidad. <strong>Inicio:</strong> consulta del cliente en tienda. <strong>Fin:</strong> solicitud evaluada y respuesta registrada, o espera/corrección documentada antes del envío. <strong>Dueño propuesto:</strong> responsable comercial, con decisión del dueño sobre excepciones.</p>
+<table>
+<thead>
+<tr>
+<th>S Proveedores</th>
+<th>I Entradas</th>
+<th>P Pasos principales</th>
+<th>O Salidas</th>
+<th>C Destinatarios</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cliente</td>
+<td>Necesidad, uso final y cantidad</td>
+<td>1 Capturar e identificar</td>
+<td>Cliente y consulta vinculados</td>
+<td>Cliente y Ventas</td>
+</tr>
+<tr>
+<td>Cliente y Ventas</td>
+<td>Necesidad viable y siguiente acción</td>
+<td>2 Calificar lead y oportunidad</td>
+<td>Oportunidad con responsable</td>
+<td>Ventas</td>
+</tr>
+<tr>
+<td>Catálogo, Inventario y dueño</td>
+<td>SKU, precio, disponibilidad fechada y facultades</td>
+<td>3 Preparar cotización versionada</td>
+<td>Oferta con importe y condiciones</td>
+<td>Cliente</td>
+</tr>
+<tr>
+<td>Cliente y Ventas</td>
+<td>Oferta vigente y respuesta expresa</td>
+<td>4 Registrar aceptación exacta</td>
+<td>Aceptación ligada a la versión</td>
+<td>Ventas y evaluación ERP</td>
+</tr>
+<tr>
+<td>Ventas y registros comerciales</td>
+<td>Referencias y actor autorizado</td>
+<td>5 Solicitar y validar transición</td>
+<td>Solicitud identificada y controles</td>
+<td>Evaluación ERP</td>
+</tr>
+<tr>
+<td>Evaluación ERP y responsables</td>
+<td>Decisión y motivo</td>
+<td>6 Responder y comunicar</td>
+<td>ACEPTADA, RECHAZADA, PROMESA_CONDICIONADA o PENDIENTE; señal P2P si procede</td>
+<td>Cliente, Ventas y dueño</td>
+</tr>
+</tbody>
+</table>
+<p>Una cotización no aceptada continúa en seguimiento, recotización o cierre por desistimiento. No debe construirse una solicitud ficticia para completar el gráfico. Los pasos tercero y quinto consultan disponibilidad para momentos distintos: preparar una oferta y revalidar al evaluar la transición.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 05</div></section>
+<section class="sheet" id="s6"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>6 SIPOC de contexto de los macroprocesos</h2>
+<p>Estos contratos de alto nivel permiten explicar los extremos de la teoría de Semana 5. Sus actividades posteriores al corte <strong>no se ejecutan ni se desarrollan en el parcial</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>Elemento</th>
+<th>O2C completo como contexto</th>
+<th>P2P completo como contexto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Propósito y límites</td>
+<td>De la necesidad del comprador al cobro aplicado o excepción registrada</td>
+<td>De la necesidad de abastecimiento aprobada al pago conciliado o excepción registrada</td>
+</tr>
+<tr>
+<td>S Proveedores</td>
+<td>Cliente, Ventas, catálogo, Inventario y funciones financieras</td>
+<td>O2C/Inventario, dueño, proveedor y datos maestros</td>
+</tr>
+<tr>
+<td>I Entradas</td>
+<td>Necesidad, SKU, cantidad, precios, autorizaciones y condiciones</td>
+<td>Necesidad justificada, especificación, presupuesto, proveedor y condiciones</td>
+</tr>
+<tr>
+<td>P entre cuatro y siete pasos</td>
+<td>Capturar necesidad; aprobar oferta; validar pedido; cumplir operación; documentar; aplicar cobro</td>
+<td>Evaluar necesidad; aprobar solicitud; seleccionar fuente; ordenar; recibir; verificar documento; pagar y conciliar</td>
+</tr>
+<tr>
+<td>O Salidas</td>
+<td>Oferta y pedido trazables; cumplimiento y cobro como resultado final posterior</td>
+<td>Abastecimiento conforme, disponibilidad actualizada y pago sustentado</td>
+</tr>
+<tr>
+<td>C Destinatarios</td>
+<td>Comprador, Ventas, Inventario, Finanzas y dueño</td>
+<td>Inventario/O2C, proveedor, Finanzas y dueño</td>
+</tr>
+<tr>
+<td>Evidencia en este aporte</td>
+<td>Solo hasta solicitud y respuesta; sin cobro, comprobante ni salida</td>
+<td>Solo señal conceptual REP-EP-001; sin solicitud aprobada, orden, recepción ni pago</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Relación defendible:</strong> el inventario es un dato compartido que O2C consulta para no ofrecer una disponibilidad inexistente y P2P puede aumentar mediante una recepción futura validada. La cantidad faltante de una venta es una entrada para revisar abastecimiento; no determina automáticamente cuánto comprar ni a qué proveedor.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 06</div></section>
+<section class="sheet graph-sheet" id="s7"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>7 Journey actual del cliente</h2>
+<p><img alt="Journey actual reconstruido documentalmente" src="diagramas/05-journey-actual.svg" /></p>
+<p>El recorrido actual se reconstruye a partir del diagnóstico documental de registros dispersos y consultas manuales. Los puntos de dolor y emociones son hipótesis de análisis; no provienen de observación cronometrada ni de entrevistas nuevas. Cada etapa llega al límite previo al pedido para compararse con el journey propuesto.</p>
+<div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 07</div></section>
+<section class="sheet graph-sheet" id="s8"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>8 Journey propuesto del cliente</h2>
+<p><img alt="Journey propuesto del cliente en tienda" src="diagramas/06-journey-propuesto.svg" /></p>
+<p>La mejora propuesta consiste en mantener la relación entre la experiencia visible y la evidencia interna. El cliente recibe un precio y un estado claros; Ventas conserva la necesidad y el siguiente paso. Las emociones muestran una experiencia deseada, no un resultado medido. La compatibilidad se verifica contra especificaciones del producto y del vehículo; este ejemplo no acredita una prueba técnica real.</p>
+
+<p>La rama de stock insuficiente no mejora la experiencia inventando una fecha: mejora la claridad del estado, asigna una persona para resolverlo y conserva seguimiento. Si se modifican cantidad, descuento o plazo, debe presentarse otra versión y obtener una nueva aceptación.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 08</div></section>
+<section class="sheet graph-sheet" id="s9"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>9 Flujo por roles y responsabilidades</h2>
+<p><img alt="Flujo por roles hasta la respuesta ERP" src="diagramas/03-flujo-roles-validacion.svg" /></p>
+
+<p>Las cajas de Odoo representan responsabilidades propuestas de Contactos, CRM, Ventas e Inventario. El control de transición es un diseño local simulado: que todos compartan plataforma no elimina la necesidad de gobernar el paso de intención comercial a compromiso operativo. Ninguna caja demuestra configuración productiva.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 09</div></section>
+<section class="sheet graph-sheet" id="s10"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>10 Línea de tiempo del caso normal</h2>
+<p><img alt="Línea de tiempo del caso EP N01" src="diagramas/04-linea-tiempo-trazabilidad.svg" /></p>
+<p>Todas las horas corresponden al reloj lógico del ejemplo <strong>24/10/2026, UTC−05:00</strong>. La ejecución del script conserva por separado su fecha real. Las horas no representan tiempos observados en la empresa ni metas de atención.</p>
+<div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 10</div></section>
+<section class="sheet" id="s11"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>11 Datos controles e interfaces del recorrido</h2>
+<table>
+<thead>
+<tr>
+<th>Momento</th>
+<th>Datos mínimos y fuente lógica</th>
+<th>Control y responsable</th>
+<th>Falla y contención</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Identidad</td>
+<td>ID de cliente, estado y referencia mínima; Contactos</td>
+<td>Ventas busca antes de crear; resuelve coincidencia</td>
+<td>Identidad ambigua: corregir, no duplicar</td>
+</tr>
+<tr>
+<td>Calificación</td>
+<td>Lead, oportunidad, necesidad, cantidad y siguiente acción; CRM</td>
+<td>Ventas mantiene mismo cliente y asignación</td>
+<td>Contexto incompleto: seguimiento, no simular aprobación</td>
+</tr>
+<tr>
+<td>Oferta</td>
+<td>ID, versión, SKU, cantidad, moneda, precio, descuento, total y vencimiento; Ventas</td>
+<td>Recalcular; vincular precio de catálogo</td>
+<td>Oferta vencida o cambiada: nueva versión y aceptación</td>
+</tr>
+<tr>
+<td>Aceptación</td>
+<td>ID y hora de respuesta, ID y versión aceptados; registro comercial</td>
+<td>Ventas verifica coincidencia con versión vigente</td>
+<td>Aceptación de otra versión: bloquear transición</td>
+</tr>
+<tr>
+<td>Autorización</td>
+<td>Regla y decisión del dueño por versión y total; registro de aprobaciones</td>
+<td>Evaluación comprueba autorización independiente</td>
+<td>10 % sin dueño: RECHAZADA, sin compromiso</td>
+</tr>
+<tr>
+<td>Disponibilidad</td>
+<td>SKU, ubicación, unidades disponibles y fecha; Inventario</td>
+<td>Evaluación consulta de nuevo; no descuenta unidades</td>
+<td>Menos de cinco: PROMESA_CONDICIONADA; escalar</td>
+</tr>
+<tr>
+<td>Solicitud</td>
+<td>Empresa, SOL, COR, CLI, OPP, COT, versión y ACE</td>
+<td>Actor de sesión, idempotencia y vínculos; evaluación ERP</td>
+<td>Reintento idéntico: mismo resultado; no duplicar</td>
+</tr>
+<tr>
+<td>Respuesta</td>
+<td>Estado, código, motivo, responsable y acción; bitácora</td>
+<td>Ventas comunica sin convertir validación en pedido</td>
+<td>Dependencia inaccesible: PENDIENTE, no afirmar disponibilidad</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interfaces lógicas:</strong> cliente–Ventas registra necesidad; CRM–Contactos resuelve identidad; CRM–Ventas vincula oportunidad/cotización; evaluación–Inventario consulta disponibilidad; evaluación–autorizaciones verifica al dueño; evaluación–Ventas devuelve decisión. La señal de reposición conecta con la función P2P. Son intercambios funcionales dentro del Odoo propuesto y proveedores locales de prueba; no se afirma una API externa instalada.</p>
+<p>El mensaje de solicitud transporta referencias; los importes, roles y stock se contrastan con registros confiables. Un indicador <code>aprobado=true</code> escrito por el vendedor no reemplaza la decisión del dueño. La bitácora registra actor, hora, evento e identificador; no necesita nombres, documentos ni teléfonos reales.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 11</div></section>
+<section class="sheet" id="s12"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>12 Dimensiones ERP e indicadores</h2>
+<table>
+<thead>
+<tr>
+<th>Dimensión de Semana 5</th>
+<th>Aplicación a O2C en el parcial</th>
+<th>Dependencia P2P y límite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Resultado</td>
+<td>Respuesta de transición explicada y correlacionada</td>
+<td>Necesidad de reposición identificada, sin compra</td>
+</tr>
+<tr>
+<td>Actores</td>
+<td>Cliente, Ventas, dueño y evaluación lógica ERP</td>
+<td>Función Inventario/Abastecimiento y dueño evalúan</td>
+</tr>
+<tr>
+<td>Eventos</td>
+<td>Consulta, oferta, aceptación, solicitud y respuesta</td>
+<td>Detección de brecha produce señal REP</td>
+</tr>
+<tr>
+<td>Datos</td>
+<td>CLI, OPP, COT/versión, SKU, cantidad, COR y SOL</td>
+<td>Mismo SKU/ubicación y cantidad faltante justificable</td>
+</tr>
+<tr>
+<td>Documentos</td>
+<td>Cotización y constancia de aceptación</td>
+<td>Registro de señal, no orden ni documento de proveedor</td>
+</tr>
+<tr>
+<td>Sistemas</td>
+<td>Contactos, CRM, Ventas, Inventario y bitácora propuestos</td>
+<td>Disponibilidad compartida; recepción futura como contexto</td>
+</tr>
+<tr>
+<td>Controles</td>
+<td>Identidad, versión, descuento, permisos e idempotencia</td>
+<td>Evaluación humana antes de autorizar abastecimiento</td>
+</tr>
+<tr>
+<td>Indicadores</td>
+<td>Trazabilidad completa y transición sin reproceso</td>
+<td>Señales con responsable y fuente identificados</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Indicador propuesto</th>
+<th>Fórmula y fuente</th>
+<th>Responsable y criterio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Solicitudes con trazabilidad completa</td>
+<td>Solicitudes con CLI, OPP, COT/versión, ACE, SOL y COR coherentes ÷ solicitudes evaluadas × 100; bitácora</td>
+<td>Ventas; objetivo de prueba 100 %. Sin línea base empresarial medida</td>
+</tr>
+<tr>
+<td>Transición validada al primer intento</td>
+<td>Solicitudes ACEPTADA/VALIDADA en primera evaluación ÷ solicitudes evaluadas × 100; respuestas</td>
+<td>Responsable comercial; medir normal y excepciones por separado, sin premiar omisión de controles</td>
+</tr>
+<tr>
+<td>Señales de reposición sustentadas</td>
+<td>Señales con SKU, ubicación, déficit, fuente/hora y responsable ÷ señales generadas × 100</td>
+<td>Abastecimiento; objetivo de diseño 100 %. No mide compras ejecutadas</td>
+</tr>
+</tbody>
+</table>
+<p>Un agente futuro podría leer estados autorizados, advertir faltantes y recomendar seguimiento. Debe escalar descuentos, cambios de condiciones y decisiones de abastecimiento al humano competente. La simulación no despliega un agente ni le atribuye facultades comerciales.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 12</div></section>
+<section class="sheet" id="s13"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>13 Casos y resultados comprobables</h2>
+<table>
+<thead>
+<tr>
+<th>Caso</th>
+<th>Entrada diferencial</th>
+<th>Resultado esperado</th>
+<th>Control y siguiente acción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EP-N01 normal</td>
+<td>5 unidades, 5 %, S/ 1,900; disponible 8; v1 aceptada vigente</td>
+<td>Estado ACEPTADA; código VALIDADA; order_id null; stock intacto</td>
+<td>Ventas comunica que se validó la solicitud; confirmación operativa posterior pendiente</td>
+</tr>
+<tr>
+<td>EP-S01 enlace P2P</td>
+<td>Misma necesidad; disponibilidad de evaluación 3</td>
+<td>PROMESA_CONDICIONADA / DISPONIBILIDAD_PARCIAL; déficit 2; sin fecha prometida</td>
+<td>Señal REP-EP-001; dueño/abastecimiento evalúan; cliente debe aceptar nuevas condiciones</td>
+</tr>
+<tr>
+<td>EP-E01 coordinación con Adrián</td>
+<td>v2 solicita 10 %, total S/ 1,800; sin autorización del dueño</td>
+<td>RECHAZADA / DESCUENTO_SIN_APROBACION; order_id null</td>
+<td>Vendedor escala al dueño y conserva condiciones pendientes; no ofrece 10 % como aprobado</td>
+</tr>
+</tbody>
+</table>
+<p>Los casos son <strong>corridas independientes</strong>, no tres ventas del mismo cliente. EP-S01 cambia deliberadamente el snapshot confiable de disponibilidad respecto del caso normal para comprobar la rama P2P. El 10 % no se acumula al 5 %: ambos se calculan sobre S/ 2,000. La falta de aprobación comercial se controla antes de evaluar el faltante.</p>
+<p>En el contrato existente, <code>ACEPTADA</code> es el <strong>estado</strong> y <code>VALIDADA</code> es el <strong>código</strong> de la misma respuesta normal. No son dos etapas sucesivas ni equivalen a pedido confirmado. <code>PROMESA_CONDICIONADA</code> describe una propuesta por revisar, no una promesa firme: la fecha continúa nula. <code>PENDIENTE</code> significa que no pudo verificarse una dependencia; no equivale a stock cero.</p>
+<p>El <a href="../../../pruebas/ep-benjamin/evidencias/resultados.md">informe de ejecución</a> registra el resultado <strong>observado</strong>, comparado con expectativas fijas, y los controles realmente ejecutados. Los JSON contienen datos de entrada, respuestas y trazas. La señal de reposición se documenta localmente como evidencia del enlace; no crea una transacción en Compras. Las verificaciones no acreditan ERP instalado, disponibilidad real ni política comercial aprobada.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 13</div></section>
+<section class="sheet" id="s14"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>14 Cómo reproducir y navegar la evidencia</h2>
+<ol>
+<li>Abrir <code>panel-benjamin.html</code> y seleccionar <strong>Mapa integrado</strong>. Explicar qué evento conecta O2C con P2P.</li>
+<li>Seleccionar <strong>Línea de tiempo</strong> y seguir CLI-DEMO-001, OPP-DEMO-001 y COT-DEMO-001 v1 hasta SOL-EP-N01.</li>
+<li>Abrir <strong>Caso normal</strong>: contrastar S/ 1,900, estado ACEPTADA, código VALIDADA y ausencia de pedido.</li>
+<li>Abrir <strong>Faltante y P2P</strong>: mostrar disponibilidad 3, déficit 2, señal REP-EP-001 y fecha prometida nula.</li>
+<li>Mostrar brevemente <strong>Descuento</strong>, que enlaza con el quiebre de Adrián; la explicación contractual detallada continúa con Gabriel.</li>
+</ol>
+<p>Desde la raíz del repositorio, ejecutar con Python 3:</p>
+<pre><code class="language-powershell">python pruebas/ep-benjamin/generar_evidencias.py
+</code></pre>
+<p>El generador usa la biblioteca estándar y reutiliza el simulador local existente. Reproduce snapshots sintéticos, contrasta respuestas con expectativas y actualiza resultados y hashes de sus entradas. El informe de ejecución indica qué se verificó realmente. Para inspección independiente se puede cambiar el stock de la fixture de prueba en una copia y volver a ejecutar; una expectativa que deje de cumplirse debe producir un fallo visible, no un resultado favorable escrito manualmente.</p>
+<p>No se deben presentar las pruebas históricas de PC2 como prueba de este nuevo canal sin adaptación. Tampoco corresponde afirmar que los journeys se validaron con clientes por ejecutar un script de transición. El panel local es material de Benjamin para integrar al panel único del grupo; publicar el enlace accesible del comité sigue siendo una tarea grupal.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 14</div></section>
+<section class="sheet" id="s15"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>15 Guion de dos minutos y coordinación</h2>
+<p><strong>04:00–04:20 | Decisión y contexto.</strong> “Defiendo que el recorrido del cliente sea trazable hasta la respuesta a la solicitud, y que un faltante active evaluación de reposición sin autorizar compras. Nuestro cliente es una persona natural nueva que llega a la tienda; mantenemos el canal físico de PC2.”</p>
+<p><strong>04:20–04:55 | Hilo normal.</strong> “Ventas identifica CLI-DEMO-001, califica el lead y vincula OPP-DEMO-001. Cotiza cinco autoradios a 400 soles: base 2,000, descuento permitido en el ejemplo del 5 %, total 1,900. La consulta de ocho unidades tiene fuente y hora; todavía no reserva nada. El cliente acepta COT-DEMO-001 v1 dentro de su vigencia.”</p>
+<p><strong>04:55–05:20 | Solicitud y evidencia.</strong> “La aceptación se enlaza con SOL-EP-N01 y con COR-EP-001. Aquí comprobamos la respuesta del simulador: estado ACEPTADA, código VALIDADA y order_id nulo. La validación permite continuar posteriormente; no confirma el pedido. Los registros conservan actor, versión y momento.”</p>
+<p><strong>05:20–05:45 | Conexión P2P.</strong> “En la variante EP-S01 solo hay tres unidades disponibles para cinco solicitadas. La brecha de dos produce REP-EP-001. El dueño y abastecimiento deben evaluar esa necesidad: no hay compra automática ni plazo comprometido. El cliente recibe una condición por revisar y debe aceptar cualquier cambio de oferta.”</p>
+<p><strong>05:45–06:00 | Límite y transición.</strong> “Precios, cantidades y stock son sintéticos; P2P no fue ejecutado. Llegamos a la respuesta de evaluación, antes de pedido, reserva y los tramos posteriores. Gabriel explicará ahora qué datos, estados y autorizaciones hacen válida esa transición.”</p>
+<p>El guion debe ensayarse con la navegación real para no superar dos minutos. Jharolym entrega la arquitectura lógica al iniciar el bloque; Benjamin usa los mismos sistemas e identificadores y entrega el contrato a Gabriel. Adrián amplía el descuento sin autorización. Ballack contrasta resultados y pendientes. Shirley conserva la vocería del minuto final; las preguntas siguientes son de preparación, no un registro de la pregunta real del vocal.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 15</div></section>
+<section class="sheet" id="s16"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>16 Matriz de cumplimiento de la rúbrica individual</h2>
+<table>
+<thead>
+<tr>
+<th>Criterio oficial</th>
+<th>Puntos</th>
+<th>Cómo lo demuestra Benjamin</th>
+<th>Evidencia local</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dominio funcional y contexto</td>
+<td>4</td>
+<td>Explica cliente físico, O2C completo y corte evaluado; justifica conexión P2P sin compras</td>
+<td>Alcance, mapa integrado y dos SIPOC</td>
+</tr>
+<tr>
+<td>Integración y arquitectura</td>
+<td>4</td>
+<td>Vincula CRM, Contactos, Ventas, Inventario, autorizaciones y bitácora por responsabilidades</td>
+<td>Mapa, flujo por roles y matriz de interfaces</td>
+</tr>
+<tr>
+<td>Datos controles y trazabilidad</td>
+<td>3</td>
+<td>Sigue CLI, OPP, COT/versión, ACE, SOL y COR; muestra descuento y snapshot</td>
+<td>Línea de tiempo, tabla de controles y JSON</td>
+</tr>
+<tr>
+<td>Reproducibilidad y evidencia</td>
+<td>3</td>
+<td>Navega normal y excepción; contrasta esperado con observado y muestra reintento</td>
+<td>Generador, resultados, trazas y manifiesto</td>
+</tr>
+<tr>
+<td>Argumentación y comunicación individual</td>
+<td>3</td>
+<td>Defiende una decisión y un límite, dentro de dos minutos</td>
+<td>Guion y panel navegable</td>
+</tr>
+<tr>
+<td>Contribución y coordinación</td>
+<td>2</td>
+<td>Entrega artefactos identificables y transición coherente al contrato de Gabriel</td>
+<td>Fila de contribución, archivos y enlace al bloque siguiente</td>
+</tr>
+<tr>
+<td>Ética y propiedad intelectual</td>
+<td>1</td>
+<td>Declara fuentes, IA, datos sintéticos y revisión humana pendiente</td>
+<td>Registro de fuentes, supuestos y límites</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total: 20 puntos.</strong> Esta es una matriz de cobertura del aporte, no una calificación otorgada. Todos los criterios se aplican a Benjamin; los puntos no se reparten entre miembros del grupo. La revisión humana y el ensayo de Benjamin deben completarse antes de la exposición.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 16</div></section>
+<section class="sheet" id="s17"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>17 Preguntas para preparar la defensa</h2>
+<p><strong>¿En qué evento se vinculan O2C y P2P?</strong> En la detección de disponibilidad insuficiente para una necesidad comercial identificada. REP-EP-001 vincula producto, ubicación y brecha con oportunidad y solicitud. Esa señal debe evaluarse; no aprueba una compra.</p>
+<p><strong>¿Por qué la cotización no compromete inventario?</strong> Registra condiciones comerciales y una consulta fechada. La simulación no ejecuta reserva y mantiene order_id nulo. Antes de una futura confirmación debe revalidarse disponibilidad y aplicar los controles operativos correspondientes.</p>
+<p><strong>¿Por qué cinco autoradios siguen siendo público general?</strong> La clasificación depende del uso final y del perfil de persona natural del caso; la cantidad por sí sola no demuestra reventa. El uso en vehículos familiares es un supuesto explícito que debe confirmarse con el cliente.</p>
+<p><strong>¿Por qué mostrar P2P si no se compra?</strong> Porque abastecimiento condiciona lo que comercial puede ofrecer. Mostrar la dependencia, su dueño y su evidencia satisface la visión integrada; ejecutar una compra ampliaría el alcance.</p>
+<p><strong>¿Qué significa ACEPTADA si no hay pedido?</strong> Significa que la solicitud pasó los controles de esta evaluación, con código VALIDADA. Es diferente de la aceptación de la cotización por el cliente y de una futura confirmación del pedido.</p>
+<p><strong>¿Pueden prometer una fecha con tres unidades disponibles?</strong> No con esta evidencia. La fecha es nula; el dueño y abastecimiento evalúan alternativas y Ventas obtiene una nueva aceptación si cambian las condiciones. La consulta de un proveedor no sustituye esa decisión.</p>
+<p><strong>¿Y si el dueño no responde al 10 %?</strong> El vendedor no se autoautoriza. Se conserva la solicitud comercial en seguimiento y se comunica la espera; si se intenta la transición sin autorización, la prueba devuelve DESCUENTO_SIN_APROBACION. Rechazar la solicitud técnica no significa perder automáticamente la oportunidad.</p>
+<p><strong>¿Se comprobó esto en Odoo real?</strong> No. Se ejecutó una simulación local del contrato y se comprobaron sus resultados. El despliegue, permisos reales y concurrencia de inventario permanecen por validar antes de cualquier operación.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 17</div></section>
+<section class="sheet" id="s18"><div class="meta">GE703 · G7 · Importaciones MYS Hermanos S.A.C. · Aporte de Benjamin</div><h2>18 Fuentes supuestos y revisión</h2>
+<table>
+<thead>
+<tr>
+<th>Referencia</th>
+<th>Uso y localización</th>
+<th>Consulta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GE703 EP Instrucciones y Rúbrica Comité, material docente</td>
+<td>Págs. 1–2: alcance hasta solicitud/respuestas; mapa O2C–P2P; siete criterios, total 20</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td>Reparto Parcial, propuesta de equipo</td>
+<td>Págs. 1 y 3: Benjamin, sección 3, dos minutos y enlace por faltante; pág. 7: consistencia y límites</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td>Plantilla GE703 EP G7, Word adjunto</td>
+<td>Sección 3 y fila de contribución; se prepara texto para integrar sin llenar aportes ajenos ni pregunta real</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td>GE703 S5 Presentación, Enrique Chaparro, UNI FIIS</td>
+<td>Págs. PDF 10–19, 21–27 y 29–33: proceso, mapa, SIPOC, dimensiones, eventos y conexión O2C–P2P. Desde PDF pág. 31 la numeración impresa se desplaza</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../pc2/entrega-pc2.md">PC2 consolidada en Markdown</a> y Word oficial en raíz</td>
+<td>Cliente físico nuevo, cinco autoradios, precios, IDs, alcance comercial y supuestos</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../contexto-y-alcance.md">Contexto empresarial</a> y <a href="../../../macroproesos%20ERP/macroprocesos-o2c.md">macroprocesos históricos</a></td>
+<td>Diagnóstico de fragmentación y estructura previa; se adapta al corte EP</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td><a href="../../../arquitectura/contratos/crm-erp-v1.md">Contrato local v1</a></td>
+<td>Estado ACEPTADA y código VALIDADA, idempotencia, controles, order_id null; el escenario histórico se adapta</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td><a href="https://www.odoo.com/documentation/19.0/applications/sales/crm/acquire_leads/send_quotes.html">Odoo 19 documentación de cotizaciones desde CRM</a></td>
+<td>Referencia técnica de vinculación oportunidad–cotización; no prueba despliegue MYS</td>
+<td>21/10/2026</td>
+</tr>
+<tr>
+<td><a href="https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/inventory/warehouses_storage/replenishment/report.html">Odoo 19 documentación de reposición</a></td>
+<td>Referencia de evaluación de necesidades; la señal didáctica no configura automatismos</td>
+<td>21/10/2026</td>
+</tr>
+</tbody>
+</table>
+</section><section class="sheet"><div class="meta">GE703 · G7 · Aporte de Benjamin · Examen parcial 24/10/2026</div><h2>Supuestos y revisión del aporte</h2><p><strong>Criterio de consistencia entre fuentes.</strong> El Word oficial de PC2 menciona cinco unidades disponibles; su Markdown menciona ocho. Se fija <strong>ocho</strong> como dato explícito de esta nueva recreación EP, coherente con las fixtures, y se prueban tres en la variante. No se afirma reproducción literal de PC2. Las fechas y vigencias se renuevan al reloj lógico de 24/10; no se reutiliza como vigente una oferta de 16/10.</p>
+<p>El reparto atribuye el límite de descuento a una entrevista, mientras los entregables PC2 lo etiquetan como supuesto. Al no disponer en estos insumos del registro primario de esa entrevista, el aporte conserva <strong>5 % como regla didáctica por validar con el dueño</strong> y no acredita una política empresarial real. El diagnóstico actual tampoco acredita Odoo operativo: la arquitectura se expresa como propuesta.</p>
+<p><strong>Hechos documentales:</strong> empresa y giro, foco presencial/público general de PC2, reparto y alcance del parcial. <strong>Supuestos:</strong> cantidades, SKU, precios, descuentos, disponibilidad, tiempos, condiciones, uso familiar y emociones de journeys. <strong>Diseño:</strong> reglas de transición, IDs nuevos, señal REP, roles funcionales e indicadores. <strong>Resultados observados:</strong> únicamente los producidos y registrados por el generador local.</p>
+<p>Se utilizó Codex de OpenAI el 21/10/2026 para leer insumos, contrastar el alcance, redactar, programar la recreación y elaborar diagramas SVG/Mermaid. No se realizaron nuevas entrevistas ni operaciones en Odoo. Los diagramas son elaboración del aporte, asistida por IA; se atribuye el material docente y no se redistribuyen sus archivos originales. No se publica información personal de clientes, credenciales ni fuentes privadas. Benjamin debe revisar contenido, cifras y navegación; el grupo debe aprobar la política comercial y completar el panel común y su enlace accesible. La revisión humana no se registra como ya realizada.</p><div class="pagefoot">Material de apoyo a la intervención 04:00–06:00 · 18</div></section></main></html>

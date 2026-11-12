@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+<title id="title">Mapa integrado O2C y P2P — alcance del examen parcial</title>
+<desc id="desc">Caso didáctico de IMPORTACIONES MYS HERMANOS S.A.C. Cliente nuevo persona natural, público general y canal físico. Diseño y simulación local; Odoo no desplegado. Datos sintéticos.</desc>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#4A637A"/></marker><marker id="amberarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#87540A"/></marker><marker id="grayarrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L8,4 L0,8 Z" fill="#ABB6C2"/></marker></defs>
+<style>text {font-family: "Segoe UI", Arial, sans-serif;} .title {font-weight:700;} </style>
+<rect width="1600" height="1000" fill="#FBFCFE"/>
+<rect x="36" y="30" width="47" height="47" rx="10" fill="#15324A" stroke="#15324A" stroke-width="1.5"/>
+<text x="59" y="62" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">02</text>
+<text x="102" y="61" font-size="30" fill="#15324A" font-weight="700" text-anchor="start">Mapa integrado · O2C y su enlace con P2P</text>
+<text x="41" y="106" font-size="19" fill="#526578" font-weight="400" text-anchor="start">Una vista: bloque comercial EP, señal de reposición y contexto corporativo. Sin pedido, reserva ni compra ejecutada.</text>
+<text x="46" y="148" font-size="20" fill="#006C87" font-weight="700" text-anchor="start">O2C · RECORRIDO EVALUADO EN EL EXAMEN PARCIAL</text>
+<rect x="50" y="175" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="68" y="207" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">01 · Consulta física</text>
+<text x="68" y="236" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Cliente nuevo walk-in</text>
+<text x="68" y="261" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">5 autoradios familiares</text>
+<text x="68" y="286" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:45</text>
+<rect x="350" y="175" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="368" y="207" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">02 · Cliente + lead</text>
+<text x="368" y="236" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">CLI-DEMO-001</text>
+<text x="368" y="261" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">LEAD-EP-001</text>
+<text x="368" y="286" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:46</text>
+<rect x="650" y="175" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="668" y="207" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">03 · Oportunidad</text>
+<text x="668" y="236" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">OPP-DEMO-001</text>
+<text x="668" y="261" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Público general / físico</text>
+<text x="668" y="286" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:48</text>
+<rect x="950" y="175" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="968" y="207" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">04 · Stock referencial</text>
+<text x="968" y="236" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Caso base: 8 disponibles</text>
+<text x="968" y="261" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Consulta; sin reserva</text>
+<text x="968" y="286" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:50</text>
+<rect x="1250" y="175" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="1268" y="207" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">05 · Cotización v1</text>
+<text x="1268" y="236" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">COT-DEMO-001 · S/ 1 900</text>
+<text x="1268" y="261" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">5 × S/ 400; descuento 5%</text>
+<text x="1268" y="286" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:52</text>
+<polyline points="300,240 350,240" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="600,240 650,240" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="900,240 950,240" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1200,240 1250,240" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<rect x="1250" y="355" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="1268" y="387" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">06 · Aceptación exacta</text>
+<text x="1268" y="416" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">ACE-EP-001 → versión 1</text>
+<text x="1268" y="441" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Acepta términos cotizados</text>
+<text x="1268" y="466" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:54</text>
+<rect x="950" y="355" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="968" y="387" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">07 · Solicitud a ERP</text>
+<text x="968" y="416" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">SOL-EP-N01 / COR-EP-001</text>
+<text x="968" y="441" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Vendedor envía datos</text>
+<text x="968" y="466" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:55</text>
+<rect x="650" y="355" width="250" height="130" rx="12" fill="#E8F6FA" stroke="#006C87" stroke-width="1.5"/>
+<text x="668" y="387" font-size="18" fill="#006C87" font-weight="700" text-anchor="start">08 · Evaluación lógica</text>
+<text x="668" y="416" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Cliente, precio y versión</text>
+<text x="668" y="441" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Descuento autorizado</text>
+<text x="668" y="466" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Reglas de disponibilidad</text>
+<rect x="350" y="355" width="250" height="130" rx="12" fill="#EAF7EF" stroke="#176447" stroke-width="1.5"/>
+<text x="368" y="387" font-size="18" fill="#176447" font-weight="700" text-anchor="start">09 · Respuesta</text>
+<text x="368" y="416" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">ACEPTADA / VALIDADA</text>
+<text x="368" y="441" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">order_id: null</text>
+<text x="368" y="466" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">09:55:01</text>
+<rect x="50" y="355" width="250" height="130" rx="12" fill="#FFF0EF" stroke="#9D3131" stroke-width="1.5"/>
+<text x="68" y="387" font-size="18" fill="#9D3131" font-weight="700" text-anchor="start">CORTE DEL EP</text>
+<text x="68" y="416" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Solicitud validada</text>
+<text x="68" y="441" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Sin pedido ni reserva</text>
+<text x="68" y="466" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">No hay venta concluida</text>
+<polyline points="1375,305 1375,355" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="1250,420 1200,420" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="950,420 900,420" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="650,420 600,420" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="350,420 300,420" fill="none" stroke="#4A637A" stroke-width="2.2" stroke-linejoin="round" marker-end="url(#arrow)"/>
+<polyline points="775,485 775,517 750,517 750,550" fill="none" stroke="#87540A" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#amberarrow)"/>
+<text x="795" y="533" font-size="16" fill="#87540A" font-weight="400" text-anchor="start">Tras controles conformes</text>
+<rect x="605" y="550" width="290" height="100" rx="12" fill="#FFF4DC" stroke="#87540A" stroke-width="1.5"/>
+<text x="623" y="582" font-size="17" fill="#87540A" font-weight="700" text-anchor="start">PROMESA_CONDICIONADA</text>
+<text x="623" y="611" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">EP-S01: disponible 3; déficit 2</text>
+<text x="623" y="636" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Evaluación de disponibilidad</text>
+<rect x="965" y="550" width="260" height="100" rx="12" fill="#FFF4DC" stroke="#87540A" stroke-width="1.5"/>
+<text x="983" y="582" font-size="18" fill="#87540A" font-weight="700" text-anchor="start">Necesidad de reposición</text>
+<text x="983" y="611" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">REP-EP-001 · enlace P2P</text>
+<text x="983" y="636" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Sin OC ni fecha prometida</text>
+<rect x="1265" y="550" width="290" height="100" rx="12" fill="#FFF4DC" stroke="#87540A" stroke-width="1.5"/>
+<text x="1283" y="582" font-size="18" fill="#87540A" font-weight="700" text-anchor="start">Dueño / compras evalúa</text>
+<text x="1283" y="611" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Factibilidad de abastecimiento</text>
+<text x="1283" y="636" font-size="16" fill="#15324A" font-weight="400" text-anchor="start">Sin orden de compra ni fecha</text>
+<polyline points="895,595 965,595" fill="none" stroke="#87540A" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#amberarrow)"/>
+<polyline points="1225,595 1265,595" fill="none" stroke="#87540A" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#amberarrow)"/>
+<text x="45" y="598" font-size="18" fill="#526578" font-weight="400" text-anchor="start">Caso base: 8 ≥ 5; no activa reposición.</text>
+<text x="45" y="625" font-size="17" fill="#526578" font-weight="400" text-anchor="start">EP-S01: stock parcial; sin promesa firme.</text>
+<rect x="42" y="673" width="1516" height="172" rx="12" fill="#F1F4F7" stroke="#ABB6C2" stroke-width="1.5" stroke-dasharray="7 6"/>
+<text x="62" y="701" font-size="18" fill="#526578" font-weight="700" text-anchor="start">P2P COMPLETO · SOLO CONTEXTO / NO EJECUTADO EN LA DEMOSTRACIÓN EP</text>
+<rect x="62" y="717" width="225" height="70" rx="12" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="80" y="749" font-size="16" fill="#ABB6C2" font-weight="700" text-anchor="start">Selección proveedor</text>
+<text x="80" y="778" font-size="14" fill="#15324A" font-weight="400" text-anchor="start">Cotizar / evaluar</text>
+<polyline points="287,753 312,753" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<rect x="312" y="717" width="225" height="70" rx="12" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="330" y="749" font-size="16" fill="#ABB6C2" font-weight="700" text-anchor="start">Orden de compra</text>
+<text x="330" y="778" font-size="14" fill="#15324A" font-weight="400" text-anchor="start">Aprobar / emitir OC</text>
+<polyline points="537,753 562,753" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<rect x="562" y="717" width="225" height="70" rx="12" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="580" y="749" font-size="16" fill="#ABB6C2" font-weight="700" text-anchor="start">Recepción</text>
+<text x="580" y="778" font-size="14" fill="#15324A" font-weight="400" text-anchor="start">Conformidad de bienes</text>
+<polyline points="787,753 812,753" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<rect x="812" y="717" width="225" height="70" rx="12" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="830" y="749" font-size="16" fill="#ABB6C2" font-weight="700" text-anchor="start">Factura proveedor</text>
+<text x="830" y="778" font-size="14" fill="#15324A" font-weight="400" text-anchor="start">Validación / cuenta por pagar</text>
+<polyline points="1037,753 1062,753" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<rect x="1062" y="717" width="225" height="70" rx="12" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="1080" y="749" font-size="16" fill="#ABB6C2" font-weight="700" text-anchor="start">Pago proveedor</text>
+<text x="1080" y="778" font-size="14" fill="#15324A" font-weight="400" text-anchor="start">Programación y desembolso</text>
+<polyline points="1287,753 1312,753" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<rect x="1312" y="717" width="225" height="70" rx="12" fill="#FFFFFF" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="1330" y="749" font-size="16" fill="#ABB6C2" font-weight="700" text-anchor="start">Cierre P2P</text>
+<text x="1330" y="778" font-size="14" fill="#15324A" font-weight="400" text-anchor="start">Aplicación / conciliación</text>
+<polyline points="1410,650 1410,657 30,657 30,753 62,753" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<polyline points="675,787 675,810 830,810" fill="none" stroke="#ABB6C2" stroke-width="2.2" stroke-linejoin="round" stroke-dasharray="7 6" marker-end="url(#grayarrow)"/>
+<text x="842" y="817" font-size="17" fill="#526578" font-weight="400" text-anchor="start">Retorno a stock futuro tras recepción; no modifica el stock de esta demo</text>
+<rect x="42" y="869" width="1516" height="53" rx="12" fill="#F1F4F7" stroke="#ABB6C2" stroke-width="1.5"/>
+<text x="62" y="901" font-size="20" fill="#526578" font-weight="400" text-anchor="start">O2C posterior · CONTEXTO FUERA DEL EP: pedido → reserva → facturación / entrega → cobro aplicado</text>
+<text x="42" y="961" font-size="17" fill="#526578" font-weight="400" text-anchor="start">Diseño / simulación local · Odoo no desplegado · cantidades, precios y stock sintéticos</text>
+<text x="42" y="986" font-size="16" fill="#526578" font-weight="400" text-anchor="start">IMPORTACIONES MYS HERMANOS S.A.C. · Público general · Canal físico walk-in · Continuidad PC2 v2.1</text>
+</svg>

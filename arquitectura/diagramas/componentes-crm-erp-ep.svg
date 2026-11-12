@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="2040" viewBox="0 0 1900 2040" role="img" aria-labelledby="title description">
+<title id="title">Arquitectura lógica EP de Odoo para cliente nuevo en tienda física</title>
+<desc id="description">Módulos C01 a C08 e interfaces I01 a I07. Cliente presencial nuevo, registros comerciales, controles y respuesta sin pedido. Señal conceptual P2P fuera del contrato. Odoo no desplegado.</desc>
+<rect width="1900" height="2040" fill="#ffffff"/>
+<g transform="translate(35 25) scale(1.0)" fill="none" stroke="#16374c" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 25h63v45H7z M2 24 14 5h49l14 19z M18 9l-3 15 M34 9l-3 15 M50 9l-3 15 M66 9l-3 15 M20 70V43h17v27 M45 40h17v14H45z"/></g>
+<text x="140" y="60" font-family="Arial" font-size="45" fill="#16374c" font-weight="700">Cliente nuevo en tienda física</text>
+<text x="140" y="108" font-family="Arial" font-size="29" fill="#526574">Público general · visita espontánea · registro humano del vendedor</text>
+<rect x="20" y="230" width="1860" height="1460" rx="16" fill="#fafcfe" stroke="#c9d6df" stroke-width="3"/>
+<text x="55" y="277" font-family="Arial" font-size="30" fill="#16374c" font-weight="700">ODOO PROPUESTO  /  RESPONSABILIDADES LÓGICAS</text>
+<polyline points="1270,140 1270,290 950,290 950,315" fill="none" stroke="#286d9b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="950.0,315.0 941.4,299.2 958.6,299.2" fill="#286d9b"/>
+<text x="1300" y="190" font-family="Arial" font-size="26" fill="#286d9b" font-weight="700">Atención presencial</text>
+<g id="C02">
+<rect x="65" y="315" width="530" height="235" rx="16" fill="#edf5fa" stroke="#286d9b" stroke-width="3"/>
+<g transform="translate(87 337) scale(0.675)" fill="none" stroke="#286d9b" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="71" height="58"/><circle cx="22" cy="29" r="9"/><path d="m10 54 5-11h14l7 11 M44 24h21 M44 36h21 M44 48h17"/></g>
+<text x="165" y="366" font-family="Arial" font-size="33" fill="#286d9b" font-weight="700">C02  Contactos</text>
+<text x="90" y="439" font-family="Arial" font-size="28" fill="#183345">Cliente único</text>
+<text x="90" y="473" font-family="Arial" font-size="28" fill="#183345">CLI-DEMO-001</text>
+<text x="90" y="507" font-family="Arial" font-size="28" fill="#183345">Datos mínimos autorizados</text>
+<text x="90" y="533" font-family="Arial" font-size="24" fill="#286d9b" font-weight="700">Módulo estándar propuesto</text>
+</g>
+<g id="C01">
+<rect x="685" y="315" width="530" height="235" rx="16" fill="#edf5fa" stroke="#286d9b" stroke-width="3"/>
+<g transform="translate(707 337) scale(0.675)" fill="none" stroke="#286d9b" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="40.5" cy="11.5" r="11"/><circle cx="11.5" cy="53.5" r="11"/><circle cx="68.5" cy="53.5" r="11"/><path d="M40 24v9H12v9 M40 33h28v9"/></g>
+<text x="785" y="366" font-family="Arial" font-size="33" fill="#286d9b" font-weight="700">C01  CRM</text>
+<text x="710" y="439" font-family="Arial" font-size="28" fill="#183345">Lead y oportunidad</text>
+<text x="710" y="473" font-family="Arial" font-size="28" fill="#183345">OPP-DEMO-001</text>
+<text x="710" y="507" font-family="Arial" font-size="28" fill="#183345">Origen y seguimiento</text>
+<text x="710" y="533" font-family="Arial" font-size="24" fill="#286d9b" font-weight="700">Módulo estándar propuesto</text>
+</g>
+<g id="C03">
+<rect x="1305" y="315" width="530" height="235" rx="16" fill="#edf5fa" stroke="#286d9b" stroke-width="3"/>
+<g transform="translate(1327 337) scale(0.675)" fill="none" stroke="#286d9b" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h41l18 18v51H10z M51 3v18h18 M23 33h33 M23 46h33 M23 59h33"/></g>
+<text x="1405" y="366" font-family="Arial" font-size="33" fill="#286d9b" font-weight="700">C03  Ventas</text>
+<text x="1330" y="439" font-family="Arial" font-size="28" fill="#183345">COT-DEMO-001</text>
+<text x="1330" y="473" font-family="Arial" font-size="28" fill="#183345">Versión v1 y aceptación</text>
+<text x="1330" y="507" font-family="Arial" font-size="28" fill="#183345">5 unidades · S/ 1,900</text>
+<text x="1330" y="533" font-family="Arial" font-size="24" fill="#286d9b" font-weight="700">Versionado y aceptación por extender</text>
+</g>
+<polyline points="685,430 595,430" fill="none" stroke="#286d9b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="595.0,430.0 610.8,421.4 610.8,438.6" fill="#286d9b"/>
+<text x="604" y="403" font-family="Arial" font-size="26" fill="#286d9b" font-weight="700">I01</text>
+<polyline points="1215,430 1305,430" fill="none" stroke="#286d9b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1305.0,430.0 1289.2,438.6 1289.2,421.4" fill="#286d9b"/>
+<text x="1224" y="403" font-family="Arial" font-size="26" fill="#286d9b" font-weight="700">I02</text>
+<polyline points="950,550 950,765" fill="none" stroke="#286d9b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="950.0,765.0 941.4,749.2 958.6,749.2" fill="#286d9b"/>
+<text x="720" y="655" font-family="Arial" font-size="26" fill="#286d9b" font-weight="700">I03 · solicitar</text>
+<polyline points="1125,765 1125,625 1570,625 1570,550" fill="none" stroke="#286d9b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1570.0,550.0 1578.6,565.8 1561.4,565.8" fill="#286d9b"/>
+<text x="1260" y="603" font-family="Arial" font-size="26" fill="#286d9b" font-weight="700">I04 · versión aceptada</text>
+<g id="C06">
+<rect x="65" y="765" width="530" height="235" rx="16" fill="#fff7e9" stroke="#a76513" stroke-width="3"/>
+<g transform="translate(87 787) scale(0.675)" fill="none" stroke="#a76513" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 5h50v67H14z m10 47 9 9 22-21"/><circle cx="39.5" cy="25.5" r="9.5"/></g>
+<text x="165" y="816" font-family="Arial" font-size="33" fill="#a76513" font-weight="700">C06  Autorización</text>
+<text x="90" y="889" font-family="Arial" font-size="28" fill="#183345">Dueño decide excepciones</text>
+<text x="90" y="923" font-family="Arial" font-size="28" fill="#183345">Regla didáctica del 5 %</text>
+<text x="90" y="957" font-family="Arial" font-size="28" fill="#183345">Aprobación por versión</text>
+<text x="90" y="983" font-family="Arial" font-size="24" fill="#a76513" font-weight="700">Extensión propuesta</text>
+</g>
+<g id="C04">
+<rect x="685" y="765" width="530" height="235" rx="16" fill="#eef8f3" stroke="#267b65" stroke-width="3"/>
+<g transform="translate(707 787) scale(0.675)" fill="none" stroke="#267b65" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="39.5" cy="37.5" r="36"/><path d="m21 38 13 13 25-26"/></g>
+<text x="785" y="816" font-family="Arial" font-size="33" fill="#267b65" font-weight="700">C04  Transición</text>
+<text x="710" y="889" font-family="Arial" font-size="28" fill="#183345">Evalúa solicitud y reglas</text>
+<text x="710" y="923" font-family="Arial" font-size="28" fill="#183345">SOL-EP-N01</text>
+<text x="710" y="957" font-family="Arial" font-size="28" fill="#183345">Conserva decisión y motivo</text>
+<text x="710" y="983" font-family="Arial" font-size="24" fill="#267b65" font-weight="700">Extensión propuesta</text>
+</g>
+<g id="C05">
+<rect x="1305" y="765" width="530" height="235" rx="16" fill="#edf5fa" stroke="#286d9b" stroke-width="3"/>
+<g transform="translate(1327 787) scale(0.675)" fill="none" stroke="#286d9b" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 35h32v31H4z M42 35h32v31H42z M23 0h32v31H23z M20 35v12 M58 35v12 M39 0v12"/></g>
+<text x="1405" y="816" font-family="Arial" font-size="33" fill="#286d9b" font-weight="700">C05  Inventario</text>
+<text x="1330" y="889" font-family="Arial" font-size="28" fill="#183345">SKU y ubicación</text>
+<text x="1330" y="923" font-family="Arial" font-size="28" fill="#183345">Disponibilidad y hora</text>
+<text x="1330" y="957" font-family="Arial" font-size="28" fill="#183345">Consulta sin reserva</text>
+<text x="1330" y="983" font-family="Arial" font-size="24" fill="#286d9b" font-weight="700">Módulo estándar consultado</text>
+</g>
+<polyline points="685,880 595,880" fill="none" stroke="#a76513" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="595.0,880.0 610.8,871.4 610.8,888.6" fill="#a76513"/>
+<text x="604" y="853" font-family="Arial" font-size="26" fill="#a76513" font-weight="700">I06</text>
+<polyline points="1215,880 1305,880" fill="none" stroke="#286d9b" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="1305.0,880.0 1289.2,888.6 1289.2,871.4" fill="#286d9b"/>
+<text x="1224" y="853" font-family="Arial" font-size="26" fill="#286d9b" font-weight="700">I05</text>
+<polyline points="950,1000 950,1070" fill="none" stroke="#267b65" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="950.0,1070.0 941.4,1054.2 958.6,1054.2" fill="#267b65"/>
+<rect x="320" y="1070" width="1260" height="145" rx="16" fill="#f1f8f5" stroke="#267b65" stroke-width="3"/>
+<text x="350" y="1105" font-family="Arial" font-size="31" fill="#267b65" font-weight="700">RESPUESTA A VENTAS Y CRM</text>
+<text x="350" y="1150" font-family="Arial" font-size="29" fill="#183345">ACEPTADA / código VALIDADA · RECHAZADA</text>
+<text x="350" y="1190" font-family="Arial" font-size="29" fill="#183345">PROMESA_CONDICIONADA · PENDIENTE  |  order_id = null</text>
+<polyline points="950,1215 950,1300" fill="none" stroke="#16374c" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="950.0,1300.0 941.4,1284.2 958.6,1284.2" fill="#16374c"/>
+<text x="995" y="1272" font-family="Arial" font-size="26" fill="#16374c" font-weight="700">I07 · autorización y eventos</text>
+<g id="C07">
+<rect x="65" y="1300" width="1770" height="155" rx="16" fill="#eef2f6" stroke="#16374c" stroke-width="3"/>
+<g transform="translate(87 1322) scale(0.675)" fill="none" stroke="#16374c" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="m39 0 31 13-5 34-26 25-27-25-5-34z m-17 34 13 13 21-24"/></g>
+<text x="165" y="1351" font-family="Arial" font-size="33" fill="#16374c" font-weight="700">C07  Seguridad y bitácora</text>
+<text x="90" y="1424" font-family="Arial" font-size="28" fill="#183345">Actor · permisos · compañía · COR-EP-001 · evento y fecha</text>
+</g>
+<polyline points="950,1455 950,1515" fill="none" stroke="#267b65" stroke-width="4" stroke-linejoin="round"/>
+<polygon points="950.0,1515.0 941.4,1499.2 958.6,1499.2" fill="#267b65"/>
+<g id="C08">
+<g transform="translate(440 1530) scale(1.125)" fill="none" stroke="#267b65" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="39.5" cy="13" rx="36.5" ry="11"/><path d="M3 13v46c0 15 73 15 73 0V13 M3 34c0 15 73 15 73 0 M3 49c0 15 73 15 73 0"/></g>
+<text x="555" y="1553" font-family="Arial" font-size="34" fill="#267b65" font-weight="700">C08  Persistencia Odoo y PostgreSQL</text>
+<text x="555" y="1603" font-family="Arial" font-size="28" fill="#526574">C01–C07 acceden mediante ORM; diseño por implementar</text>
+<text x="555" y="1648" font-family="Arial" font-size="28" fill="#526574">La prueba local utiliza JSON y SQLite</text>
+</g>
+<rect x="65" y="1725" width="855" height="185" rx="16" fill="#f3f5f7" stroke="#526574" stroke-width="3"/>
+<g transform="translate(87 1747) scale(0.675)" fill="none" stroke="#526574" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h41l18 18v51H10z M51 3v18h18 M23 33h33 M23 46h33 M23 59h33"/></g>
+<text x="165" y="1776" font-family="Arial" font-size="33" fill="#526574" font-weight="700">UBLHUB  Continuidad de PC1</text>
+<text x="90" y="1849" font-family="Arial" font-size="28" fill="#183345">Emisión electrónica futura</text>
+<text x="90" y="1883" font-family="Arial" font-size="28" fill="#183345">Fuera del tramo evaluado</text>
+<rect x="1010" y="1725" width="825" height="185" rx="16" fill="#fff9ef" stroke="#a76513" stroke-width="3"/>
+<g transform="translate(1032 1747) scale(0.675)" fill="none" stroke="#a76513" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 35h32v31H4z M42 35h32v31H42z M23 0h32v31H23z M20 35v12 M58 35v12 M39 0v12"/></g>
+<text x="1110" y="1776" font-family="Arial" font-size="33" fill="#a76513" font-weight="700">P2P  Abastecimiento</text>
+<text x="1035" y="1849" font-family="Arial" font-size="28" fill="#183345">Faltante 2 → REP-EP-001</text>
+<text x="1035" y="1883" font-family="Arial" font-size="28" fill="#183345">Dueño evalúa; sin compra automática</text>
+<line x1="1580.0" y1="1140.0" x2="1595.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1608.0" y1="1140.0" x2="1623.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1636.0" y1="1140.0" x2="1651.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1664.0" y1="1140.0" x2="1679.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1692.0" y1="1140.0" x2="1707.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1720.0" y1="1140.0" x2="1735.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1748.0" y1="1140.0" x2="1763.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1776.0" y1="1140.0" x2="1791.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1804.0" y1="1140.0" x2="1819.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1832.0" y1="1140.0" x2="1847.0" y2="1140.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1140.0" x2="1860.0" y2="1155.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1168.0" x2="1860.0" y2="1183.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1196.0" x2="1860.0" y2="1211.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1224.0" x2="1860.0" y2="1239.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1252.0" x2="1860.0" y2="1267.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1280.0" x2="1860.0" y2="1295.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1308.0" x2="1860.0" y2="1323.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1336.0" x2="1860.0" y2="1351.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1364.0" x2="1860.0" y2="1379.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1392.0" x2="1860.0" y2="1407.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1420.0" x2="1860.0" y2="1435.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1448.0" x2="1860.0" y2="1463.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1476.0" x2="1860.0" y2="1491.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1504.0" x2="1860.0" y2="1519.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1532.0" x2="1860.0" y2="1547.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1560.0" x2="1860.0" y2="1575.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1588.0" x2="1860.0" y2="1603.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1616.0" x2="1860.0" y2="1631.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1644.0" x2="1860.0" y2="1659.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1672.0" x2="1860.0" y2="1687.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1700.0" x2="1860.0" y2="1715.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1728.0" x2="1860.0" y2="1743.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1756.0" x2="1860.0" y2="1771.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1784.0" x2="1860.0" y2="1799.0" stroke="#a76513" stroke-width="4"/>
+<line x1="1860.0" y1="1810.0" x2="1845.0" y2="1810.0" stroke="#a76513" stroke-width="4"/>
+<polygon points="1835.0,1810.0 1850.8,1801.4 1850.8,1818.6" fill="#a76513"/>
+<text x="1605" y="1202" font-family="Arial" font-size="23" fill="#a76513">Tras respuesta parcial:</text>
+<text x="1605" y="1231" font-family="Arial" font-size="23" fill="#a76513">arnés documenta señal</text>
+<text x="1605" y="1260" font-family="Arial" font-size="23" fill="#a76513">fuera del contrato 1.0</text>
+<text x="65" y="1948" font-family="Arial" font-size="26" fill="#526574">Flecha continua: intercambio lógico · Trazo discontinuo: dependencia conceptual</text>
+<text x="65" y="1988" font-family="Arial" font-size="25" fill="#526574">Ficha: identidad · Documento: cotización · Cajas: inventario · Escudo: seguridad · Cilindro: datos</text>
+<text x="65" y="2024" font-family="Arial" font-size="25" fill="#526574">Diseño y datos sintéticos · Odoo no desplegado · Sin pedido, reserva ni compras ejecutadas</text>
+</svg>

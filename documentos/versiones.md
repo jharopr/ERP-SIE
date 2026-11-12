@@ -7,6 +7,7 @@
 | 0.3 | 25/09/2026 | Contexto real de dos canales, selección Odoo + UBLHUB y proceso comercial mejorado | Sustituida |
 | 0.4 | 25/09/2026 | Actores detallados, matriz RACI, diagramas UML/BPMN/C4 y cierre de decisiones abiertas | Línea base PC1 |
 | PC2 v2.0 | 15/10/2026 | CRM de Odoo, componentes C01–C08, interfaces I01–I07, contrato 1.0, datos/controles y prueba local reproducible | Incremento documentado; revisión humana pendiente |
+| EP arquitectura 1.0 | 22/10/2026 | Aporte de Jharolym en el repositorio: arquitectura del cliente nuevo presencial, dos SVG con iconos, guion, fuentes y conexión con evidencias de Benjamín | Diseño documentado; revisión humana pendiente |
 
 ## Registro de decisiones
 
@@ -21,3 +22,7 @@
 ## Decisiones del incremento PC2
 
 El [registro D-PC2-01 a D-PC2-08](../fuentes/pc2.md#3-decisiones-de-diseño-trazables) conserva las decisiones nuevas: CRM integrado, control de transición propuesto, contrato cerrado, fuentes oficiales por objeto, idempotencia/atomicidad y separación entre promesa, pendiente y aceptación de solicitud. Una aceptación PC2 no confirma el pedido operativo. Los componentes de integración tributaria de PC1 quedan como continuidad posterior.
+
+## Arquitectura para el parcial
+
+La [vista EP](../arquitectura/crm-erp-ep.md) mantiene cliente nuevo, tienda física y visita espontánea de PC2 v2.1. Reutiliza C01–C08, I01–I07 y el contrato 1.0; no cambia el simulador. La dependencia P2P es una señal conceptual documentada por el arnés de Benjamín, fuera del contrato. Los diagramas históricos y evidencias previas se conservan como antecedentes identificados.

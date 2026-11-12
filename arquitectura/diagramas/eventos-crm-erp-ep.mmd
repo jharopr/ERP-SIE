@@ -1,0 +1,12 @@
+flowchart TD
+    E01["E01 · Cliente aceptó la cotización<br/>Cliente / Ventas C03 → vendedor en CRM C01<br/>Antecedente sintético"]
+    E01 -->|"I03 · Ventas solicita evaluación"| E02["E02 · Solicitud recibida<br/>CRM C01 → Control C04<br/>Bitácora RECIBIDA"]
+    E02 --> CONTROL["C04 coordina controles<br/>I04 oferta · I06 autorización · I05 stock si procede"]
+    CONTROL --> E03["E03 · Evaluación validada<br/>ACEPTADA / VALIDADA · EP-N01"]
+    CONTROL --> E04["E04 · Disponibilidad parcial<br/>PROMESA_CONDICIONADA / DISPONIBILIDAD_PARCIAL<br/>EP-S01 · brecha de 2 unidades"]
+    CONTROL --> E05["E05 · Descuento sin aprobación<br/>RECHAZADA / DESCUENTO_SIN_APROBACION<br/>EP-E01 · antes de consultar stock"]
+    E03 --> C07["C07 · Registro de decisión y respuesta a CRM / Ventas<br/>I07 · DECISION + código · actor, fecha, SOL y COR<br/>order_id = null"]
+    E04 --> C07
+    E05 --> C07
+    C07 -->|"Misma solicitud final y contenido por I03"| E07["E07 · Reintento recibido<br/>C04 recupera respuesta original<br/>REINTENTO · una sola decisión persistida"]
+    E04 -. "Arnés tras respuesta parcial · fuera del contrato 1.0" .-> E06["E06 · Necesidad de abastecimiento<br/>REP-EP-001 → dueño / abastecimiento<br/>Señal conceptual O2C–P2P · sin compra automática"]

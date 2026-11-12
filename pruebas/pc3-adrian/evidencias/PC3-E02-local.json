@@ -1,0 +1,220 @@
+{
+  "ejecutado_lima": "2026-11-12T00:22:54.932144-05:00",
+  "commit_base": "8cfbf842a05c0316c150087f967a56574ce8d59a",
+  "modo": "FastAPI TestClient + SQLite temporal + OdooSimulado; SIN servicios externos",
+  "reloj_escenario": "2026-11-13T10:00:00-05:00",
+  "qa_asignado": "Adrián Mansilla",
+  "ejecucion": "Automatizada por Codex; pendiente validación y firma de Adrián",
+  "caso": "PC3-E02",
+  "entrada": {
+    "contract_version": "1.0",
+    "company_id": "MYS-DEMO",
+    "request_id": "SOL-PC3-E02",
+    "correlation_id": "COR-PC3-001",
+    "opportunity_id": "OPP-DEMO-001",
+    "customer_id": "CLI-DEMO-001",
+    "quotation_id": "COT-DEMO-004",
+    "quotation_version": 2,
+    "acceptance_id": "ACE-PC3-003"
+  },
+  "salida": {
+    "respuesta": {
+      "contract_version": "1.0",
+      "request_id": "SOL-PC3-E02",
+      "correlation_id": "COR-PC3-001",
+      "quotation_id": "COT-DEMO-004",
+      "quotation_version": 2,
+      "status": "RECHAZADA",
+      "code": "DESCUENTO_SIN_APROBACION",
+      "message": "El descuento supera el 5 % y no tiene aprobación válida.",
+      "responsible_role": "GERENCIA",
+      "required_action": "Gerencia debe decidir; después preparar nueva versión y aceptación.",
+      "total": null,
+      "currency": null,
+      "order_id": null,
+      "conditions": []
+    },
+    "senales_reposicion": []
+  },
+  "eventos_antes_escalamiento": [
+    {
+      "event_id": 1,
+      "occurred_at": "2026-11-13T10:00:00-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I03",
+      "event_type": "RECIBIDA",
+      "code": "RECIBIDA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "AGENTE",
+      "detalle": null
+    },
+    {
+      "event_id": 2,
+      "occurred_at": "2026-11-13T10:00:00-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "SNAPSHOT_COMERCIAL",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 3,
+      "occurred_at": "2026-11-13T10:00:00-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I06",
+      "event_type": "CONSULTA",
+      "code": "POLITICA_DESCUENTO",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 4,
+      "occurred_at": "2026-11-13T10:00:00-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "DESCUENTO_SIN_APROBACION",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 5,
+      "occurred_at": "2026-11-13T10:00:00-05:00",
+      "correlation_id": "COR-PC3-001",
+      "request_id": "SOL-PC3-E02",
+      "interface_id": "AGENTE",
+      "event_type": "HERRAMIENTA_AGENTE",
+      "code": "enviar_solicitud_i03",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "AGENTE",
+      "detalle": {
+        "agent_version": "w1-1.0",
+        "input_hash": "a150f1947e429b82a38d06df3bdec6cf2a792bc64b8f7197e46bde39cdc6e13e",
+        "prompt_version": "p-1.0"
+      }
+    }
+  ],
+  "llamadas_reales_a_stock": [
+    {
+      "skus": [
+        "RAD-7BT"
+      ],
+      "ubicacion": 8
+    }
+  ],
+  "escalamiento_local": {
+    "escalation_id": "ESC-PC3-001",
+    "company_id": "MYS-DEMO",
+    "tipo": "DESCUENTO",
+    "request_id": "SOL-PC3-E02",
+    "correlation_id": "COR-PC3-001",
+    "quotation_id": "COT-DEMO-004",
+    "quotation_version": 2,
+    "version_aprobacion": 3,
+    "total": "1800.00",
+    "signal_id": null,
+    "destinatario": "DUENO",
+    "resumen_hash": "5b05a4b55b9117d0bf3d8b956927dd83b971995fcfc7e20011c5aacd902cc16c",
+    "created_at": "2026-11-13T10:00:00-05:00",
+    "plazo_hasta": "2026-11-13T10:10:00-05:00",
+    "estado": "ESPERANDO_DECISION",
+    "decision": null,
+    "decided_at": null
+  },
+  "chequeos": {
+    "rechazo_r08": true,
+    "rol_gerencia": true,
+    "schema_valido": true,
+    "sin_evento_i05": true,
+    "sin_lectura_real_stock": false,
+    "sin_mutacion_stock": true
+  },
+  "veredicto": "NO_CONFORME: ADR-PC3-001",
+  "seguimiento_sintetico_v3": {
+    "decision": {
+      "escalation_id": "ESC-PC3-001",
+      "tipo": "DESCUENTO",
+      "resultado": {
+        "approval_id": 1,
+        "status": "APROBADA",
+        "approver_id": "GER-DEMO-01",
+        "quotation_id": "COT-DEMO-004",
+        "version": 3,
+        "total": "1800.00",
+        "nota": "La aprobación vale solo para esa versión y ese total; requiere nueva aceptación y solicitud."
+      }
+    },
+    "nueva_aceptacion": {
+      "acceptance_id": "ACE-PC3-ADR-V3",
+      "total": "1800.00",
+      "accepted_at": "2026-11-13T10:00:00-05:00"
+    },
+    "respuesta_v3": {
+      "respuesta": {
+        "contract_version": "1.0",
+        "request_id": "SOL-PC3-E02-V3",
+        "correlation_id": "COR-PC3-001",
+        "quotation_id": "COT-DEMO-004",
+        "quotation_version": 3,
+        "status": "ACEPTADA",
+        "code": "VALIDADA",
+        "message": "Solicitud validada; confirmación operativa pendiente.",
+        "responsible_role": "VENTAS",
+        "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+        "total": "1800.00",
+        "currency": "PEN",
+        "order_id": null,
+        "conditions": []
+      },
+      "senales_reposicion": []
+    },
+    "respuesta_v2_conservada": {
+      "respuesta": {
+        "code": "DESCUENTO_SIN_APROBACION",
+        "conditions": [],
+        "contract_version": "1.0",
+        "correlation_id": "COR-PC3-001",
+        "currency": null,
+        "message": "El descuento supera el 5 % y no tiene aprobación válida.",
+        "order_id": null,
+        "quotation_id": "COT-DEMO-004",
+        "quotation_version": 2,
+        "request_id": "SOL-PC3-E02",
+        "required_action": "Gerencia debe decidir; después preparar nueva versión y aceptación.",
+        "responsible_role": "GERENCIA",
+        "status": "RECHAZADA",
+        "total": null
+      },
+      "senales_reposicion": []
+    },
+    "nota": "La v3 se añade al doble Odoo en memoria; no se crea en Odoo real."
+  },
+  "stock_antes": {
+    "fisico": {
+      "RAD-7BT": 10.0,
+      "RAD-10X": 10.0
+    },
+    "reservado": {
+      "RAD-7BT": 2.0,
+      "RAD-10X": 7.0
+    }
+  },
+  "stock_despues": {
+    "fisico": {
+      "RAD-7BT": 10.0,
+      "RAD-10X": 10.0
+    },
+    "reservado": {
+      "RAD-7BT": 2.0,
+      "RAD-10X": 7.0
+    }
+  }
+}

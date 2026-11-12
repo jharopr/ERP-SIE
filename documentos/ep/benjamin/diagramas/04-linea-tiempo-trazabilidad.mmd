@@ -1,0 +1,19 @@
+flowchart LR
+  A[24/10/2026 09:45 -05:00: consulta física; cliente nuevo persona natural; 5 autoradios familiares]
+  B[09:46: CLI-DEMO-001 y LEAD-EP-001; público general, canal físico, sin campaña]
+  C[09:48: OPP-DEMO-001]
+  D[09:50: stock referencial 8; sin reserva; no activa reposición]
+  E[09:52: COT-DEMO-001 v1; 5 x S/400 = S/2000; descuento 5% S/100; total S/1900]
+  F[09:54: ACE-EP-001 acepta exactamente cotización v1 y monto S/1900]
+  G[09:55: envío SOL-EP-N01; correlación COR-EP-001]
+  H[09:55:01: estado ACEPTADA; código VALIDADA; order_id null]
+  FIN[CORTE EP: sin pedido creado, sin reserva y sin factura, entrega ni cobro ejecutados]
+  A --> B --> C --> D --> E --> F --> G --> H --> FIN
+  N[Fecha lógica didáctica 24/10/2026 -05. Todos los eventos correlacionados por COR-EP-001. Continuidad PC2 v2.1. Diseño / simulación local; Odoo no desplegado; cantidades, precios y stock sintéticos.]
+  FIN ~~~ N
+  classDef normal fill:#E8F6FA,stroke:#006C87,color:#15324A;
+  classDef accepted fill:#EAF7EF,stroke:#176447,color:#176447;
+  classDef stop fill:#FFF0EF,stroke:#9D3131,color:#9D3131;
+  class A,B,C,D,E,F,G normal;
+  class H accepted;
+  class FIN stop;
