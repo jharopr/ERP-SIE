@@ -1,0 +1,6 @@
+﻿PC3-E02: NO_CONFORME: ADR-PC3-001; lecturas stock=1; eventos I05=0
+PC3-A01: backend 403 conforme; chat LLM NO EJECUTADO
+Versionado sintético: v3 VALIDADA, v2 conserva rechazo, stock sin cambios
+PC3-F01: caída/reintento/reanudación conformes en simulación; una solicitud
+Escalamiento: registro local comprobado; correo W2 y decisión humana real NO EJECUTADOS
+Exit code: 1
