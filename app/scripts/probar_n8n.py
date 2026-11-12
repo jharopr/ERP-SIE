@@ -35,7 +35,7 @@ def main():
     ok('Webhook sin secreto interno rechazado', response.status_code in (401, 403))
     for path in ('/webhook/6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01/chat', '/form/decision-dueno', '/form/modo-determinista'):
         ok('Interfaz anterior despublicada: '+path, httpx.get(n8n+path, timeout=30).status_code == 404)
-    c = Cliente('http://localhost:'+env.get('APP_PORT', '8088'), env, 'ven-demo-01', env['ODOO_SELLER_PASSWORD'])
+    c = Cliente('http://localhost:'+env.get('APP_PORT', '8088'), env, 'vendedor01', env['ODOO_SELLER_PASSWORD'])
     status = c.rpc('/mys/agent/status')
     ok('Estado del agente disponible con sesión Odoo', bool(status['code']))
     before = audit()

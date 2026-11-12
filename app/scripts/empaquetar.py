@@ -10,7 +10,7 @@ EXCLUDE = {'.git','.venv','.pytest_cache','__pycache__','.test-runs','backups','
 
 def main():
     env=leer_env()
-    public_demo = {'ODOO_PASSWORD': 'admin', 'ODOO_SELLER_PASSWORD': 'ven-demo-01', 'ODOO_OWNER_PASSWORD': 'ger-demo-01'}
+    public_demo = {'ODOO_PASSWORD': 'admin', 'ODOO_SELLER_PASSWORD': 'vendedor01', 'ODOO_OWNER_PASSWORD': 'gerente'}
     private=[v for k,v in env.items() if (any(word in k for word in ('PASSWORD','TOKEN','KEY','SECRET'))
              and len(v)>=8 and not v.startswith('cambiar-esto') and public_demo.get(k) != v)]
     files=[]

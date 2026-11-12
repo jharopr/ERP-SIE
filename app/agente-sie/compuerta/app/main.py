@@ -498,6 +498,8 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
         registrar_panel(app, config, repo, fuente, ejecutar, escalar, decidir_escalamiento, reloj)
     from .catalogo import registrar_catalogo
     registrar_catalogo(app, exigir, fuente, huella_agente)
+    from .lenguaje_natural import registrar_lenguaje_natural
+    registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_senales, huella_agente)
     return app
 
 

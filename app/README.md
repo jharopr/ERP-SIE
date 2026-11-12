@@ -10,8 +10,8 @@ Las cuentas humanas de esta demostración tienen **contraseña igual al usuario*
 
 | Rol | Usuario | Contraseña | Función |
 | --- | --- | --- | --- |
-| Vendedor | `ven-demo-01` | `ven-demo-01` | Contactos, leads, oportunidades, cotizaciones, evaluación y solicitud de excepciones |
-| Dueño / Gerencia | `ger-demo-01` | `ger-demo-01` | Revisión de resultados y aprobación o rechazo de excepciones |
+| Vendedor | `vendedor01` | `vendedor01` | Contactos, leads, oportunidades, cotizaciones, evaluación y solicitud de excepciones |
+| Dueño / Gerencia | `gerente` | `gerente` | Revisión de resultados y aprobación o rechazo de excepciones |
 | Administrador | `admin` | `admin` | Configuración y administración de Odoo |
 
 **Agente SIE no tiene usuario ni contraseña propios.** Se abre en el menú lateral de Odoo y utiliza la sesión y el rol actuales. Ventas solicita; el dueño aprueba manualmente en su módulo. El chat no puede aprobar, incluso desde una sesión del dueño.
@@ -70,6 +70,17 @@ SMTP_CLAVE=<contraseña de aplicación de 16 letras, no la clave normal>
 ```
 
 y ejecute `python scripts/iniciar.py`. Los avisos automáticos de Odoo que genera la carga de datos («Te asignaron…», «Cambio de contraseña») se cancelan para no llenar el buzón; solo salen los avisos `[MYS]`. La tarea del dueño se cierra sola cuando decide o vence el plazo.
+
+## Cómo se le habla al agente
+
+Con palabras normales, **sin códigos**: el nombre del cliente o el número de cotización que muestra Odoo (S000…). El agente busca la cotización, su versión vigente y su aceptación, y arma la solicitud con los mismos identificadores que el botón «3. Evaluar reglas» (validar por chat o por botón da el mismo resultado). Si hay varias cotizaciones, pregunta cuál con productos y precios. Ejemplos:
+
+- «Busca subwoofers Pioneer» · «¿Cuánto stock disponible hay de RAD-7BT?»
+- «El Cliente de prueba 003 aceptó su cotización, ¿me la validas?» · «Valida la S00007, el cliente la aceptó»
+- «¿Qué decidió el gerente sobre la S00007? Redáctame un mensaje para el cliente»
+- Como gerente: «Resume las cotizaciones del Cliente de prueba 001 con su % de descuento y el descuento en soles»
+
+El agente no aprueba (ni siquiera en la sesión del gerente), no crea pedidos, no reserva stock ni promete fechas. `admin` es la cuenta técnica y tampoco puede aprobar.
 
 ## Agente integrado y estado de Gemini
 

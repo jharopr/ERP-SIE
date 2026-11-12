@@ -8,7 +8,7 @@ La implementación integrada está en [`app/`](app/README.md): Odoo 18 Community
 
 Desde `app/`, ejecutar `python scripts/iniciar.py` y abrir `http://localhost:8088`. Los avisos al dueño llegan por correo (buzón local en `http://localhost:8025`). La arquitectura efectiva y los límites están en [`app/docs/ARQUITECTURA.md`](app/docs/ARQUITECTURA.md).
 
-Accesos de demostración: vendedor **`ven-demo-01` / `ven-demo-01`**, dueño **`ger-demo-01` / `ger-demo-01`**, administrador **`admin` / `admin`**. El agente se abre en el menú de Odoo sin otra contraseña y muestra su estado según la API key configurada.
+Accesos de demostración: vendedor **`vendedor01` / `vendedor01`**, dueño **`gerente` / `gerente`**, administrador **`admin` / `admin`**. El agente se abre en el menú de Odoo sin otra contraseña y muestra su estado según la API key configurada.
 
 ## Incremento vigente · PC2 (Consolidado Oficial v2.1)
 

@@ -37,8 +37,8 @@ def main():
         {**CRED['webhook'], 'type': 'httpHeaderAuth', 'data': {'name': 'X-MYS-Webhook', 'value': env['N8N_WEBHOOK_SECRET']}},
         {**CRED["ventas"], "type": "httpHeaderAuth", "data": {"name": "Authorization", "value": f"Bearer {env['TOKEN_VENTAS']}"}},
         {**CRED["gerencia"], "type": "httpHeaderAuth", "data": {"name": "Authorization", "value": f"Bearer {env['TOKEN_GERENCIA']}"}},
-        {**CRED["form_dueno"], "type": "httpBasicAuth", "data": {"user": "ger-demo-01", "password": env['ODOO_OWNER_PASSWORD']}},
-        {**CRED["form_ventas"], "type": "httpBasicAuth", "data": {"user": "ven-demo-01", "password": env['ODOO_SELLER_PASSWORD']}},
+        {**CRED["form_dueno"], "type": "httpBasicAuth", "data": {"user": "gerente", "password": env['ODOO_OWNER_PASSWORD']}},
+        {**CRED["form_ventas"], "type": "httpBasicAuth", "data": {"user": "vendedor01", "password": env['ODOO_SELLER_PASSWORD']}},
     ]
     if env.get("GEMINI_API_KEY"):
         credenciales.append({**CRED["gemini"], "type": "googlePalmApi",

@@ -27,7 +27,7 @@ La reserva sale de **dos pedidos confirmados en Odoo de otro cliente** (CLI-DEMO
 |---|---|---|
 | CLI-DEMO-001 | Cliente (`res.partner.ref`) | Consumidor final, identidad revisada |
 | CLI-DEMO-002 | Cliente | Recurrente; es dueño de las reservas |
-| VEN-DEMO-01 | Vendedor (VENTAS) | Usuario de Odoo `ven-demo-01`; oportunidades OPP-DEMO-001 y OPP-DEMO-002 |
+| VEN-DEMO-01 | Vendedor (VENTAS) | Usuario de Odoo `vendedor01`; oportunidades OPP-DEMO-001 y OPP-DEMO-002 |
 | GER-DEMO-01 | Dueño (GERENCIA) | Aprueba descuentos mayores al 5 % y decide reposiciones |
 | ADM-DEMO-01 | Administrador | Reinicio y recuperación |
 | OPP-DEMO-001 / 002 | `crm.lead` (type = opportunity) | Ambas de CLI-DEMO-001 |

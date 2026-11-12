@@ -29,9 +29,9 @@
     "Bitácora disponible dentro de Odoo",
     "Estado de Gemini sin revelar API key",
     "Backend incluye bundles nativos",
+    "Bundle compilado web.assets_web_print.min.css",
     "Bundle compilado web.assets_web.min.js",
-    "Bundle compilado web.assets_web.min.css",
-    "Bundle compilado web.assets_web_print.min.css"
+    "Bundle compilado web.assets_web.min.css"
   ],
   "count": 32,
   "agent_status": {
@@ -41,8 +41,8 @@
     "code": "HABILITADO",
     "message": "API key verificada. Agente disponible."
   },
-  "test_order_id": 11,
-  "new_version_order_id": 12,
-  "evaluation_id": 1,
-  "decision_id": 1
+  "test_order_id": 21,
+  "new_version_order_id": 22,
+  "evaluation_id": 14,
+  "decision_id": 13
 }

@@ -20,7 +20,7 @@ from ejecutar_casos import leer_env
 RAIZ = Path(__file__).resolve().parents[1]
 def cabecera_acceso(rol='VENTAS'):
     env = leer_env()
-    user = 'ven-demo-01' if rol == 'VENTAS' else 'ger-demo-01'
+    user = 'vendedor01' if rol == 'VENTAS' else 'gerente'
     password = env['ODOO_SELLER_PASSWORD' if rol == 'VENTAS' else 'ODOO_OWNER_PASSWORD']
     return 'Basic ' + base64.b64encode(f'{user}:{password}'.encode()).decode()
 

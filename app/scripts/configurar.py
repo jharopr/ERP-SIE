@@ -21,7 +21,7 @@ def main():
     text = path.read_text(encoding='utf-8')
     env = leer_env()
     required = {'ODOO_READER_USER': 'sie-lectura', 'ODOO_READER_PASSWORD': None,
-                'ODOO_SELLER_PASSWORD': 'ven-demo-01', 'ODOO_OWNER_PASSWORD': 'ger-demo-01',
+                'ODOO_SELLER_PASSWORD': 'vendedor01', 'ODOO_OWNER_PASSWORD': 'gerente',
                 'TOKEN_ODOO': None, 'TOKEN_AGENTE': None, 'ODOO_BRIDGE_SECRET': None, 'N8N_WEBHOOK_SECRET': None,
                 'GEMINI_MODEL': 'models/gemini-3.5-flash-lite',
                 'CORREO_DUENO': 'dueno@mys-demo.local', 'CORREO_REMITENTE': 'agente-sie@mys-demo.local',

@@ -122,6 +122,13 @@ def w1():
                          "GET", f"={COMPUERTA}/bitacora?correlation_id={{{{ {ia('correlation_id', 'Correlación COR-…')} }}}}", [1080, y], pv),
         herramienta_http("consultar_escalamiento", "Estado de un escalamiento ESC-…: esperando, decidido (y qué decidió el dueño) o sin decisión tras 10 minutos. Única prueba válida de una decisión del dueño.",
                          "GET", f"={COMPUERTA}/escalamientos/{{{{ {ia('escalation_id', 'Escalamiento ESC-…')} }}}}", [1260, y], pv),
+        # Lenguaje natural: el vendedor nombra la cotización o el cliente; la compuerta resuelve los códigos.
+        herramienta_http("buscar_cotizaciones", "Busca cotizaciones por número de Odoo (p. ej. S00010), nombre o código del cliente, o código COT-. Devuelve versión vigente, cliente, productos, total, aceptación, todas las versiones y el historial: resultados de cada evaluación, decisiones del gerente y aprobaciones de descuento (con motivo y vigencia). Úsala cuando no te dan códigos, para saber si algo ya fue aprobado y para responder qué pasó con una cotización.",
+                         "GET", f"={COMPUERTA}/cotizaciones-buscar?texto={{{{ encodeURIComponent({ia('texto', 'Lo que dijo el vendedor para identificar la cotización: número S000..., nombre del cliente o código')}) }}}}",
+                         [0, y + 200], pv),
+        herramienta_http("validar_cotizacion", "Valida una cotización aceptada sin pedir códigos: identifica la versión vigente, la aceptación y arma la solicitud I03 (mismos identificadores que el botón Evaluar de Odoo). Si hay varias coincidencias devuelve opciones para preguntar al vendedor.",
+                         "POST", f"={COMPUERTA}/cotizaciones-validar", [180, y + 200], pv,
+                         "={ \"cotizacion\": \"{{ " + ia('cotizacion', 'Número de Odoo (S000...), nombre del cliente o código COT- de la cotización') + " }}\" }"),
     ]
     escalar = nodo("escalar_al_dueno", "@n8n/n8n-nodes-langchain.toolWorkflow", 2, [1440, y], {
         "name": "escalar_al_dueno",

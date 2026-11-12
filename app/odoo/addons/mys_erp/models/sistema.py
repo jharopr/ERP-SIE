@@ -14,6 +14,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import AccessError, UserError
 
 REF = re.compile(r'^(COT-[A-Za-z0-9_-]+) v([1-9][0-9]*)$')
+# Tope de descuento del vendedor: misma política que aplica la compuerta (max_seller_discount, R08).
+TOPE_VENDEDOR = 5.0
 
 
 class Gateway(models.AbstractModel):
@@ -47,7 +49,8 @@ class Gateway(models.AbstractModel):
         if self.env.company != company:
             raise AccessError(_('Seleccione la compañía MYS para usar el agente y las reglas.'))
         login = self.env.user.login
-        actor = {'ven-demo-01': 'VEN-DEMO-01', 'ger-demo-01': 'GER-DEMO-01'}.get(login)
+        # Códigos internos del contrato (VEN-/GER-) para los usuarios de la tienda.
+        actor = {'vendedor01': 'VEN-DEMO-01', 'gerente': 'GER-DEMO-01'}.get(login)
         actor = actor or ('GER' if role == 'GERENCIA' else 'VEN') + '-ODOO-' + str(self.env.uid)
         data = {'uid': self.env.uid, 'actor_id': actor, 'rol': role, 'company_id': 'MYS-DEMO',
                 'exp': int(time.time()) + 600}
@@ -269,7 +272,13 @@ class Order(models.Model):
         # Serializa versiones concurrentes de la familia.
         self.env.cr.execute('SELECT pg_advisory_xact_lock(hashtext(%s))', [family])
         versions = self.sudo().search([('mys_quotation_id', '=', family)])
-        version = max(versions.mapped('mys_version')) + 1
+        # Una versión ANULADA no debe ocupar el número siguiente (p. ej. la v3 de un ensayo anterior
+        # anulada por el reinicio de la demo): se renombra y el número queda libre para la aprobación.
+        vigentes = versions.filtered(lambda o: o.state != 'cancel')
+        siguiente = max(vigentes.mapped('mys_version') or [0]) + 1
+        for anulada in versions.filtered(lambda o: o.state == 'cancel' and o.mys_version >= siguiente):
+            anulada.sudo().write({'client_order_ref': '%s v%s (anulada %s)' % (family, anulada.mys_version, anulada.id)})
+        version = siguiente
         return self.sudo().copy({'client_order_ref': '%s v%s' % (family, version), 'state': 'draft',
                                  'validity_date': fields.Date.context_today(self), 'origin': self.name})
 
@@ -309,11 +318,11 @@ class Evaluation(models.Model):
     _description = 'Evaluación comercial MYS'
     _order = 'id desc'
     _rec_name = 'request_id'
-    order_id = fields.Many2one('sale.order', required=True, ondelete='restrict', readonly=True)
-    user_id = fields.Many2one('res.users', required=True, readonly=True)
-    company_id = fields.Many2one('res.company', required=True, readonly=True)
-    request_id = fields.Char(required=True, readonly=True, index=True)
-    correlation_id = fields.Char(readonly=True)
+    order_id = fields.Many2one('sale.order', 'Cotización', required=True, ondelete='restrict', readonly=True)
+    user_id = fields.Many2one('res.users', 'Vendedor', required=True, readonly=True)
+    company_id = fields.Many2one('res.company', 'Compañía', required=True, readonly=True)
+    request_id = fields.Char('Solicitud', required=True, readonly=True, index=True)
+    correlation_id = fields.Char('Correlación', readonly=True)
     status = fields.Char('Estado', readonly=True)
     code = fields.Char('Regla / código', readonly=True)
     message = fields.Text('Diagnóstico', readonly=True)
@@ -354,10 +363,19 @@ class Decision(models.Model):
     _description = 'Decisión del dueño MYS'
     _order = 'id desc'
     _rec_name = 'escalation_id'
-    evaluation_id = fields.Many2one('mys.evaluation', required=True, ondelete='restrict', readonly=True)
+    evaluation_id = fields.Many2one('mys.evaluation', 'Evaluación', required=True, ondelete='restrict', readonly=True)
     order_id = fields.Many2one(related='evaluation_id.order_id', string='Cotización')
-    user_id = fields.Many2one('res.users', readonly=True, required=True)
-    company_id = fields.Many2one('res.company', readonly=True, required=True)
+    user_id = fields.Many2one('res.users', 'Vendedor', readonly=True, required=True)
+    company_id = fields.Many2one('res.company', 'Compañía', readonly=True, required=True)
+    # Detalle para decidir sin salir de la pantalla (solo lectura; sale de la cotización evaluada).
+    partner_id = fields.Many2one(related='order_id.partner_id', string='Cliente')
+    order_line_ids = fields.One2many(related='order_id.order_line', string='Productos de la cotización')
+    currency_id = fields.Many2one(related='order_id.currency_id')
+    amount_total = fields.Monetary(related='order_id.amount_total', string='Total de la cotización', currency_field='currency_id')
+    unidades = fields.Float('Unidades', compute='_compute_detalle')
+    descuento_max = fields.Float('Descuento pedido (%)', compute='_compute_detalle')
+    tope_vendedor = fields.Float('Tope del vendedor (%)', compute='_compute_detalle')
+    ahorro_cliente = fields.Monetary('Descuento en soles', compute='_compute_detalle', currency_field='currency_id')
     escalation_id = fields.Char('Escalamiento', required=True, readonly=True)
     tipo = fields.Char('Tipo', readonly=True)
     state = fields.Char('Estado', readonly=True)
@@ -371,6 +389,15 @@ class Decision(models.Model):
     approver_id = fields.Many2one('res.users', 'Decidido por', readonly=True)
     new_order_id = fields.Many2one('sale.order', 'Nueva versión', readonly=True)
     _sql_constraints = [('unique_escalation', 'unique(escalation_id)', 'El escalamiento ya está registrado.')]
+
+    @api.depends('order_id.order_line.discount', 'order_id.order_line.product_uom_qty', 'order_id.order_line.price_unit')
+    def _compute_detalle(self):
+        for decision in self:
+            lineas = decision.order_id.order_line.filtered(lambda l: not l.display_type)
+            decision.unidades = sum(lineas.mapped('product_uom_qty'))
+            decision.descuento_max = max(lineas.mapped('discount') or [0.0])
+            decision.tope_vendedor = TOPE_VENDEDOR
+            decision.ahorro_cliente = sum(l.price_unit * l.product_uom_qty * l.discount / 100 for l in lineas)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -420,14 +447,27 @@ class Decision(models.Model):
                         for k, v in [('Cotización', cotizacion), ('Cliente', self.order_id.partner_id.display_name),
                                      ('Vendedor', self.user_id.name), ('Total verificado', 'S/ %s' % (self.total or '—')),
                                      ('Escalamiento', self.escalation_id), ('Responder antes de', self.deadline or '—')])
-        cuerpo = ('<div style="font-family:Arial,sans-serif;font-size:14px;color:#101828;max-width:560px">'
-                  '<h2 style="margin:0 0 8px">%s</h2><p>El vendedor solicitó su decisión en el sistema MYS.</p>'
-                  '<table>%s</table>'
-                  '<p style="margin:20px 0"><a href="%s" style="padding:10px 18px;border-radius:6px;background:#1a7f37;'
-                  'color:#fff;text-decoration:none">Abrir la decisión en Odoo</a></p>'
-                  '<p style="color:#667085;font-size:12px">Ingrese con su usuario de dueño. Ninguna opción crea pedidos '
-                  'ni reservas. Si no decide en 10 minutos, la oportunidad queda en seguimiento.</p></div>') % (
-                      e(que), filas, e(enlace))
+        celda = 'padding:4px 8px;border-bottom:1px solid #eaecf0'
+        productos = ''.join(
+            '<tr><td style="%s">%s</td><td style="%s;text-align:right">%s</td><td style="%s;text-align:right">S/ %.2f</td>'
+            '<td style="%s;text-align:right">%s %%</td><td style="%s;text-align:right">S/ %.2f</td></tr>' % (
+                celda, e(l.product_id.display_name), celda, ('%g' % l.product_uom_qty), celda, l.price_unit,
+                celda + (';color:#b42318;font-weight:bold' if l.discount > TOPE_VENDEDOR else ''), ('%g' % l.discount),
+                celda, l.price_subtotal)
+            for l in self.order_id.order_line.filtered(lambda l: not l.display_type))
+        detalle = ('<p style="margin:16px 0 4px"><b>Detalle de la cotización</b> (tope del vendedor: %g %%)</p>'
+                   '<table style="border-collapse:collapse;font-size:13px"><tr style="color:#475467">'
+                   '<th style="text-align:left;padding:4px 8px">Producto</th><th style="padding:4px 8px">Cant.</th>'
+                   '<th style="padding:4px 8px">Precio</th><th style="padding:4px 8px">Desc.</th>'
+                   '<th style="padding:4px 8px">Subtotal</th></tr>%s</table>') % (TOPE_VENDEDOR, productos)
+        encabezado = ('<div style="font-family:Arial,sans-serif;font-size:14px;color:#101828;max-width:620px">'
+                      '<h2 style="margin:0 0 8px">%s</h2><p>El vendedor solicitó su decisión en el sistema MYS.</p>'
+                      '<table>%s</table>') % (e(que), filas)
+        pie = ('<p style="margin:20px 0"><a href="%s" style="padding:10px 18px;border-radius:6px;background:#1a7f37;'
+               'color:#fff;text-decoration:none">Abrir la decisión en Odoo</a></p>'
+               '<p style="color:#667085;font-size:12px">Ingrese con su usuario de dueño. Ninguna opción crea pedidos '
+               'ni reservas. Si no decide en 10 minutos, la oportunidad queda en seguimiento.</p></div>') % e(enlace)
+        cuerpo = encabezado + detalle + pie
         destinos = [d.email for d in duenos if d.email]
         if destinos:
             try:

@@ -47,8 +47,8 @@ def main():
         else:
             raise AssertionError(label + ': operación indebidamente permitida')
 
-    seller = Cliente(url, env, 'ven-demo-01', env['ODOO_SELLER_PASSWORD'])
-    owner = Cliente(url, env, 'ger-demo-01', env['ODOO_OWNER_PASSWORD'])
+    seller = Cliente(url, env, 'vendedor01', env['ODOO_SELLER_PASSWORD'])
+    owner = Cliente(url, env, 'gerente', env['ODOO_OWNER_PASSWORD'])
     admin = Cliente(url, env, env['ODOO_USER'], env['ODOO_PASSWORD'])
     ok('Tres usuarios Odoo autentican con las contraseñas de .env', all([seller.uid, owner.uid, admin.uid]))
     ok('Rol vendedor derivado de sesión', seller.rpc('/mys/session')['role'] == 'VENTAS')

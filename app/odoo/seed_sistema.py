@@ -34,7 +34,23 @@ def instalar_mys(odoo):
         odoo.conectar()
 
 
+RENOMBRES = {'ven-demo-01': ('vendedor01', 'Vendedor 01'), 'ger-demo-01': ('gerente', 'Gerente')}
+
+
+def renombrar_usuarios(odoo):
+    """Instalaciones anteriores: renombra los usuarios en lugar de crear otros (conserva su historial)."""
+    for viejo, (nuevo, nombre) in RENOMBRES.items():
+        antes = odoo.buscar('res.users', [('login', '=', viejo)])
+        if antes and not odoo.buscar('res.users', [('login', '=', nuevo)]):
+            odoo.x('res.users', 'write', antes[:1], {'login': nuevo, 'name': nombre})
+            legacy.log(f'usuario {viejo} renombrado a {nuevo}')
+    empresa = odoo.buscar('res.company', [('name', '=', 'MYS Demo (datos sintéticos)')])
+    if empresa:
+        odoo.x('res.company', 'write', empresa, {'name': 'Importaciones MYS Hermanos'})
+
+
 def usuarios(odoo):
+    renombrar_usuarios(odoo)
     group_field = 'groups_id'
     if 'group_ids' in odoo.x('res.users', 'fields_get', attributes=['type']):
         group_field = 'group_ids'
@@ -49,12 +65,13 @@ def usuarios(odoo):
     owner_groups = [odoo.ref(g) for g in ['base.group_user', 'sales_team.group_sale_manager',
                                          'stock.group_stock_manager', 'purchase.group_purchase_manager',
                                          'mys_erp.group_mys_manager']]
-    owner, _ = odoo.upsert('res.users', [('login', '=', 'ger-demo-01')],
-                          {'name': 'Dueño Demo MYS', 'login': 'ger-demo-01', 'password': os.environ['ODOO_OWNER_PASSWORD'],
+    owner, _ = odoo.upsert('res.users', [('login', '=', 'gerente')],
+                          {'name': 'Gerente', 'login': 'gerente', 'password': os.environ['ODOO_OWNER_PASSWORD'],
                            'email': os.environ.get('CORREO_DUENO') or 'dueno@mys-demo.local',
                            group_field: [(6, 0, [g for g in owner_groups if g])], 'action_id': home})
+    # admin es la cuenta técnica: configura Odoo, pero NO aprueba. Solo el gerente decide.
     admin = odoo.buscar('res.users', [('login', '=', os.environ['ODOO_USER'])])[0]
-    odoo.x('res.users', 'write', [admin], {group_field: [(4, odoo.ref('mys_erp.group_mys_manager'))], 'action_id': home})
+    odoo.x('res.users', 'write', [admin], {group_field: [(3, odoo.ref('mys_erp.group_mys_manager'))], 'action_id': False})
     legacy.log(f'Usuarios preparados: vendedor, dueño e integración de lectura ({reader}). Claves no impresas.')
     return seller
 
@@ -207,6 +224,11 @@ def main():
     # Mantiene todos los casos y reglas del paquete existente. Instala el addon como
     # parte del primer arranque para que sus campos estén presentes antes del seed.
     legacy.MODULOS += ['mys_erp']
+    cfg0 = Config.desde_entorno()
+    previo = legacy.Odoo(cfg0.odoo_url, cfg0.odoo_db, os.environ['ODOO_USER'], os.environ['ODOO_PASSWORD'])
+    if cfg0.odoo_db in previo.proxy('/xmlrpc/2/db').list():
+        previo.conectar()
+        renombrar_usuarios(previo)  # antes del seed original, que busca al vendedor por su login nuevo
     if '--reiniciar' in sys.argv:
         cfg = Config.desde_entorno()
         admin = legacy.Odoo(cfg.odoo_url, cfg.odoo_db, os.environ['ODOO_USER'], os.environ['ODOO_PASSWORD'])
@@ -214,7 +236,7 @@ def main():
             admin.conectar()
             installed = admin.leer('ir.module.module', [('name', '=', 'mys_erp')], ['state'])
             if installed and installed[0]['state'] == 'installed':
-                admin.x('mys.gateway', 'action_reset_demo', [])
+                admin.x('mys.gateway', 'action_reset_demo', [], context={'mys_seed': True})
     legacy.main()
     config = Config.desde_entorno()
     odoo = legacy.Odoo(config.odoo_url, config.odoo_db, os.environ['ODOO_USER'], os.environ['ODOO_PASSWORD'])

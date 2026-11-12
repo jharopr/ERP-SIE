@@ -129,6 +129,55 @@ class OdooCliente:
             })
         return resultado
 
+    def buscar_cotizaciones(self, texto: str, limite: int = 5) -> list[dict]:
+        """Cotizaciones SIE por número de Odoo (S000…), código COT-…, nombre o código del cliente.
+
+        Devuelve una entrada por familia (COT-…) con todas sus versiones, para que el vendedor
+        hable con nombres y no con códigos. Solo lectura.
+        """
+        t = texto.strip()
+        dominio = [("client_order_ref", "=like", "COT-%"), "|", "|", "|",
+                   ("name", "ilike", t), ("client_order_ref", "ilike", t),
+                   ("partner_id.name", "ilike", t), ("partner_id.ref", "ilike", t)]
+        coincidencias = self._leer("sale.order", dominio, ["client_order_ref"])
+        familias = []
+        for f in coincidencias:
+            m = re.match(r"^(COT-[A-Za-z0-9_-]+) v[1-9][0-9]*$", f["client_order_ref"] or "")
+            if m and m.group(1) not in familias:
+                familias.append(m.group(1))
+        familias = familias[:limite]
+        if not familias:
+            return []
+        dominio = ["|"] * (len(familias) - 1) + [("client_order_ref", "=like", f"{q} v%") for q in familias]
+        pedidos = self._leer("sale.order", dominio, ["name", "client_order_ref", "state", "company_id", "partner_id",
+                                                     "opportunity_id", "amount_total", "user_id"])
+        lineas = self._leer("sale.order.line", [("order_id", "in", [p["id"] for p in pedidos]), ("display_type", "=", False)],
+                            ["order_id", "product_id", "product_uom_qty", "discount"]) if pedidos else []
+        ids_cliente = sorted({_id(p["partner_id"]) for p in pedidos if p["partner_id"]})
+        refs = {f["id"]: f["ref"] or None for f in
+                self._leer("res.partner", [("id", "in", ids_cliente)], ["ref"])} if ids_cliente else {}
+        ids_lead = sorted({_id(p["opportunity_id"]) for p in pedidos if p.get("opportunity_id")})
+        opps = {f["id"]: f["mys_reference"] for f in
+                self._leer("crm.lead", [("id", "in", ids_lead)], ["mys_reference"])} if ids_lead else {}
+        resultado = []
+        for q in familias:
+            versiones = []
+            for p in pedidos:
+                m = re.match(rf"^{re.escape(q)} v([1-9][0-9]*)$", p["client_order_ref"] or "")
+                if not m:
+                    continue
+                propias = [l for l in lineas if _id(l["order_id"]) == p["id"]]
+                versiones.append({
+                    "version": int(m.group(1)), "numero_odoo": p["name"], "state": p["state"],
+                    "company_odoo_id": _id(p["company_id"]), "cliente": _nombre(p["partner_id"]),
+                    "cliente_ref": refs.get(_id(p["partner_id"])),
+                    "oportunidad": opps.get(_id(p["opportunity_id"])) if p.get("opportunity_id") else None,
+                    "vendedor": _nombre(p["user_id"]), "total": p["amount_total"],
+                    "productos": "; ".join(f"{l['product_uom_qty']:g} × {_nombre(l['product_id'])} ({l['discount']:g} %)"
+                                           for l in propias)})
+            resultado.append({"cotizacion": q, "versiones": sorted(versiones, key=lambda v: v["version"])})
+        return resultado
+
     def productos(self, skus: list[str]) -> dict:
         filas = self._leer("product.product", [("default_code", "in", list(skus))],
                            ["name", "default_code", "active", "list_price", "currency_id"])

@@ -113,7 +113,7 @@ def configurar_empresa(odoo):
     pen = odoo.buscar("res.currency", [("name", "=", "PEN")])
     odoo.x("res.currency", "write", pen, {"active": True})
     empresa = odoo.leer("res.users", [("id", "=", odoo.uid)], ["company_id"])[0]["company_id"][0]
-    odoo.x("res.company", "write", [empresa], {"name": "MYS Demo (datos sintéticos)", "currency_id": pen[0]})
+    odoo.x("res.company", "write", [empresa], {"name": "Importaciones MYS Hermanos", "currency_id": pen[0]})
     tarifas = odoo.buscar("product.pricelist", [])
     if tarifas:
         odoo.x("product.pricelist", "write", tarifas, {"currency_id": pen[0]})
@@ -126,7 +126,7 @@ def asegurar_vendedor(odoo):
     grupos = [g for g in (odoo.ref("base.group_user"), odoo.ref("sales_team.group_sale_salesman")) if g]
     campo_grupos = "group_ids" if "group_ids" in odoo.x("res.users", "fields_get", attributes=["type"]) else "groups_id"
     uid, nuevo = odoo.upsert("res.users", [("login", "=", E.VENDEDOR_LOGIN)],
-                             {"name": "Vendedor Demo 01 (sintético)", "login": E.VENDEDOR_LOGIN,
+                             {"name": "Vendedor 01", "login": E.VENDEDOR_LOGIN,
                               campo_grupos: [(4, g) for g in grupos]})
     log(f"vendedor {E.VENDEDOR_LOGIN} {'creado' if nuevo else 'actualizado'} (id {uid})")
     return uid
