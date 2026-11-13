@@ -173,6 +173,8 @@ class SaleOrder(models.Model):
     def _action_cancel(self):
         for order in self:
             order.check_access('write')
+            if order._mys_privileged():
+                continue
             if not self.env['mys.gateway']._manager():
                 order._mys_seller()
         return super(SaleOrder, self.with_context(_mys_confirmation=CONFIRMATION_TOKEN))._action_cancel()
