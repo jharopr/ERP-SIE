@@ -541,6 +541,7 @@ class Decision(models.Model):
             raise UserError(_('Esta solicitud ya fue decidida.'))
         new_order = self.env['sale.order']
         if self.tipo == 'DESCUENTO' and decision == 'APROBADA':
+            self.order_id._mys_check_discount_policy()
             new_order = self.order_id._mys_new_version()
             if new_order.mys_version != self.target_version or format(new_order.amount_total, '.2f') != self.total:
                 raise UserError(_('Ya existe otra versión o cambió el total. Solicite una evaluación y aprobación nuevas.'))

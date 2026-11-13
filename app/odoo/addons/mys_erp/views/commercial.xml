@@ -175,6 +175,7 @@
             <xpath expr="//page[@name='mys_rules']//field[@name='mys_status']" position="replace">
                 <field name="mys_commercial_label" string="Estado comercial" widget="badge" readonly="1" />
                 <field name="mys_commercial_note" readonly="1" />
+                <field name="mys_policy_summary" readonly="1" />
                 <field name="mys_result" widget="badge" />
                 <field name="mys_discount_state" widget="badge" />
                 <field name="mys_discount_target_id" invisible="not mys_discount_target_id" />
