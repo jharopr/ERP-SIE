@@ -18,7 +18,13 @@ El [aporte de Jharolym](documentos/ep/jharolym/README.md) desarrolla la sección
 
 El [aporte de Benjamín al recorrido O2C](documentos/ep/benjamin/README.md) desarrolla la sección 3 del comité para público general nuevo en tienda física. Incluye [contenido editable](documentos/ep/benjamin/aporte-benjamin.md), [informe imprimible](documentos/ep/benjamin/informe-benjamin.html), [panel local navegable](documentos/ep/benjamin/panel-benjamin.html), journeys, mapas, SIPOC, guion y [pruebas sintéticas](pruebas/ep-benjamin/evidencias/resultados.md). El alcance termina en la respuesta de evaluación CRM–ERP; P2P se conecta por una señal conceptual de reposición. La integración al panel único del grupo y la revisión humana siguen pendientes.
 
-Los entregables Word, ZIP y la carpeta `output/` se mantienen fuera del repositorio para evitar copias redundantes. Las fuentes editables se conservan en Markdown, HTML y los generadores correspondientes.
+En el parcial, los entregables Word, ZIP y la carpeta `output/` se mantienen fuera del repositorio para evitar copias redundantes. Las fuentes editables se conservan en Markdown, HTML y los generadores correspondientes.
+
+## PC3 · Cadena de suministro
+
+La [documentación de la PC3](documentos/pc3/README.md) del curso GE703 – Sistemas Integrados Empresariales, Grupo 7, reúne el análisis de la cadena de suministro, abastecimiento, importaciones y reposición de productos de IMPORTACIONES MYS HERMANOS S.A.C.
+
+El [índice de fuentes documentales](documentos/pc3/fuentes/README.md) enlaza el catálogo de productos y los documentos originales utilizados en el análisis. Distingue la evidencia empresarial de la referencia externa correspondiente a SOTMA, cuya documentación no acredita que sea proveedor de MYS Hermanos. Estos originales se incorporan como fuentes de PC3 y se conservan los trabajos anteriores de PC1, PC2 y el parcial.
 
 ## Situación y decisión
 

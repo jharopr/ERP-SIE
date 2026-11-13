@@ -12,3 +12,9 @@ evidencias/privadas/
 /output/
 *.docx
 *.zip
+
+# Fuentes originales de PC3 incorporadas expresamente
+!documentos/pc3/fuentes/GUANGDONG_XUYING_TECHNOLOGY_CO.docx
+!documentos/pc3/fuentes/MEICANXIN_ELECTRONICS_TECHNOLOGY.docx
+!documentos/pc3/fuentes/SHENZHEN_GEARFORCE_TECHNOLOGY_CO.docx
+!documentos/pc3/fuentes/CI_OF_SOTMA_1.docx
