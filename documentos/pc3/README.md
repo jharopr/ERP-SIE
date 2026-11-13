@@ -8,10 +8,12 @@ Entrega: 13/11/2026, 17:00. Exposición: 14/11/2026.
 | --- | --- | --- |
 | Shirley Carrión | Consolidación del informe; 1–4, 5B-II, 8, 9; QA de instalación, navegación, caso normal y stock/servicio | [shirley/](shirley/README.md) · [QA](../../pruebas/pc3-shirley/ficha_qa_usabilidad_shirley.md) |
 | Adrián Mansilla | 5A activos y mantenimiento; 5C relación activos-cadena; QA de descuento y escalamiento | [5A](adrian/seccion_5a_activos_mantenimiento.md) · [5C](adrian/seccion_5c_relacion_activos_cadena.md) · [QA](../../pruebas/pc3-adrian/ficha_qa_descuento_adrian.md) |
-| Benjamín Arancibia | 5B-I flujo de abastecimiento; QA de stock parcial | Pendiente |
+| Benjamín Arancibia | 5B-I flujo de abastecimiento; QA de stock parcial | [5B-I y materiales](benjamin/README.md) |
 | Jharolym, Gabriel, Ballack | Sistema (C01–C07, R01–R12) y Agente SIE | Ramas `pc3/agente-sie` y `sistema-agente`; ZIP pendiente |
 
 Informe consolidado: [shirley/informe_pc3_consolidado.md](shirley/informe_pc3_consolidado.md).
+
+El aporte de Benjamín conserva su corte documental del 12/11/2026. Sus menciones a originales fuera de Git corresponden a ese corte; desde el 13/11/2026, los cinco originales están disponibles en [fuentes](fuentes/README.md), incorporados por solicitud expresa. El Word del aporte se conserva sin regenerar.
 
 ## Fuentes documentales
 
