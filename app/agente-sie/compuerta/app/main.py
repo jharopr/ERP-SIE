@@ -331,6 +331,19 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
             raise HTTPException(403, "El aprobador no puede ser el vendedor.")
         if quien.actor_type == 'AGENTE':
             raise HTTPException(403, 'El agente no puede aprobar descuentos.')
+        if datos.decision == 'APROBADA':
+            try:
+                versions = fuente.versiones_cotizacion(datos.quotation_id)
+            except DependenciaNoDisponible:
+                raise HTTPException(503, 'No se puede autorizar sin verificar la evidencia comercial en Odoo.')
+            target = next((v for v in versions if v['version'] == datos.version), None)
+            target = target or snapshot.version_vigente(versions)
+            report = target.get('policy_report') if target else None
+            if report and (report.get('exceptional_eligible') is not True or report.get('blocking_code')):
+                evento(request_id=None, actor_id=quien.actor_id, actor_type='HUMANO', interface_id='C06',
+                       event_type='DENEGADA', code='CRITERIO_COMERCIAL_NO_CUMPLIDO',
+                       correlation_id=datos.correlation_id)
+                raise HTTPException(409, report.get('message') or 'No existe un criterio estratégico comprobado para autorizar el descuento.')
         if quien.odoo_uid:
             versiones = fuente.versiones_cotizacion(datos.quotation_id)
             if any(v.get('seller_odoo_id') == quien.odoo_uid for v in versiones):

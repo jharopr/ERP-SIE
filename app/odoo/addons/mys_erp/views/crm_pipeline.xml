@@ -38,6 +38,7 @@
                 <page name="mys_commercial_control" string="Seguimiento comercial" invisible="type != 'opportunity'">
                     <div class="alert alert-info" role="status">Las etapas describen el seguimiento comercial. La evaluación se muestra por separado. El cierre no confirma pedidos ni reserva stock.</div>
                     <group>
+                        <field name="mys_policy_summary" readonly="1"/>
                         <field name="mys_current_order_id" readonly="1"/>
                         <field name="mys_evaluation_status" widget="badge" readonly="1"
                                decoration-success="mys_evaluation_status == 'ACEPTADA'"

@@ -140,6 +140,7 @@ class SaleOrder(models.Model):
         # Se comprueba cada vez, incluso al invocar action_confirm por RPC.
         for order in self:
             order._mys_seller()
+            order._mys_check_discount_policy()
             self.env.cr.execute('SELECT id FROM sale_order WHERE id = %s FOR UPDATE', [order.id])
             self.env.cr.execute('SELECT pg_advisory_xact_lock(hashtext(%s))', [order.mys_quotation_id or str(order.id)])
             order.invalidate_recordset()

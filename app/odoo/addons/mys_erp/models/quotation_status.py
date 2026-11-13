@@ -95,6 +95,9 @@ class QuotationStatus(models.Model):
             return 'unevaluated', _('Complete la oferta, registre la aceptación del cliente y evalúe las reglas comerciales.')
         if not self.mys_acceptance_id or self.mys_acceptance_hash != self._mys_hash():
             return 'awaiting_customer', _('Falta una aceptación del cliente que corresponda exactamente a esta oferta.')
+        policy = self.sudo()._mys_discount_report()
+        if policy['blocking_code']:
+            return ('verification_pending' if policy['pending'] else 'needs_changes'), policy['message']
         if (self.mys_discount_state in ('not_required', 'approved') and self.opportunity_id
                 and self.opportunity_id.active and self.partner_id.active and current == self
                 and self.opportunity_id._mys_can_close()):

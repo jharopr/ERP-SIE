@@ -83,6 +83,9 @@ class TestQuotationStatus(TransactionCase):
         self.assertEqual(self.order.mys_commercial_state, 'needs_changes')
 
     def test_accepted_without_required_discount_approval_is_not_ready(self):
+        from dateutil.relativedelta import relativedelta
+        self.product.write({'mys_sin_rotacion_desde': fields.Date.today() - relativedelta(months=7),
+                            'mys_evidencia_comercial': 'Fixture de liquidación sintética'})
         self.order.order_line.discount = 10
         self.evaluate()
         self.assertEqual(self.order.mys_commercial_state, 'needs_changes')

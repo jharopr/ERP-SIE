@@ -69,6 +69,13 @@ class OdooCliente:
         return self._call(lambda: self._proxy("/xmlrpc/2/object").execute_kw(
             self.db, uid, self.password, modelo, "search_read", [dominio], kwargs))
 
+    def _politica_descuento(self, ids):
+        if not ids:
+            return {}
+        uid = self._uid_actual()
+        return self._call(lambda: self._proxy('/xmlrpc/2/object').execute_kw(
+            self.db, uid, self.password, 'sale.order', 'mys_analyze_discount', [ids]))
+
     # ---- interfaz usada por snapshot.py -------------------------------------------------
     def ping(self) -> dict:
         version = self._call(lambda: self._proxy("/xmlrpc/2/common").version())
@@ -115,6 +122,7 @@ class OdooCliente:
         refs = {f["id"]: f["ref"] or None for f in
                 self._leer("res.partner", [("id", "in", ids_cliente)], ["ref"])} if ids_cliente else {}
         resultado = []
+        policy_reports = self._politica_descuento([p['id'] for p, _ in pedidos])
         for p, m in pedidos:
             lineas = [l for l in todas if _id(l["order_id"]) == p["id"]]
             resultado.append({
@@ -124,6 +132,7 @@ class OdooCliente:
                 "customer_ref": refs.get(_id(p["partner_id"])),
                 "opportunity_id": referencias.get(_id(p["opportunity_id"])) if p.get("opportunity_id") else None,
                 "amount_total": p["amount_total"],
+                "policy_report": policy_reports.get(str(p['id'])),
                 "lines": [{"sku": codigos.get(_id(l["product_id"])), "quantity": l["product_uom_qty"],
                            "unit_price": l["price_unit"], "discount_pct": l["discount"]} for l in lineas],
             })
@@ -160,6 +169,7 @@ class OdooCliente:
         opps = {f["id"]: f["mys_reference"] for f in
                 self._leer("crm.lead", [("id", "in", ids_lead)], ["mys_reference"])} if ids_lead else {}
         resultado = []
+        policy_reports = self._politica_descuento([p['id'] for p in pedidos])
         for q in familias:
             versiones = []
             for p in pedidos:
@@ -173,6 +183,7 @@ class OdooCliente:
                     "cliente_ref": refs.get(_id(p["partner_id"])),
                     "oportunidad": opps.get(_id(p["opportunity_id"])) if p.get("opportunity_id") else None,
                     "vendedor": _nombre(p["user_id"]), "total": p["amount_total"],
+                    "analisis_comercial": policy_reports.get(str(p['id'])),
                     "productos": "; ".join(f"{l['product_uom_qty']:g} × {_nombre(l['product_id'])} ({l['discount']:g} %)"
                                            for l in propias)})
             resultado.append({"cotizacion": q, "versiones": sorted(versiones, key=lambda v: v["version"])})

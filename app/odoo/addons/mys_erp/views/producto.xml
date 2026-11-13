@@ -6,6 +6,10 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
                 <page string="Procedencia MYS" name="mys_procedencia">
+                    <group string="Evidencia para descuentos" groups="mys_erp.group_mys_manager,stock.group_stock_manager,base.group_system">
+                        <field name="mys_origen_mercaderia"/><field name="mys_costo_verificado"/>
+                        <field name="mys_sin_rotacion_desde"/><field name="mys_evidencia_comercial"/>
+                    </group>
                     <group>
                         <group><field name="mys_catalogo"/><field name="mys_codigo_fuente"/><field name="mys_prioridad_demo"/><field name="mys_precio_mayorista"/></group>
                         <group><field name="mys_archivo_fuente"/><field name="mys_fila_fuente"/><field name="mys_lote_sha256"/><field name="mys_datos_sinteticos"/></group>

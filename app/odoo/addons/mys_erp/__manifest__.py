@@ -1,6 +1,6 @@
 {
     'name': 'MYS - Gestión comercial integrada',
-    'version': '18.0.2.8.0',
+    'version': '18.0.2.9.0',
     'category': 'Sales/CRM',
     'summary': 'Catálogo trazable, datos demo y acceso de lectura del Agente SIE',
     'author': 'Grupo 7 - Importaciones MYS Hermanos',

@@ -82,6 +82,7 @@ def cotizacion_normalizada(v: dict, config: Config, repo: Repositorio) -> dict:
                    "unit_price": dinero(l["unit_price"]), "discount_pct": dinero(l["discount_pct"])}
                   for l in v["lines"]],
         "total": dinero(v["amount_total"]),
+        "commercial_policy": v.get('policy_report'),
     }
 
 

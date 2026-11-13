@@ -87,6 +87,7 @@ def registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_
                 "cotizacion": q, "version_vigente": v, "numero_odoo": vigente["numero_odoo"],
                 "cliente": vigente["cliente"], "cliente_ref": vigente["cliente_ref"], "oportunidad": vigente["oportunidad"],
                 "vendedor": vigente["vendedor"], "total": dinero(vigente["total"]),
+                "analisis_comercial": vigente.get('analisis_comercial'),
                 "estado": ESTADOS.get(vigente["state"], vigente["state"]), "productos": vigente["productos"],
                 "aceptacion_registrada": aceptacion(q, v), "ya_evaluada": bool(evaluada(q, v)),
                 "versiones": [{"version": x["version"], "numero_odoo": x["numero_odoo"],

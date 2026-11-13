@@ -57,6 +57,14 @@ class Compuerta(base.TransitionSimulator):
                                   "Recuperar dependencia y reanudar la misma solicitud.",
                                   "ADMINISTRADOR_Y_VENTAS", "PENDIENTE", None)
         result = super()._evaluate(request, actor)
+        policy = self.masters.get('quotations', {}).get(request.get('quotation_id'), {}).get('commercial_policy')
+        if policy and (result['status'] in ('ACEPTADA', 'PROMESA_CONDICIONADA') or result['code'] == 'DESCUENTO_SIN_APROBACION'):
+            self._event(request, actor, 'I06', 'CONSULTA', 'POLITICA_COMERCIAL_MYS', policy)
+            if policy.get('blocking_code'):
+                result = self._response(request, 'DEPENDENCIA_NO_DISPONIBLE' if policy.get('pending') else 'DATOS_INCONSISTENTES', policy['message'],
+                    'Complete los datos verificados o prepare una nueva oferta; el agente no autoriza descuentos.',
+                    'ADMINISTRADOR_Y_VENTAS' if policy.get('pending') else 'VENTAS',
+                    'PENDIENTE' if policy.get('pending') else 'RECHAZADA')
         if result["status"] == "PROMESA_CONDICIONADA":
             self._crear_senales(request, actor, result)
         return result

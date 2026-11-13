@@ -1,4 +1,13 @@
 <odoo>
+    <record id="crm_form_policy_analysis" model="ir.ui.view">
+        <field name="name">crm.lead.mys.policy.analysis</field><field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Reglas de descuento" name="mys_discount_policy"><field name="mys_policy_summary" readonly="1" nolabel="1"/></page>
+            </xpath>
+        </field>
+    </record>
     <record id="crm_form_mys_products" model="ir.ui.view">
         <field name="name">crm.lead.mys.products.form</field><field name="model">crm.lead</field>
         <field name="inherit_id" ref="mys_erp.crm_form_mys_pipeline"/>
