@@ -13,14 +13,14 @@ const w = dom.window;
 w.HTMLElement.prototype.scrollIntoView = function () {};
 w.eval(execFileSync('docker', ['compose', 'exec', '-T', 'odoo', 'cat', '/usr/lib/python3/dist-packages/odoo/addons/web/static/lib/owl/owl.js'], { cwd: root }).toString());
 Object.assign(w, w.owl);
-const counts = {contacts: 8, leads: 6, opportunities: 5, products: 50, quotes: 9, evaluations: 1, decisions: 1};
+const counts = {contacts: 8, leads: 6, opportunities: 5, products: 50, quotes: 9, sales: 2, evaluations: 1, decisions: 1};
 const agent = {enabled: true, code: 'HABILITADO', message: 'API key verificada.'};
 const calls = [];
 w.rpc = async (route, data) => {
     calls.push({route, data});
     if (route === '/mys/session') return {name: 'Vendedor demo', role: 'VENTAS', agent};
     if (route === '/mys/workspace') return {counts, agent, evaluations: []};
-    if (route === '/mys/trace') return {eventos: [{event_id:1, code:'VALIDADA', event_type:'EVALUACION', interface_id:'I03', actor_id:'VEN-DEMO-01', actor_type:'HUMANO', occurred_at:'2026-11-11'}]};
+    if (route === '/mys/trace') return {eventos: [{event_id:'gateway-1', order_id:12, order_name:'S00012', version:1, customer:'Cliente de prueba', seller:'Vendedor 01', detail:'Motivo de prueba', code:'VALIDADA', event_type:'EVALUACION', interface_id:'I03', actor_id:'VEN-DEMO-01', actor_type:'HUMANO', occurred_at:'2026-11-11T10:00:00-05:00'}], orders:[{id:12, name:'S00012', version:1, state:'sent', customer:'Cliente de prueba'}], options:{customers:[{id:5,name:'Cliente de prueba'}],sellers:[{id:6,name:'Vendedor 01'}],versions:[1,2],types:['EVALUACION'],actors:['VEN-DEMO-01']}};
     if (route === '/mys/agent/chat') return {ok:true, message:'Respuesta de prueba', conversation:'a'.repeat(32)};
     throw Error('Ruta inesperada: '+route);
 };
@@ -43,11 +43,13 @@ async function render(Component, props) {
 }
 (async () => {
     let r = await render(w.MysSidebar);
-    assert.equal(r.target.querySelectorAll('nav button').length, 11);
-    assert.match(r.target.textContent, /Contactos[\s\S]*Leads[\s\S]*Inventario[\s\S]*Agente SIE/);
+    assert.equal(r.target.querySelectorAll('nav button').length, 12);
+    assert.match(r.target.textContent, /Cotizaciones[\s\S]*Ventas/);
+    assert.match(r.target.textContent, /Contactos[\s\S]*CRM \/ Oportunidades[\s\S]*Inventario[\s\S]*Agente SIE/);
+    assert.match(r.target.textContent, /Leads/);
     r.app.destroy();
     r = await render(w.MysWorkspace, {action:{params:{page:'home'}}});
-    assert.equal(r.target.querySelectorAll('.mys_stats button').length, 6);
+    assert.equal(r.target.querySelectorAll('.mys_stats button').length, 7);
     assert.match(r.target.textContent, /50/);
     r.app.destroy();
     r = await render(w.MysWorkspace, {action:{params:{page:'agent'}}});
@@ -58,13 +60,22 @@ async function render(Component, props) {
     assert(calls.some(c => c.route === '/mys/agent/chat'));
     r.app.destroy();
     r = await render(w.MysWorkspace, {action:{params:{page:'trace', correlation_id:'COR-TEST'}}});
-    assert.match(r.target.textContent, /VALIDADA/);
+    assert.match(r.target.textContent, /Validada/);
+    assert.match(r.target.textContent, /S00012/);
+    assert.match(r.target.textContent, /Motivo de prueba/);
+    assert.equal(r.target.querySelectorAll('.mys_trace_filters select').length, 5);
+    r.component.state.traceFilters.version = '2';
+    await r.component.trace();
+    assert(calls.some(c => c.route === '/mys/trace' && c.data.version === '2'));
+    await r.component.resetTrace();
+    assert.equal(r.component.state.traceFilters.version, '');
+    assert.equal(r.component.state.query, '');
     r.app.destroy();
     Object.assign(agent, {enabled:false, code:'CUOTA_AGOTADA', message:'Sin cuota en el proveedor.'});
     r = await render(w.MysWorkspace, {action:{params:{page:'agent'}}});
     assert.equal(r.target.querySelector('textarea').disabled, true);
     assert.match(r.target.textContent, /Agente sin cuota/);
     r.app.destroy();
-    console.log('OWL: menú de 11 accesos, vista general, chat, trazabilidad y estado sin cuota correctos en DOM simulado.');
+    console.log('OWL: 12 accesos, cotizaciones y ventas separadas, 7 indicadores, chat, trazabilidad con filtros y motivos, y estado sin cuota correctos.');
     dom.window.close();
 })().catch(e => {console.error(e); dom.window.close(); process.exitCode = 1;});

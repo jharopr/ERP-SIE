@@ -19,9 +19,10 @@ Odoo contiene Contactos, CRM (leads y oportunidades), Ventas e Inventario y el a
 
 ## Fuentes y contratos
 
-- **Odoo / PostgreSQL:** contactos, oportunidades, cotizaciones y versiones, precios y existencias. El lector técnico no tiene permisos de escritura.
+- **Odoo / PostgreSQL:** contactos, oportunidades, cotizaciones y versiones, ventas confirmadas, reservas, precios y existencias. El lector técnico no tiene permisos de escritura.
 - **Compuerta / SQLite:** contrato I03 de nueve referencias, sus cuatro estados, respuestas idempotentes, aceptaciones, autorizaciones por versión y total, escalamientos y auditoría. El motor histórico y sus schemas se preservan.
 - **Modelos `mys.evaluation` y `mys.decision`:** reflejan los resultados de la compuerta para mostrarlos en Odoo. `workspace` sincroniza también resultados y solicitudes de revisión originados por herramientas del agente. No sustituyen al registro de decisiones del motor.
+- **Modelo `mys.operation.event`:** conserva creación, presentación, aceptación y confirmación/cancelación en la misma transacción Odoo. La trazabilidad combina esos eventos con la bitácora por familia de cotización y los motivos del dueño, limitando el acceso por vendedor y compañía.
 - **n8n:** orquesta las herramientas del agente. W4 (chat privado) y W5 (errores del proveedor) están publicados; W1/W2/W3 se conservan despublicados como referencia. No guarda una segunda copia del inventario.
 
 Los 167 productos conservan SKU, fila y hash del Excel suministrado. Las primeras 50 referencias (demostración) equilibran categorías y precios, sin afirmar una clasificación real de ventas; los 8 productos sin categoría en el Excel se clasifican por su descripción y quedan registrados en `datos/procedencia.json`. Los servicios no tienen stock y los cables se venden por metro. Stock, clientes y operaciones son sintéticos. Además se mantienen dos productos y dos reservas de otro cliente del escenario PC3.
@@ -40,7 +41,9 @@ La política por defecto permite 5 %. Una oferta con descuento mayor requiere un
 
 Al recibir `DESCUENTO_SIN_APROBACION`, el vendedor solicita una decisión. El dueño dispone de diez minutos para decidir. Aprobar genera una cotización de la versión siguiente con el mismo importe; el vendedor debe prepararla, obtener otra aceptación y evaluarla. Una decisión no transforma el rechazo guardado en aceptación. La familia/version se serializa para evitar duplicados concurrentes.
 
-Una versión evaluada queda inmutable para las cuentas comerciales, incluso vía RPC. Los cambios previos invalidan la aceptación registrada. La versión nueva no hereda aceptaciones, solicitudes ni resultados. El botón `action_confirm` está bloqueado en el servidor para este alcance previo al pedido; solo el seed administrativo puede crear las reservas de prueba explícitas.
+Una versión evaluada queda inmutable para las cuentas comerciales, incluso vía RPC. Los cambios previos invalidan la aceptación registrada. La versión nueva no hereda aceptaciones, solicitudes ni resultados. `action_confirm` solo permite al vendedor asignado confirmar la oferta vigente, aceptada y evaluada ACEPTADA / VALIDADA. Una autorización mayor al 5 % debe corresponder a la misma versión y total. La acción bloquea el registro, revalida condiciones actuales mediante `/solicitudes/{id}/validar-confirmacion` y ejecuta la confirmación y reserva nativas de Odoo en una sola transacción. Una reserva incompleta revierte la venta. La escritura directa del estado por RPC sigue bloqueada; la excepción interna usa una identidad de Python que no puede construirse desde JSON.
+
+La revalidación ejecuta el mismo motor en una base temporal y registra un evento separado, conservando la respuesta idempotente original. No crea nuevas solicitudes ni señales persistentes. La compuerta y el agente siguen sin escribir pedidos en Odoo; la confirmación es una acción humana explícita. Cotizaciones y Ventas utilizan acciones, listas y búsquedas distintas; comparten criterios de cliente, vendedor y fecha. Confirmar no emite comprobantes ni valida entregas.
 
 Las decisiones de reposición expresan ofrecer parcial, evaluar reposición o descartar. No compran, reservan ni prometen fechas. `PENDIENTE` conserva el identificador y se reanuda cuando la dependencia vuelve.
 

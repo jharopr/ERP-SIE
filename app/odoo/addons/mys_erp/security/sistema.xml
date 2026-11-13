@@ -1,4 +1,16 @@
 <odoo>
+    <record id="rule_event_company" model="ir.rule">
+        <field name="name">Eventos de la compañía</field><field name="model_id" ref="model_mys_operation_event"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_event_seller" model="ir.rule">
+        <field name="name">Vendedor: eventos de sus operaciones</field><field name="model_id" ref="model_mys_operation_event"/>
+        <field name="groups" eval="[(4, ref('group_mys_seller'))]"/><field name="domain_force">[('order_id.user_id', '=', user.id)]</field>
+    </record>
+    <record id="rule_event_manager" model="ir.rule">
+        <field name="name">Dueño: eventos de la compañía</field><field name="model_id" ref="model_mys_operation_event"/>
+        <field name="groups" eval="[(4, ref('group_mys_manager'))]"/><field name="domain_force">[(1, '=', 1)]</field>
+    </record>
     <record id="rule_eval_company" model="ir.rule">
         <field name="name">Evaluaciones de la compañía</field><field name="model_id" ref="model_mys_evaluation"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>

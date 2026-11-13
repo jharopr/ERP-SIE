@@ -1,0 +1,21 @@
+{
+  "order_id": 127,
+  "checks": [
+    "Confirmación humana revalida con la compuerta y registra la venta",
+    "Venta confirmada reserva productos y mantiene entrega pendiente",
+    "Separación correcta en Cotizaciones",
+    "Separación correcta en Ventas",
+    "Trazabilidad reúne versiones de la oportunidad",
+    "Trazabilidad incluye motivo del dueño",
+    "Trazabilidad incluye revalidación y confirmación",
+    "Filtros de versión y tipo de evento funcionan",
+    "Filtros comunes en Cotizaciones",
+    "Filtros comunes en Ventas",
+    "Filtros comunes en Evaluación comercial",
+    "Filtros comunes en Decisiones del dueño",
+    "Cancelar la venta sintética libera todas sus reservas",
+    "Historial conserva confirmación y cancelación"
+  ],
+  "count": 14,
+  "reservations_restored": true
+}

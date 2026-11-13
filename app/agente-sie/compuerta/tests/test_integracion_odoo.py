@@ -72,3 +72,66 @@ def test_escalamiento_vencido_admite_nuevo_seguimiento(entorno, casos):
 
 def segundo_estado(entorno, escalation_id):
     return entorno.llamar('GET', '/escalamientos/'+escalation_id).json()['estado']
+
+
+def test_revalidar_venta_usa_stock_fresco_y_conserva_evaluacion(entorno, casos):
+    payload = casos['PC3-N01']['solicitud']
+    first = entorno.llamar('POST', '/solicitudes', json=payload).json()['respuesta']
+    c = config(entorno)
+    client = TestClient(crear_app(c, entorno.odoo, entorno.reloj))
+    headers = {'Authorization': 'Bearer privado-odoo', 'X-MYS-Context': firma(c)}
+    path = '/solicitudes/' + payload['request_id'] + '/validar-confirmacion'
+    assert client.post(path, headers=headers).json()['respuesta']['code'] == 'VALIDADA'
+    entorno.odoo.reservado['RAD-7BT'] = entorno.odoo.fisico['RAD-7BT']
+    result = client.post(path, headers=headers)
+    assert result.status_code == 200
+    assert result.json()['respuesta']['code'] == 'DISPONIBILIDAD_PARCIAL'
+    assert entorno.repo.respuesta(c.company_id, payload['request_id'])['respuesta'] == first
+    assert not entorno.repo.senales_de(payload['request_id'])
+    assert any(e['event_type'] == 'REVALIDACION_VENTA' for e in entorno.repo.bitacora(request_id=payload['request_id']))
+
+
+def test_revalidar_venta_rechaza_agente_y_token_sin_sesion_odoo(entorno, casos):
+    payload = casos['PC3-N01']['solicitud']
+    entorno.llamar('POST', '/solicitudes', json=payload)
+    path = '/solicitudes/' + payload['request_id'] + '/validar-confirmacion'
+    assert entorno.llamar('POST', path).status_code == 403
+    c = config(entorno)
+    client = TestClient(crear_app(c, entorno.odoo, entorno.reloj))
+    headers = {'Authorization': 'Bearer privado-agente', 'X-MYS-Context': firma(c)}
+    assert client.post(path, headers=headers).status_code == 403
+    headers = {'Authorization': 'Bearer privado-odoo', 'X-MYS-Context': firma(c, actor_id='VEN-OTRO')}
+    assert client.post(path, headers=headers).status_code == 403
+
+
+def test_revalidar_venta_detecta_vencimiento_y_caida(entorno, casos):
+    payload = casos['PC3-N01']['solicitud']
+    entorno.llamar('POST', '/solicitudes', json=payload)
+    c = config(entorno)
+    client = TestClient(crear_app(c, entorno.odoo, entorno.reloj))
+    headers = {'Authorization': 'Bearer privado-odoo', 'X-MYS-Context': firma(c)}
+    path = '/solicitudes/' + payload['request_id'] + '/validar-confirmacion'
+    entorno.odoo.caido = True
+    assert client.post(path, headers=headers).json()['respuesta']['status'] == 'PENDIENTE'
+    entorno.odoo.caido = False
+    entorno.reloj.hora += timedelta(days=2)
+    assert client.post(path, headers=headers).json()['respuesta']['code'] == 'COTIZACION_VENCIDA'
+
+
+def test_bitacora_por_cotizacion_incluye_aceptacion_sin_correlacion(entorno, casos):
+    payload = casos['PC3-N01']['solicitud']
+    entorno.llamar('POST', '/solicitudes', json=payload)
+    result = entorno.llamar('POST', '/aceptaciones', json={
+        'acceptance_id': 'ACE-TRACE-TEST', 'quotation_id': payload['quotation_id'],
+        'version': payload['quotation_version']})
+    assert result.status_code == 200
+    c = config(entorno)
+    client = TestClient(crear_app(c, entorno.odoo, entorno.reloj))
+    headers = {'Authorization': 'Bearer privado-odoo', 'X-MYS-Context': firma(c)}
+    r = client.get('/bitacora', params={'quotation_id': payload['quotation_id']}, headers=headers)
+    assert r.status_code == 200
+    events = r.json()['eventos']
+    assert any(e['event_type'] == 'ACEPTACION' and e['correlation_id'] is None for e in events)
+    assert any(e['code'] == 'VALIDADA' for e in events)
+    headers['X-MYS-Context'] = firma(c, actor_id='VEN-OTRO')
+    assert client.get('/bitacora', params={'quotation_id': payload['quotation_id']}, headers=headers).status_code == 403

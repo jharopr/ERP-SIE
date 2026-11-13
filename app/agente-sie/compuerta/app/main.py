@@ -18,7 +18,7 @@ from pydantic import BaseModel, Field
 
 from . import snapshot
 from .config import Config, ahora_lima
-from .motor import evaluar
+from .motor import Compuerta, evaluar
 from .odoo_cliente import DependenciaNoDisponible, OdooCliente
 from .repositorio import Repositorio
 from .seguridad import Identidad, identificar
@@ -269,6 +269,34 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
         huella_agente(request, quien, request_id.encode(), guardada["respuesta"]["correlation_id"], request_id)
         return con_senales(guardada["respuesta"])
 
+    @app.post('/solicitudes/{request_id}/validar-confirmacion')
+    def validar_confirmacion(request_id: str, quien: Identidad = Depends(exigir('VENTAS'))):
+        """Lectura fresca de R01–R12; conserva la evaluación original y su idempotencia.
+
+        Solo la acción humana de Odoo usa esta operación. El motor temporal no
+        crea solicitudes ni señales persistentes y nunca confirma pedidos.
+        """
+        if not quien.odoo_uid or quien.actor_type != 'HUMANO':
+            raise HTTPException(403, 'La confirmación corresponde al vendedor desde Odoo.')
+        payload = repo.payload(config.company_id, request_id) if re.fullmatch(ID, request_id) else None
+        guardada = repo.respuesta(config.company_id, request_id) if payload else None
+        if not guardada:
+            raise HTTPException(404, 'Solicitud no encontrada.')
+        alcance_solicitud(quien, request_id)
+        if guardada['respuesta']['status'] != 'ACEPTADA' or guardada['respuesta']['code'] != 'VALIDADA':
+            raise HTTPException(409, 'La solicitud debe estar aceptada y validada antes de confirmar.')
+        masters, disponible = snapshot.construir(payload, fuente, repo, config, reloj())
+        motor = Compuerta(masters, ':memory:', 'HUMANO', config.prefijo_rep, disponible)
+        try:
+            response = motor._evaluate(payload, quien.actor_id)
+        finally:
+            motor.close()
+        evento(request_id=request_id, correlation_id=payload['correlation_id'], actor_id=quien.actor_id,
+               actor_type='HUMANO', interface_id='ODOO', event_type='REVALIDACION_VENTA', code=response['code'],
+               detalle={'mensaje': response['message'], 'siguiente_paso': response.get('required_action'),
+                        'condiciones': response.get('conditions', [])})
+        return {'respuesta': response}
+
     @app.post("/aceptaciones")
     def aceptaciones(datos: Aceptacion, quien: Identidad = Depends(exigir("VENTAS"))):
         """Extensión C03: registra la aceptación con el total que calcula Odoo, no el del cuerpo."""
@@ -318,7 +346,7 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
             repo.registrar_evento(db, company_id=config.company_id, request_id=None, correlation_id=datos.correlation_id,
                                   actor_id=quien.actor_id, actor_type="HUMANO", interface_id="C06",
                                   event_type="APROBACION", code=datos.decision, occurred_at=ahora.isoformat(),
-                                  detalle={"quotation_id": datos.quotation_id, "version": datos.version,
+                                  detalle={"quotation_id": datos.quotation_id, "version": datos.version, "motivo": datos.motivo,
                                            "total": datos.total, "approval_id": cur.lastrowid})
             repo.cerrar_escalamientos(db, decision=datos.decision, decided_at=ahora.isoformat(),
                                       quotation_id=datos.quotation_id, version_aprobacion=datos.version)
@@ -447,13 +475,24 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
 
     @app.get("/bitacora")
     def bitacora(correlation_id: str | None = None, request_id: str | None = None,
+                 quotation_id: str | None = None,
                  quien: Identidad = Depends(exigir("VENTAS", "GERENCIA", "ADMIN"))):
-        if not correlation_id and not request_id:
-            raise HTTPException(422, "Indique correlation_id o request_id.")
-        for valor in (correlation_id, request_id):
+        if not correlation_id and not request_id and not quotation_id:
+            raise HTTPException(422, "Indique correlation_id, request_id o quotation_id.")
+        for valor in (correlation_id, request_id, quotation_id):
             if valor and not re.fullmatch(ID, valor):
                 raise HTTPException(422, "Identificador inválido.")
-        eventos = repo.bitacora(correlation_id, request_id)
+        versiones = []
+        if quotation_id:
+            try:
+                versiones = fuente.versiones_cotizacion(quotation_id)
+            except DependenciaNoDisponible:
+                raise HTTPException(503, 'No fue posible verificar el acceso a la cotización.') from None
+            if not versiones:
+                raise HTTPException(404, 'Cotización no encontrada.')
+            for v in versiones:
+                alcance(quien, v['opportunity_id'])
+        eventos = repo.bitacora(correlation_id, request_id, quotation_id)
         if quien.odoo_uid and quien.rol == 'VENTAS':
             permitidos = []
             for e in eventos:
@@ -463,7 +502,10 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
                         permitidos.append(e)
                     except HTTPException:
                         pass
-                elif e['actor_id'] == quien.actor_id:
+                elif e['actor_id'] == quien.actor_id or (quotation_id and any(
+                        v['version'] == (e.get('detalle') or {}).get('version') and
+                        snapshot.cotizacion_normalizada(v, config, repo)['seller_id'] == quien.actor_id
+                        for v in versiones)):
                     permitidos.append(e)
             eventos = permitidos
         return {"correlation_id": correlation_id, "request_id": request_id, "eventos": eventos}

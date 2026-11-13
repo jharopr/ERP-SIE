@@ -16,6 +16,8 @@ from odoo.exceptions import AccessError, UserError
 REF = re.compile(r'^(COT-[A-Za-z0-9_-]+) v([1-9][0-9]*)$')
 # Tope de descuento del vendedor: misma política que aplica la compuerta (max_seller_discount, R08).
 TOPE_VENDEDOR = 5.0
+# El contexto RPC no puede construir esta identidad; solo la acción validada la usa.
+CONFIRMATION_TOKEN = object()
 
 
 class Gateway(models.AbstractModel):
@@ -88,12 +90,23 @@ class Gateway(models.AbstractModel):
 
 class Lead(models.Model):
     _inherit = 'crm.lead'
-    mys_reference = fields.Char('Referencia SIE', compute='_compute_mys_reference', store=True, index=True)
+    mys_reference = fields.Char('Referencia SIE', readonly=True, copy=False, index=True,
+                                help='Referencia interna estable. Cambiar el título no cambia este código.')
 
-    @api.depends('name')
-    def _compute_mys_reference(self):
+    @api.model_create_multi
+    def create(self, vals_list):
+        leads = super().create(vals_list)
+        for lead in leads:
+            if not lead.mys_reference:
+                reference = lead.name if re.fullmatch(r'OPP-[A-Za-z0-9_-]+', lead.name or '') else 'OPP-MYS-%s' % lead.id
+                super(Lead, lead).write({'mys_reference': reference})
+        return leads
+
+    def _mys_fill_reference(self):
+        """Completa instalaciones antiguas sin cambiar referencias ya utilizadas."""
         for lead in self:
-            lead.mys_reference = lead.name if re.fullmatch(r'OPP-[A-Za-z0-9_-]+', lead.name or '') else 'OPP-MYS-%s' % lead.id
+            if not lead.mys_reference:
+                lead.mys_reference = lead.name if re.fullmatch(r'OPP-[A-Za-z0-9_-]+', lead.name or '') else 'OPP-MYS-%s' % lead.id
 
 
 class Order(models.Model):
@@ -155,11 +168,13 @@ class Order(models.Model):
     def write(self, vals):
         if any(k.startswith('mys_') for k in vals) and not self._mys_privileged():
             raise AccessError(_('No se pueden alterar resultados, solicitudes ni aceptaciones por RPC.'))
-        if 'state' in vals and vals['state'] not in ('draft', 'sent', 'cancel') and not self._mys_privileged():
+        confirming = self.env.context.get('_mys_confirmation') is CONFIRMATION_TOKEN
+        if 'state' in vals and vals['state'] not in ('draft', 'sent', 'cancel') and not (self._mys_privileged() or confirming):
             raise AccessError(_('La evaluación comercial no confirma pedidos.'))
         commercial = {'order_line', 'partner_id', 'partner_invoice_id', 'partner_shipping_id', 'user_id',
-                      'opportunity_id', 'currency_id', 'pricelist_id', 'validity_date', 'client_order_ref', 'company_id', 'state'}
-        if commercial.intersection(vals):
+                      'opportunity_id', 'currency_id', 'pricelist_id', 'validity_date', 'client_order_ref', 'company_id', 'warehouse_id', 'state'}
+        changed = commercial.intersection(vals) - ({'state'} if confirming else set())
+        if changed:
             self._mys_check_edit()
             if (commercial - {'state'}).intersection(vals) and not self._mys_privileged() and any(self.mapped('mys_approval_hash')):
                 raise UserError(_('Esta oferta tiene aprobación para su versión e importe. Cree una nueva versión para cambiarla.'))
@@ -179,9 +194,12 @@ class Order(models.Model):
         return super().copy(defaults)
 
     def action_confirm(self):
-        if not (self.env.context.get('mys_seed') and self._mys_privileged()):
-            raise UserError(_('El alcance de esta demo termina en evaluación comercial: no crea pedidos ni reservas. Use «Evaluar reglas».'))
-        return super().action_confirm()
+        if self.env.context.get('mys_seed') and self._mys_privileged():
+            return super().action_confirm()
+        self._mys_check_confirmation()
+        result = super(Order, self.with_context(_mys_confirmation=CONFIRMATION_TOKEN)).action_confirm()
+        self._mys_finish_confirmation()
+        return result
 
     def _mys_seller(self):
         self.ensure_one()
@@ -305,7 +323,8 @@ class OrderLine(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
-        self._mys_changed(self.order_id | self.env['sale.order'].browse(vals.get('order_id', [])))
+        if {'product_id', 'product_uom_qty', 'price_unit', 'discount', 'tax_id', 'product_uom', 'order_id'}.intersection(vals):
+            self._mys_changed(self.order_id | self.env['sale.order'].browse(vals.get('order_id', [])))
         return super().write(vals)
 
     def unlink(self):

@@ -1,0 +1,259 @@
+<odoo>
+    <record id="view_commercial_list" model="ir.ui.view">
+        <field name="name">sale.order.mys.commercial.list</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <list string="Cotizaciones" default_order="id desc" decoration-muted="state == 'cancel'">
+                <field name="name" string="Número" />
+                <field name="mys_subject" />
+                <field name="mys_version" string="Versión" optional="show" />
+                <field name="client_order_ref" string="Referencia interna" optional="hide" />
+                <field name="date_order" string="Fecha" />
+                <field name="partner_id" string="Cliente" />
+                <field name="user_id" string="Vendedor" widget="many2one_avatar_user" />
+                <field name="state" string="Estado del documento" widget="badge" />
+                <field name="mys_commercial_state" column_invisible="True" />
+                <field name="mys_commercial_label" string="Estado comercial" widget="badge"
+                       decoration-success="mys_commercial_state in ['ready', 'confirmed']"
+                       decoration-info="mys_commercial_state == 'superseded'"
+                       decoration-warning="mys_commercial_state in ['approval_required', 'approval_pending', 'authorization_review', 'availability', 'verification_pending', 'awaiting_customer']"
+                       decoration-danger="mys_commercial_state in ['needs_changes', 'expired']"
+                       decoration-muted="mys_commercial_state == 'cancelled'" />
+                <field name="mys_evaluation_code" optional="hide" />
+                <field name="opportunity_id" optional="hide" />
+                <field name="amount_total" string="Total" sum="Total" />
+                <field name="currency_id" column_invisible="True" />
+                <button name="action_mys_trace" type="object" icon="fa-history" title="Ver trazabilidad" />
+            </list>
+        </field>
+    </record>
+    <record id="view_sales_list" model="ir.ui.view">
+        <field name="name">sale.order.mys.sales.list</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <list string="Ventas" create="false" default_order="date_order desc" decoration-muted="state == 'cancel'">
+                <field name="name" string="Venta" />
+                <field name="client_order_ref" string="Cotización / versión" />
+                <field name="date_order" string="Fecha de confirmación" />
+                <field name="partner_id" string="Cliente" />
+                <field name="user_id" string="Vendedor" />
+                <field name="state" string="Estado" widget="badge" />
+                <field name="invoice_status" string="Facturación" widget="badge" />
+                <field name="mys_delivery_state" widget="badge" />
+                <field name="mys_discount_state" widget="badge" optional="hide" />
+                <field name="opportunity_id" optional="hide" />
+                <field name="amount_total" string="Total" sum="Total" />
+                <field name="currency_id" column_invisible="True" />
+                <button name="action_mys_trace" type="object" icon="fa-history" title="Ver trazabilidad" />
+            </list>
+        </field>
+    </record>
+    <record id="view_commercial_search" model="ir.ui.view">
+        <field name="name">sale.order.mys.commercial.search</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <search string="Buscar cotizaciones">
+                <field name="name" string="Número, producto o cliente" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('client_order_ref', 'ilike', self), ('mys_subject', 'ilike', self), ('partner_id.name', 'ilike', self)]" />
+                <field name="partner_id" string="Cliente" />
+                <field name="user_id" string="Vendedor" />
+                <field name="opportunity_id" />
+                <field name="mys_version" />
+                <field name="mys_commercial_state" />
+                <field name="mys_result" />
+                <field name="mys_discount_state" />
+                <filter name="draft" string="Borradores" domain="[('state', '=', 'draft')]" />
+                <filter name="sent" string="Enviadas" domain="[('state', '=', 'sent')]" />
+                <filter name="cancelled" string="Canceladas" domain="[('state', '=', 'cancel')]" />
+                <separator />
+                <filter name="commercial_unevaluated" string="Por evaluar" domain="[('mys_commercial_state', '=', 'unevaluated')]" />
+                <filter name="commercial_approval" string="Aprobación por gestionar" domain="[('mys_commercial_state', 'in', ['approval_required', 'approval_pending'])]" />
+                <filter name="commercial_review" string="Requieren revisión" domain="[('mys_commercial_state', 'in', ['needs_changes', 'authorization_review', 'availability', 'verification_pending'])]" />
+                <filter name="commercial_ready" string="Listas para confirmar" domain="[('mys_commercial_state', '=', 'ready')]" />
+                <filter name="commercial_superseded" string="Reemplazadas" domain="[('mys_commercial_state', '=', 'superseded')]" />
+                <filter name="commercial_expired" string="Vencidas" domain="[('mys_commercial_state', '=', 'expired')]" />
+                <separator />
+                <filter name="unevaluated" string="Sin evaluar" domain="[('mys_result', '=', 'unevaluated')]" />
+                <filter name="accepted" string="Evaluación aceptada" domain="[('mys_result', '=', 'ACEPTADA')]" />
+                <filter name="rejected" string="Evaluación rechazada" domain="[('mys_result', '=', 'RECHAZADA')]" />
+                <filter name="pending" string="Evaluación pendiente" domain="[('mys_result', '=', 'PENDIENTE')]" />
+                <filter name="conditional" string="Promesa condicionada" domain="[('mys_result', '=', 'PROMESA_CONDICIONADA')]" />
+                <separator />
+                <filter name="discount_not_requested" string="Descuento sin solicitud" domain="[('mys_discount_state', '=', 'not_requested')]" />
+                <filter name="discount_pending" string="Descuento pendiente del dueño" domain="[('mys_discount_state', '=', 'pending')]" />
+                <filter name="discount_approved" string="Descuento aprobado" domain="[('mys_discount_state', '=', 'approved')]" />
+                <filter name="discount_approved_next" string="Aprobado para nueva versión" domain="[('mys_discount_state', '=', 'approved_next')]" />
+                <filter name="discount_review" string="Revisar autorización" domain="[('mys_discount_state', '=', 'review')]" />
+                <filter name="discount_rejected" string="Descuento rechazado" domain="[('mys_discount_state', '=', 'rejected')]" />
+                <filter name="discount_no_decision" string="Descuento sin decisión / vencido" domain="[('mys_discount_state', '=', 'no_decision')]" />
+                <separator />
+                <filter name="date" string="Fecha" date="date_order" />
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_customer" string="Cliente" context="{'group_by': 'partner_id'}" />
+                    <filter name="group_seller" string="Vendedor" context="{'group_by': 'user_id'}" />
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}" />
+                    <filter name="group_result" string="Evaluación comercial" context="{'group_by': 'mys_result'}" />
+                    <filter name="group_discount" string="Aprobación de descuento" context="{'group_by': 'mys_discount_state'}" />
+                    <filter name="group_reference" string="Referencia de cotización" context="{'group_by': 'mys_quotation_id'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="view_sales_search" model="ir.ui.view">
+        <field name="name">sale.order.mys.sales.search</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <search string="Buscar ventas">
+                <field name="name" string="Número o referencia" filter_domain="['|', ('name', 'ilike', self), ('client_order_ref', 'ilike', self)]" />
+                <field name="partner_id" string="Cliente" />
+                <field name="user_id" string="Vendedor" />
+                <field name="opportunity_id" />
+                <field name="mys_version" />
+                <filter name="confirmed" string="Confirmadas" domain="[('state', '=', 'sale')]" />
+                <filter name="cancelled" string="Canceladas" domain="[('state', '=', 'cancel')]" />
+                <separator />
+                <filter name="to_invoice" string="Por facturar" domain="[('invoice_status', '=', 'to invoice')]" />
+                <filter name="invoiced" string="Facturadas" domain="[('invoice_status', '=', 'invoiced')]" />
+                <filter name="no_invoice" string="Nada que facturar" domain="[('invoice_status', '=', 'no')]" />
+                <separator />
+                <filter name="delivery_pending" string="Entrega pendiente" domain="[('mys_delivery_state', '=', 'pending')]" />
+                <filter name="delivery_partial" string="Entrega parcial" domain="[('mys_delivery_state', '=', 'partial')]" />
+                <filter name="delivery_done" string="Entregadas" domain="[('mys_delivery_state', '=', 'done')]" />
+                <separator />
+                <filter name="date" string="Fecha de confirmación" date="date_order" />
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_customer" string="Cliente" context="{'group_by': 'partner_id'}" />
+                    <filter name="group_seller" string="Vendedor" context="{'group_by': 'user_id'}" />
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}" />
+                    <filter name="group_invoice" string="Facturación" context="{'group_by': 'invoice_status'}" />
+                    <filter name="group_delivery" string="Entrega" context="{'group_by': 'mys_delivery_state'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_cotizaciones_mys" model="ir.actions.act_window">
+        <field name="name">Cotizaciones</field>
+        <field name="view_id" ref="view_commercial_list" />
+        <field name="search_view_id" ref="view_commercial_search" />
+        <field name="domain">['|', ('client_order_ref', '=like', 'COT-%'), ('client_order_ref', '=', False), ('state', '!=', 'sale'), ('mys_confirmed_at', '=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Prepara una cotización</p>
+            <p>Revisa su estado, evaluación y aprobación de descuento.</p>
+        </field>
+    </record>
+    <record id="action_ventas_mys" model="ir.actions.act_window">
+        <field name="name">Ventas</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_sales_list" />
+        <field name="search_view_id" ref="view_sales_search" />
+        <field name="domain">[('client_order_ref', '=like', 'COT-%'), '|', ('state', '=', 'sale'), ('mys_confirmed_at', '!=', False)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Todavía no hay ventas confirmadas</p>
+            <p>Confirma una cotización vigente, aceptada y validada para generar la venta.</p>
+        </field>
+    </record>
+    <record id="menu_mys_cotizaciones" model="ir.ui.menu">
+        <field name="name">Cotizaciones</field>
+    </record>
+    <menuitem id="menu_mys_ventas" name="Ventas" parent="menu_mys" action="action_ventas_mys" sequence="45" />
+    <record id="sale_form_mys_commercial" model="ir.ui.view">
+        <field name="name">sale.order.mys.commercial.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_form_mys" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_confirm" type="object" string="4. Confirmar venta" class="btn-primary" groups="mys_erp.group_mys_seller" invisible="state != 'sent' or mys_status != 'ACEPTADA'" confirm="Se revalidarán las reglas y el stock. Si todo es conforme, se confirmará la venta y se reservarán los productos. ¿Continuar?" />
+                <button name="action_mys_trace" type="object" string="Ver trazabilidad" />
+                <field name="mys_confirmed_at" invisible="1" />
+            </xpath>
+            <xpath expr="//page[@name='mys_rules']//div[hasclass('alert-info')]" position="replace">
+                <div class="alert alert-info" role="status">
+                    <p><strong>Evaluación de esta versión:</strong> verifica datos, vigencia, aceptación del cliente, descuento y disponibilidad.</p>
+                    <p class="mb-0"><strong>Autorización del descuento:</strong> el gerente permite superar el 5 % para una versión e importe concretos. La versión rechazada conserva su resultado; la nueva versión debe aceptarse y evaluarse antes de confirmar la venta.</p>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='mys_rules']//field[@name='mys_status']" position="replace">
+                <field name="mys_commercial_label" string="Estado comercial" widget="badge" readonly="1" />
+                <field name="mys_commercial_note" readonly="1" />
+                <field name="mys_result" widget="badge" />
+                <field name="mys_discount_state" widget="badge" />
+                <field name="mys_discount_target_id" invisible="not mys_discount_target_id" />
+                <field name="mys_status" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="mys_subject" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+    <record id="view_evaluation_search" model="ir.ui.view">
+        <field name="name">mys.evaluation.search</field>
+        <field name="model">mys.evaluation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_id" />
+                <field name="partner_id" string="Cliente" />
+                <field name="user_id" string="Vendedor" />
+                <field name="request_id" />
+                <field name="correlation_id" />
+                <field name="code" />
+                <filter name="accepted" string="Evaluación aceptada" domain="[('status', '=', 'ACEPTADA')]" />
+                <filter name="rejected" string="Evaluación rechazada" domain="[('status', '=', 'RECHAZADA')]" />
+                <filter name="pending" string="Evaluación pendiente" domain="[('status', '=', 'PENDIENTE')]" />
+                <filter name="conditional" string="Promesa condicionada" domain="[('status', '=', 'PROMESA_CONDICIONADA')]" />
+                <separator />
+                <filter name="date" string="Fecha" date="create_date" />
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_customer" string="Cliente" context="{'group_by': 'partner_id'}" />
+                    <filter name="group_seller" string="Vendedor" context="{'group_by': 'user_id'}" />
+                    <filter name="group_state" string="Evaluación comercial" context="{'group_by': 'status'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_evaluations" model="ir.actions.act_window">
+        <field name="search_view_id" ref="view_evaluation_search" />
+    </record>
+    <record id="view_decision_search" model="ir.ui.view">
+        <field name="name">mys.decision.search</field>
+        <field name="model">mys.decision</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_id" />
+                <field name="partner_id" string="Cliente" />
+                <field name="user_id" string="Vendedor" />
+                <field name="tipo" />
+                <field name="decision" />
+                <filter name="discount" string="Descuentos" domain="[('tipo', '=', 'DESCUENTO')]" />
+                <filter name="replenishment" string="Faltantes de stock" domain="[('tipo', '=', 'REPOSICION')]" />
+                <separator />
+                <filter name="pending" string="Pendientes del dueño" domain="[('state', '=', 'ESPERANDO_DECISION')]" />
+                <filter name="decided" string="Decididas" domain="[('state', '=', 'DECIDIDO')]" />
+                <filter name="no_decision" string="Sin decisión / vencidas" domain="[('state', '=', 'SIN_DECISION')]" />
+                <separator />
+                <filter name="approved" string="Aprobadas" domain="[('decision', '=', 'APROBADA')]" />
+                <filter name="rejected" string="Rechazadas" domain="[('decision', '=', 'RECHAZADA')]" />
+                <separator />
+                <filter name="date" string="Fecha" date="create_date" />
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_customer" string="Cliente" context="{'group_by': 'partner_id'}" />
+                    <filter name="group_seller" string="Vendedor" context="{'group_by': 'user_id'}" />
+                    <filter name="group_state" string="Estado" context="{'group_by': 'state'}" />
+                    <filter name="group_decision" string="Decisión" context="{'group_by': 'decision'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_decisions" model="ir.actions.act_window">
+        <field name="search_view_id" ref="view_decision_search" />
+    </record>
+    <record id="view_decision_trace" model="ir.ui.view">
+        <field name="name">mys.decision.trace</field>
+        <field name="model">mys.decision</field>
+        <field name="inherit_id" ref="view_decision_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_mys_trace" type="object" string="Ver trazabilidad" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

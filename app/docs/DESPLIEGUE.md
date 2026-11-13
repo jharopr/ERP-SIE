@@ -33,4 +33,4 @@ La configuración suministrada es para demostración local. Para publicar una in
 5. Configurar copias periódicas, logs y almacenamiento persistente; probar restauración. Comprobar tiempo de espera del proxy para respuestas de modelo de hasta cien segundos.
 6. Aplicar actualizaciones de addon con Odoo detenido, como hace `actualizar_odoo.py`, y recrear servicios si cambian variables de entorno. Reimportar W4 mediante `iniciar.py` después de cambiar la clave/modelo.
 
-Los límites de este incremento son evaluación comercial y decisión humana; facturación electrónica, cobranza, compra y despacho requieren implementación adicional.
+El flujo incluye evaluación comercial, decisión humana y confirmación explícita de la venta con reserva nativa. Facturación electrónica, cobranza, compra y despacho requieren implementación adicional. Después de actualizar, recargar el navegador con Ctrl+F5 para ver los accesos separados de Cotizaciones y Ventas y los nuevos filtros de trazabilidad.

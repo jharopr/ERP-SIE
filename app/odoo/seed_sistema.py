@@ -135,13 +135,10 @@ def catalogo(odoo, data, ubicacion):
 
 def datos_comerciales(odoo, repo, data, productos, vendedor, ubicacion):
     now = ahora_lima()
-    clients = {}
-    for i in range(1, 9):
-        ref = f'CLI-DEMO-{i:03d}'
-        clients[ref], _ = odoo.upsert('res.partner', [('ref', '=', ref)],
-                                     {'name': f'Cliente de prueba {i:03d}', 'ref': ref, 'mys_demo': True,
-                                      'mys_segmento': 'nuevo' if i != 2 else 'recurrente',
-                                      'mys_identidad_revisada': True, 'active': True, 'customer_rank': 1})
+    odoo.x('res.partner', 'action_mys_prepare_demo_contacts')
+    clients = {c['ref']: c['id'] for c in odoo.leer('res.partner',
+               [('ref', 'in', [f'CLI-DEMO-{i:03d}' for i in range(1, 11)])], ['ref'])}
+    for ref in clients:
         with repo.conexion() as db:
             db.execute('INSERT INTO clientes_ext VALUES(?,?,?) ON CONFLICT(ref) DO UPDATE SET identity_reviewed=1',
                        (ref, 1, 'PUBLICO_GENERAL_NUEVO'))
@@ -150,8 +147,9 @@ def datos_comerciales(odoo, repo, data, productos, vendedor, ubicacion):
                                'supplier_rank': 1, 'mys_demo': True, 'mys_segmento': 'proveedor'})
     # Registrar leads y oportunidades reales de Odoo, conservando los IDs del agente.
     for i in range(1, 7):
-        odoo.upsert('crm.lead', [('name', '=', f'LEAD-MYS-{i:03d}')],
+        odoo.upsert('crm.lead', ['|', ('mys_demo_key', '=', f'LEAD-MYS-{i:03d}'), ('name', '=', f'LEAD-MYS-{i:03d}')],
                     {'name': f'LEAD-MYS-{i:03d}', 'type': 'lead', 'partner_id': clients[f'CLI-DEMO-{i:03d}'],
+                     'mys_demo_key': f'LEAD-MYS-{i:03d}',
                      'user_id': vendedor, 'description': 'Visita espontánea en tienda. Datos sintéticos de demostración.'})
     opportunities = legacy.asegurar_oportunidades(odoo, clients)
     for opp, oid in opportunities.items():
@@ -162,7 +160,7 @@ def datos_comerciales(odoo, repo, data, productos, vendedor, ubicacion):
         assigned = json.loads(actors[0])
     for i, p in enumerate(data['productos'][:3], 1):
         opp = f'OPP-CAT-{i:03d}'
-        oid, _ = odoo.upsert('crm.lead', [('name', '=', opp)],
+        oid, _ = odoo.upsert('crm.lead', [('mys_reference', '=', opp)],
                              {'name': opp, 'type': 'opportunity', 'partner_id': clients['CLI-DEMO-003'],
                               'user_id': vendedor, 'description': 'Oportunidad de demostración con producto del catálogo.'})
         discount = 10 if i == 3 else 5
@@ -192,7 +190,9 @@ def datos_comerciales(odoo, repo, data, productos, vendedor, ubicacion):
                    (json.dumps(sorted(set(assigned))), E.VENDEDOR))
     # Guardar el escenario de catálogo en el volumen de la compuerta para reproducirlo.
     Path('/data/casos_catalogo.json').write_text(json.dumps(cases, ensure_ascii=False, indent=2), encoding='utf-8')
-    legacy.log('8 clientes, 1 proveedor, 6 leads y 3 oportunidades/cotizaciones de catálogo preparados.')
+    odoo.x('res.partner', 'action_mys_prepare_demo_contacts')
+    odoo.x('crm.lead', 'action_mys_prepare_demo_presentation')
+    legacy.log('10 contactos peruanos de ejemplo, 1 proveedor, 6 leads y 3 oportunidades/cotizaciones de catálogo preparados.')
 
 
 def limpiar_notificaciones(odoo):
@@ -218,6 +218,8 @@ def main():
             modules = existing.leer('ir.module.module', [('name', '=', 'mys_erp')], ['state'])
             if modules and modules[0]['state'] == 'installed' and len(existing.buscar('product.template', [('mys_catalogo', '=', True)])) == total:
                 usuarios(existing)
+                existing.x('res.partner', 'action_mys_prepare_demo_contacts')
+                existing.x('crm.lead', 'action_mys_prepare_demo_presentation')
                 limpiar_notificaciones(existing)
                 print('Instalación existente: usuarios sincronizados. Cotizaciones, versiones, stock y decisiones conservados.', flush=True)
                 return

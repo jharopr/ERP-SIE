@@ -7,17 +7,26 @@
         <field name="domain">[('mys_catalogo', '=', True)]</field>
     </record>
     <record id="action_contactos_mys" model="ir.actions.act_window">
-        <field name="name">Clientes de prueba MYS</field>
+        <field name="name">Contactos</field>
         <field name="res_model">res.partner</field>
         <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_contactos_mys_search"/>
         <field name="domain">[('mys_demo', '=', True), ('supplier_rank', '=', 0)]</field>
         <field name="context">{'default_mys_demo': True, 'default_customer_rank': 1}</field>
+    </record>
+    <record id="action_contactos_mys_kanban" model="ir.actions.act_window.view">
+        <field name="sequence">1</field><field name="view_mode">kanban</field>
+        <field name="view_id" ref="view_contactos_mys_kanban"/><field name="act_window_id" ref="action_contactos_mys"/>
+    </record>
+    <record id="action_contactos_mys_list" model="ir.actions.act_window.view">
+        <field name="sequence">2</field><field name="view_mode">list</field>
+        <field name="view_id" ref="view_contactos_mys_list"/><field name="act_window_id" ref="action_contactos_mys"/>
     </record>
     <record id="action_oportunidades_mys" model="ir.actions.act_window">
         <field name="name">Oportunidades MYS</field>
         <field name="res_model">crm.lead</field>
         <field name="view_mode">kanban,list,form</field>
-        <field name="domain">[('name', '=like', 'OPP-%')]</field>
+        <field name="domain">[('type', '=', 'opportunity')]</field>
     </record>
     <record id="action_cotizaciones_mys" model="ir.actions.act_window">
         <field name="name">Cotizaciones MYS</field>

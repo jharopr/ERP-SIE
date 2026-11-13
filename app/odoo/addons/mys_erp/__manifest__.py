@@ -1,6 +1,6 @@
 {
     'name': 'MYS - Gestión comercial integrada',
-    'version': '18.0.2.2.0',
+    'version': '18.0.2.8.0',
     'category': 'Sales/CRM',
     'summary': 'Catálogo trazable, datos demo y acceso de lectura del Agente SIE',
     'author': 'Grupo 7 - Importaciones MYS Hermanos',
@@ -8,7 +8,7 @@
     'depends': ['mail', 'contacts', 'crm', 'sale_management', 'sale_crm', 'sale_stock', 'purchase_stock'],
     'data': ['security/grupos.xml', 'security/ir.model.access.csv', 'security/reglas.xml', 'security/sistema.xml',
              'views/producto.xml', 'views/contacto.xml', 'views/menus.xml',
-             'views/sistema.xml', 'views/login.xml'],
+             'views/crm_pipeline.xml', 'views/lead_products.xml', 'views/sistema.xml', 'views/commercial.xml', 'views/login.xml'],
     'assets': {
         'web.assets_backend': ['mys_erp/static/src/sistema.js', 'mys_erp/static/src/sistema.xml',
                                'mys_erp/static/src/sistema.scss'],
@@ -16,4 +16,5 @@
     },
     'application': True,
     'installable': True,
+    'post_init_hook': 'post_init_hook',
 }
