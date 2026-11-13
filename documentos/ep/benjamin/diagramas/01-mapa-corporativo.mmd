@@ -1,0 +1,32 @@
+flowchart TB
+  subgraph E[PROCESOS ESTRATÉGICOS]
+    E1[Dirección del negocio]
+    E2[Gestión comercial: precios y descuentos]
+    E3[Planificación de compras y reposición]
+    E4[Control, riesgos y mejora]
+  end
+  C[Necesidad del cliente nuevo / público general / canal físico]
+  subgraph M[PROCESOS MISIONALES / CORE]
+    O[O2C: consulta, cotización, solicitud y respuesta ERP]
+    I[Inventario comercial: consulta de existencias sin reserva en EP]
+    P[P2P: necesidad, compra, recepción y pago proveedor]
+    O --> I
+    I -. necesidad de reposición .-> P
+  end
+  V[Valor: cotización clara y respuesta trazable]
+  C --> O
+  M --> V
+  subgraph S[PROCESOS DE SOPORTE]
+    S1[Administración y finanzas]
+    S2[Sistemas y datos maestros]
+    S3[Gestión de personas]
+    S4[Cumplimiento y archivo]
+  end
+  E ~~~ M
+  M ~~~ S
+  N[Empresa comercializadora de autoradios; sin manufactura. Mapa analítico nivel 1. Diseño / simulación local; Odoo no desplegado; cantidades, precios y stock sintéticos.]
+  S ~~~ N
+  classDef core fill:#E8F6FA,stroke:#006C87,color:#15324A;
+  classDef context fill:#F1F4F7,stroke:#ABB6C2,color:#526578;
+  class O,I,P core;
+  class E1,E2,E3,E4,S1,S2,S3,S4,N context;

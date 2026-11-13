@@ -1,0 +1,31 @@
+{
+  "notice": "Fixture exclusivamente sintética para el examen parcial. No acredita identidad, políticas, inventario, atención ni instalación real de Odoo.",
+  "business_time": "2026-10-24T09:55:01-05:00",
+  "company_id": "MYS-DEMO",
+  "policy": {"max_seller_discount": "5.00"},
+  "actors": {
+    "VEN-DEMO-01": {"role": "VENTAS", "company_id": "MYS-DEMO", "opportunities": ["OPP-DEMO-001"]},
+    "GER-DEMO-01": {"role": "GERENCIA", "company_id": "MYS-DEMO", "opportunities": []},
+    "ALM-DEMO-01": {"role": "ALMACEN", "company_id": "MYS-DEMO", "opportunities": []}
+  },
+  "customers": {
+    "CLI-DEMO-001": {"company_id": "MYS-DEMO", "name": "Consumidor final sintético 001", "segment": "PUBLICO_GENERAL_NUEVO", "active": true, "identity_reviewed": true, "identity_reviewed_notice": "Bandera sintética; no verifica una identidad real."}
+  },
+  "leads": {
+    "LEAD-EP-001": {"company_id": "MYS-DEMO", "customer_id": "CLI-DEMO-001", "opportunity_id": "OPP-DEMO-001", "channel": "FISICO", "source": "VISITA_ESPONTANEA", "qualification": "Necesidad, cantidad y siguiente actividad identificadas", "state": "CALIFICADO"}
+  },
+  "opportunities": {
+    "OPP-DEMO-001": {"company_id": "MYS-DEMO", "customer_id": "CLI-DEMO-001", "lead_id": "LEAD-EP-001", "type": "opportunity", "source": "VISITA_ESPONTANEA", "channel": "FISICO", "attention_reference": "ATN-EP-001", "correlation_id": "COR-EP-001"}
+  },
+  "products": {
+    "RAD-7BT": {"company_id": "MYS-DEMO", "active": true, "name": "Autoradio genérico de demostración", "unit_price": "400.00", "currency": "PEN"}
+  },
+  "quotations": {
+    "COT-DEMO-001": {"company_id": "MYS-DEMO", "opportunity_id": "OPP-DEMO-001", "customer_id": "CLI-DEMO-001", "version": 1, "state": "sent", "currency": "PEN", "valid_until": "2026-10-24T18:00:00-05:00", "seller_id": "VEN-DEMO-01", "lines": [{"sku": "RAD-7BT", "quantity": 5, "unit_price": "400.00", "discount_pct": "5.00"}], "total": "1900.00", "payment_condition": "CONTADO", "document_condition": "BOLETA_UNICA_PROPUESTA", "pickup_condition": "RETIRO_EN_TIENDA", "tax_notice": "Importe final académico; no modela impuestos ni emite un comprobante."}
+  },
+  "acceptances": {
+    "ACE-EP-001": {"company_id": "MYS-DEMO", "quotation_id": "COT-DEMO-001", "quotation_version": 1, "customer_id": "CLI-DEMO-001", "total": "1900.00", "accepted_at": "2026-10-24T09:54:00-05:00", "notice": "Aceptación sintética para probar el contrato; no equivale a pedido o pago."}
+  },
+  "approvals": [],
+  "availability": {"available": true, "company_id": "MYS-DEMO", "location_id": "TIENDA-DEMO", "observed_at": "2026-10-24T09:50:00-05:00", "quantities": {"RAD-7BT": 8}}
+}

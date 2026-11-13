@@ -1,0 +1,41 @@
+flowchart LR
+  subgraph EP[O2C: bloque evaluado en el examen parcial]
+    A[Consulta física: cliente nuevo persona natural; 5 autoradios familiares]
+    B[Cliente CLI-DEMO-001 y lead LEAD-EP-001]
+    C[Oportunidad OPP-DEMO-001; público general; canal físico]
+    D[Consulta stock referencial: 8; no reserva]
+    E[COT-DEMO-001 v1: 5 x S/400; descuento 5%; total S/1900]
+    F[ACE-EP-001: aceptación exacta de cotización v1]
+    G[SOL-EP-N01: envío de solicitud a ERP; COR-EP-001]
+    H[Evaluación: cliente, aceptación, versión, precio, descuento y disponibilidad]
+    I[Respuesta: estado ACEPTADA; código VALIDADA; order_id null]
+    J[CORTE EP: detener antes de pedido y reserva]
+    A --> B --> C --> D --> E --> F --> G --> H --> I --> J
+  end
+  H -. EP-S01 tras controles conformes .-> K[PROMESA_CONDICIONADA: disponible 3; déficit 2; evaluación de disponibilidad]
+  K -.-> R[REP-EP-001: necesidad de reposición; sin OC ni fecha prometida]
+  R -.-> Q[Dueño / compras evalúa abastecimiento; respuesta comercial condicionada]
+  subgraph P2P[P2P completo: solo contexto; no ejecutado en la demo EP]
+    P1[Selección y cotización de proveedor]
+    P2[Aprobación y emisión de orden de compra]
+    P3[Recepción y conformidad]
+    P4[Validación factura proveedor y cuenta por pagar]
+    P5[Pago al proveedor]
+    P6[Aplicación y conciliación / cierre]
+    ST[Actualizar stock futuro; no modifica el stock de la demo]
+    P1 -.-> P2 -.-> P3 -.-> P4 -.-> P5 -.-> P6
+    P3 -. Retorno tras recepción .-> ST
+  end
+  Q -. Contexto no ejecutado .-> P1
+  X[O2C posterior: pedido → reserva → facturación / entrega → cobro aplicado. Contexto fuera EP.]
+  J ~~~ X
+  N[Diseño / simulación local; Odoo no desplegado; cantidades, precios y stock sintéticos. Caso base 8 mayor o igual que 5: no activa reposición.]
+  X ~~~ N
+  classDef ep fill:#E8F6FA,stroke:#006C87,color:#15324A;
+  classDef context fill:#F1F4F7,stroke:#ABB6C2,color:#526578;
+  classDef exception fill:#FFF4DC,stroke:#87540A,color:#87540A;
+  classDef accepted fill:#EAF7EF,stroke:#176447,color:#176447;
+  class A,B,C,D,E,F,G,H ep;
+  class I accepted;
+  class K,R,Q exception;
+  class P1,P2,P3,P4,P5,P6,ST,X,N context;

@@ -1,0 +1,41 @@
+flowchart TB
+    TIENDA["Cliente nuevo del público general<br/>Tienda física · visita espontánea"]
+    VENDEDOR["Vendedor<br/>Registro humano · identidad de sesión"]
+    DUENO["Dueño<br/>Autoriza excepciones"]
+    TIENDA --> VENDEDOR
+
+    subgraph ODOO["Odoo propuesto · responsabilidades lógicas · sin despliegue acreditado"]
+        C01["C01 CRM<br/>Lead y oportunidad · crm.lead"]
+        C02["C02 Contactos<br/>Cliente único · res.partner"]
+        C03["C03 Ventas y catálogo<br/>Cotización y líneas<br/>Versión y aceptación por extender"]
+        C04["C04 Control de transición<br/>mys.crm.transition · extensión propuesta"]
+        C05["C05 Inventario<br/>SKU, ubicación y hora<br/>Consulta sin reserva"]
+        C06["C06 Autorizaciones<br/>mys.discount.approval · extensión propuesta"]
+        C07["C07 Seguridad y bitácora<br/>Actor, permisos y eventos<br/>mys.transition.event por implementar"]
+        C08[("C08 Persistencia Odoo / PostgreSQL<br/>C01–C07 acceden mediante ORM")]
+        RESP["Respuesta a CRM / Ventas<br/>ACEPTADA con código VALIDADA<br/>RECHAZADA · PROMESA_CONDICIONADA · PENDIENTE<br/>order_id = null"]
+
+        C01 -->|"I01 resolver cliente"| C02
+        C01 -->|"I02 vincular cotización"| C03
+        C01 -->|"I03 solicitar / consultar"| C04
+        C04 -->|"I04 leer versión aceptada"| C03
+        C04 -->|"I05 disponibilidad"| C05
+        C04 -->|"I06 verificar aprobación"| C06
+        C04 --> RESP
+        RESP -->|"I07 autorizar y auditar; aplica a C01–C06"| C07
+        C07 ---|"Persistencia de C01–C07 mediante ORM"| C08
+    end
+    VENDEDOR --> C01
+    DUENO -->|"Decisión humana registrada"| C06
+    RESP -. "Faltante: arnés documenta señal conceptual fuera del contrato 1.0" .-> P2P["REP-EP-001 · Evaluación de abastecimiento<br/>Dueño y abastecimiento deciden<br/>Sin compra, reserva ni fecha automática"]
+    C03 -. "Continuidad de PC1 fuera del caso" .-> UB["UBLHUB<br/>Emisión electrónica futura"]
+
+    classDef module fill:#edf5fa,stroke:#286d9b,color:#183345;
+    classDef proposed fill:#fff7e9,stroke:#a76513,color:#633e0d;
+    classDef decision fill:#eef8f3,stroke:#267b65,color:#183345;
+    classDef context fill:#f3f5f7,stroke:#526574,color:#526574;
+    class C01,C02,C03,C05 module;
+    class C06 proposed;
+    class C04,RESP,C08 decision;
+    class C07,UB,TIENDA,VENDEDOR,DUENO context;
+    class P2P proposed;

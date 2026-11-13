@@ -1,0 +1,130 @@
+{
+  "ejecutado_lima": "2026-11-12T21:29:25-05:00",
+  "qa_asignado": "Shirley Carrión Oré",
+  "python": "3.13.18",
+  "sistema": "Linux-6.18.44-fc-v445-x86_64-with-glibc2.39",
+  "modo": "Simulador local del contrato + arnés EP en directorio temporal; sin Odoo, n8n, LLM ni red",
+  "ejecucion": "Ejecutada por Shirley Carrión Oré con su script de QA (preparado con apoyo de IA)",
+  "prueba": "SHI-U04 Interpretación de stock y servicio",
+  "por_caso": [
+    {
+      "caso": "EP-N01",
+      "estado": "ACEPTADA",
+      "codigo": "VALIDADA",
+      "sku": "RAD-7BT",
+      "unidades_solicitadas": 5,
+      "disponible_snapshot": 8,
+      "evaluado_en_stock": true,
+      "unidades_atendibles": 5,
+      "faltante": 0,
+      "pedido_completo": true,
+      "promised_date": null,
+      "order_id": null,
+      "senal_reposicion": null
+    },
+    {
+      "caso": "EP-S01",
+      "estado": "PROMESA_CONDICIONADA",
+      "codigo": "DISPONIBILIDAD_PARCIAL",
+      "sku": "RAD-7BT",
+      "unidades_solicitadas": 5,
+      "disponible_snapshot": 3,
+      "evaluado_en_stock": true,
+      "unidades_atendibles": 3,
+      "faltante": 2,
+      "pedido_completo": false,
+      "promised_date": [
+        null
+      ],
+      "order_id": null,
+      "senal_reposicion": "REP-EP-001"
+    },
+    {
+      "caso": "EP-E01",
+      "estado": "RECHAZADA",
+      "codigo": "DESCUENTO_SIN_APROBACION",
+      "sku": "RAD-7BT",
+      "unidades_solicitadas": 5,
+      "disponible_snapshot": 8,
+      "evaluado_en_stock": false,
+      "unidades_atendibles": null,
+      "faltante": null,
+      "pedido_completo": null,
+      "promised_date": null,
+      "order_id": null,
+      "senal_reposicion": null
+    }
+  ],
+  "agregados": {
+    "aviso": "Indicadores calculados sobre corridas sintéticas e independientes del arnés EP. Sirven para comprobar fórmulas y lectura del agente; NO son nivel de servicio de MYS Hermanos.",
+    "solicitudes_evaluadas_en_stock": 2,
+    "solicitudes_excluidas": [
+      "EP-E01"
+    ],
+    "tasa_cumplimiento_unidades_pct": 80.0,
+    "formula_tasa_unidades": "8 atendibles ÷ 10 solicitadas × 100",
+    "solicitudes_completas_pct": 50.0,
+    "formula_solicitudes_completas": "1 completas ÷ 2 evaluadas × 100",
+    "solicitudes_con_quiebre_pct": 50.0,
+    "senales_reposicion_sustentadas_pct": 100.0,
+    "promesas_con_fecha_sin_validar": 0
+  },
+  "controles": [
+    {
+      "caso": "EP-N01",
+      "control": "Sin pedido operativo (order_id null)",
+      "ok": true
+    },
+    {
+      "caso": "EP-N01",
+      "control": "Comprobaciones del arnés superadas",
+      "ok": true
+    },
+    {
+      "caso": "EP-S01",
+      "control": "Sin pedido operativo (order_id null)",
+      "ok": true
+    },
+    {
+      "caso": "EP-S01",
+      "control": "Comprobaciones del arnés superadas",
+      "ok": true
+    },
+    {
+      "caso": "EP-S01",
+      "control": "Parcial sin fecha prometida",
+      "ok": true
+    },
+    {
+      "caso": "EP-S01",
+      "control": "Parcial requiere nueva aceptación del cliente",
+      "ok": true
+    },
+    {
+      "caso": "EP-S01",
+      "control": "Señal de reposición sin compra ni reserva automática",
+      "ok": true
+    },
+    {
+      "caso": "EP-S01",
+      "control": "Faltante de la señal = solicitado − disponible",
+      "ok": true
+    },
+    {
+      "caso": "EP-E01",
+      "control": "Sin pedido operativo (order_id null)",
+      "ok": true
+    },
+    {
+      "caso": "EP-E01",
+      "control": "Comprobaciones del arnés superadas",
+      "ok": true
+    },
+    {
+      "caso": "EP-E01",
+      "control": "Rechazo sin evento de disponibilidad en bitácora",
+      "ok": true
+    }
+  ],
+  "estado": "CONFORME"
+}

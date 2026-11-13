@@ -1,0 +1,12 @@
+{
+  "ejecutado_lima": "2026-11-12T21:29:25-05:00",
+  "qa_asignado": "Shirley Carrión Oré",
+  "python": "3.13.18",
+  "sistema": "Linux-6.18.44-fc-v445-x86_64-with-glibc2.39",
+  "modo": "Simulador local del contrato + arnés EP en directorio temporal; sin Odoo, n8n, LLM ni red",
+  "ejecucion": "Ejecutada por Shirley Carrión Oré con su script de QA (preparado con apoyo de IA)",
+  "archivos_sha256": {
+    "indicadores_servicio.json": "c18603553d74ce3208fdb59c3907b1147396ff6efbcc90c695e506d3067fa82b",
+    "resultado_qa_shirley.json": "1a321d49fb5aa729bb304c900dc1229e4ae21d0ec6cfed86b59760b170fb55b2"
+  }
+}

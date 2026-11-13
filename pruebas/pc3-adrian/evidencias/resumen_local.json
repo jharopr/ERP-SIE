@@ -1,0 +1,23 @@
+{
+  "ejecutado_lima": "2026-11-12T00:22:54.932144-05:00",
+  "commit_base": "8cfbf842a05c0316c150087f967a56574ce8d59a",
+  "modo": "FastAPI TestClient + SQLite temporal + OdooSimulado; SIN servicios externos",
+  "reloj_escenario": "2026-11-13T10:00:00-05:00",
+  "qa_asignado": "Adrián Mansilla",
+  "ejecucion": "Automatizada por Codex; pendiente validación y firma de Adrián",
+  "hallazgos": [
+    {
+      "id": "ADR-PC3-001",
+      "prioridad": "ALTA",
+      "esperado_lecturas_stock_e02": 0,
+      "observado_lecturas_stock_e02": 1,
+      "eventos_i05_e02": 0,
+      "estado": "ABIERTO"
+    }
+  ],
+  "archivos_sha256": {
+    "PC3-A01-local.json": "569350d26e97e72842be0da4c51b234ab8b6ab7b9012c2162fea414df22cc63f",
+    "PC3-E02-local.json": "1921c974de27f62dbf9f1af946c62a8334aa09e9626d658cf52ba1e192274e61",
+    "PC3-F01-local.json": "7beb77241e3ac0aec8f9c311e4d616840e46cdb744a393734af67548e7565e3e"
+  }
+}

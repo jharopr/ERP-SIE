@@ -13,11 +13,20 @@ Accesos de demostración: vendedor **`vendedor01` / `vendedor01`**, dueño **`ge
 ## Incremento vigente · PC2 (Consolidado Oficial v2.1)
 
 El documento principal de entrega consolidado conforme a la consigna oficial vigente (corte a la diapositiva 12 de la sesión 6) se encuentra en:
-- 📄 **Documento Consolidado (Word):** [`GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx`](GE703_PC2_G7_ENTREGA_CONSOLIDADA_FINAL.docx)
 - 📖 **Documento Consolidado (Markdown):** [`documentos/pc2/entrega-pc2.md`](documentos/pc2/entrega-pc2.md)
 - 👥 **Reparto y contribuciones del equipo:** [`documentos/contribuciones.md`](documentos/contribuciones.md)
 
 Este incremento delimita el escenario evaluable al tramo comercial CRM (tienda física, lead calificado, cotización versionada, 3 decisiones comerciales y 2 casos de análisis). El contrato técnico CRM–ERP y las simulaciones se conservan como investigación y trabajo técnico adicional de continuidad.
+
+## Examen parcial del 24 de octubre de 2026
+
+El [índice del parcial](documentos/ep/README.md) conecta los aportes desarrollados para el mismo caso de PC2: cliente nuevo del público general, tienda física y visita espontánea.
+
+El [aporte de Jharolym](documentos/ep/jharolym/README.md) desarrolla la sección 2, Arquitectura integrada. Incluye la [especificación de Odoo](arquitectura/crm-erp-ep.md), [diagrama con iconos](arquitectura/diagramas/componentes-crm-erp-ep.svg), [casos y puntos de control](arquitectura/diagramas/casos-arquitectura-ep.svg), sistemas de registro, interfaces, guion de tres minutos y [verificación reproducible](pruebas/ep-jharolym/README.md). Reutiliza las evidencias de Benjamín y conserva el límite de solicitud/respuesta.
+
+El [aporte de Benjamín al recorrido O2C](documentos/ep/benjamin/README.md) desarrolla la sección 3 del comité para público general nuevo en tienda física. Incluye [contenido editable](documentos/ep/benjamin/aporte-benjamin.md), [informe imprimible](documentos/ep/benjamin/informe-benjamin.html), [panel local navegable](documentos/ep/benjamin/panel-benjamin.html), journeys, mapas, SIPOC, guion y [pruebas sintéticas](pruebas/ep-benjamin/evidencias/resultados.md). El alcance termina en la respuesta de evaluación CRM–ERP; P2P se conecta por una señal conceptual de reposición. La integración al panel único del grupo y la revisión humana siguen pendientes.
+
+Los entregables Word, ZIP y la carpeta `output/` se mantienen fuera del repositorio para evitar copias redundantes. Las fuentes editables se conservan en Markdown, HTML y los generadores correspondientes.
 
 ## Situación y decisión
 
