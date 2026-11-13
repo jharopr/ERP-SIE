@@ -1,4 +1,73 @@
 <odoo>
+    <record id="view_contactos_mys_kanban" model="ir.ui.view">
+        <field name="name">res.partner.mys.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban class="mys_contacts" default_order="name asc" quick_create="false">
+                <field name="name"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-start gap-3 mb-3">
+                            <div class="mys_contact_initial" aria-hidden="true"><t t-esc="record.name.raw_value ? record.name.raw_value.charAt(0) : ''"/></div>
+                            <div class="flex-grow-1">
+                                <field name="name" class="fw-bold fs-5 d-block text-break"/>
+                                <field name="function" class="text-muted d-block mt-1"/>
+                            </div>
+                        </div>
+                        <div class="mys_contact_details">
+                            <div><span class="text-muted">Celular</span><field name="mobile" widget="phone"/></div>
+                            <div><span class="text-muted">Correo</span><field name="email" widget="email"/></div>
+                            <div><span class="text-muted">Dirección</span><div><field name="street"/><br/><field name="street2"/></div></div>
+                            <div><span class="text-muted">Ciudad</span><field name="city"/></div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 mt-3 pt-2 border-top">
+                            <field name="mys_segmento" widget="badge"/>
+                            <field name="mys_canal_preferido" widget="badge"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="view_contactos_mys_list" model="ir.ui.view">
+        <field name="name">res.partner.mys.list</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Contactos" default_order="name asc">
+                <field name="name" string="Nombre completo"/>
+                <field name="mobile" string="Celular" widget="phone"/>
+                <field name="email" widget="email"/>
+                <field name="street2" string="Zona / distrito"/>
+                <field name="city"/>
+                <field name="mys_segmento" widget="badge"/>
+                <field name="mys_canal_preferido"/>
+                <field name="street" optional="hide"/>
+                <field name="phone" optional="hide"/>
+                <field name="function" optional="hide"/>
+                <field name="mys_documento_demo" optional="hide"/>
+                <field name="ref" string="Referencia interna" optional="hide"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_contactos_mys_search" model="ir.ui.view">
+        <field name="name">res.partner.mys.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Buscar contactos">
+                <field name="name" string="Nombre, teléfono o correo" filter_domain="['|', '|', '|', ('name', 'ilike', self), ('mobile', 'ilike', self), ('phone', 'ilike', self), ('email', 'ilike', self)]"/>
+                <field name="street2" string="Zona / distrito"/>
+                <field name="mys_canal_preferido"/>
+                <filter name="recurrentes" string="Clientes recurrentes" domain="[('mys_segmento', '=', 'recurrente')]"/>
+                <filter name="nuevos" string="Clientes nuevos" domain="[('mys_segmento', '=', 'nuevo')]"/>
+                <separator/>
+                <filter name="archivados" string="Archivados" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="por_segmento" string="Segmento comercial" context="{'group_by': 'mys_segmento'}"/>
+                    <filter name="por_canal" string="Canal preferido" context="{'group_by': 'mys_canal_preferido'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
     <record id="view_contacto_mys" model="ir.ui.view">
         <field name="name">res.partner.mys.demo</field>
         <field name="model">res.partner</field>
@@ -35,8 +104,12 @@
                     </group>
                     <button name="action_mys_recalcular_perfil" type="object" string="Recalcular perfil" class="btn-secondary"/>
                 </page>
-                <page string="MYS" name="mys_demo">
-                    <group><field name="ref"/><field name="mys_demo"/><field name="mys_segmento"/><field name="mys_identidad_revisada"/></group>
+                <page string="Datos del cliente" name="mys_demo">
+                    <div class="alert alert-info" role="status" invisible="not mys_demo">Ficha de demostración. Los documentos, teléfonos, correos y direcciones de los ejemplos son ficticios.</div>
+                    <group>
+                        <group string="Atención al cliente"><field name="mys_segmento"/><field name="mys_canal_preferido"/><field name="user_id"/></group>
+                        <group string="Datos de demostración"><field name="mys_documento_demo"/><field name="ref" string="Referencia interna"/><field name="mys_demo"/><field name="mys_identidad_revisada"/></group>
+                    </group>
                 </page>
             </xpath>
         </field>

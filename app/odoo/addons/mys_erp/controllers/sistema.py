@@ -129,7 +129,8 @@ class Sistema(http.Controller):
                            'leads': env['crm.lead'].search_count([('type', '=', 'lead')]),
                            'opportunities': env['crm.lead'].search_count([('type', '=', 'opportunity')]),
                            'products': env['product.template'].search_count([('mys_catalogo', '=', True)]),
-                           'quotes': env['sale.order'].search_count([('mys_quotation_id', '!=', False)]),
+                           'quotes': env['sale.order'].search_count(['|', ('client_order_ref', '=like', 'COT-%'), ('client_order_ref', '=', False), ('state', '!=', 'sale'), ('mys_confirmed_at', '=', False)]),
+                           'sales': env['sale.order'].search_count([('client_order_ref', '=like', 'COT-%'), '|', ('state', '=', 'sale'), ('mys_confirmed_at', '!=', False)]),
                            'evaluations': env['mys.evaluation'].search_count([]),
                            'decisions': env['mys.decision'].search_count([('state', '=', 'ESPERANDO_DECISION')])},
                 'policy': data['politica'],
@@ -137,13 +138,10 @@ class Sistema(http.Controller):
                                                                       'message', 'correlation_id'], limit=20)}
 
     @http.route('/mys/trace', type='json', auth='user')
-    def trace(self, correlation_id):
-        gateway = request.env['mys.gateway']
-        gateway._role()
-        if not isinstance(correlation_id, str) or len(correlation_id) > 64:
-            raise UserError('Correlación inválida.')
-        import urllib.parse
-        return gateway._request('GET', '/bitacora?correlation_id=' + urllib.parse.quote(correlation_id, safe=''))
+    def trace(self, **filters):
+        allowed = {'query', 'order_id', 'correlation_id', 'partner_id', 'user_id', 'date_from',
+                   'date_to', 'version', 'event_type', 'actor_id'}
+        return request.env['mys.gateway']._trace_operations(**{k: v for k, v in filters.items() if k in allowed})
 
     @http.route('/mys/agent/status', type='json', auth='user')
     def agent_status(self):

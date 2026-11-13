@@ -8,7 +8,7 @@
     </record>
     <record id="action_opportunities" model="ir.actions.act_window">
         <field name="name">CRM / Oportunidades</field><field name="res_model">crm.lead</field><field name="view_mode">kanban,list,form</field>
-        <field name="domain">[('type', '=', 'opportunity')]</field><field name="context">{'default_type': 'opportunity'}</field>
+        <field name="domain">[('type', '=', 'opportunity')]</field><field name="context">{'default_type': 'opportunity', 'mys_commercial_pipeline': True}</field>
     </record>
     <record id="view_stock_list" model="ir.ui.view">
         <field name="name">mys.inventory.list</field><field name="model">product.template</field>
@@ -131,6 +131,7 @@
     </record>
     <menuitem id="menu_mys_home" name="Vista general" parent="menu_mys" action="action_workspace" sequence="1"/>
     <menuitem id="menu_mys_leads" name="Leads" parent="menu_mys" action="action_leads" sequence="21"/>
+    <record id="menu_mys_leads" model="ir.ui.menu"><field name="active" eval="True"/></record>
     <menuitem id="menu_mys_inventory" name="Inventario" parent="menu_mys" action="action_inventory" sequence="35"/>
     <menuitem id="menu_mys_evaluations" name="Evaluación comercial" parent="menu_mys" action="action_evaluations" sequence="50"/>
     <menuitem id="menu_mys_decisions" name="Decisiones del dueño" parent="menu_mys" action="action_decisions" sequence="60"/>

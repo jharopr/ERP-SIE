@@ -1,4 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+mys_lead_products_seller,MYS productos lead vendedor,model_mys_lead_product,mys_erp.group_mys_seller,1,1,1,1
+mys_lead_products_manager,MYS productos lead gerente,model_mys_lead_product,mys_erp.group_mys_manager,1,1,1,1
+mys_lead_products_reader,MYS productos lead lectura,model_mys_lead_product,mys_erp.group_agente_lectura,1,0,0,0
 mys_read_partner,MYS contactos lectura,base.model_res_partner,mys_erp.group_agente_lectura,1,0,0,0
 mys_read_lead,MYS CRM lectura,crm.model_crm_lead,mys_erp.group_agente_lectura,1,0,0,0
 mys_read_sale,MYS cotizaciones lectura,sale.model_sale_order,mys_erp.group_agente_lectura,1,0,0,0
@@ -19,3 +22,5 @@ mys_decision_manager,MYS decisiones dueño,model_mys_decision,mys_erp.group_mys_
 mys_quant_seller,MYS stock vendedor,stock.model_stock_quant,mys_erp.group_mys_seller,1,0,0,0
 mys_location_seller,MYS ubicaciones vendedor,stock.model_stock_location,mys_erp.group_mys_seller,1,0,0,0
 mys_warehouse_seller,MYS almacenes vendedor,stock.model_stock_warehouse,mys_erp.group_mys_seller,1,0,0,0
+mys_event_seller,MYS eventos vendedor,model_mys_operation_event,mys_erp.group_mys_seller,1,0,0,0
+mys_event_manager,MYS eventos dueño,model_mys_operation_event,mys_erp.group_mys_manager,1,0,0,0

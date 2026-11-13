@@ -1,0 +1,44 @@
+<odoo>
+    <record id="crm_form_mys_products" model="ir.ui.view">
+        <field name="name">crm.lead.mys.products.form</field><field name="model">crm.lead</field>
+        <field name="inherit_id" ref="mys_erp.crm_form_mys_pipeline"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <field name="mys_has_quotation" invisible="1"/>
+                <field name="mys_currency_id" invisible="1"/>
+                <separator string="Productos solicitados"/>
+                <group>
+                    <field name="mys_pricelist_id" readonly="mys_has_quotation"
+                           domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]"
+                           options="{'no_create': True}"/>
+                </group>
+                <field name="mys_product_line_ids" nolabel="1" readonly="mys_has_quotation">
+                    <list editable="bottom">
+                        <field name="sequence" widget="handle"/>
+                        <field name="currency_id" column_invisible="True"/>
+                        <field name="product_id" options="{'no_create': True}"/>
+                        <field name="quantity"/>
+                        <field name="product_uom_id" readonly="1"/>
+                        <field name="price_unit" readonly="1"/>
+                        <field name="discount" readonly="1" optional="hide"/>
+                        <field name="price_subtotal" readonly="1" sum="Total sin impuestos"/>
+                    </list>
+                </field>
+                <group class="oe_subtotal_footer oe_right">
+                    <field name="mys_estimated_untaxed" widget="monetary"
+                           options="{'currency_field': 'mys_currency_id'}" readonly="1"/>
+                </group>
+                <p class="text-muted" invisible="mys_has_quotation">El precio se obtiene de la tarifa. Al convertir a oportunidad con cliente y productos, se genera una cotización en borrador.</p>
+                <p class="text-muted" invisible="not mys_has_quotation">Este es el detalle inicial. Revise y modifique la cotización vigente desde Ventas. El ingreso esperado utiliza su importe sin impuestos, convertido a la moneda de la compañía.</p>
+                <button name="action_mys_initial_quotation" type="object" string="Crear cotización desde productos"
+                        class="btn-secondary mb-3" invisible="type != 'opportunity' or mys_has_quotation or not mys_product_line_ids"/>
+            </xpath>
+            <xpath expr="//field[@name='expected_revenue']" position="attributes">
+                <attribute name="readonly">mys_has_quotation or mys_product_line_ids</attribute>
+            </xpath>
+            <xpath expr="//page[@name='mys_commercial_control']//group" position="inside">
+                <field name="expected_revenue" string="Ingreso esperado sin impuestos" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

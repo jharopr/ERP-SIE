@@ -115,7 +115,8 @@ class Repositorio:
                    (cur.lastrowid, actor_type, json.dumps(detalle, ensure_ascii=False, sort_keys=True) if detalle else None))
         return cur.lastrowid
 
-    def bitacora(self, correlation_id: str | None = None, request_id: str | None = None) -> list[dict]:
+    def bitacora(self, correlation_id: str | None = None, request_id: str | None = None,
+                 quotation_id: str | None = None) -> list[dict]:
         consulta = ("SELECT a.event_id, a.occurred_at, a.correlation_id, a.request_id, a.interface_id, a.event_type,"
                     " a.code, a.actor_id, COALESCE(e.actor_type,'SISTEMA') AS actor_type, e.detalle"
                     " FROM audit a LEFT JOIN audit_ext e ON e.event_id = a.event_id WHERE 1=1")
@@ -126,6 +127,10 @@ class Repositorio:
         if request_id:
             consulta += " AND a.request_id = ?"
             params.append(request_id)
+        if quotation_id:
+            consulta += (" AND (a.request_id IN (SELECT request_id FROM requests WHERE quotation_id = ?)"
+                         " OR json_extract(e.detalle, '$.quotation_id') = ?)")
+            params.extend([quotation_id, quotation_id])
         with self.conexion() as db:
             filas = db.execute(consulta + " ORDER BY a.event_id", params).fetchall()
         return [{**dict(f), "detalle": json.loads(f["detalle"]) if f["detalle"] else None} for f in filas]

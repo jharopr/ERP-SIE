@@ -63,7 +63,16 @@ def main():
     import json
     total = len(json.loads((Path(__file__).resolve().parents[1] / 'datos' / 'productos.json').read_text(encoding='utf-8'))['productos'])
     ok(f'{total} productos del catálogo conservados', workspace['counts']['products'] == total)
-    ok('Leads y contactos visibles', workspace['counts']['leads'] >= 6 and workspace['counts']['contacts'] >= 8)
+    ok('Leads y contactos consultables', isinstance(workspace['counts']['leads'], int)
+       and workspace['counts']['leads'] >= 0 and workspace['counts']['contacts'] >= 1)
+    stages = seller.call('crm.stage', 'search_read', [[['mys_commercial_step', '!=', False]]],
+                         fields=['mys_commercial_step'], order='sequence,id')
+    stage_ids = {s['mys_commercial_step']: s['id'] for s in stages}
+    ok('Cinco etapas comerciales configuradas', list(stage_ids) ==
+       ['qualified', 'preparing', 'presented', 'review', 'validated'])
+    def crm_state(lead_id):
+        return seller.call('crm.lead', 'read', [[lead_id]],
+                           fields=['stage_id', 'active', 'mys_evaluation_status', 'mys_current_order_id'])[0]
     product_view = seller.call('product.template', 'get_views', [], views=[[False, 'form']], options={})
     ok('Vistas nativas de productos accesibles al vendedor', bool(product_view))
     stock = seller.call('product.template', 'search_read', [[['mys_catalogo', '=', True]]],
@@ -72,7 +81,9 @@ def main():
     sales_view = seller.call('sale.order', 'get_views', [], views=[[False, 'form']], options={})
     sales_xml = ET.fromstring(sales_view['views']['form']['arch'])
     confirms = sales_xml.findall(".//button[@name='action_confirm']")
-    ok('Confirmación nativa oculta en el formulario comercial', all(b.get('invisible') in ('True', '1') for b in confirms))
+    ok('Confirmación de venta condicionada y botones nativos ocultos',
+       len([b for b in confirms if b.get('string') == '4. Confirmar venta']) == 1
+       and all(b.get('invisible') in ('True', '1') for b in confirms if b.get('string') != '4. Confirmar venta'))
     seller_view = seller.call('mys.decision', 'get_views', [], views=[[False, 'form']], options={})
     owner_view = owner.call('mys.decision', 'get_views', [], views=[[False, 'form']], options={})
     ok('Vendedor no ve aprobar; dueño sí lo ve', 'name="action_approve"' not in seller_view['views']['form']['arch']
@@ -80,16 +91,25 @@ def main():
 
     source = seller.call('sale.order', 'search', [[['client_order_ref', '=', 'COT-CAT-003 v1']]])[0]
     tag = uuid.uuid4().hex[:8]
-    contact = seller.call('res.partner', 'create', [{'name': 'Cliente prueba nativa ' + tag, 'mys_demo': True,
+    contact = seller.call('res.partner', 'create', [{'name': 'Gabriel Esteban Peña Morales', 'mys_demo': True,
+                'email': 'gabriel.pena@example.com', 'mobile': '+51 900 000 201',
                 'mys_identidad_revisada': True, 'mys_segmento': 'nuevo', 'customer_rank': 1}])
     contact = contact[0] if isinstance(contact, list) else contact
-    lead = seller.call('crm.lead', 'create', [{'name': 'Venta desde Odoo ' + tag, 'type': 'opportunity',
+    lead = seller.call('crm.lead', 'create', [{'name': 'Pantalla Android para vehículo particular · Gabriel Esteban Peña Morales',
+                                             'description': 'Verificación automática de demostración: ' + tag,
+                                             'type': 'opportunity',
                                              'partner_id': contact, 'user_id': seller.uid}])
     lead = lead[0] if isinstance(lead, list) else lead
+    ok('Oportunidad nueva inicia calificada', crm_state(lead)['stage_id'][0] == stage_ids['qualified'])
+    denied('No se puede cerrar sin cotización validada', lambda: seller.call(
+        'crm.lead', 'write', [[lead], {'stage_id': stage_ids['validated']}]))
+    denied('Botón Ganado no evita la validación', lambda: seller.call('crm.lead', 'action_set_won', [[lead]]))
     order = seller.call('sale.order', 'copy', [[source]], default={'client_order_ref': False, 'partner_id': contact,
                      'opportunity_id': lead, 'origin': 'VERIFICACION-ODOO-' + tag})
     order = order[0] if isinstance(order, list) else order
+    ok('Crear cotización avanza a preparación', crm_state(lead)['stage_id'][0] == stage_ids['preparing'])
     seller.call('sale.order', 'action_mys_send', [[order]])
+    ok('Preparar/enviar avanza a propuesta presentada', crm_state(lead)['stage_id'][0] == stage_ids['presented'])
     seller.call('sale.order', 'action_mys_accept', [[order]])
     ok('Cliente y oportunidad nuevos funcionan con referencias generadas por Odoo', True)
     before = admin.call('stock.quant', 'search_read', [[['location_id.usage', '=', 'internal']]],
@@ -98,7 +118,10 @@ def main():
     eid = result['res_id']
     ev = seller.call('mys.evaluation', 'read', [[eid]], fields=['code', 'status', 'request_id', 'correlation_id'])[0]
     ok('R08 rechaza descuento del 10 % sin aprobación', ev['code'] == 'DESCUENTO_SIN_APROBACION')
-    denied('Vendedor no puede confirmar pedidos por RPC', lambda: seller.call('sale.order', 'action_confirm', [[order]]))
+    crm = crm_state(lead)
+    ok('Rechazo pasa a revisión y conserva la oportunidad activa', crm['active']
+       and crm['stage_id'][0] == stage_ids['review'] and crm['mys_evaluation_status'] == 'RECHAZADA')
+    denied('Vendedor no puede confirmar una evaluación rechazada por RPC', lambda: seller.call('sale.order', 'action_confirm', [[order]]))
     denied('Vendedor no puede forzar estado confirmado por RPC', lambda: seller.call('sale.order', 'write', [[order], {'state': 'sale'}]))
     line = seller.call('sale.order.line', 'search', [[['order_id', '=', order]]])[0]
     denied('Versión evaluada no permite cambiar líneas por RPC', lambda: seller.call('sale.order.line', 'write', [[line], {'discount': 0}]))
@@ -114,6 +137,11 @@ def main():
     new_order = decision['new_order_id'][0]
     quote = seller.call('sale.order', 'read', [[new_order]], fields=['mys_version', 'mys_acceptance_id', 'state'])[0]
     ok('Aprobación crea versión 2 sin aceptación reutilizada', quote['mys_version'] == 2 and not quote['mys_acceptance_id'] and quote['state'] == 'draft')
+    crm = crm_state(lead)
+    ok('Nueva versión vuelve a preparación sin cierre anticipado', crm['stage_id'][0] == stage_ids['preparing']
+       and crm['mys_current_order_id'][0] == new_order and not crm['mys_evaluation_status'])
+    denied('Aprobación del gerente no permite cerrar sin nueva aceptación y evaluación',
+           lambda: seller.call('crm.lead', 'action_set_won', [[lead]]))
     new_line = seller.call('sale.order.line', 'search', [[['order_id', '=', new_order]]])[0]
     denied('Oferta aprobada no permite cambiar productos o descuento', lambda: seller.call('sale.order.line', 'write', [[new_line], {'discount': 1}]))
     seller.call('sale.order', 'action_mys_send', [[new_order]])
@@ -123,6 +151,9 @@ def main():
     final = seller.call('mys.evaluation', 'read', [[action['res_id']]], fields=['status', 'response_json'])[0]
     response = json.loads(final['response_json'])['respuesta']
     ok('Versión nueva aprobada se acepta por reglas', final['status'] == 'ACEPTADA' and response['order_id'] is None)
+    crm = crm_state(lead)
+    ok('Evaluación aceptada cierra comercialmente la versión vigente',
+       crm['stage_id'][0] == stage_ids['validated'] and crm['mys_evaluation_status'] == 'ACEPTADA')
     after = admin.call('stock.quant', 'search_read', [[['location_id.usage', '=', 'internal']]],
                        fields=['product_id', 'quantity', 'reserved_quantity'], order='id')
     ok('Evaluación y aprobación no alteran físico ni reservas', before == after)

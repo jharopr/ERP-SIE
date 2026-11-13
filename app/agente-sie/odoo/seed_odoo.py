@@ -192,8 +192,9 @@ def asegurar_reservas(odoo, productos, clientes, vendedor, moneda):
 
 def asegurar_oportunidades(odoo, clientes):
     ids = {}
+    reference_field = 'mys_reference' if 'mys_reference' in odoo.x('crm.lead', 'fields_get', attributes=['type']) else 'name'
     for opp, o in E.OPORTUNIDADES.items():
-        ids[opp], _ = odoo.upsert("crm.lead", [("name", "=", opp)],
+        ids[opp], _ = odoo.upsert("crm.lead", [(reference_field, "=", opp)],
                                   {"name": opp, "type": "opportunity", "partner_id": clientes[o["cliente"]], "active": True})
     return ids
 
