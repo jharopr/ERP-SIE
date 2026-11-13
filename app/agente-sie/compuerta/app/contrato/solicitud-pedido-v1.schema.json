@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mys:pc2:solicitud-pedido:1.0",
+  "title": "I03 Solicitud de evaluación CRM-ERP; no confirma pedido",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "company_id", "request_id", "correlation_id", "opportunity_id", "customer_id", "quotation_id", "quotation_version", "acceptance_id"],
+  "properties": {
+    "contract_version": {"const": "1.0"},
+    "company_id": {"$ref": "#/$defs/identifier"},
+    "request_id": {"$ref": "#/$defs/identifier"},
+    "correlation_id": {"$ref": "#/$defs/identifier"},
+    "opportunity_id": {"$ref": "#/$defs/identifier"},
+    "customer_id": {"$ref": "#/$defs/identifier"},
+    "quotation_id": {"$ref": "#/$defs/identifier"},
+    "quotation_version": {"type": "integer", "minimum": 1},
+    "acceptance_id": {"$ref": "#/$defs/identifier"}
+  },
+  "$defs": {
+    "identifier": {"type": "string", "minLength": 1, "maxLength": 64, "pattern": "^[A-Za-z0-9_-]+(?![\\s\\S])"}
+  }
+}

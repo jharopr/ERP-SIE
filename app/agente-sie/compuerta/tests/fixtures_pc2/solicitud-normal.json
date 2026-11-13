@@ -1,0 +1,11 @@
+{
+  "contract_version": "1.0",
+  "company_id": "MYS-DEMO",
+  "request_id": "SOL-DEMO-001",
+  "correlation_id": "COR-DEMO-001",
+  "opportunity_id": "CRM-DEMO-001",
+  "customer_id": "CLI-DEMO-001",
+  "quotation_id": "COT-DEMO-001",
+  "quotation_version": 1,
+  "acceptance_id": "ACE-DEMO-001"
+}

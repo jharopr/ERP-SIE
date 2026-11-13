@@ -1,0 +1,98 @@
+ Container agente-sie-odoo-run-8c492c697987 Creating 
+ Container agente-sie-odoo-run-8c492c697987 Created 
+2026-11-13 04:29:26,566 7 INFO ? odoo: Odoo version 18.0-20261102 
+2026-11-13 04:29:26,566 7 INFO ? odoo: Using configuration file at /tmp/odoo.conf 
+2026-11-13 04:29:26,567 7 INFO ? odoo: addons paths: ['/usr/lib/python3/dist-packages/odoo/addons', '/var/lib/odoo/addons/18.0', '/mnt/extra-addons'] 
+2026-11-13 04:29:26,567 7 INFO ? odoo: database: odoo@db:5432 
+Warn: Can't find .pfb for face 'Courier'
+2026-11-13 04:29:26,674 7 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltopdf binary at /usr/local/bin/wkhtmltopdf 
+2026-11-13 04:29:26,679 7 INFO ? odoo.addons.base.models.ir_actions_report: Will use the Wkhtmltoimage binary at /usr/local/bin/wkhtmltoimage 
+2026-11-13 04:29:26,790 7 INFO ? odoo.service.server: HTTP service (werkzeug) running on 32cff425f9b5:8069 
+2026-11-13 04:29:26,816 7 INFO mys_demo odoo.tests.common: Importing test framework 
+2026-11-13 04:29:26,834 7 INFO mys_demo odoo.modules.loading: loading 1 modules... 
+2026-11-13 04:29:26,839 7 INFO mys_demo odoo.modules.loading: 1 modules loaded in 0.00s, 0 queries (+0 extra) 
+2026-11-13 04:29:26,861 7 INFO mys_demo odoo.modules.loading: updating modules list 
+2026-11-13 04:29:26,863 7 INFO mys_demo odoo.addons.base.models.ir_module: ALLOW access to module.update_list on [] to user __system__ #1 via n/a 
+2026-11-13 04:29:27,931 7 INFO mys_demo odoo.addons.base.models.ir_module: ALLOW access to module.button_upgrade on ['MYS - Gestión comercial integrada'] to user __system__ #1 via n/a 
+2026-11-13 04:29:27,931 7 INFO mys_demo odoo.addons.base.models.ir_module: ALLOW access to module.update_list on ['MYS - Gestión comercial integrada'] to user __system__ #1 via n/a 
+2026-11-13 04:29:28,440 7 INFO mys_demo odoo.addons.base.models.ir_module: ALLOW access to module.button_install on [] to user __system__ #1 via n/a 
+2026-11-13 04:29:28,974 7 INFO mys_demo odoo.modules.loading: loading 72 modules... 
+2026-11-13 04:29:29,544 7 INFO mys_demo odoo.modules.loading: Loading module mys_erp (72/72) 
+2026-11-13 04:29:29,890 7 INFO mys_demo odoo.modules.registry: module mys_erp: creating or updating database tables 
+2026-11-13 04:29:30,042 7 INFO mys_demo odoo.modules.loading: loading mys_erp/security/grupos.xml 
+2026-11-13 04:29:30,110 7 INFO mys_demo odoo.modules.loading: loading mys_erp/security/ir.model.access.csv 
+2026-11-13 04:29:30,144 7 INFO mys_demo odoo.modules.loading: loading mys_erp/security/reglas.xml 
+2026-11-13 04:29:30,171 7 INFO mys_demo odoo.modules.loading: loading mys_erp/security/sistema.xml 
+2026-11-13 04:29:30,195 7 INFO mys_demo odoo.modules.loading: loading mys_erp/views/producto.xml 
+2026-11-13 04:29:30,291 7 INFO mys_demo odoo.modules.loading: loading mys_erp/views/contacto.xml 
+2026-11-13 04:29:30,323 7 INFO mys_demo odoo.modules.loading: loading mys_erp/views/menus.xml 
+2026-11-13 04:29:30,348 7 INFO mys_demo odoo.modules.loading: loading mys_erp/views/crm_pipeline.xml 
+2026-11-13 04:29:30,395 7 INFO mys_demo odoo.modules.loading: loading mys_erp/views/sistema.xml 
+2026-11-13 04:29:30,420 7 WARNING mys_demo odoo.addons.base.models.ir_ui_view: An alert (class alert-*) must have an alert, alertdialog or status role or an alert-link class. Please use alert and alertdialog only for what expects to stop any activity to be read immediately.
+View error context:
+{'file': '/mnt/extra-addons/mys_erp/views/sistema.xml',
+ 'line': 5,
+ 'name': 'mys.evaluation.form',
+ 'view': ir.ui.view(1431,),
+ 'view.model': 'mys.evaluation',
+ 'view.parent': ir.ui.view(),
+ 'xmlid': 'view_evaluation_form'} 
+2026-11-13 04:29:30,429 7 WARNING mys_demo odoo.addons.base.models.ir_ui_view: An alert (class alert-*) must have an alert, alertdialog or status role or an alert-link class. Please use alert and alertdialog only for what expects to stop any activity to be read immediately.
+View error context:
+{'file': '/mnt/extra-addons/mys_erp/views/sistema.xml',
+ 'line': 10,
+ 'name': 'mys.decision.form',
+ 'view': ir.ui.view(1433,),
+ 'view.model': 'mys.decision',
+ 'view.parent': ir.ui.view(),
+ 'xmlid': 'view_decision_form'} 
+2026-11-13 04:29:30,459 7 WARNING mys_demo odoo.addons.base.models.ir_ui_view: An alert (class alert-*) must have an alert, alertdialog or status role or an alert-link class. Please use alert and alertdialog only for what expects to stop any activity to be read immediately.
+View error context:
+{'file': '/mnt/extra-addons/mys_erp/views/sistema.xml',
+ 'line': 12,
+ 'name': 'sale.order.mys.rules',
+ 'view': ir.ui.view(1434,),
+ 'view.model': 'sale.order',
+ 'view.parent': ir.ui.view(1342,),
+ 'xmlid': 'sale_form_mys'} 
+2026-11-13 04:29:30,481 7 INFO mys_demo odoo.modules.loading: loading mys_erp/views/login.xml 
+2026-11-13 04:29:30,509 7 INFO mys_demo odoo.addons.base.models.ir_module: module mys_erp: no translation for language es_PE 
+2026-11-13 04:29:30,588 7 INFO mys_demo odoo.modules.loading: Module mys_erp loaded in 1.04s, 737 queries (+737 other) 
+2026-11-13 04:29:30,588 7 INFO mys_demo odoo.modules.loading: 72 modules loaded in 1.61s, 737 queries (+737 extra) 
+2026-11-13 04:29:31,334 7 INFO mys_demo odoo.modules.loading: Modules loaded. 
+2026-11-13 04:29:31,338 7 INFO mys_demo odoo.modules.registry: Registry changed, signaling through the database 
+2026-11-13 04:29:31,339 7 INFO mys_demo odoo.modules.registry: Registry loaded in 4.548s 
+2026-11-13 04:29:31,339 7 INFO mys_demo odoo.service.server: Starting post tests 
+2026-11-13 04:29:31,618 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_acceptance_and_validity_are_required ... 
+2026-11-13 04:29:31,969 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <591218552805949.1794544171.782780170440674-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:31,982 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [197] 
+2026-11-13 04:29:32,035 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_cannot_force_close_from_ui_or_rpc ... 
+2026-11-13 04:29:32,107 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_conversion_keeps_lead_and_uses_qualified_stage ... 
+2026-11-13 04:29:32,163 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_current_version_required_and_new_version_reopens ... 
+2026-11-13 04:29:32,338 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <317331358338377.1794544172.300744533538818-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:32,348 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [198] 
+2026-11-13 04:29:32,416 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <939689973139180.1794544172.400990486145020-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:32,423 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [199] 
+2026-11-13 04:29:32,446 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_pending_preserves_stage_and_resume_can_close ... 
+2026-11-13 04:29:32,552 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <770815720995689.1794544172.514875650405884-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:32,563 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [200] 
+2026-11-13 04:29:32,597 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_pipeline_has_only_five_mys_columns ... 
+2026-11-13 04:29:32,631 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_quote_preparation_and_presentation ... 
+2026-11-13 04:29:32,753 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <130103562346932.1794544172.715473413467407-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:32,765 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [201] 
+2026-11-13 04:29:32,783 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_rejected_and_partial_do_not_lose_opportunity ... 
+2026-11-13 04:29:32,887 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <031068935419996.1794544172.847307205200195-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:32,898 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [202] 
+2026-11-13 04:29:32,920 7 INFO mys_demo odoo.addons.mys_erp.tests.test_crm_pipeline: Starting TestCrmPipeline.test_sync_does_not_reactivate_lost_opportunity ... 
+2026-11-13 04:29:33,027 7 INFO mys_demo odoo.addons.mail.models.mail_mail: Ignoring invalid recipients for mail.mail <755838622759496.1794544172.988489866256714-openerp-message-notify@32cff425f9b5>: ['"Vendedor pruebas CRM" <@False>'] 
+2026-11-13 04:29:33,038 7 INFO mys_demo odoo.models.unlink: User #1 deleted mail.mail records with IDs: [203] 
+2026-11-13 04:29:33,066 7 INFO mys_demo odoo.addons.base.models.ir_attachment: filestore gc 1 checked, 1 removed 
+2026-11-13 04:29:33,066 7 INFO mys_demo odoo.service.server: 9 post-tests in 1.73s, 1885 queries 
+2026-11-13 04:29:33,066 7 INFO mys_demo odoo.tests.stats: mys_erp: 11 tests 1.72s 1885 queries 
+2026-11-13 04:29:33,067 7 INFO mys_demo odoo.tests.result: 0 failed, 0 error(s) of 9 tests when loading database 'mys_demo' 
+2026-11-13 04:29:33,067 7 INFO mys_demo odoo.service.server: Initiating shutdown 
+2026-11-13 04:29:33,067 7 INFO mys_demo odoo.service.server: Hit CTRL-C again or send a second signal to force the shutdown. 
+2026-11-13 04:29:33,067 7 INFO mys_demo odoo.addons.base.models.ir_http: Generating routing map for key None 
+2026-11-13 04:29:33,094 7 INFO mys_demo werkzeug: 127.0.0.1 - - [13/Nov/2026 04:29:33] "GET /web/health HTTP/1.1" 200 - 7 0.005 2.021
+2026-11-13 04:29:33,109 7 INFO mys_demo odoo.sql_db: ConnectionPool(read/write;used=0/count=0/max=64): Closed 1 connections  
+2026-11-13 04:29:33,109 7 INFO mys_demo odoo.sql_db: ConnectionPool(read-only;used=0/count=0/max=64): Closed 1 connections  

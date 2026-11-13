@@ -1,0 +1,12 @@
+<odoo>
+    <!-- Recalcula cada día el perfil comercial de los clientes (reglas fijas, sin IA). -->
+    <record id="cron_mys_perfiles" model="ir.cron">
+        <field name="name">MYS: perfil comercial de clientes</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_mys_perfiles()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

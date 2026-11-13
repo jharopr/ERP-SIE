@@ -8,6 +8,10 @@ evidencias/privadas/
 *.tmp
 ~$*
 
+# Secretos locales: cada persona genera el suyo (nunca se suben)
+.env
+**/.env
+
 # Entregables y exportaciones locales
 /output/
 *.docx

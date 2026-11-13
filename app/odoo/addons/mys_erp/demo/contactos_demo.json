@@ -1,0 +1,82 @@
+[
+  {
+    "ref": "CLI-DEMO-001", "name": "José Luis Quispe Huamán",
+    "mys_documento_demo": "DEMO-DNI-001", "mys_segmento": "nuevo", "mys_canal_preferido": "whatsapp",
+    "phone": "+51 1 000 0101", "mobile": "+51 900 000 101", "email": "jose.quispe@example.com",
+    "street": "Av. Los Pinos 125", "street2": "Urb. Los Jardines · San Juan de Lurigancho", "city": "Lima", "zip": "15401",
+    "function": "Conductor independiente",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Busca un autoradio con Bluetooth para su Toyota Yaris. Prefiere recibir la cotización por WhatsApp y recoger en tienda.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-002", "name": "María Fernanda Flores Rojas",
+    "mys_documento_demo": "DEMO-DNI-002", "mys_segmento": "recurrente", "mys_canal_preferido": "correo",
+    "phone": "+51 1 000 0102", "mobile": "+51 900 000 102", "email": "maria.flores@example.com",
+    "street": "Jr. Las Palmeras 248", "street2": "Urb. Santa Rosa · Los Olivos", "city": "Lima", "zip": "15301",
+    "function": "Encargada de compras de accesorios automotrices",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Compra equipos de audio para un taller de instalación. Solicita detalle de modelos, cantidades y condiciones por correo.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-003", "name": "Carlos Alberto Condori Mamani",
+    "mys_documento_demo": "DEMO-DNI-003", "mys_segmento": "nuevo", "mys_canal_preferido": "tienda",
+    "phone": "+51 1 000 0103", "mobile": "+51 900 000 103", "email": "carlos.condori@example.com",
+    "street": "Av. Los Cedros 360", "street2": "Urb. Sol de Vitarte · Ate", "city": "Lima", "zip": "15494",
+    "function": "Técnico instalador de audio",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Consulta pantallas Android y autorradios para instalaciones. Revisa compatibilidad y disponibilidad antes de aceptar una oferta.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-004", "name": "Rosa Elena Huamán Salazar",
+    "mys_documento_demo": "DEMO-DNI-004", "mys_segmento": "nuevo", "mys_canal_preferido": "whatsapp",
+    "phone": "+51 1 000 0104", "mobile": "+51 900 000 104", "email": "rosa.huaman@example.com",
+    "street": "Calle Las Orquídeas 187", "street2": "Urb. El Progreso · Comas", "city": "Lima", "zip": "15314",
+    "function": "Comerciante independiente",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Busca mejorar los parlantes de su Kia Picanto. Solicita opciones de buena calidad dentro de su presupuesto y orientación de instalación.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-005", "name": "Jorge Eduardo Gutiérrez Paredes",
+    "mys_documento_demo": "DEMO-DNI-005", "mys_segmento": "nuevo", "mys_canal_preferido": "telefono",
+    "phone": "+51 1 000 0105", "mobile": "+51 900 000 105", "email": "jorge.gutierrez@example.com",
+    "street": "Jr. Los Álamos 452", "street2": "Urb. San Gabriel · San Martín de Porres", "city": "Lima", "zip": "15108",
+    "function": "Conductor de taxi",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Solicita cámara de retroceso y pantalla compatible con su Hyundai Accent. Prefiere una llamada para resolver dudas técnicas.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-006", "name": "Lucía Milagros Chávez Cárdenas",
+    "mys_documento_demo": "DEMO-DNI-006", "mys_segmento": "nuevo", "mys_canal_preferido": "correo",
+    "phone": "+51 1 000 0106", "mobile": "+51 900 000 106", "email": "lucia.chavez@example.com",
+    "street": "Av. Las Acacias 618", "street2": "Urb. San Borja Norte · San Borja", "city": "Lima", "zip": "15036",
+    "function": "Administradora de servicios de transporte",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Evalúa equipos multimedia para vehículos de trabajo. Requiere cotización con productos, cantidades y garantía claramente descritos.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-007", "name": "Pedro Antonio Mendoza Vargas",
+    "mys_documento_demo": "DEMO-DNI-007", "mys_segmento": "nuevo", "mys_canal_preferido": "tienda",
+    "phone": "+51 1 000 0107", "mobile": "+51 900 000 107", "email": "pedro.mendoza@example.com",
+    "street": "Calle Los Sauces 279", "street2": "Urb. Santa Anita · Santa Anita", "city": "Lima", "zip": "15009",
+    "function": "Electricista automotriz",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Consulta cables, conectores y accesorios para instalación de audio. Desea comparar modelos presencialmente antes de comprar.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-008", "name": "Carmen Pilar Ramos Espinoza",
+    "mys_documento_demo": "DEMO-DNI-008", "mys_segmento": "nuevo", "mys_canal_preferido": "whatsapp",
+    "phone": "+51 1 000 0108", "mobile": "+51 900 000 108", "email": "carmen.ramos@example.com",
+    "street": "Jr. Las Dalias 534", "street2": "Urb. Villa del Sol · Villa El Salvador", "city": "Lima", "zip": "15834",
+    "function": "Emprendedora de reparto",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Busca un equipo con manos libres para su vehículo de reparto. Prefiere coordinar por WhatsApp y retirar en tienda.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-009", "name": "Miguel Ángel Ccahuana Torres",
+    "mys_documento_demo": "DEMO-DNI-009", "mys_segmento": "nuevo", "mys_canal_preferido": "telefono",
+    "phone": "+51 1 000 0109", "mobile": "+51 900 000 109", "email": "miguel.ccahuana@example.com",
+    "street": "Av. Los Laureles 723", "street2": "Urb. San Carlos · San Juan de Lurigancho", "city": "Lima", "zip": "15401",
+    "function": "Mecánico automotriz",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Solicita amplificador y subwoofer para un proyecto de audio. Necesita confirmar potencia y compatibilidad antes de cotizar.</p>"
+  },
+  {
+    "ref": "CLI-DEMO-010", "name": "Ana Patricia Villanueva León",
+    "mys_documento_demo": "DEMO-DNI-010", "mys_segmento": "nuevo", "mys_canal_preferido": "correo",
+    "phone": "+51 1 000 0110", "mobile": "+51 900 000 110", "email": "ana.villanueva@example.com",
+    "street": "Calle Los Geranios 916", "street2": "Urb. Salamanca · Ate", "city": "Lima", "zip": "15022",
+    "function": "Supervisora de compras",
+    "comment": "<p>Contacto ficticio de demostración. Teléfonos, documento y dirección de ejemplo.</p><p>Compara pantallas multimedia para vehículos de uso administrativo. Solicita especificaciones y cotización por correo para su revisión.</p>"
+  }
+]
