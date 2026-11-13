@@ -1,0 +1,280 @@
+{
+  "ejecutado_lima": "2026-11-12T21:29:25-05:00",
+  "qa_asignado": "Shirley Carrión Oré",
+  "python": "3.13.18",
+  "sistema": "Linux-6.18.44-fc-v445-x86_64-with-glibc2.39",
+  "modo": "Simulador local del contrato + arnés EP en directorio temporal; sin Odoo, n8n, LLM ni red",
+  "ejecucion": "Ejecutada por Shirley Carrión Oré con su script de QA (preparado con apoyo de IA)",
+  "paquete_agente": {
+    "prueba": "SHI-U01 Instalación limpia del Agente SIE y del sistema Odoo",
+    "presente": {
+      "agente-sie/": false,
+      "app/": false
+    },
+    "guias_encontradas": [],
+    "estado": "BLOQUEADA",
+    "motivo": "El checkout no contiene el paquete del agente ni el sistema Odoo. Según la ficha QA de Adrián, están en las ramas origin/pc3/agente-sie (commit 8cfbf84) y origin/sistema-agente (commit 587eabb). Ejecutar esta prueba sobre el ZIP GE703_PC3_Agente_G7 cuando Ballack lo entregue."
+  },
+  "prototipo": {
+    "prueba": "SHI-U02 Instalación limpia del prototipo de contrato incluido en el repositorio",
+    "estado": "CONFORME",
+    "pasos": [
+      {
+        "paso": "PC2: pruebas del contrato",
+        "comando": "python pruebas/pc2/generar_evidencias.py",
+        "codigo_salida": 0,
+        "segundos": 0.181,
+        "salida": [
+          "OK: pruebas automáticas y 4 casos documentados; evidencia en pruebas/pc2/evidencias"
+        ],
+        "errores": []
+      },
+      {
+        "paso": "EP: casos normal, stock parcial y descuento",
+        "comando": "python pruebas/ep-benjamin/generar_evidencias.py",
+        "codigo_salida": 0,
+        "segundos": 0.043,
+        "salida": [
+          "OK: 3 casos, 112 comprobaciones; evidencia en pruebas/ep-benjamin/evidencias",
+          "EP-N01: ACEPTADA / VALIDADA / order_id=null",
+          "EP-S01: PROMESA_CONDICIONADA / DISPONIBILIDAD_PARCIAL / order_id=null",
+          "EP-E01: RECHAZADA / DESCUENTO_SIN_APROBACION / order_id=null"
+        ],
+        "errores": []
+      }
+    ]
+  },
+  "indicadores": {
+    "prueba": "SHI-U04 Interpretación de stock y servicio",
+    "por_caso": [
+      {
+        "caso": "EP-N01",
+        "estado": "ACEPTADA",
+        "codigo": "VALIDADA",
+        "sku": "RAD-7BT",
+        "unidades_solicitadas": 5,
+        "disponible_snapshot": 8,
+        "evaluado_en_stock": true,
+        "unidades_atendibles": 5,
+        "faltante": 0,
+        "pedido_completo": true,
+        "promised_date": null,
+        "order_id": null,
+        "senal_reposicion": null
+      },
+      {
+        "caso": "EP-S01",
+        "estado": "PROMESA_CONDICIONADA",
+        "codigo": "DISPONIBILIDAD_PARCIAL",
+        "sku": "RAD-7BT",
+        "unidades_solicitadas": 5,
+        "disponible_snapshot": 3,
+        "evaluado_en_stock": true,
+        "unidades_atendibles": 3,
+        "faltante": 2,
+        "pedido_completo": false,
+        "promised_date": [
+          null
+        ],
+        "order_id": null,
+        "senal_reposicion": "REP-EP-001"
+      },
+      {
+        "caso": "EP-E01",
+        "estado": "RECHAZADA",
+        "codigo": "DESCUENTO_SIN_APROBACION",
+        "sku": "RAD-7BT",
+        "unidades_solicitadas": 5,
+        "disponible_snapshot": 8,
+        "evaluado_en_stock": false,
+        "unidades_atendibles": null,
+        "faltante": null,
+        "pedido_completo": null,
+        "promised_date": null,
+        "order_id": null,
+        "senal_reposicion": null
+      }
+    ],
+    "agregados": {
+      "aviso": "Indicadores calculados sobre corridas sintéticas e independientes del arnés EP. Sirven para comprobar fórmulas y lectura del agente; NO son nivel de servicio de MYS Hermanos.",
+      "solicitudes_evaluadas_en_stock": 2,
+      "solicitudes_excluidas": [
+        "EP-E01"
+      ],
+      "tasa_cumplimiento_unidades_pct": 80.0,
+      "formula_tasa_unidades": "8 atendibles ÷ 10 solicitadas × 100",
+      "solicitudes_completas_pct": 50.0,
+      "formula_solicitudes_completas": "1 completas ÷ 2 evaluadas × 100",
+      "solicitudes_con_quiebre_pct": 50.0,
+      "senales_reposicion_sustentadas_pct": 100.0,
+      "promesas_con_fecha_sin_validar": 0
+    },
+    "controles": [
+      {
+        "caso": "EP-N01",
+        "control": "Sin pedido operativo (order_id null)",
+        "ok": true
+      },
+      {
+        "caso": "EP-N01",
+        "control": "Comprobaciones del arnés superadas",
+        "ok": true
+      },
+      {
+        "caso": "EP-S01",
+        "control": "Sin pedido operativo (order_id null)",
+        "ok": true
+      },
+      {
+        "caso": "EP-S01",
+        "control": "Comprobaciones del arnés superadas",
+        "ok": true
+      },
+      {
+        "caso": "EP-S01",
+        "control": "Parcial sin fecha prometida",
+        "ok": true
+      },
+      {
+        "caso": "EP-S01",
+        "control": "Parcial requiere nueva aceptación del cliente",
+        "ok": true
+      },
+      {
+        "caso": "EP-S01",
+        "control": "Señal de reposición sin compra ni reserva automática",
+        "ok": true
+      },
+      {
+        "caso": "EP-S01",
+        "control": "Faltante de la señal = solicitado − disponible",
+        "ok": true
+      },
+      {
+        "caso": "EP-E01",
+        "control": "Sin pedido operativo (order_id null)",
+        "ok": true
+      },
+      {
+        "caso": "EP-E01",
+        "control": "Comprobaciones del arnés superadas",
+        "ok": true
+      },
+      {
+        "caso": "EP-E01",
+        "control": "Rechazo sin evento de disponibilidad en bitácora",
+        "ok": true
+      }
+    ],
+    "estado": "CONFORME"
+  },
+  "coherencia": [
+    {
+      "id": "SHI-PC3-002",
+      "prioridad": "ALTA",
+      "tema": "Ubicación de la empresa",
+      "archivos": [
+        "GE703_EP_G7_CONSOLIDADO_COMPLETO.md"
+      ],
+      "esperado": "PC3 sitúa las tiendas en Naranjal «La 50», Independencia, y el almacén en Carabayllo (5A, EMP-01/03)",
+      "accion": "No copiar la ubicación del parcial al informe PC3; confirmar con Adrián y retirar la dirección completa por privacidad",
+      "ocurrencias": [
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 45
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 870
+        }
+      ],
+      "total_ocurrencias": 2,
+      "estado": "ABIERTO"
+    },
+    {
+      "id": "SHI-PC3-003",
+      "prioridad": "MEDIA",
+      "tema": "Código de almacén en la señal de reposición",
+      "archivos": [
+        "GE703_EP_G7_CONSOLIDADO_COMPLETO.md"
+      ],
+      "esperado": "La evidencia ejecutada usa location_id TIENDA-DEMO; PC3 propone ubicaciones Carabayllo N1/N2 y tiendas",
+      "accion": "Usar en el informe el código que muestra la evidencia o la tabla de ubicaciones de 5B",
+      "ocurrencias": [
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 714
+        }
+      ],
+      "total_ocurrencias": 1,
+      "estado": "ABIERTO"
+    },
+    {
+      "id": "SHI-PC3-004",
+      "prioridad": "ALTA",
+      "tema": "Inmutabilidad de la bitácora",
+      "archivos": [
+        "GE703_EP_G7_CONSOLIDADO_COMPLETO.md"
+      ],
+      "esperado": "La ficha de Adrián indica que la bitácora del prototipo NO acredita inmutabilidad fuerte",
+      "accion": "En PC3 decir «bitácora con huella SHA-256 que permite detectar cambios», no «inmutable»",
+      "ocurrencias": [
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 31
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 57
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 292
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 376
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 494
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 495
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 599
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 632
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 656
+        },
+        {
+          "archivo": "GE703_EP_G7_CONSOLIDADO_COMPLETO.md",
+          "linea": 663
+        }
+      ],
+      "total_ocurrencias": 15,
+      "estado": "ABIERTO"
+    },
+    {
+      "id": "SHI-PC3-005",
+      "prioridad": "ALTA",
+      "tema": "Informe PC3 libre de afirmaciones heredadas",
+      "esperado": "El informe no repite ubicación, código ni inmutabilidad del parcial",
+      "ocurrencias": [],
+      "total_ocurrencias": 0,
+      "estado": "CONFORME",
+      "archivos": [
+        "documentos/pc3/shirley/informe_pc3_consolidado.md"
+      ],
+      "accion": "Corregir antes de exportar el PDF"
+    }
+  ]
+}
