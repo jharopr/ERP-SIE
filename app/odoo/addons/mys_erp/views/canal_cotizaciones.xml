@@ -1,0 +1,85 @@
+<odoo>
+    <!-- Formulario de lead/oportunidad: canal de entrada y pestaña de cotizaciones -->
+    <record id="crm_lead_form_mys_canal" model="ir.ui.view">
+        <field name="name">crm.lead.mys.canal.cotizaciones</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="(//field[@name='tag_ids'])[1]" position="before">
+                <field name="mys_canal" widget="badge"/>
+            </xpath>
+            <xpath expr="(//field[@name='tag_ids'])[2]" position="before">
+                <field name="mys_canal" widget="badge"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="mys_cotizaciones" string="Cotizaciones" invisible="type != 'opportunity'">
+                    <field name="mys_cotizaciones_count" invisible="1"/>
+                    <div class="alert alert-info" role="status">
+                        Todas las versiones de cotización de esta oportunidad. Una versión anulada queda como historial;
+                        la vigente es la más reciente no anulada.
+                    </div>
+                    <p class="text-muted" invisible="mys_cotizaciones_count">Aún no hay cotizaciones. Créela desde los productos de la oportunidad o desde Ventas.</p>
+                    <field name="order_ids" readonly="1" nolabel="1" invisible="not mys_cotizaciones_count">
+                        <list create="false" delete="false" default_order="id desc"
+                              decoration-muted="state == 'cancel'" decoration-success="mys_status == 'ACEPTADA'"
+                              decoration-danger="mys_status == 'RECHAZADA'">
+                            <field name="name" string="Número"/>
+                            <field name="client_order_ref" string="Cotización y versión"/>
+                            <field name="date_order" string="Fecha"/>
+                            <field name="validity_date" string="Vence"/>
+                            <field name="amount_total" string="Total" sum="Total"/>
+                            <field name="state" string="Estado" widget="badge"/>
+                            <field name="mys_status" string="Resultado de reglas" widget="badge"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Listas de leads y oportunidades: columna Canal -->
+    <record id="crm_lead_list_mys_canal" model="ir.ui.view">
+        <field name="name">crm.lead.mys.canal.lista.leads</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="before">
+                <field name="mys_canal" widget="badge" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_oppor_list_mys_canal" model="ir.ui.view">
+        <field name="name">crm.lead.mys.canal.lista.oportunidades</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="mys_canal" widget="badge" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Búsqueda: filtrar y agrupar por canal -->
+    <record id="crm_lead_search_mys_canal" model="ir.ui.view">
+        <field name="name">crm.lead.mys.canal.busqueda</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="mys_canal"/>
+                <filter name="mys_por_canal" string="Canal de entrada" context="{'group_by': 'mys_canal'}"/>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_oppor_search_mys_canal" model="ir.ui.view">
+        <field name="name">crm.lead.mys.canal.busqueda.oportunidades</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <field name="mys_canal"/>
+                <filter name="mys_por_canal" string="Canal de entrada" context="{'group_by': 'mys_canal'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

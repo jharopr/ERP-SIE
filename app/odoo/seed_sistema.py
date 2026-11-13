@@ -249,6 +249,21 @@ def categoria_pc3(odoo):
         odoo.x('product.template', 'write', plantillas, {'categ_id': sub})
 
 
+CANAL_DEMO = {'CLI-DEMO-001': 'whatsapp', 'CLI-DEMO-002': 'tienda', 'CLI-DEMO-003': 'telefono',
+              'CLI-DEMO-004': 'web', 'CLI-DEMO-005': 'redes', 'CLI-DEMO-006': 'referido'}
+
+
+def canales_demo(odoo):
+    """Canal de entrada de los leads de la demo (solo si está vacío: no pisa lo registrado a mano)."""
+    asignados = 0
+    for ref, canal in CANAL_DEMO.items():
+        leads = odoo.buscar('crm.lead', [('partner_id.ref', '=', ref), ('type', '=', 'lead'), ('mys_canal', '=', False)])
+        if leads:
+            odoo.x('crm.lead', 'write', leads, {'mys_canal': canal}, context={'tracking_disable': True})
+            asignados += len(leads)
+    legacy.log(f'canal de entrada asignado a {asignados} leads de la demo.')
+
+
 def calcular_perfiles(odoo):
     """Perfil comercial de todos los clientes (las mismas reglas que la tarea diaria de Odoo)."""
     clientes = odoo.buscar('res.partner', ['|', ('customer_rank', '>', 0), ('mys_demo', '=', True),
@@ -288,6 +303,7 @@ def main():
                 existing.x('res.partner', 'action_mys_prepare_demo_contacts')
                 existing.x('crm.lead', 'action_mys_prepare_demo_presentation')
                 categoria_pc3(existing)
+                canales_demo(existing)
                 historial_compras(existing)
                 calcular_perfiles(existing)
                 limpiar_notificaciones(existing)
@@ -323,6 +339,7 @@ def main():
     products = catalogo(odoo, data, location)
     datos_comerciales(odoo, repo, data, products, seller, location)
     categoria_pc3(odoo)
+    canales_demo(odoo)
     historial_compras(odoo)
     calcular_perfiles(odoo)
     limpiar_notificaciones(odoo)

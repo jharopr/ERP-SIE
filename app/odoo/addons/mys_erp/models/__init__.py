@@ -7,3 +7,4 @@ from . import traceability
 from . import demo_presentation
 from . import quotation_status
 from . import discount_policy
+from . import canal_cotizaciones

@@ -48,11 +48,13 @@ class DiscountPolicy(models.Model):
     def _mys_para_rpc(report):
         """XML-RPC de Odoo no admite None. En los criterios, None significa «sin verificar»
         (no es lo mismo que «no cumple»), así que se envía como 'SIN_VERIFICAR'; en el resto, False."""
+        verificables = {'eligible', 'exceptional_eligible'}  # None = «sin verificar», no «no cumple»
+
         def limpiar(valor, nulo=False):
             if valor is None:
                 return nulo
             if isinstance(valor, dict):
-                return {str(k): limpiar(v, nulo) for k, v in valor.items()}
+                return {str(k): limpiar(v, 'SIN_VERIFICAR' if k in verificables else nulo) for k, v in valor.items()}
             if isinstance(valor, (list, tuple)):
                 return [limpiar(v, nulo) for v in valor]
             return valor

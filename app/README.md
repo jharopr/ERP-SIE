@@ -119,6 +119,15 @@ Con palabras normales, **sin códigos**: el nombre del cliente o el número de c
 
 El agente no aprueba (ni siquiera en la sesión del gerente), no crea pedidos, no reserva stock ni promete fechas. `admin` es la cuenta técnica y tampoco puede aprobar.
 
+## Canal de entrada y cotizaciones de la oportunidad
+
+- **Canal de entrada** (lead y oportunidad): WhatsApp, tienda, teléfono, correo, web, redes sociales o referido. Si no se indica, se toma el canal preferido del contacto; se puede ver como columna y agrupar por canal en las listas de CRM.
+- Pestaña **Cotizaciones** de la oportunidad: todas sus versiones con número, versión, fecha, vencimiento, total, estado y resultado de las reglas (las anuladas quedan como historial).
+
+## Secuencia del agente para descuentos
+
+Cuando se le pregunta por un descuento, el agente sigue siempre los mismos pasos y responde con el bloque «Análisis de descuento»: (1) identifica la cotización y el % por línea; (2) regla de hasta 5 %; (3) criterios para más de 5 % en orden: margen mayor a S/ 2 000, fidelidad, compras mensuales y liquidación (cumple, no cumple o sin verificar); (4) perfil del cliente como contexto; (5) conclusión según el sistema; (6) siguiente paso. Lee el análisis que calcula Odoo (`mys_analyze_discount`); no calcula ni autoriza.
+
 ## Agente integrado y estado de Gemini
 
 Abrir **Agente SIE** desde Odoo. Ejemplos: «Busca radios con pantalla» o «Consulta la disponibilidad de RAD-7BT». El chat usa el catálogo y las herramientas existentes; los resultados se leen de Odoo y la compuerta.
