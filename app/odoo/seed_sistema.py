@@ -195,6 +195,73 @@ def datos_comerciales(odoo, repo, data, productos, vendedor, ubicacion):
     legacy.log('8 clientes, 1 proveedor, 6 leads y 3 oportunidades/cotizaciones de catálogo preparados.')
 
 
+def historial_compras(odoo):
+    """Ventas pasadas SINTÉTICAS (datos/historial_compras.json) para el perfil del cliente.
+
+    Se confirman (con contexto de seed) y se cancela su entrega, así no reservan ni descuentan
+    stock de los casos PC3. Idempotente: busca por la referencia HIS-… y no duplica.
+    """
+    from datetime import datetime, timedelta
+    archivo = CATALOGO.parent / 'historial_compras.json'
+    if not archivo.exists():
+        return
+    datos = json.loads(archivo.read_text(encoding='utf-8'))
+    precios = {p['sku']: float(p['precio_venta']) for p in json.loads(CATALOGO.read_text(encoding='utf-8'))['productos']}
+    skus = sorted({l[0] for o in datos['pedidos'] for l in o['lineas']})
+    productos = {r['default_code']: r['id'] for r in odoo.leer('product.product', [('default_code', 'in', skus)], ['default_code'])}
+    vendedor = odoo.buscar('res.users', [('login', '=', E.VENDEDOR_LOGIN)])[0]
+    contexto = {'mys_seed': True, 'tracking_disable': True, 'mail_notrack': True}
+    creados, contadores = 0, {}
+    for pedido in datos['pedidos']:
+        contadores[pedido['cliente']] = contadores.get(pedido['cliente'], 0) + 1
+        ref = 'HIS-%s-%02d' % (pedido['cliente'], contadores[pedido['cliente']])
+        if odoo.buscar('sale.order', [('client_order_ref', '=', ref)]):
+            continue
+        cliente = odoo.buscar('res.partner', [('ref', '=', pedido['cliente'])])
+        if not cliente:
+            continue
+        oid = odoo.x('sale.order', 'create', {
+            'partner_id': cliente[0], 'user_id': vendedor, 'client_order_ref': ref,
+            'order_line': [(0, 0, {'product_id': productos[sku], 'product_uom_qty': cant, 'price_unit': precios[sku],
+                                   'discount': desc, 'tax_id': [(6, 0, [])]}) for sku, cant, desc in pedido['lineas']]},
+            context=contexto)
+        if pedido['estado'] == 'sale':
+            legacy.llamar_tolerante(odoo, 'sale.order', 'action_confirm', [oid], contexto)
+            entregas = odoo.buscar('stock.picking', [('sale_id', '=', oid), ('state', 'not in', ['done', 'cancel'])])
+            if entregas:  # la venta histórica no debe tocar el stock de la demo
+                legacy.llamar_tolerante(odoo, 'stock.picking', 'action_cancel', entregas, contexto)
+        else:
+            legacy.llamar_tolerante(odoo, 'sale.order', 'action_cancel', [oid], {**contexto, 'disable_cancel_warning': True})
+        fecha = (datetime.utcnow() - timedelta(days=pedido['dias'])).strftime('%Y-%m-%d %H:%M:%S')
+        odoo.x('sale.order', 'write', [oid], {'date_order': fecha}, context=contexto)
+        creados += 1
+    legacy.log(f'historial de compras: {creados} pedidos nuevos (de {len(datos["pedidos"])} declarados).')
+
+
+def categoria_pc3(odoo):
+    """RAD-7BT y RAD-10X (casos PC3) bajo «Radios y Pantallas», no en la categoría genérica de Odoo."""
+    padre, _ = odoo.upsert('product.category', [('name', '=', 'Radios y Pantallas'), ('parent_id', '=', False)],
+                           {'name': 'Radios y Pantallas'})
+    sub, _ = odoo.upsert('product.category', [('name', '=', 'Casos PC3 (genéricos)'), ('parent_id', '=', padre)],
+                         {'name': 'Casos PC3 (genéricos)', 'parent_id': padre})
+    plantillas = odoo.buscar('product.template', [('default_code', 'in', list(E.PRODUCTOS))])
+    if plantillas:
+        odoo.x('product.template', 'write', plantillas, {'categ_id': sub})
+
+
+def calcular_perfiles(odoo):
+    """Perfil comercial de todos los clientes (las mismas reglas que la tarea diaria de Odoo)."""
+    clientes = odoo.buscar('res.partner', ['|', ('customer_rank', '>', 0), ('mys_demo', '=', True),
+                                           ('mys_segmento', '!=', 'proveedor'), ('ref', '!=', False)])
+    if clientes:
+        odoo.x('res.partner', 'action_mys_recalcular_perfil', clientes)
+    niveles = odoo.leer('res.partner', [('id', 'in', clientes), ('mys_nivel', '!=', False)], ['ref', 'mys_nivel'])
+    resumen = {}
+    for c in niveles:
+        resumen[c['mys_nivel']] = resumen.get(c['mys_nivel'], 0) + 1
+    legacy.log(f'perfil comercial calculado para {len(clientes)} clientes: {resumen}')
+
+
 def limpiar_notificaciones(odoo):
     """Cancela los avisos automáticos que el propio seed genera en Odoo («Te asignaron S000…»,
     «Cambio de contraseña»): con correo activo llenarían el buzón del dueño en cada arranque.
@@ -218,6 +285,9 @@ def main():
             modules = existing.leer('ir.module.module', [('name', '=', 'mys_erp')], ['state'])
             if modules and modules[0]['state'] == 'installed' and len(existing.buscar('product.template', [('mys_catalogo', '=', True)])) == total:
                 usuarios(existing)
+                categoria_pc3(existing)
+                historial_compras(existing)
+                calcular_perfiles(existing)
                 limpiar_notificaciones(existing)
                 print('Instalación existente: usuarios sincronizados. Cotizaciones, versiones, stock y decisiones conservados.', flush=True)
                 return
@@ -250,6 +320,9 @@ def main():
                    (E.VENDEDOR, str(seller)))
     products = catalogo(odoo, data, location)
     datos_comerciales(odoo, repo, data, products, seller, location)
+    categoria_pc3(odoo)
+    historial_compras(odoo)
+    calcular_perfiles(odoo)
     limpiar_notificaciones(odoo)
     print(f'SISTEMA MYS LISTO: {total} referencias de catálogo, 2 SKU PC3, Odoo y Agente SIE conectados.', flush=True)
 

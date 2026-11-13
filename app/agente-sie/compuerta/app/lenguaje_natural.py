@@ -98,6 +98,35 @@ def registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_
     def publico(c):
         return {k: v for k, v in c.items() if not k.startswith("_")}
 
+    NIVELES = {"nuevo": "Nuevo", "ocasional": "Ocasional", "frecuente": "Frecuente", "mayorista": "Mayorista"}
+
+    @app.get("/clientes-perfil")
+    def perfil(request: Request, texto: str = Query(min_length=2, max_length=100),
+               quien=Depends(exigir("VENTAS", "GERENCIA"))):
+        """Perfil comercial del cliente: lo calcula Odoo con reglas fijas; aquí solo se lee."""
+        if not hasattr(fuente, "perfil_cliente"):
+            raise HTTPException(503, "El perfil del cliente requiere Odoo.")
+        try:
+            filas = fuente.perfil_cliente(texto)
+        except DependenciaNoDisponible:
+            raise HTTPException(503, "Odoo no responde; no se pudo leer el perfil del cliente.")
+        huella_agente(request, quien, texto.encode(), None)
+        perfiles = [{
+            "cliente": f["name"], "codigo": f["ref"], "nivel": NIVELES.get(f["mys_nivel"], f["mys_nivel"]),
+            "por_que": f["mys_nivel_motivo"], "compras_6_meses": f["mys_compras_6m"],
+            "monto_6_meses": dinero(f["mys_monto_6m"]), "unidades_6_meses": f["mys_unidades_6m"],
+            "ticket_promedio": dinero(f["mys_ticket_promedio"]), "ultima_compra": f["mys_ultima_compra"] or None,
+            "dias_sin_comprar": f["mys_dias_sin_compra"], "inactivo": f["mys_inactivo"],
+            "descuento_promedio_obtenido_pct": round(f["mys_descuento_promedio"], 1),
+            "cotizaciones_que_terminan_en_compra_pct": round(f["mys_conversion"], 1),
+            "categorias_que_mas_compra": f["mys_categorias_top"] or None,
+            "productos_que_mas_compra": f["mys_productos_top"] or None,
+            "complementos_sugeridos": f["mys_sugerencias"] or None,
+            "calculado_el": f["mys_perfil_fecha"]} for f in filas]
+        return {"coincidencias": len(perfiles), "perfiles": perfiles,
+                "nota": "Perfil calculado por Odoo con reglas fijas (ventas confirmadas de los últimos 6 meses). "
+                        "Sirve para recomendar y decidir; no cambia los topes de descuento."}
+
     @app.get("/cotizaciones-buscar")
     def buscar(request: Request, texto: str = Query(min_length=2, max_length=100),
                quien=Depends(exigir("VENTAS", "GERENCIA"))):

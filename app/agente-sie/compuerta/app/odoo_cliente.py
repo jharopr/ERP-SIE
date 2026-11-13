@@ -129,6 +129,18 @@ class OdooCliente:
             })
         return resultado
 
+    CAMPOS_PERFIL = ["name", "ref", "mys_nivel", "mys_nivel_motivo", "mys_compras_6m", "mys_monto_6m",
+                     "mys_unidades_6m", "mys_ticket_promedio", "mys_ultima_compra", "mys_dias_sin_compra",
+                     "mys_inactivo", "mys_descuento_promedio", "mys_conversion", "mys_categorias_top",
+                     "mys_productos_top", "mys_sugerencias", "mys_perfil_fecha"]
+
+    def perfil_cliente(self, texto: str, limite: int = 3) -> list[dict]:
+        """Perfil comercial (calculado por reglas en Odoo) de los clientes cuyo nombre o código coincide."""
+        t = texto.strip()
+        filas = self._leer("res.partner", ["&", ("mys_nivel", "!=", False), "|", ("name", "ilike", t), ("ref", "ilike", t)],
+                           self.CAMPOS_PERFIL)
+        return filas[:limite]
+
     def buscar_cotizaciones(self, texto: str, limite: int = 5) -> list[dict]:
         """Cotizaciones SIE por número de Odoo (S000…), código COT-…, nombre o código del cliente.
 

@@ -111,6 +111,18 @@ class Order(models.Model):
     mys_response = fields.Text('Respuesta de las reglas', readonly=True, copy=False)
     mys_locked = fields.Boolean('Versión evaluada', readonly=True, copy=False)
     mys_evaluation_ids = fields.One2many('mys.evaluation', 'order_id', string='Evaluaciones')
+    # Aviso visual inmediato (sin IA): se recalcula al escribir el % en cualquier línea.
+    mys_descuento_max = fields.Float('Mayor descuento (%)', compute='_compute_mys_tope')
+    mys_supera_tope = fields.Boolean('Supera el tope del vendedor', compute='_compute_mys_tope')
+    mys_tope_vendedor = fields.Float('Tope del vendedor (%)', compute='_compute_mys_tope')
+
+    @api.depends('order_line.discount', 'order_line.display_type')
+    def _compute_mys_tope(self):
+        for order in self:
+            descuentos = order.order_line.filtered(lambda l: not l.display_type).mapped('discount')
+            order.mys_descuento_max = max(descuentos or [0.0])
+            order.mys_tope_vendedor = TOPE_VENDEDOR
+            order.mys_supera_tope = order.mys_descuento_max > TOPE_VENDEDOR
     _sql_constraints = [('mys_unique_version', 'unique(company_id, mys_quotation_id, mys_version)',
                          'Ya existe esta versión de cotización SIE. Cree una nueva versión.')]
 
@@ -376,6 +388,13 @@ class Decision(models.Model):
     descuento_max = fields.Float('Descuento pedido (%)', compute='_compute_detalle')
     tope_vendedor = fields.Float('Tope del vendedor (%)', compute='_compute_detalle')
     ahorro_cliente = fields.Monetary('Descuento en soles', compute='_compute_detalle', currency_field='currency_id')
+    # Perfil del cliente (calculado por reglas en res.partner) para decidir con contexto.
+    cliente_nivel = fields.Selection(related='partner_id.mys_nivel', string='Nivel del cliente')
+    cliente_motivo = fields.Char(related='partner_id.mys_nivel_motivo', string='Por qué')
+    cliente_compras = fields.Integer(related='partner_id.mys_compras_6m', string='Compras (6 meses)')
+    cliente_monto = fields.Float(related='partner_id.mys_monto_6m', string='Monto comprado 6 meses (S/)')
+    cliente_descuento_prom = fields.Float(related='partner_id.mys_descuento_promedio', string='Descuento promedio obtenido (%)')
+    cliente_conversion = fields.Float(related='partner_id.mys_conversion', string='Cotizaciones que terminan en compra (%)')
     escalation_id = fields.Char('Escalamiento', required=True, readonly=True)
     tipo = fields.Char('Tipo', readonly=True)
     state = fields.Char('Estado', readonly=True)
@@ -428,6 +447,14 @@ class Decision(models.Model):
                 self.env['ir.config_parameter'].sudo().get_param('web.base.url', 'http://localhost:8069')).rstrip('/')
         return '%s/odoo/mys.decision/%s' % (base, self.id)
 
+    def _mys_resumen_perfil(self):
+        p = self.order_id.partner_id
+        if not p.mys_nivel:
+            return 'Sin perfil calculado'
+        nivel = dict(p._fields['mys_nivel'].selection).get(p.mys_nivel)
+        return '%s · %d compras · S/ %s en 6 meses · descuento promedio %.1f %%' % (
+            nivel, p.mys_compras_6m, f'{p.mys_monto_6m:,.2f}', p.mys_descuento_promedio)
+
     def _mys_avisar_dueno(self):
         """Tarea en Odoo + correo al dueño. Un fallo de correo no impide registrar la excepción."""
         self.ensure_one()
@@ -445,6 +472,7 @@ class Decision(models.Model):
                 note='Vence: %s (hora Lima). Revise y pulse el botón de decisión.' % (self.deadline or '—'))
         filas = ''.join('<tr><td style="padding:4px 12px 4px 0;color:#475467">%s</td><td><b>%s</b></td></tr>' % (e(k), e(str(v)))
                         for k, v in [('Cotización', cotizacion), ('Cliente', self.order_id.partner_id.display_name),
+                                     ('Perfil del cliente', self._mys_resumen_perfil()),
                                      ('Vendedor', self.user_id.name), ('Total verificado', 'S/ %s' % (self.total or '—')),
                                      ('Escalamiento', self.escalation_id), ('Responder antes de', self.deadline or '—')])
         celda = 'padding:4px 8px;border-bottom:1px solid #eaecf0'
