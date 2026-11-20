@@ -59,7 +59,11 @@ class QuotationStatus(models.Model):
             replacement = latest.get((order.company_id.id, order.mys_quotation_id))
             if not replacement or replacement.mys_version <= order.mys_version:
                 replacement = current.get(order.opportunity_id.id)
-                if not replacement or replacement.id <= order.id or replacement.partner_id != order.partner_id:
+                # Durante la edición (onchange) order.id es un NewId: se compara con el id real (_origin).
+                # Una cotización aún no guardada no puede estar reemplazada.
+                origen = order._origin.id
+                if (not replacement or not origen or replacement._origin.id <= origen
+                        or replacement.partner_id != order.partner_id):
                     replacement = False
             state, note = order._mys_commercial_summary(today, replacement, current.get(order.opportunity_id.id))
             order.mys_commercial_state = state

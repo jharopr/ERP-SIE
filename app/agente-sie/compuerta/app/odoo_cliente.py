@@ -10,7 +10,15 @@ from __future__ import annotations
 import http.client
 import re
 import socket
+import threading
+import time
+import unicodedata
 import xmlrpc.client
+
+
+def _normalizar(texto: str) -> str:
+    """Minúsculas y sin tildes: «María» y «maria» se tratan igual."""
+    return "".join(c for c in unicodedata.normalize("NFD", (texto or "").lower()) if unicodedata.category(c) != "Mn")
 
 
 class DependenciaNoDisponible(Exception):
@@ -43,6 +51,10 @@ class OdooCliente:
     def __init__(self, url: str, db: str, user: str, password: str, timeout: float = 5.0):
         self.url, self.db, self.user, self.password, self.timeout = url.rstrip("/"), db, user, password, timeout
         self._uid = None
+        self._clientes = (0.0, [])          # (vence, [(id, texto normalizado)])
+        self._candado = threading.Lock()
+
+    CACHE_CLIENTES_S = 60   # la lista de clientes cambia poco; precios y stock NUNCA se cachean
 
     def _proxy(self, path):
         return xmlrpc.client.ServerProxy(f"{self.url}{path}", allow_none=True,
@@ -68,6 +80,15 @@ class OdooCliente:
         kwargs = {"fields": campos, "context": {"active_test": False, **(contexto or {})}}
         return self._call(lambda: self._proxy("/xmlrpc/2/object").execute_kw(
             self.db, uid, self.password, modelo, "search_read", [dominio], kwargs))
+
+    def _leer_anidado(self, modelo, dominio, especificacion, contexto=None):
+        """Una sola llamada con relaciones anidadas (web_search_read de Odoo 17+): pedido + líneas +
+        cliente + oportunidad en un viaje, en lugar de uno por modelo."""
+        uid = self._uid_actual()
+        kwargs = {"specification": especificacion, "context": {"active_test": False, **(contexto or {})}}
+        r = self._call(lambda: self._proxy("/xmlrpc/2/object").execute_kw(
+            self.db, uid, self.password, modelo, "web_search_read", [dominio], kwargs))
+        return r["records"]
 
     def _politica_descuento(self, ids):
         if not ids:
@@ -100,54 +121,64 @@ class OdooCliente:
         return {"opportunity_id": f["mys_reference"], "type": f["type"], "active": bool(f["active"]),
                 "customer_ref": self._ref_partner(_id(f["partner_id"]))}
 
+    _SPEC_LINEAS = {"fields": {"display_type": {}, "product_id": {"fields": {"default_code": {}, "display_name": {}}},
+                               "product_uom_qty": {}, "price_unit": {}, "discount": {}}}
+
+    @staticmethod
+    def _rel(valor, campo="id"):
+        """Valor de una relación many2one leída con web_search_read (dict o False)."""
+        return valor.get(campo) if isinstance(valor, dict) else None
+
     def versiones_cotizacion(self, quotation_id: str) -> list[dict]:
         patron = re.compile(rf"^{re.escape(quotation_id)} v([1-9][0-9]*)$")
-        pedidos = self._leer("sale.order", [("client_order_ref", "=like", f"{quotation_id} v%")],
-                             ["client_order_ref", "state", "currency_id", "validity_date", "user_id",
-                              "partner_id", "opportunity_id", "amount_total", "order_line"])
+        pedidos = self._leer_anidado("sale.order", [("client_order_ref", "=like", f"{quotation_id} v%")], {
+            "client_order_ref": {}, "state": {}, "validity_date": {}, "amount_total": {},
+            "currency_id": {"fields": {"display_name": {}}}, "user_id": {"fields": {}},
+            "partner_id": {"fields": {"ref": {}}}, "opportunity_id": {"fields": {"mys_reference": {}}},
+            "order_line": self._SPEC_LINEAS})
         pedidos = [(p, m) for p in pedidos if (m := patron.match(p["client_order_ref"] or ""))]
         if not pedidos:
             return []
-        # Lecturas agrupadas (una por modelo, no una por versión): menos viajes a Odoo, misma información.
-        todas = self._leer("sale.order.line", [("order_id", "in", [p["id"] for p, _ in pedidos]),
-                                               ("display_type", "=", False)],
-                           ["order_id", "product_id", "product_uom_qty", "price_unit", "discount"])
-        ids_producto = sorted({_id(l["product_id"]) for l in todas if l["product_id"]})
-        codigos = {f["id"]: f["default_code"] for f in
-                   self._leer("product.product", [("id", "in", ids_producto)], ["default_code"])} if ids_producto else {}
-        ids_lead = sorted({_id(p["opportunity_id"]) for p, _ in pedidos if p.get("opportunity_id")})
-        referencias = {f["id"]: f["mys_reference"] for f in
-                       self._leer("crm.lead", [("id", "in", ids_lead)], ["mys_reference"])} if ids_lead else {}
-        ids_cliente = sorted({_id(p["partner_id"]) for p, _ in pedidos if p["partner_id"]})
-        refs = {f["id"]: f["ref"] or None for f in
-                self._leer("res.partner", [("id", "in", ids_cliente)], ["ref"])} if ids_cliente else {}
-        resultado = []
+        rel = self._rel
         policy_reports = self._politica_descuento([p['id'] for p, _ in pedidos])
-        for p, m in pedidos:
-            lineas = [l for l in todas if _id(l["order_id"]) == p["id"]]
-            resultado.append({
-                "version": int(m.group(1)), "state": p["state"], "currency": _nombre(p["currency_id"]),
-                "validity_date": p["validity_date"] or None,
-                "seller_login": None, "seller_odoo_id": _id(p["user_id"]),
-                "customer_ref": refs.get(_id(p["partner_id"])),
-                "opportunity_id": referencias.get(_id(p["opportunity_id"])) if p.get("opportunity_id") else None,
-                "amount_total": p["amount_total"],
-                "policy_report": policy_reports.get(str(p['id'])),
-                "lines": [{"sku": codigos.get(_id(l["product_id"])), "quantity": l["product_uom_qty"],
-                           "unit_price": l["price_unit"], "discount_pct": l["discount"]} for l in lineas],
-            })
-        return resultado
+        return [{
+            "version": int(m.group(1)), "state": p["state"], "currency": rel(p["currency_id"], "display_name"),
+            "validity_date": p["validity_date"] or None,
+            "seller_login": None, "seller_odoo_id": rel(p["user_id"]),
+            "customer_ref": rel(p["partner_id"], "ref") or None,
+            "opportunity_id": rel(p["opportunity_id"], "mys_reference") or None,
+            "amount_total": p["amount_total"],
+            "policy_report": policy_reports.get(str(p['id'])),
+            "lines": [{"sku": rel(l["product_id"], "default_code") or None, "quantity": l["product_uom_qty"],
+                       "unit_price": l["price_unit"], "discount_pct": l["discount"]}
+                      for l in p["order_line"] if not l["display_type"]],
+        } for p, m in pedidos]
 
     CAMPOS_PERFIL = ["name", "ref", "mys_nivel", "mys_nivel_motivo", "mys_compras_6m", "mys_monto_6m",
                      "mys_unidades_6m", "mys_ticket_promedio", "mys_ultima_compra", "mys_dias_sin_compra",
                      "mys_inactivo", "mys_descuento_promedio", "mys_conversion", "mys_categorias_top",
                      "mys_productos_top", "mys_sugerencias", "mys_perfil_fecha"]
 
+    def clientes_por_texto(self, texto: str) -> list[int]:
+        """Clientes cuyo nombre o código contiene TODAS las palabras dichas, sin importar tildes,
+        mayúsculas ni orden («Maria Flores» encuentra a «María Fernanda Flores Rojas»)."""
+        palabras = [w for w in _normalizar(texto).replace(",", " ").split() if len(w) > 1]
+        if not palabras:
+            return []
+        with self._candado:
+            vence, clientes = self._clientes
+            if vence < time.monotonic():
+                filas = self._leer("res.partner", ["|", ("customer_rank", ">", 0), ("mys_nivel", "!=", False)], ["name", "ref"])
+                clientes = [(f["id"], _normalizar(f"{f['name']} {f['ref'] or ''}")) for f in filas]
+                self._clientes = (time.monotonic() + self.CACHE_CLIENTES_S, clientes)
+        return [i for i, texto in clientes if all(w in texto for w in palabras)]
+
     def perfil_cliente(self, texto: str, limite: int = 3) -> list[dict]:
         """Perfil comercial (calculado por reglas en Odoo) de los clientes cuyo nombre o código coincide."""
-        t = texto.strip()
-        filas = self._leer("res.partner", ["&", ("mys_nivel", "!=", False), "|", ("name", "ilike", t), ("ref", "ilike", t)],
-                           self.CAMPOS_PERFIL)
+        ids = self.clientes_por_texto(texto)
+        if not ids:
+            return []
+        filas = self._leer("res.partner", [("id", "in", ids), ("mys_nivel", "!=", False)], self.CAMPOS_PERFIL)
         return filas[:limite]
 
     def buscar_cotizaciones(self, texto: str, limite: int = 5) -> list[dict]:
@@ -161,6 +192,11 @@ class OdooCliente:
                    ("name", "ilike", t), ("client_order_ref", "ilike", t),
                    ("partner_id.name", "ilike", t), ("partner_id.ref", "ilike", t)]
         coincidencias = self._leer("sale.order", dominio, ["client_order_ref"])
+        if not coincidencias:  # nombre del cliente dicho de otra forma (sin tildes, incompleto, otro orden)
+            ids = self.clientes_por_texto(t)
+            if ids:
+                coincidencias = self._leer("sale.order", [("client_order_ref", "=like", "COT-%"), ("partner_id", "in", ids)],
+                                           ["client_order_ref"])
         familias = []
         for f in coincidencias:
             m = re.match(r"^(COT-[A-Za-z0-9_-]+) v[1-9][0-9]*$", f["client_order_ref"] or "")
@@ -170,16 +206,11 @@ class OdooCliente:
         if not familias:
             return []
         dominio = ["|"] * (len(familias) - 1) + [("client_order_ref", "=like", f"{q} v%") for q in familias]
-        pedidos = self._leer("sale.order", dominio, ["name", "client_order_ref", "state", "company_id", "partner_id",
-                                                     "opportunity_id", "amount_total", "user_id"])
-        lineas = self._leer("sale.order.line", [("order_id", "in", [p["id"] for p in pedidos]), ("display_type", "=", False)],
-                            ["order_id", "product_id", "product_uom_qty", "discount"]) if pedidos else []
-        ids_cliente = sorted({_id(p["partner_id"]) for p in pedidos if p["partner_id"]})
-        refs = {f["id"]: f["ref"] or None for f in
-                self._leer("res.partner", [("id", "in", ids_cliente)], ["ref"])} if ids_cliente else {}
-        ids_lead = sorted({_id(p["opportunity_id"]) for p in pedidos if p.get("opportunity_id")})
-        opps = {f["id"]: f["mys_reference"] for f in
-                self._leer("crm.lead", [("id", "in", ids_lead)], ["mys_reference"])} if ids_lead else {}
+        pedidos = self._leer_anidado("sale.order", dominio, {
+            "name": {}, "client_order_ref": {}, "state": {}, "amount_total": {}, "company_id": {"fields": {}},
+            "partner_id": {"fields": {"display_name": {}, "ref": {}}}, "opportunity_id": {"fields": {"mys_reference": {}}},
+            "user_id": {"fields": {"display_name": {}}}, "order_line": self._SPEC_LINEAS})
+        rel = self._rel
         resultado = []
         policy_reports = self._politica_descuento([p['id'] for p in pedidos])
         for q in familias:
@@ -188,15 +219,15 @@ class OdooCliente:
                 m = re.match(rf"^{re.escape(q)} v([1-9][0-9]*)$", p["client_order_ref"] or "")
                 if not m:
                     continue
-                propias = [l for l in lineas if _id(l["order_id"]) == p["id"]]
+                propias = [l for l in p["order_line"] if not l["display_type"]]
                 versiones.append({
                     "version": int(m.group(1)), "numero_odoo": p["name"], "state": p["state"],
-                    "company_odoo_id": _id(p["company_id"]), "cliente": _nombre(p["partner_id"]),
-                    "cliente_ref": refs.get(_id(p["partner_id"])),
-                    "oportunidad": opps.get(_id(p["opportunity_id"])) if p.get("opportunity_id") else None,
-                    "vendedor": _nombre(p["user_id"]), "total": p["amount_total"],
+                    "company_odoo_id": rel(p["company_id"]), "cliente": rel(p["partner_id"], "display_name"),
+                    "cliente_ref": rel(p["partner_id"], "ref") or None,
+                    "oportunidad": rel(p["opportunity_id"], "mys_reference") or None,
+                    "vendedor": rel(p["user_id"], "display_name"), "total": p["amount_total"],
                     "analisis_comercial": policy_reports.get(str(p['id'])),
-                    "productos": "; ".join(f"{l['product_uom_qty']:g} × {_nombre(l['product_id'])} ({l['discount']:g} %)"
+                    "productos": "; ".join(f"{l['product_uom_qty']:g} × {rel(l['product_id'], 'display_name')} ({l['discount']:g} %)"
                                            for l in propias)})
             resultado.append({"cotizacion": q, "versiones": sorted(versiones, key=lambda v: v["version"])})
         return resultado

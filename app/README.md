@@ -139,6 +139,8 @@ GEMINI_API_KEY=<clave de la cuenta de prueba>
 GEMINI_MODEL=models/gemini-3.5-flash-lite
 ```
 
+Para usar **Claude** en lugar de Gemini (más rápido con herramientas), en `app/.env` ponga `LLM_PROVIDER=anthropic`, `ANTHROPIC_API_KEY=<clave>` y opcionalmente `ANTHROPIC_MODEL=claude-haiku-5-5`. Luego ejecute `python agente-sie/scripts/importar_n8n.py`. El W4 del repositorio sigue con Gemini: el nodo del modelo se reemplaza solo al importarlo. Las capas, el aprendizaje y los resultados de carga están en [docs/ARQUITECTURA_AGENTE.md](docs/ARQUITECTURA_AGENTE.md).
+
 La clave suministrada está en el `.env` local y en la credencial cifrada de n8n. No se incluye en Git, documentación ni en el navegador. Para aplicar un cambio ejecutar `python scripts/iniciar.py`.
 
 Odoo consulta la API de Gemini y muestra **habilitado**, **sin clave**, **clave rechazada**, **modelo no disponible**, **sin conexión** o **sin cuota**. La validación se conserva durante un minuto. Una cuota de generación agotada puede aparecer al enviar el mensaje aunque listar modelos haya funcionado; ese estado deshabilita el envío y se conserva una hora para evitar repetir llamadas. Las funciones deterministas de Odoo siguen operativas sin Gemini.

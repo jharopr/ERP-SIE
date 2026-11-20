@@ -1,0 +1,24 @@
+<odoo>
+    <!-- Cotización: propuesta pendiente del Agente SIE, que el vendedor aplica o descarta -->
+    <record id="sale_form_mys_propuesta" model="ir.ui.view">
+        <field name="name">sale.order.mys.propuesta</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/*[1]" position="before">
+                <field name="mys_propuesta_id" invisible="1"/>
+                <div class="alert alert-primary mb-3" role="status" invisible="not mys_propuesta_id">
+                    <p class="mb-2"><i class="fa fa-magic me-1"/> <b>El Agente SIE propone cambios a esta cotización.</b>
+                        Todavía no se aplicaron: decides tú. Al aplicar se crea la versión siguiente con estos cambios.</p>
+                    <field name="mys_propuesta_html" nolabel="1" readonly="1"/>
+                    <div class="mt-2">
+                        <button name="action_mys_aplicar_propuesta" type="object" string="Aplicar como nueva versión"
+                                class="btn-primary me-2" groups="mys_erp.group_mys_seller"/>
+                        <button name="action_mys_descartar_propuesta" type="object" string="Descartar"
+                                class="btn-secondary" groups="mys_erp.group_mys_seller"/>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

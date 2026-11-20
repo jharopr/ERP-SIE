@@ -1,0 +1,390 @@
+{
+  "fecha": "2026-11-20T14:34:49",
+  "etiqueta": "optimizado",
+  "flujo": {
+    "clientes": 40,
+    "concurrencia": 4,
+    "segundos_totales": 136.2,
+    "clientes_por_minuto": 17.6,
+    "aciertos": 39,
+    "errores": 1,
+    "por_escenario": {
+      "sin_descuento": {
+        "VALIDADA": 18
+      },
+      "volumen_5": {
+        "VALIDADA": 10
+      },
+      "descuento_alto": {
+        "VALIDADA": 5,
+        "DESCUENTO_SIN_APROBACION": 1
+      },
+      "falta_stock": {
+        "DISPONIBILIDAD_PARCIAL": 3
+      },
+      "descuento_sin_evidencia": {
+        "DEPENDENCIA_NO_DISPONIBLE": 3
+      }
+    },
+    "pasos": {
+      "login_vendedor": {
+        "n": 40,
+        "p50": 2.741,
+        "p95": 5.296,
+        "p99": 6.296,
+        "max": 6.296,
+        "media": 3.08
+      },
+      "crear_cotizacion": {
+        "n": 40,
+        "p50": 0.49,
+        "p95": 14.161,
+        "p99": 14.235,
+        "max": 14.235,
+        "media": 1.972
+      },
+      "enviar": {
+        "n": 46,
+        "p50": 0.283,
+        "p95": 0.803,
+        "p99": 1.24,
+        "max": 1.24,
+        "media": 0.405
+      },
+      "aceptacion": {
+        "n": 46,
+        "p50": 1.657,
+        "p95": 5.693,
+        "p99": 6.242,
+        "max": 6.242,
+        "media": 2.156
+      },
+      "evaluar": {
+        "n": 46,
+        "p50": 1.418,
+        "p95": 12.689,
+        "p99": 25.67,
+        "max": 25.67,
+        "media": 3.205
+      },
+      "pedir_decision": {
+        "n": 9,
+        "p50": 1.231,
+        "p95": 2.248,
+        "p99": 2.248,
+        "max": 2.248,
+        "media": 1.302
+      },
+      "login_gerente": {
+        "n": 9,
+        "p50": 2.45,
+        "p95": 3.142,
+        "p99": 3.142,
+        "max": 3.142,
+        "media": 2.577
+      },
+      "decision_gerente": {
+        "n": 9,
+        "p50": 1.515,
+        "p95": 2.698,
+        "p99": 2.698,
+        "max": 2.698,
+        "media": 1.426
+      }
+    },
+    "por_cliente": {
+      "n": 40,
+      "p50": 9.15,
+      "p95": 30.1,
+      "p99": 39.57,
+      "max": 39.57,
+      "media": 12.96
+    },
+    "errores_detalle": [
+      {
+        "ref": "CARGA-143508-018",
+        "escenario": "descuento_alto",
+        "pasos": [],
+        "error": "could not serialize access due to concurrent update\n",
+        "codigo": "DESCUENTO_SIN_APROBACION",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "decision": "APROBADA",
+        "segundos": 39.57
+      }
+    ],
+    "fallos_de_regla": []
+  },
+  "api": {
+    "1": {
+      "solicitudes": 200,
+      "por_segundo": 5.2,
+      "errores": 0,
+      "latencia": {
+        "n": 200,
+        "p50": 0.161,
+        "p95": 0.397,
+        "p99": 0.582,
+        "max": 0.65,
+        "media": 0.194
+      },
+      "por_ruta": {
+        "catalogo": {
+          "n": 34,
+          "p50": 0.102,
+          "p95": 0.148,
+          "p99": 0.157,
+          "max": 0.157,
+          "media": 0.11
+        },
+        "disponibilidad": {
+          "n": 67,
+          "p50": 0.16,
+          "p95": 0.199,
+          "p99": 0.26,
+          "max": 0.3,
+          "media": 0.165
+        },
+        "clientes-perfil": {
+          "n": 33,
+          "p50": 0.079,
+          "p95": 0.136,
+          "p99": 0.182,
+          "max": 0.182,
+          "media": 0.089
+        },
+        "cotizaciones-buscar": {
+          "n": 33,
+          "p50": 0.385,
+          "p95": 0.582,
+          "p99": 0.65,
+          "max": 0.65,
+          "media": 0.411
+        },
+        "cotizaciones": {
+          "n": 33,
+          "p50": 0.212,
+          "p95": 0.268,
+          "p99": 0.396,
+          "max": 0.396,
+          "media": 0.227
+        }
+      }
+    },
+    "5": {
+      "solicitudes": 200,
+      "por_segundo": 9.0,
+      "errores": 0,
+      "latencia": {
+        "n": 200,
+        "p50": 0.52,
+        "p95": 1.064,
+        "p99": 1.201,
+        "max": 1.559,
+        "media": 0.55
+      },
+      "por_ruta": {
+        "catalogo": {
+          "n": 34,
+          "p50": 0.291,
+          "p95": 0.385,
+          "p99": 0.594,
+          "max": 0.594,
+          "media": 0.306
+        },
+        "disponibilidad": {
+          "n": 67,
+          "p50": 0.521,
+          "p95": 0.693,
+          "p99": 0.735,
+          "max": 0.749,
+          "media": 0.543
+        },
+        "clientes-perfil": {
+          "n": 33,
+          "p50": 0.26,
+          "p95": 0.337,
+          "p99": 0.395,
+          "max": 0.395,
+          "media": 0.27
+        },
+        "cotizaciones-buscar": {
+          "n": 33,
+          "p50": 1.028,
+          "p95": 1.201,
+          "p99": 1.559,
+          "max": 1.559,
+          "media": 1.034
+        },
+        "cotizaciones": {
+          "n": 33,
+          "p50": 0.597,
+          "p95": 0.878,
+          "p99": 0.908,
+          "max": 0.908,
+          "media": 0.61
+        }
+      }
+    },
+    "10": {
+      "solicitudes": 200,
+      "por_segundo": 8.2,
+      "errores": 0,
+      "latencia": {
+        "n": 200,
+        "p50": 1.112,
+        "p95": 2.136,
+        "p99": 3.982,
+        "max": 4.571,
+        "media": 1.2
+      },
+      "por_ruta": {
+        "catalogo": {
+          "n": 34,
+          "p50": 0.565,
+          "p95": 0.849,
+          "p99": 2.839,
+          "max": 2.839,
+          "media": 0.666
+        },
+        "disponibilidad": {
+          "n": 67,
+          "p50": 1.128,
+          "p95": 3.202,
+          "p99": 3.673,
+          "max": 3.679,
+          "media": 1.283
+        },
+        "clientes-perfil": {
+          "n": 33,
+          "p50": 0.549,
+          "p95": 0.91,
+          "p99": 0.95,
+          "max": 0.95,
+          "media": 0.589
+        },
+        "cotizaciones-buscar": {
+          "n": 33,
+          "p50": 1.848,
+          "p95": 3.982,
+          "p99": 4.571,
+          "max": 4.571,
+          "media": 2.057
+        },
+        "cotizaciones": {
+          "n": 33,
+          "p50": 1.188,
+          "p95": 1.61,
+          "p99": 3.741,
+          "max": 3.741,
+          "media": 1.334
+        }
+      }
+    },
+    "20": {
+      "solicitudes": 200,
+      "por_segundo": 6.1,
+      "errores": 0,
+      "latencia": {
+        "n": 200,
+        "p50": 2.948,
+        "p95": 6.183,
+        "p99": 6.839,
+        "max": 7.329,
+        "media": 3.18
+      },
+      "por_ruta": {
+        "catalogo": {
+          "n": 34,
+          "p50": 1.555,
+          "p95": 3.307,
+          "p99": 3.8,
+          "max": 3.8,
+          "media": 1.79
+        },
+        "disponibilidad": {
+          "n": 67,
+          "p50": 3.298,
+          "p95": 4.958,
+          "p99": 5.121,
+          "max": 5.615,
+          "media": 3.395
+        },
+        "clientes-perfil": {
+          "n": 33,
+          "p50": 1.547,
+          "p95": 2.734,
+          "p99": 3.742,
+          "max": 3.742,
+          "media": 1.721
+        },
+        "cotizaciones-buscar": {
+          "n": 33,
+          "p50": 5.044,
+          "p95": 6.839,
+          "p99": 7.329,
+          "max": 7.329,
+          "media": 5.291
+        },
+        "cotizaciones": {
+          "n": 33,
+          "p50": 3.246,
+          "p95": 5.03,
+          "p99": 5.071,
+          "max": 5.071,
+          "media": 3.522
+        }
+      }
+    }
+  },
+  "agente": {
+    "preguntas": 6,
+    "fallos": 0,
+    "latencia": {
+      "n": 6,
+      "p50": 19.514,
+      "p95": 35.761,
+      "p99": 35.761,
+      "max": 35.761,
+      "media": 22.872
+    },
+    "muestras": [
+      {
+        "pregunta": "Busca subwoofers Pioneer",
+        "segundos": 35.8,
+        "ok": true,
+        "respuesta": "- PIONEER TS-A3000LS4 SUBWOOFER DELG 12\" (SKU: TS-A3000LS4) - S/ 540.00\n- PIONEER TS-W312D4 SUBWOOFER 12\" 1600W (SKU: TS-W312D4) - S/ 360.00"
+      },
+      {
+        "pregunta": "¿Cuánto stock disponible hay del TS-A3000LS4?",
+        "segundos": 17.9,
+        "ok": true,
+        "respuesta": "Hay 47 unidades disponibles (47 físicas y 0 reservadas) del PIONEER TS-A3000LS4 SUBWOOFER DELG 12\" en TIENDA-DEMO."
+      },
+      {
+        "pregunta": "¿Quién es Lucía Chávez y qué le puedo ofrecer?",
+        "segundos": 20.1,
+        "ok": true,
+        "respuesta": "Lucía Milagros Chávez Cárdenas es un cliente Frecuente (3 compras en 6 meses). Sus categorías favoritas son Tweeters, Medios y Parlantes, y Cables y Conexiones.\n\nLe puedes ofrecer complementos de Amplificadores, como:\n- "
+      },
+      {
+        "pregunta": "¿Qué cotizaciones tiene José Luis Quispe?",
+        "segundos": 19.5,
+        "ok": true,
+        "respuesta": "- COT-DEMO-003 (S00056): 6 autorradios RAD-7BT y 1 kit de instalación, versión 2 en borrador (S/ 2 578.00).\n- COT-DEMO-004 (S00023): 5 autorradios RAD-7BT con 10 % de descuento, versión 3 enviada al cliente (S/ 1 800.00)"
+      },
+      {
+        "pregunta": "Analiza el descuento de la S00005 paso a paso.",
+        "segundos": 15.0,
+        "ok": true,
+        "respuesta": "Análisis de descuento · S00005 (versión 1, número anterior S00005, actual S00056)\n1. Cotización: 6 × [RAD-7BT] Autoradio Bluetooth 7 (genérico) (con 3 % de descuento); 1 × [SSK4ANL] KIT DE INSTALACIÓN PARA AMPLIFICADOR C"
+      },
+      {
+        "pregunta": "¿Hay stock de pantallas Android de 9 pulgadas?",
+        "segundos": 28.9,
+        "ok": true,
+        "respuesta": "Sí hay stock de pantallas Android de 9 pulgadas. Estas son las opciones disponibles en tienda:\n\n- Pantalla Android 4+64GB 8 Núcleos con Chip (MS200-9): 41 unidades disponibles a S/ 490.00\n- Pantalla Multimedia Android 9 "
+      }
+    ]
+  }
+}

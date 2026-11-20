@@ -8,3 +8,6 @@ from . import demo_presentation
 from . import quotation_status
 from . import discount_policy
 from . import canal_cotizaciones
+from . import propuestas
+from . import precedentes
+from . import rendimiento

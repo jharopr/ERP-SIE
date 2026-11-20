@@ -135,3 +135,23 @@ def test_bitacora_por_cotizacion_incluye_aceptacion_sin_correlacion(entorno, cas
     assert any(e['code'] == 'VALIDADA' for e in events)
     headers['X-MYS-Context'] = firma(c, actor_id='VEN-OTRO')
     assert client.get('/bitacora', params={'quotation_id': payload['quotation_id']}, headers=headers).status_code == 403
+
+
+def test_contexto_concurrente_no_pierde_oportunidades(entorno):
+    """Regresión de la prueba de carga: varias sesiones del mismo vendedor registrando oportunidades a la vez
+    no deben pisarse la lista (con WAL, leer-y-escribir sin BEGIN IMMEDIATE perdía oportunidades)."""
+    from concurrent.futures import ThreadPoolExecutor
+    c = config(entorno)
+    client = TestClient(crear_app(c, entorno.odoo, entorno.reloj))
+    headers = {'Authorization': 'Bearer privado-odoo', 'X-MYS-Context': firma(c)}
+    nuevas = [f'OPP-CONC-{i:02d}' for i in range(24)]
+
+    def registrar(opp):
+        return client.post('/integracion/contexto', headers=headers, json={
+            'opportunity_id': opp, 'customer_id': 'CLI-DEMO-001', 'seller_uid': 6, 'identidad_revisada': True}).status_code
+
+    with ThreadPoolExecutor(max_workers=12) as pool:
+        assert set(pool.map(registrar, nuevas)) == {200}
+    from app.repositorio import Repositorio
+    registradas = Repositorio(c.database).actores()['VEN-DEMO-01']['opportunities']
+    assert set(nuevas) <= set(registradas)

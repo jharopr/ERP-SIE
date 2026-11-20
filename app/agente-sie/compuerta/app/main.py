@@ -423,7 +423,7 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
             senales = repo.senales_de(datos.request_id)
             signal_id = senales[0]["signal_id"] if senales else None
         ahora = reloj()
-        with repo.conexion() as db:
+        with repo.conexion(exclusiva=True) as db:
             n = db.execute("SELECT COUNT(*) FROM escalamientos").fetchone()[0]
             escalation_id = f"ESC-PC3-{n + 1:03d}"
             db.execute("INSERT INTO escalamientos(escalation_id,company_id,tipo,request_id,correlation_id,quotation_id,"
@@ -555,6 +555,10 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
     registrar_catalogo(app, exigir, fuente, huella_agente)
     from .lenguaje_natural import registrar_lenguaje_natural
     registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_senales, huella_agente)
+    from .aprendizaje import registrar_aprendizaje
+    aprendizaje = registrar_aprendizaje(app, config, repo, exigir, fuente, reloj)
+    from .propuestas import registrar_propuestas
+    registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj, aprendizaje)
     return app
 
 

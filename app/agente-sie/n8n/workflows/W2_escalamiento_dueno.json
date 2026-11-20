@@ -82,7 +82,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const e = $input.first().json;\nif (!e.escalation_id) {\n  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n}\nconst enlace = `http://localhost:5678/form/decision-dueno?escalation_id=${e.escalation_id}`;\nreturn [{ json: {\n  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlace_formulario_dueno: enlace,\n  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n} }];"
+        "jsCode": "const e = $input.first().json;\nif (!e.escalation_id) {\n  return [{ json: { estado: 'NO_ESCALADO', motivo: e.detail || e, siguiente_paso: 'Revisar la solicitud; no se notificó al dueño.' } }];\n}\nconst enlace = `http://localhost:5679/form/decision-dueno?escalation_id=${e.escalation_id}`;\nreturn [{ json: {\n  estado: 'ESPERANDO_DECISION_DEL_DUENO', escalation_id: e.escalation_id, tipo: e.tipo,\n  destinatario: e.destinatario, signal_id: e.signal_id, aprobacion_aplicaria_a_version: e.version_aprobacion,\n  total_verificado: e.total, plazo_hasta: e.plazo_hasta, enlace_formulario_dueno: enlace,\n  nota: 'Si no hay respuesta en 10 minutos: sin decisión, la oportunidad queda en seguimiento.'\n} }];"
       },
       "id": "af9576d8-700d-5a53-976c-414ac05e03ee",
       "name": "Respuesta al agente",

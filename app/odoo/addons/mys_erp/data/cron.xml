@@ -9,4 +9,10 @@
         <field name="interval_type">days</field>
         <field name="active" eval="True"/>
     </record>
+
+    <!-- Puntaje predictivo de leads: se reconstruye cada noche en lugar de sumar en cada venta
+         (evita bloqueos entre vendedores; ver models/rendimiento.py). -->
+    <record id="crm.website_crm_score_cron" model="ir.cron">
+        <field name="active" eval="True"/>
+    </record>
 </odoo>

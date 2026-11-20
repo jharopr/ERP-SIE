@@ -61,6 +61,7 @@ def usuarios(odoo):
     seller = odoo.buscar('res.users', [('login', '=', E.VENDEDOR_LOGIN)])[0]
     home = odoo.ref('mys_erp.action_workspace')
     odoo.x('res.users', 'write', [seller], {'password': os.environ['ODOO_SELLER_PASSWORD'],
+           'email': 'vendedor01@mys-demo.local',
            group_field: [(4, odoo.ref('mys_erp.group_mys_seller'))], 'action_id': home})
     owner_groups = [odoo.ref(g) for g in ['base.group_user', 'sales_team.group_sale_manager',
                                          'stock.group_stock_manager', 'purchase.group_purchase_manager',

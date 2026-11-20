@@ -33,6 +33,7 @@ CRED = {
     "ventas": {"id": "cmpVentasAgSIE01", "name": "Compuerta VENTAS"},
     "gerencia": {"id": "cmpGerenciaSIE01", "name": "Compuerta GERENCIA"},
     "gemini": {"id": "geminiAgenteSIE1", "name": "Gemini (Agente SIE)"},
+    "claude": {"id": "claudeAgenteSIE1", "name": "Claude (Agente SIE)"},
     "form_dueno": {"id": "mysFormDueno01", "name": "Acceso dueño MYS"},
     "form_ventas": {"id": "mysFormVentas01", "name": "Acceso vendedor MYS"},
     "agente": {"id": "mysAgenteBridge1", "name": "Compuerta AGENTE con contexto Odoo"},
@@ -132,6 +133,14 @@ def w1():
         herramienta_http("validar_cotizacion", "Valida una cotización aceptada sin pedir códigos: identifica la versión vigente, la aceptación y arma la solicitud I03 (mismos identificadores que el botón Evaluar de Odoo). Si hay varias coincidencias devuelve opciones para preguntar al vendedor.",
                          "POST", f"={COMPUERTA}/cotizaciones-validar", [180, y + 200], pv,
                          "={ \"cotizacion\": \"{{ " + ia('cotizacion', 'Número de Odoo (S000...), nombre del cliente o código COT- de la cotización') + " }}\" }"),
+        herramienta_http("consultar_precedentes", "Precedentes reales del gerente en casos parecidos: cuántos descuentos aprobó o rechazó con un porcentaje similar y para el mismo nivel de cliente, descuento promedio aprobado y motivos. Es contexto para decidir, no autoriza nada.",
+                         "GET", f"={COMPUERTA}/aprendizaje/precedentes?tipo=DESCUENTO&descuento={{{{ {ia('descuento', 'Porcentaje de descuento pedido (número)', 'number')} }}}}&cliente={{{{ encodeURIComponent({ia('cliente', 'Nombre o código del cliente')}) }}}}",
+                         [720, y + 200], pv),
+        herramienta_http("proponer_cambio_cotizacion", "Propone cambios a una cotización (cantidad, descuento, agregar o quitar productos) cuando el vendedor lo pide. NO modifica nada: registra una propuesta con vista previa (totales y si algún descuento pasa el tope del 5 por ciento). El vendedor la aplica en Odoo con el botón Aplicar como nueva versión.",
+                         "POST", f"={COMPUERTA}/propuestas", [540, y + 200], pv,
+                         "={ \"cotizacion\": {{ JSON.stringify(" + ia('cotizacion', 'Número de Odoo (S000...), nombre del cliente o código COT- de la cotización a cambiar') + ") }}, "
+                         "\"cambios\": {{ JSON.stringify(" + ia('cambios', 'Lista JSON de cambios, por ejemplo [{"producto": "RAD-7BT", "descuento": 5}, {"producto": "kit de instalacion", "cantidad": 2}]. Cada cambio tiene producto (SKU o nombre) y cantidad y/o descuento; accion quitar para eliminar una línea') + ") }}, "
+                         "\"motivo\": {{ JSON.stringify(" + ia('motivo', 'Motivo breve del cambio dicho por el vendedor, sin datos personales') + ") }} }"),
     ]
     escalar = nodo("escalar_al_dueno", "@n8n/n8n-nodes-langchain.toolWorkflow", 2, [1440, y], {
         "name": "escalar_al_dueno",
@@ -317,7 +326,7 @@ def w4():
         nodo('Contexto Odoo', 'n8n-nodes-base.code', 2, [200, -200], {'jsCode':
              "const b=$input.first().json.body; if (!b || typeof b.chatInput !== 'string' || !b.mys_context || !b.sessionId) throw new Error('Contexto Odoo requerido'); return [{json:{chatInput:b.chatInput,sessionId:b.sessionId,mys_context:b.mys_context}}];"}),
         nodo('Responder a Odoo', 'n8n-nodes-base.respondToWebhook', 1.4, [700, -200],
-             {'respondWith': 'json', 'responseBody': "={{ JSON.stringify($json.output ? {ok:true,output:$json.output} : {ok:false,code: /429|quota|too many|many requests/i.test(JSON.stringify($json)) ? 'CUOTA_AGOTADA' : /api.?key|401|403|unauthenticated/i.test(JSON.stringify($json)) ? 'API_KEY_RECHAZADA' : 'MODELO_NO_DISPONIBLE'}) }}", 'options': {}}),
+             {'respondWith': 'json', 'responseBody': "={{ JSON.stringify($json.output ? {ok:true,output:$json.output} : {ok:false,code: /429|quota|too many|many requests|rate_limit/i.test(JSON.stringify($json)) ? 'CUOTA_AGOTADA' : /api.?key|401|403|unauthenticated|authentication_error|permission_error/i.test(JSON.stringify($json)) ? 'API_KEY_RECHAZADA' : 'MODELO_NO_DISPONIBLE'}) }}", 'options': {}}),
     ]
     connections = {k: v for k, v in old['connections'].items() if k != 'Chat del vendedor'}
     connections.update({'Entrada Odoo': main_('Contexto Odoo'), 'Contexto Odoo': main_('Agente SIE'),
@@ -331,7 +340,7 @@ def w5():
     nodes = [
         nodo('Error del chat', 'n8n-nodes-base.errorTrigger', 1, [0, 0], {}),
         nodo('Clasificar sin secretos', 'n8n-nodes-base.code', 2, [240, 0], {'jsCode':
-             "const e=JSON.stringify($input.first().json.execution?.error || $input.first().json); const code=/429|quota|too many|many requests/i.test(e)?'CUOTA_AGOTADA':/api.?key|401|403|unauthenticated/i.test(e)?'API_KEY_RECHAZADA':'MODELO_NO_DISPONIBLE'; return [{json:{code}}];"}),
+             "const e=JSON.stringify($input.first().json.execution?.error || $input.first().json); const code=/429|quota|too many|many requests|rate_limit/i.test(e)?'CUOTA_AGOTADA':/api.?key|401|403|unauthenticated|authentication_error|permission_error/i.test(e)?'API_KEY_RECHAZADA':'MODELO_NO_DISPONIBLE'; return [{json:{code}}];"}),
         nodo('Actualizar estado en Odoo', 'n8n-nodes-base.httpRequest', 4.2, [480, 0], {
              'method':'POST', 'url':'http://odoo:8069/mys/agent/provider-error',
              'authentication':'genericCredentialType', 'genericAuthType':'httpHeaderAuth',

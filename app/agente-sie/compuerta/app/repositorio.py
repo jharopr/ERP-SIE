@@ -88,12 +88,21 @@ class Repositorio:
     def __init__(self, database: str):
         self.database = database
         with self.conexion() as db:
+            # WAL: las lecturas no bloquean a las escrituras con varios vendedores a la vez.
+            # Es propiedad del archivo, así que también la usa la conexión del motor.
+            db.execute("PRAGMA journal_mode=WAL")
             db.executescript(DDL)
 
     @contextmanager
-    def conexion(self):
+    def conexion(self, exclusiva: bool = False):
+        """exclusiva=True: toma el candado de escritura ANTES de leer (BEGIN IMMEDIATE). Obligatorio para
+        «leer y luego escribir» (contadores ESC-/PRO-, listas del actor): con WAL las lecturas no bloquean
+        y dos solicitudes simultáneas pisarían el cambio de la otra."""
         db = sqlite3.connect(self.database, timeout=10)
         db.row_factory = sqlite3.Row
+        db.execute("PRAGMA synchronous=NORMAL")   # seguro con WAL; evita un fsync por transacción
+        if exclusiva:
+            db.execute("BEGIN IMMEDIATE")
         try:
             yield db
             db.commit()

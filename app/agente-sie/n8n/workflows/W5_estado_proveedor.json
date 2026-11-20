@@ -15,7 +15,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const e=JSON.stringify($input.first().json.execution?.error || $input.first().json); const code=/429|quota|too many|many requests/i.test(e)?'CUOTA_AGOTADA':/api.?key|401|403|unauthenticated/i.test(e)?'API_KEY_RECHAZADA':'MODELO_NO_DISPONIBLE'; return [{json:{code}}];"
+        "jsCode": "const e=JSON.stringify($input.first().json.execution?.error || $input.first().json); const code=/429|quota|too many|many requests|rate_limit/i.test(e)?'CUOTA_AGOTADA':/api.?key|401|403|unauthenticated|authentication_error|permission_error/i.test(e)?'API_KEY_RECHAZADA':'MODELO_NO_DISPONIBLE'; return [{json:{code}}];"
       },
       "id": "f92256ea-5706-5915-89e6-86fe06fe7a18",
       "name": "Clasificar sin secretos",

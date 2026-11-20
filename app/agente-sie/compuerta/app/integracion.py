@@ -27,7 +27,7 @@ def registrar_integracion(app, config, repo, exigir, reloj):
     def contexto(datos: ContextoComercial, quien=Depends(exigir('VENTAS'))):
         if not quien.odoo_uid or quien.actor_type != 'HUMANO' or datos.seller_uid != quien.odoo_uid:
             raise HTTPException(403, 'Solo Odoo puede registrar el contexto del vendedor autenticado.')
-        with repo.conexion() as db:
+        with repo.conexion(exclusiva=True) as db:
             actual = db.execute('SELECT opportunities_json FROM actores WHERE actor_id=?', (quien.actor_id,)).fetchone()
             opps = set(json.loads(actual[0])) if actual else set()
             opps.add(datos.opportunity_id)

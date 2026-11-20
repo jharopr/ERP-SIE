@@ -11,18 +11,27 @@ from werkzeug.exceptions import Forbidden, BadRequest
 
 _AGENT_CACHE = {}
 _PROVIDER_MESSAGES = {
-    'CUOTA_AGOTADA': 'Sin cuota: Gemini agotó el límite de generación de la cuenta. La clave es válida. '
-                    'Espere a que el proveedor restablezca la cuota; las reglas y módulos de Odoo siguen disponibles.',
-    'API_KEY_RECHAZADA': 'Gemini rechazó la API key o sus permisos. Actualice GEMINI_API_KEY en app/.env.',
-    'MODELO_NO_DISPONIBLE': 'Gemini no pudo generar la respuesta. Revise el modelo y su disponibilidad.'}
+    'CUOTA_AGOTADA': 'Sin cuota: el proveedor del modelo ({p}) agotó el límite de la cuenta. La clave es válida. '
+                    'Reintente más tarde; las reglas y módulos de Odoo siguen disponibles.',
+    'API_KEY_RECHAZADA': '{p} rechazó la API key o sus permisos. Actualice la clave en app/.env.',
+    'MODELO_NO_DISPONIBLE': '{p} no pudo generar la respuesta. Revise el modelo y su disponibilidad.'}
+
+
+def _provider():
+    """(nombre visible, clave, modelo) del proveedor configurado con LLM_PROVIDER."""
+    if os.environ.get('LLM_PROVIDER', 'gemini').strip().lower() == 'anthropic':
+        return 'Claude', os.environ.get('ANTHROPIC_API_KEY', '').strip(), os.environ.get('ANTHROPIC_MODEL', 'claude-haiku-5-5')
+    return 'Gemini', os.environ.get('GEMINI_API_KEY', '').strip(), os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash-lite')
 
 
 def _provider_failure(code):
-    key = os.environ.get('GEMINI_API_KEY', '').strip()
-    model = os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash-lite')
-    failure = {'configured': bool(key), 'enabled': False, 'model': model, 'code': code, 'message': _PROVIDER_MESSAGES[code]}
+    name, key, model = _provider()
+    failure = {'configured': bool(key), 'enabled': False, 'model': model, 'code': code,
+               'message': _PROVIDER_MESSAGES[code].format(p=name)}
     cache_key = hashlib.sha256((key + model).encode()).hexdigest()
-    _AGENT_CACHE[cache_key] = (time.monotonic() + (3600 if code == 'CUOTA_AGOTADA' else 60), failure)
+    # La cuota diaria de Gemini dura horas; el límite por minuto de Claude se recupera en segundos.
+    ttl = 3600 if code == 'CUOTA_AGOTADA' and name == 'Gemini' else 60
+    _AGENT_CACHE[cache_key] = (time.monotonic() + ttl, failure)
     return failure
 
 
@@ -47,16 +56,20 @@ class Sistema(http.Controller):
                 'agent': self._agent_status()}
 
     def _agent_status(self):
-        key = os.environ.get('GEMINI_API_KEY', '').strip()
-        model = os.environ.get('GEMINI_MODEL', 'models/gemini-3.5-flash-lite')
+        name, key, model = _provider()
         result = {'configured': bool(key), 'enabled': False, 'model': model, 'code': 'SIN_API_KEY',
-                  'message': 'Deshabilitado: falta GEMINI_API_KEY en app/.env.'}
+                  'message': 'Deshabilitado: falta %s en app/.env.' % ('ANTHROPIC_API_KEY' if name == 'Claude' else 'GEMINI_API_KEY')}
         if not key:
             return result
         cache_key = hashlib.sha256((key + model).encode()).hexdigest()
         cached = _AGENT_CACHE.get(cache_key)
         if cached and cached[0] > time.monotonic():
             return cached[1]
+        if name == 'Claude':
+            # Sin sondeo previo: si la clave o la cuota fallan, n8n lo informa por /mys/agent/provider-error
+            # y este estado se actualiza solo.
+            result.update(enabled=True, code='HABILITADO', message='Agente disponible (Claude, %s).' % model)
+            return result
         try:
             response = requests.get('https://generativelanguage.googleapis.com/v1beta/models',
                                     headers={'x-goog-api-key': key}, timeout=8)

@@ -1,0 +1,105 @@
+{
+  "fecha": "2026-11-20T14:54:15",
+  "etiqueta": "estres8_corregido",
+  "flujo": {
+    "clientes": 80,
+    "concurrencia": 8,
+    "segundos_totales": 162.4,
+    "clientes_por_minuto": 29.6,
+    "aciertos": 80,
+    "errores": 0,
+    "por_escenario": {
+      "sin_descuento": {
+        "VALIDADA": 31
+      },
+      "volumen_5": {
+        "VALIDADA": 23
+      },
+      "descuento_alto": {
+        "VALIDADA": 14
+      },
+      "falta_stock": {
+        "DISPONIBILIDAD_PARCIAL": 4
+      },
+      "descuento_sin_evidencia": {
+        "DEPENDENCIA_NO_DISPONIBLE": 8
+      }
+    },
+    "pasos": {
+      "login_vendedor": {
+        "n": 80,
+        "p50": 2.907,
+        "p95": 5.157,
+        "p99": 5.64,
+        "max": 5.666,
+        "media": 3.096
+      },
+      "crear_cotizacion": {
+        "n": 80,
+        "p50": 0.637,
+        "p95": 4.453,
+        "p99": 4.506,
+        "max": 4.541,
+        "media": 0.925
+      },
+      "enviar": {
+        "n": 94,
+        "p50": 0.364,
+        "p95": 1.633,
+        "p99": 2.143,
+        "max": 3.984,
+        "media": 0.553
+      },
+      "aceptacion": {
+        "n": 94,
+        "p50": 4.42,
+        "p95": 7.589,
+        "p99": 8.31,
+        "max": 8.508,
+        "media": 4.724
+      },
+      "evaluar": {
+        "n": 94,
+        "p50": 2.613,
+        "p95": 5.154,
+        "p99": 5.612,
+        "max": 6.23,
+        "media": 2.851
+      },
+      "pedir_decision": {
+        "n": 18,
+        "p50": 2.768,
+        "p95": 3.893,
+        "p99": 4.439,
+        "max": 4.439,
+        "media": 2.843
+      },
+      "login_gerente": {
+        "n": 18,
+        "p50": 2.952,
+        "p95": 3.546,
+        "p99": 5.403,
+        "max": 5.403,
+        "media": 3.114
+      },
+      "decision_gerente": {
+        "n": 18,
+        "p50": 3.52,
+        "p95": 5.706,
+        "p99": 5.823,
+        "max": 5.823,
+        "media": 3.444
+      }
+    },
+    "por_cliente": {
+      "n": 80,
+      "p50": 12.1,
+      "p95": 34.09,
+      "p99": 36.88,
+      "max": 37.8,
+      "media": 15.889
+    },
+    "errores_detalle": [],
+    "fallos_de_regla": []
+  }
+}

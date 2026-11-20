@@ -1,0 +1,144 @@
+{
+  "fecha": "2026-11-20T13:55:51",
+  "etiqueta": "validacion",
+  "flujo": {
+    "clientes": 6,
+    "concurrencia": 2,
+    "segundos_totales": 37.3,
+    "clientes_por_minuto": 9.6,
+    "aciertos": 2,
+    "errores": 0,
+    "por_escenario": {
+      "sin_descuento": {
+        "VALIDADA": 3
+      },
+      "volumen_5": {
+        "VALIDADA": 1
+      },
+      "descuento_alto": {
+        "VALIDADA": 1
+      },
+      "falta_stock": {},
+      "descuento_sin_evidencia": {
+        "DEPENDENCIA_NO_DISPONIBLE": 1
+      }
+    },
+    "pasos": {
+      "login_vendedor": {
+        "n": 6,
+        "p50": 4.243,
+        "p95": 4.903,
+        "p99": 4.903,
+        "max": 4.903,
+        "media": 4.516
+      },
+      "crear_cotizacion": {
+        "n": 6,
+        "p50": 0.378,
+        "p95": 0.864,
+        "p99": 0.864,
+        "max": 0.864,
+        "media": 0.511
+      },
+      "enviar": {
+        "n": 7,
+        "p50": 0.202,
+        "p95": 2.325,
+        "p99": 2.325,
+        "max": 2.325,
+        "media": 0.487
+      },
+      "aceptacion": {
+        "n": 7,
+        "p50": 1.193,
+        "p95": 1.987,
+        "p99": 1.987,
+        "max": 1.987,
+        "media": 1.392
+      },
+      "evaluar": {
+        "n": 7,
+        "p50": 1.261,
+        "p95": 3.204,
+        "p99": 3.204,
+        "max": 3.204,
+        "media": 1.477
+      },
+      "pedir_decision": {
+        "n": 1,
+        "p50": 0.891,
+        "p95": 0.891,
+        "p99": 0.891,
+        "max": 0.891,
+        "media": 0.891
+      },
+      "login_gerente": {
+        "n": 1,
+        "p50": 4.172,
+        "p95": 4.172,
+        "p99": 4.172,
+        "max": 4.172,
+        "media": 4.172
+      },
+      "decision_gerente": {
+        "n": 1,
+        "p50": 1.536,
+        "p95": 1.536,
+        "p99": 1.536,
+        "max": 1.536,
+        "media": 1.536
+      }
+    },
+    "por_cliente": {
+      "n": 6,
+      "p50": 7.48,
+      "p95": 18.63,
+      "p99": 18.63,
+      "max": 18.63,
+      "media": 10.087
+    },
+    "errores_detalle": [],
+    "fallos_de_regla": [
+      {
+        "ref": "CARGA-135556-001",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "VALIDADA",
+        "estado": "ACEPTADA",
+        "acierto": false,
+        "segundos": 9.14
+      },
+      {
+        "ref": "CARGA-135556-002",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "VALIDADA",
+        "estado": "ACEPTADA",
+        "acierto": false,
+        "segundos": 11.2
+      },
+      {
+        "ref": "CARGA-135556-003",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "VALIDADA",
+        "estado": "ACEPTADA",
+        "acierto": false,
+        "segundos": 7.48
+      },
+      {
+        "ref": "CARGA-135556-004",
+        "escenario": "volumen_5",
+        "pasos": [],
+        "error": null,
+        "codigo": "VALIDADA",
+        "estado": "ACEPTADA",
+        "acierto": false,
+        "segundos": 7.48
+      }
+    ]
+  }
+}
