@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="930" viewBox="0 0 1660 930" role="img" aria-label="Figura 2  Abastecimiento internacional AS IS">
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#244b72"/></marker><marker id="info" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8" fill="none" stroke="#087f8c" stroke-width="1.5"/></marker><marker id="messageStart" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><circle cx="4" cy="4" r="2.5" fill="white" stroke="#087f8c" stroke-width="1"/></marker><marker id="money" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#637382"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="42" y="48.0" font-family="Arial, sans-serif" font-size="30" fill="#244b72" text-anchor="start">Figura 2  Abastecimiento internacional AS IS</text>
+<text x="42" y="83.0" font-family="Arial, sans-serif" font-size="20" fill="#637382" text-anchor="start">Reconstrucción analítica de la práctica declarada; no acredita un procedimiento formal vigente.</text>
+<rect x="40" y="150" width="1580" height="270" fill="#f5f8fc" stroke="#9aabbc" stroke-width="1.5"/>
+<rect x="40" y="150" width="82" height="270" fill="#e3edf6" stroke="#9aabbc"/>
+<g transform="translate(88 285.0) rotate(-90)">
+<text x="0" y="7.0" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Gestión familiar</text>
+</g>
+<rect x="40" y="420" width="1580" height="250" fill="white" stroke="#9aabbc" stroke-width="1.5"/>
+<rect x="40" y="420" width="82" height="250" fill="#e3edf6" stroke="#9aabbc"/>
+<g transform="translate(88 545.0) rotate(-90)">
+<text x="0" y="7.0" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Almacenero fijo</text>
+</g>
+<rect x="40" y="735" width="745" height="70" fill="#f2f3f4" stroke="#637382" stroke-width="2"/>
+<text x="412.5" y="777.0" font-family="Arial, sans-serif" font-size="21" fill="#637382" text-anchor="middle">Proveedor internacional · participante externo</text>
+<rect x="845" y="735" width="775" height="70" fill="#f2f3f4" stroke="#637382" stroke-width="2"/>
+<text x="1232.5" y="777.0" font-family="Arial, sans-serif" font-size="21" fill="#637382" text-anchor="middle">Logística de importación · operador no identificado</text>
+<circle cx="169.0" cy="269.0" r="17.0" fill="white" stroke="#244b72" stroke-width="2"/>
+<text x="204.0" y="333.0" font-family="Arial, sans-serif" font-size="19" fill="#244b72" text-anchor="middle">Necesidad de</text>
+<text x="204.0" y="356.4" font-family="Arial, sans-serif" font-size="19" fill="#244b72" text-anchor="middle">abastecer</text>
+<rect x="220" y="225" width="170" height="90" rx="12" fill="#eef4fa" stroke="#244b72" stroke-width="2"/>
+<text x="305.0" y="265.2" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Identificar</text>
+<text x="305.0" y="291.0" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">necesidades</text>
+<rect x="435" y="225" width="185" height="90" rx="12" fill="#eef4fa" stroke="#244b72" stroke-width="2"/>
+<text x="527.5" y="252.3" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Revisar</text>
+<text x="527.5" y="278.1" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">experiencia y</text>
+<text x="527.5" y="303.9" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">registros</text>
+<rect x="665" y="225" width="190" height="90" rx="12" fill="#eef4fa" stroke="#244b72" stroke-width="2"/>
+<text x="760.0" y="252.3" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Considerar</text>
+<text x="760.0" y="278.1" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">proveedor y</text>
+<text x="760.0" y="303.9" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">condiciones</text>
+<path d="M926.0,244 L952,270.0 L926.0,296 L900,270.0 Z" fill="#fff6e8" stroke="#986816" stroke-width="2"/>
+<text x="926.0" y="277.0" font-family="Arial, sans-serif" font-size="29" fill="#986816" text-anchor="middle">×</text>
+<text x="926.0" y="226.0" font-family="Arial, sans-serif" font-size="20" fill="#244b72" text-anchor="middle">¿Comprar?</text>
+<rect x="1010" y="225" width="230" height="100" rx="12" fill="#eef4fa" stroke="#244b72" stroke-width="2"/>
+<text x="1125.0" y="257.3" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Decidir pedido y</text>
+<text x="1125.0" y="283.1" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">coordinar</text>
+<text x="1125.0" y="308.9" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">importación</text>
+<rect x="1118.0" y="308" width="14" height="14" fill="white" stroke="#244b72"/>
+<text x="1125.0" y="320.0" font-family="Arial, sans-serif" font-size="15" fill="#244b72" text-anchor="middle">+</text>
+<rect x="1330" y="480" width="205" height="95" rx="12" fill="#eef4fa" stroke="#244b72" stroke-width="2"/>
+<text x="1432.5" y="509.8" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Recibir</text>
+<text x="1432.5" y="535.6" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">mercadería en</text>
+<text x="1432.5" y="561.4" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Carabayllo</text>
+<circle cx="1579.0" cy="529.0" r="17.0" fill="white" stroke="#244b72" stroke-width="4"/>
+<text x="1579.0" y="573.0" font-family="Arial, sans-serif" font-size="19" fill="#244b72" text-anchor="middle">Recibida</text>
+<rect x="805" y="335" width="190" height="65" rx="12" fill="#eef4fa" stroke="#244b72" stroke-width="2"/>
+<text x="900.0" y="362.7" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">Postergar la</text>
+<text x="900.0" y="388.5" font-family="Arial, sans-serif" font-size="21" fill="#244b72" text-anchor="middle">compra</text>
+<circle cx="1099.0" cy="354.0" r="17.0" fill="white" stroke="#244b72" stroke-width="4"/>
+<text x="1099.0" y="398.0" font-family="Arial, sans-serif" font-size="19" fill="#244b72" text-anchor="middle">Pendiente</text>
+<polyline points="188,269 220,269" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="390,269 435,269" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="620,269 665,269" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="855,269 900,269" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="952,270 1010,270" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="964.7" y="234" width="30.6" height="25" fill="white"/>
+<text x="980" y="254.0" font-family="Arial, sans-serif" font-size="19" fill="#244b72" text-anchor="middle">Sí</text>
+<polyline points="926,296 926,318 900,318 900,335" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<rect x="944.7" y="308" width="30.6" height="25" fill="white"/>
+<text x="960" y="328.0" font-family="Arial, sans-serif" font-size="19" fill="#244b72" text-anchor="middle">No</text>
+<polyline points="995,368 1040,368 1040,354 1080,354" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="1240,272 1280,272 1280,528 1330,528" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<polyline points="1535,528 1560,528" fill="none" stroke="#244b72" stroke-width="2.5" marker-end="url(#arrow)"/>
+<path d="M440,340 H600 L620,360 V398 H440 Z M600,340 V360 H620" fill="#fffdf6" stroke="#637382" stroke-width="1.5"/>
+<text x="530.0" y="365.0" font-family="Arial, sans-serif" font-size="19" fill="#637382" text-anchor="middle">Cuaderno y Excel</text>
+<polyline points="530,340 530,315" fill="none" stroke="#637382" stroke-width="2.5" stroke-dasharray="9 6"/>
+<polyline points="1210,325 1210,700 405,700 405,735" fill="none" stroke="white" stroke-width="6"/>
+<polyline points="1210,325 1210,700 405,700 405,735" fill="none" stroke="#087f8c" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#info)" marker-start="url(#messageStart)"/>
+<rect x="547.0" y="670" width="216.0" height="25" fill="white"/>
+<text x="655" y="690.0" font-family="Arial, sans-serif" font-size="19" fill="#087f8c" text-anchor="middle">Pedido / condiciones</text>
+<polyline points="1450,735 1450,575" fill="none" stroke="white" stroke-width="6"/>
+<polyline points="1450,735 1450,575" fill="none" stroke="#087f8c" stroke-width="2.5" stroke-dasharray="9 6" marker-end="url(#info)" marker-start="url(#messageStart)"/>
+<rect x="1417.75" y="630" width="164.5" height="25" fill="white"/>
+<text x="1500" y="650.0" font-family="Arial, sans-serif" font-size="19" fill="#087f8c" text-anchor="middle">Aviso de arribo</text>
+<text x="42" y="850.0" font-family="Arial, sans-serif" font-size="19" fill="#637382" text-anchor="start">Brecha: no se aportaron plazos completos, cantidades conciliadas ni expediente enlazado de compra–importación–recepción. La decisión sigue siendo humana.</text>
+<text x="42" y="873.4" font-family="Arial, sans-serif" font-size="19" fill="#637382" text-anchor="start">Fuentes S1 y S2; notación BPMN 2.0.2 (OMG).</text>
+</svg>

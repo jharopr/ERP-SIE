@@ -1,0 +1,222 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_02_asis_internacional" targetNamespace="https://github.com/jharopr/ERP-SIE/pc3/benjamin">
+  <bpmn:process id="Process_MYS" name="Figura 2  Abastecimiento internacional AS IS" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_MYS">
+      <bpmn:lane id="Lane_Familia" name="Gestión familiar">
+        <bpmn:flowNodeRef>Inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Identificar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Revisar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Evaluar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Decidir</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Comprar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Postergar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinPendiente</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Almacen" name="Almacenero fijo">
+        <bpmn:flowNodeRef>Recibir</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Fin</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Inicio" name="Necesidad de abastecer">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Identificar" name="Identificar necesidades">
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Revisar" name="Revisar experiencia y registros">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Evaluar" name="Considerar proveedor y condiciones">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Decidir" name="¿Comprar?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="Comprar" name="Decidir pedido y coordinar importación">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+      <bpmn:startEvent id="Comprar_start"/>
+      <bpmn:task id="Comprar_detail" name="Evaluación humana y seguimiento según sección 5B"/>
+      <bpmn:endEvent id="Comprar_end"/>
+      <bpmn:sequenceFlow id="Comprar_f1" sourceRef="Comprar_start" targetRef="Comprar_detail"/>
+      <bpmn:sequenceFlow id="Comprar_f2" sourceRef="Comprar_detail" targetRef="Comprar_end"/>
+    </bpmn:subProcess>
+    <bpmn:task id="Recibir" name="Recibir mercadería en Carabayllo">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Fin" name="Recibida">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Postergar" name="Postergar la compra">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="FinPendiente" name="Pendiente">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Inicio" targetRef="Identificar"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Identificar" targetRef="Revisar"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Revisar" targetRef="Evaluar"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Evaluar" targetRef="Decidir"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Decidir" targetRef="Comprar" name="Sí">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sí</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Decidir" targetRef="Postergar" name="No">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Postergar" targetRef="FinPendiente"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Comprar" targetRef="Recibir"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Recibir" targetRef="Fin"/>
+    <bpmn:dataObject id="Registros_object"/>
+    <bpmn:dataObjectReference id="Registros" name="Cuaderno y Excel" dataObjectRef="Registros_object"/>
+    <bpmn:association id="Assoc_0" sourceRef="Registros" targetRef="Revisar" associationDirection="None"/>
+  </bpmn:process>
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant_MYS" name="Importaciones MYS Hermanos S A C" processRef="Process_MYS"/>
+    <bpmn:participant id="Pool_Proveedor" name="Proveedor internacional · participante externo"/>
+    <bpmn:participant id="Pool_Logistica" name="Logística de importación · operador no identificado"/>
+    <bpmn:messageFlow id="Message_0" sourceRef="Comprar" targetRef="Pool_Proveedor" name="Pedido / condiciones"/>
+    <bpmn:messageFlow id="Message_1" sourceRef="Pool_Logistica" targetRef="Recibir" name="Aviso de arribo"/>
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="Diagram_02_asis_internacional">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="DI_MYS" bpmnElement="Participant_MYS" isHorizontal="true">
+        <dc:Bounds x="40" y="150" width="1580" height="520"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Familia" bpmnElement="Lane_Familia" isHorizontal="true">
+        <dc:Bounds x="40" y="150" width="1580" height="270"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Almacen" bpmnElement="Lane_Almacen" isHorizontal="true">
+        <dc:Bounds x="40" y="420" width="1580" height="250"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Pool_Proveedor" bpmnElement="Pool_Proveedor" isHorizontal="true">
+        <dc:Bounds x="40" y="735" width="745" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Pool_Logistica" bpmnElement="Pool_Logistica" isHorizontal="true">
+        <dc:Bounds x="845" y="735" width="775" height="70"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Inicio" bpmnElement="Inicio">
+        <dc:Bounds x="150" y="250" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="139.0" y="314" width="130" height="46.74"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Identificar" bpmnElement="Identificar">
+        <dc:Bounds x="220" y="225" width="170" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Revisar" bpmnElement="Revisar">
+        <dc:Bounds x="435" y="225" width="185" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Evaluar" bpmnElement="Evaluar">
+        <dc:Bounds x="665" y="225" width="190" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Decidir" bpmnElement="Decidir">
+        <dc:Bounds x="900" y="244" width="52" height="52"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="877.0" y="206.0" width="98" height="24.6"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Comprar" bpmnElement="Comprar" isExpanded="false">
+        <dc:Bounds x="1010" y="225" width="230" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Recibir" bpmnElement="Recibir">
+        <dc:Bounds x="1330" y="480" width="205" height="95"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Fin" bpmnElement="Fin">
+        <dc:Bounds x="1560" y="510" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1501.5" y="554" width="155" height="23.37"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Postergar" bpmnElement="Postergar">
+        <dc:Bounds x="805" y="335" width="190" height="65"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_FinPendiente" bpmnElement="FinPendiente">
+        <dc:Bounds x="1080" y="335" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1021.5" y="379" width="155" height="23.37"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Registros" bpmnElement="Registros">
+        <dc:Bounds x="440" y="340" width="180" height="58"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="446" y="346" width="168" height="46"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DI_Flow_0" bpmnElement="Flow_0">
+        <di:waypoint x="188" y="269"/>
+        <di:waypoint x="220" y="269"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="390" y="269"/>
+        <di:waypoint x="435" y="269"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="620" y="269"/>
+        <di:waypoint x="665" y="269"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="855" y="269"/>
+        <di:waypoint x="900" y="269"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="952" y="270"/>
+        <di:waypoint x="1010" y="270"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="969.7" y="235" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="926" y="296"/>
+        <di:waypoint x="926" y="318"/>
+        <di:waypoint x="900" y="318"/>
+        <di:waypoint x="900" y="335"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="949.7" y="309" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="995" y="368"/>
+        <di:waypoint x="1040" y="368"/>
+        <di:waypoint x="1040" y="354"/>
+        <di:waypoint x="1080" y="354"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="1240" y="272"/>
+        <di:waypoint x="1280" y="272"/>
+        <di:waypoint x="1280" y="528"/>
+        <di:waypoint x="1330" y="528"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="1535" y="528"/>
+        <di:waypoint x="1560" y="528"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Message_0" bpmnElement="Message_0">
+        <di:waypoint x="1210" y="325"/>
+        <di:waypoint x="1210" y="700"/>
+        <di:waypoint x="405" y="700"/>
+        <di:waypoint x="405" y="735"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="552.0" y="671" width="206.0" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Message_1" bpmnElement="Message_1">
+        <di:waypoint x="1450" y="735"/>
+        <di:waypoint x="1450" y="575"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1422.75" y="631" width="154.5" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Assoc_0" bpmnElement="Assoc_0">
+        <di:waypoint x="530" y="340"/>
+        <di:waypoint x="530" y="315"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

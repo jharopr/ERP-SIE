@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_04_tobe_reposicion" targetNamespace="https://github.com/jharopr/ERP-SIE/pc3/benjamin">
+  <bpmn:process id="Process_MYS" name="Figura 4  Reposición TO BE con trazabilidad" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_MYS">
+      <bpmn:lane id="Lane_Tienda" name="Encargado de tienda">
+        <bpmn:flowNodeRef>Inicio</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Solicitar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Referencia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Aclarar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Recibir</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Conforme</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Cerrar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Fin</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Almacen" name="Almacenero fijo">
+        <bpmn:flowNodeRef>Verificar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Hay</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Preparar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Despachar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Diferencia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinDiferencia</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Familia" name="Propietarios">
+        <bpmn:flowNodeRef>Faltante</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Autorizar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Compra</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinCompra</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FinNoCompra</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Inicio" name="Necesidad identificada">
+      <bpmn:outgoing>Flow_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Solicitar" name="Crear solicitud ID, SKU, cantidad y fecha">
+      <bpmn:incoming>Flow_0</bpmn:incoming>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Referencia" name="¿Referencia compatible?">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Aclarar" name="Aclarar referencia y compatibilidad">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Verificar" name="Verificar existencia y saldo por ubicación">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Hay" name="¿Saldo suficiente?">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Preparar" name="Preparar y confirmar referencias / cantidades">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Despachar" name="Registrar salida y tránsito">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Recibir" name="Cotejar y registrar recepción">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Conforme" name="¿Coincide?">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Cerrar" name="Cerrar y actualizar saldos">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="Fin" name="Cerrada">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Diferencia" name="Registrar diferencia y conciliar con tienda">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="FinDiferencia" name="Por conciliar">
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Faltante" name="Registrar saldo no atendido y evaluar compra">
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+      <bpmn:outgoing>Flow_15</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Autorizar" name="¿Autorizar compra?">
+      <bpmn:incoming>Flow_15</bpmn:incoming>
+      <bpmn:outgoing>Flow_16</bpmn:outgoing>
+      <bpmn:outgoing>Flow_18</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="Compra" name="Gestionar compra y seguimiento de recepción">
+      <bpmn:incoming>Flow_16</bpmn:incoming>
+      <bpmn:outgoing>Flow_17</bpmn:outgoing>
+      <bpmn:startEvent id="Compra_start"/>
+      <bpmn:task id="Compra_detail" name="Evaluación humana y seguimiento según sección 5B"/>
+      <bpmn:endEvent id="Compra_end"/>
+      <bpmn:sequenceFlow id="Compra_f1" sourceRef="Compra_start" targetRef="Compra_detail"/>
+      <bpmn:sequenceFlow id="Compra_f2" sourceRef="Compra_detail" targetRef="Compra_end"/>
+    </bpmn:subProcess>
+    <bpmn:endEvent id="FinCompra" name="Necesidad en seguimiento">
+      <bpmn:incoming>Flow_17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="FinNoCompra" name="Sin compra">
+      <bpmn:incoming>Flow_18</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0" sourceRef="Inicio" targetRef="Solicitar"/>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Solicitar" targetRef="Referencia"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Referencia" targetRef="Aclarar" name="No / duda">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No / duda</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="Aclarar" targetRef="Solicitar"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Referencia" targetRef="Verificar" name="Sí">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sí</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Verificar" targetRef="Hay"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Hay" targetRef="Preparar" name="Sí">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sí</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Preparar" targetRef="Despachar"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Despachar" targetRef="Recibir"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Recibir" targetRef="Conforme"/>
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="Conforme" targetRef="Cerrar" name="Sí">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sí</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_11" sourceRef="Cerrar" targetRef="Fin"/>
+    <bpmn:sequenceFlow id="Flow_12" sourceRef="Conforme" targetRef="Diferencia" name="No">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="Diferencia" targetRef="FinDiferencia"/>
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="Hay" targetRef="Faltante" name="No / saldo">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No / saldo</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_15" sourceRef="Faltante" targetRef="Autorizar"/>
+    <bpmn:sequenceFlow id="Flow_16" sourceRef="Autorizar" targetRef="Compra" name="Sí">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">Sí</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_17" sourceRef="Compra" targetRef="FinCompra"/>
+    <bpmn:sequenceFlow id="Flow_18" sourceRef="Autorizar" targetRef="FinNoCompra" name="No">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">No</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:dataObject id="Registro_object"/>
+    <bpmn:dataObjectReference id="Registro" name="ID + movimientos + fechas" dataObjectRef="Registro_object"/>
+    <bpmn:association id="Assoc_0" sourceRef="Registro" targetRef="Despachar" associationDirection="None"/>
+  </bpmn:process>
+  <bpmn:collaboration id="Collaboration">
+    <bpmn:participant id="Participant_MYS" name="Importaciones MYS Hermanos S A C" processRef="Process_MYS"/>
+    <bpmn:participant id="Pool_Transporte" name="Transportista externo · confirmación de recojo y entrega"/>
+    <bpmn:messageFlow id="Message_0" sourceRef="Despachar" targetRef="Pool_Transporte" name="Salida / identificación del traslado"/>
+    <bpmn:messageFlow id="Message_1" sourceRef="Pool_Transporte" targetRef="Recibir" name="Entrega / constancia"/>
+  </bpmn:collaboration>
+  <bpmndi:BPMNDiagram id="Diagram_04_tobe_reposicion">
+    <bpmndi:BPMNPlane id="Plane" bpmnElement="Collaboration">
+      <bpmndi:BPMNShape id="DI_MYS" bpmnElement="Participant_MYS" isHorizontal="true">
+        <dc:Bounds x="40" y="115" width="1720" height="715"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Tienda" bpmnElement="Lane_Tienda" isHorizontal="true">
+        <dc:Bounds x="40" y="115" width="1720" height="240"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Almacen" bpmnElement="Lane_Almacen" isHorizontal="true">
+        <dc:Bounds x="40" y="355" width="1720" height="245"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Lane_Familia" bpmnElement="Lane_Familia" isHorizontal="true">
+        <dc:Bounds x="40" y="600" width="1720" height="230"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Pool_Transporte" bpmnElement="Pool_Transporte" isHorizontal="true">
+        <dc:Bounds x="40" y="885" width="1720" height="65"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Inicio" bpmnElement="Inicio">
+        <dc:Bounds x="145" y="228" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="134.0" y="292" width="130" height="46.74"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Solicitar" bpmnElement="Solicitar">
+        <dc:Bounds x="215" y="205" width="210" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Referencia" bpmnElement="Referencia">
+        <dc:Bounds x="470" y="225" width="52" height="52"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="437.0" y="166" width="118" height="49.2"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Aclarar" bpmnElement="Aclarar">
+        <dc:Bounds x="665" y="205" width="180" height="90"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Verificar" bpmnElement="Verificar">
+        <dc:Bounds x="465" y="400" width="220" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Hay" bpmnElement="Hay">
+        <dc:Bounds x="735" y="424" width="52" height="52"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="667.0" y="386.0" width="188" height="24.6"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Preparar" bpmnElement="Preparar">
+        <dc:Bounds x="845" y="400" width="210" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Despachar" bpmnElement="Despachar">
+        <dc:Bounds x="1105" y="400" width="195" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Recibir" bpmnElement="Recibir">
+        <dc:Bounds x="1330" y="205" width="195" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Conforme" bpmnElement="Conforme">
+        <dc:Bounds x="1570" y="228" width="52" height="52"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1617.0" y="224" width="108" height="24.6"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Cerrar" bpmnElement="Cerrar">
+        <dc:Bounds x="1600" y="125" width="160" height="85"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Fin" bpmnElement="Fin">
+        <dc:Bounds x="1710" y="272" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1651.5" y="316" width="155" height="23.37"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Diferencia" bpmnElement="Diferencia">
+        <dc:Bounds x="1480" y="400" width="240" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_FinDiferencia" bpmnElement="FinDiferencia">
+        <dc:Bounds x="1700" y="525" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1641.5" y="569" width="155" height="23.37"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Faltante" bpmnElement="Faltante">
+        <dc:Bounds x="640" y="650" width="230" height="100"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Autorizar" bpmnElement="Autorizar">
+        <dc:Bounds x="940" y="675" width="52" height="52"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="872.0" y="637.0" width="188" height="24.6"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Compra" bpmnElement="Compra" isExpanded="false">
+        <dc:Bounds x="1080" y="650" width="240" height="110"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_FinCompra" bpmnElement="FinCompra">
+        <dc:Bounds x="1520" y="682" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1461.5" y="726" width="155" height="46.74"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_FinNoCompra" bpmnElement="FinNoCompra">
+        <dc:Bounds x="970" y="765" width="38" height="38"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="911.5" y="809" width="155" height="23.37"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="DI_Registro" bpmnElement="Registro">
+        <dc:Bounds x="930" y="180" width="215" height="65"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="936" y="186" width="203" height="53"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="DI_Flow_0" bpmnElement="Flow_0">
+        <di:waypoint x="183" y="247"/>
+        <di:waypoint x="215" y="247"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="425" y="251"/>
+        <di:waypoint x="470" y="251"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="522" y="251"/>
+        <di:waypoint x="665" y="251"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="543.65" y="217" width="92.7" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="755" y="205"/>
+        <di:waypoint x="755" y="165"/>
+        <di:waypoint x="320" y="165"/>
+        <di:waypoint x="320" y="205"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="496" y="277"/>
+        <di:waypoint x="496" y="375"/>
+        <di:waypoint x="575" y="375"/>
+        <di:waypoint x="575" y="400"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="509.7" y="321" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="685" y="450"/>
+        <di:waypoint x="735" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="787" y="450"/>
+        <di:waypoint x="845" y="450"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="803.7" y="416" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="1055" y="450"/>
+        <di:waypoint x="1105" y="450"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="1300" y="450"/>
+        <di:waypoint x="1315" y="450"/>
+        <di:waypoint x="1315" y="255"/>
+        <di:waypoint x="1330" y="255"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_9" bpmnElement="Flow_9">
+        <di:waypoint x="1525" y="255"/>
+        <di:waypoint x="1570" y="255"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_10" bpmnElement="Flow_10">
+        <di:waypoint x="1596" y="228"/>
+        <di:waypoint x="1596" y="167"/>
+        <di:waypoint x="1600" y="167"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1561.7" y="171" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_11" bpmnElement="Flow_11">
+        <di:waypoint x="1725" y="210"/>
+        <di:waypoint x="1725" y="272"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_12" bpmnElement="Flow_12">
+        <di:waypoint x="1596" y="280"/>
+        <di:waypoint x="1596" y="400"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1609.7" y="322" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_13" bpmnElement="Flow_13">
+        <di:waypoint x="1720" y="450"/>
+        <di:waypoint x="1740" y="450"/>
+        <di:waypoint x="1740" y="544"/>
+        <di:waypoint x="1738" y="544"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_14" bpmnElement="Flow_14">
+        <di:waypoint x="761" y="476"/>
+        <di:waypoint x="761" y="650"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="758.5" y="556" width="103.0" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_15" bpmnElement="Flow_15">
+        <di:waypoint x="870" y="700"/>
+        <di:waypoint x="940" y="700"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_16" bpmnElement="Flow_16">
+        <di:waypoint x="992" y="701"/>
+        <di:waypoint x="1080" y="701"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1019.7" y="666" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_17" bpmnElement="Flow_17">
+        <di:waypoint x="1320" y="701"/>
+        <di:waypoint x="1520" y="701"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Flow_18" bpmnElement="Flow_18">
+        <di:waypoint x="966" y="727"/>
+        <di:waypoint x="966" y="745"/>
+        <di:waypoint x="989" y="745"/>
+        <di:waypoint x="989" y="765"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="999.7" y="736" width="20.6" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Message_0" bpmnElement="Message_0">
+        <di:waypoint x="1200" y="500"/>
+        <di:waypoint x="1200" y="545"/>
+        <di:waypoint x="1340" y="545"/>
+        <di:waypoint x="1340" y="855"/>
+        <di:waypoint x="480" y="855"/>
+        <di:waypoint x="480" y="885"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="524.6" y="827" width="370.8" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Message_1" bpmnElement="Message_1">
+        <di:waypoint x="1415" y="885"/>
+        <di:waypoint x="1415" y="305"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1407.0" y="829" width="206.0" height="25"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DI_Assoc_0" bpmnElement="Assoc_0">
+        <di:waypoint x="1040" y="245"/>
+        <di:waypoint x="1040" y="330"/>
+        <di:waypoint x="1200" y="330"/>
+        <di:waypoint x="1200" y="400"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
