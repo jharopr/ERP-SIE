@@ -132,7 +132,7 @@ class OdooCliente:
     def versiones_cotizacion(self, quotation_id: str) -> list[dict]:
         patron = re.compile(rf"^{re.escape(quotation_id)} v([1-9][0-9]*)$")
         pedidos = self._leer_anidado("sale.order", [("client_order_ref", "=like", f"{quotation_id} v%")], {
-            "client_order_ref": {}, "state": {}, "validity_date": {}, "amount_total": {},
+            "name": {}, "client_order_ref": {}, "state": {}, "validity_date": {}, "amount_total": {},
             "currency_id": {"fields": {"display_name": {}}}, "user_id": {"fields": {}},
             "partner_id": {"fields": {"ref": {}}}, "opportunity_id": {"fields": {"mys_reference": {}}},
             "order_line": self._SPEC_LINEAS})
@@ -142,7 +142,7 @@ class OdooCliente:
         rel = self._rel
         policy_reports = self._politica_descuento([p['id'] for p, _ in pedidos])
         return [{
-            "version": int(m.group(1)), "state": p["state"], "currency": rel(p["currency_id"], "display_name"),
+            "version": int(m.group(1)), "numero_odoo": p["name"], "state": p["state"], "currency": rel(p["currency_id"], "display_name"),
             "validity_date": p["validity_date"] or None,
             "seller_login": None, "seller_odoo_id": rel(p["user_id"]),
             "customer_ref": rel(p["partner_id"], "ref") or None,
@@ -180,6 +180,21 @@ class OdooCliente:
             return []
         filas = self._leer("res.partner", [("id", "in", ids), ("mys_nivel", "!=", False)], self.CAMPOS_PERFIL)
         return filas[:limite]
+
+    def clientes_segmentacion(self, vendedor_uid: int | None = None) -> list[dict]:
+        """Perfiles de toda la cartera (o solo los clientes asignados a un vendedor). Solo lectura."""
+        dominio = [("mys_nivel", "!=", False), ("active", "=", True), ("ref", "not like", "CARGA-%")]
+        if vendedor_uid:
+            dominio.append(("user_id", "=", vendedor_uid))
+        return self._leer("res.partner", dominio, self.CAMPOS_PERFIL + ["user_id"],
+                          contexto={"active_test": True})
+
+    def rotacion(self, dias: int, ubicacion_odoo_id: int | None = None) -> dict:
+        """Totales de venta confirmada y stock por SKU, calculados en Odoo (product.product.mys_rotacion)."""
+        uid = self._uid_actual()
+        return self._call(lambda: self._proxy("/xmlrpc/2/object").execute_kw(
+            self.db, uid, self.password, "product.product", "mys_rotacion", [],
+            {"dias": int(dias), "ubicacion_id": ubicacion_odoo_id or False}))
 
     def buscar_cotizaciones(self, texto: str, limite: int = 5) -> list[dict]:
         """Cotizaciones SIE por número de Odoo (S000…), código COT-…, nombre o código del cliente.

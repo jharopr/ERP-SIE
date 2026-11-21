@@ -66,6 +66,45 @@ class OdooSimulado:
         self._ok()
         return {s: {"active": True, "list_price": E.PRODUCTOS[s]["precio"], "currency": "PEN"} for s in skus if s in E.PRODUCTOS}
 
+    # Cartera y rotación (análisis comercial). user_id 6 = vendedor de la sesión firmada de prueba.
+    CARTERA = [
+        {"name": "Cliente Mayorista", "ref": "CLI-DEMO-002", "user_id": [6, "Vendedor 01"], "mys_nivel": "mayorista",
+         "mys_monto_6m": 5750.0, "mys_compras_6m": 2, "mys_ticket_promedio": 2875.0, "mys_ultima_compra": "2026-11-05",
+         "mys_dias_sin_compra": 8, "mys_inactivo": False, "mys_categorias_top": "Amplificadores, Subwoofers",
+         "mys_sugerencias": "Cables y Conexiones"},
+        {"name": "Cliente Ocasional", "ref": "CLI-DEMO-001", "user_id": [6, "Vendedor 01"], "mys_nivel": "ocasional",
+         "mys_monto_6m": 520.0, "mys_compras_6m": 1, "mys_ticket_promedio": 520.0, "mys_ultima_compra": "2026-08-10",
+         "mys_dias_sin_compra": 102, "mys_inactivo": True, "mys_categorias_top": "Radios y Pantallas",
+         "mys_sugerencias": "Medios y Parlantes, Amplificadores"},
+        {"name": "Cliente Nuevo", "ref": "CLI-DEMO-009", "user_id": [6, "Vendedor 01"], "mys_nivel": "nuevo",
+         "mys_monto_6m": 0.0, "mys_compras_6m": 0, "mys_ticket_promedio": 0.0, "mys_ultima_compra": False,
+         "mys_dias_sin_compra": 0, "mys_inactivo": False, "mys_categorias_top": False, "mys_sugerencias": False},
+        {"name": "Cliente de otro vendedor", "ref": "CLI-OTRO-001", "user_id": [9, "Vendedor 02"], "mys_nivel": "frecuente",
+         "mys_monto_6m": 1800.0, "mys_compras_6m": 3, "mys_ticket_promedio": 600.0, "mys_ultima_compra": "2026-11-01",
+         "mys_dias_sin_compra": 12, "mys_inactivo": False, "mys_categorias_top": "Amplificadores", "mys_sugerencias": False},
+    ]
+
+    def clientes_segmentacion(self, vendedor_uid=None):
+        self._ok()
+        base = {"mys_productos_top": False, "mys_nivel_motivo": "", "mys_unidades_6m": 0, "mys_descuento_promedio": 0,
+                "mys_conversion": 0, "mys_perfil_fecha": False}
+        return [dict(base, **c) for c in self.CARTERA if not vendedor_uid or c["user_id"][0] == vendedor_uid]
+
+    def rotacion(self, dias, ubicacion_odoo_id=None):
+        self._ok()
+        assert ubicacion_odoo_id == UBICACION_ODOO
+
+        def p(sku, nombre, cat, precio, vendidas, dias_sin, disponible, clase, cobertura):
+            return {"sku": sku, "nombre": nombre, "categoria": cat, "unidad": "Unidades", "precio": precio,
+                    "vendidas": vendidas, "pedidos": 1 if vendidas else 0, "ultima_venta": "2026-10-01" if dias_sin else False,
+                    "dias_sin_venta": dias_sin, "stock_fisico": disponible, "reservado": 0.0, "disponible": disponible,
+                    "cobertura_dias": cobertura, "clasificacion": clase}
+        return {"dias": dias, "desde": "2026-08-15", "productos": [
+            p("AMP-1200", "Amplificador 5 canales", "Amplificadores", 1200.0, 0.0, 200, 46.0, "sin_movimiento", False),
+            p("AMP-650", "Amplificador multicanal", "Amplificadores", 650.0, 0.0, False, 22.0, "sin_movimiento", False),
+            p("RAD-7BT", "Autoradio Bluetooth 7", "Radios y Pantallas", 400.0, 30.0, 3, 20.0, "alta", 60.0),
+            p("CAB-4GA", "Cable calibre 4", "Cables y Conexiones", 15.0, 5.0, 10, 0.0, "agotado", 0.0)]}
+
     def stock(self, skus, ubicacion_odoo_id):
         self._ok()
         assert ubicacion_odoo_id == UBICACION_ODOO

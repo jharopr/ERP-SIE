@@ -113,12 +113,13 @@ def registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj
                     return t.upper()
             except DependenciaNoDisponible:
                 pass
-        palabras = [w for w in _norm(t).split() if len(w) > 1]
-        en_cotizacion = [s for s in lineas_actuales if all(w in _norm(f"{s} {nombres.get(s, '')}") for w in palabras)]
-        if len(en_cotizacion) == 1:
+        from .catalogo import coincide, terminos   # mismas reglas de búsqueda (plurales, sinónimos) que /catalogo
+        buscados = terminos(t)
+        en_cotizacion = [s for s in lineas_actuales if coincide(buscados, f"{s} {nombres.get(s, '')}")]
+        if len(en_cotizacion) == 1:   # lo que ya está en la cotización tiene prioridad sobre el catálogo
             return en_cotizacion[0]
         candidatos = en_cotizacion or [p["sku"] for p in catalogo
-                                       if all(w in _norm(f"{p['sku']} {p['nombre']}") for w in palabras)]
+                                       if coincide(buscados, f"{p['sku']} {p['nombre']}")]
         if len(candidatos) == 1:
             return candidatos[0]
         if not candidatos:
@@ -146,6 +147,8 @@ def registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj
             raise HTTPException(503, "Odoo no responde; no se pudo leer la cotización.")
         if not vigente:
             raise HTTPException(404, f"La cotización {quotation_id} no tiene una versión vigente.")
+        if quien.odoo_uid and quien.rol == "VENTAS" and vigente.get("seller_odoo_id") not in (None, quien.odoo_uid):
+            raise HTTPException(403, "Esa cotización pertenece a otro vendedor; solo su vendedor puede proponer cambios.")
 
         lineas = {}  # sku → {cantidad, precio, descuento}
         for l in vigente["lines"]:
@@ -168,11 +171,19 @@ def registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj
             accion = str(c.get("accion") or "").lower()
             cantidad = c.get("cantidad")
             descuento = c.get("descuento")
+            sumar = c.get("sumar")
             try:
                 cantidad = None if cantidad in (None, "") else Decimal(str(cantidad))
                 descuento = None if descuento in (None, "") else Decimal(str(descuento))
+                sumar = None if sumar in (None, "") else Decimal(str(sumar))
             except ArithmeticError:
                 raise HTTPException(422, "Cantidad y descuento deben ser números.")
+            if sumar is not None:   # «agrega 1 más», «quita 2»: relativo a la cantidad actual de la línea
+                if cantidad is not None:
+                    raise HTTPException(422, "Indique la cantidad final o cuánto sumar, no ambas.")
+                cantidad = (lineas[sku]["cantidad"] if sku in lineas else Decimal("0")) + sumar
+                if cantidad < 0:
+                    raise HTTPException(422, f"No se pueden quitar más unidades de {sku} de las que tiene la cotización.")
             if descuento is not None and not Decimal("0") <= descuento <= Decimal("100"):
                 raise HTTPException(422, "El descuento debe estar entre 0 y 100 %.")
             if cantidad is not None and not Decimal("0") <= cantidad <= Decimal("10000"):
@@ -213,9 +224,23 @@ def registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj
             return (v["precio"] * v["cantidad"] * (1 - v["descuento"] / 100)).quantize(CENT, rounding=ROUND_HALF_UP)
 
         tope = Decimal(str(repo.politica().get("max_seller_discount", "5")))
+        def cambio(s, v):
+            a = antes.get(s)
+            if not a:
+                return f"nuevo: {float(v['cantidad']):g} unidad(es)"
+            partes = []
+            if v["cantidad"] != a["cantidad"]:
+                partes.append(f"cantidad {'sube' if v['cantidad'] > a['cantidad'] else 'baja'} de {float(a['cantidad']):g} a {float(v['cantidad']):g}")
+            if v["descuento"] != a["descuento"]:
+                partes.append(f"descuento {'sube' if v['descuento'] > a['descuento'] else 'baja'} de {float(a['descuento']):g} % a {float(v['descuento']):g} %")
+            return "; ".join(partes) or "sin cambio"
+
         detalle = [{"sku": s, "producto": nombres.get(s, ""), "cantidad": float(v["cantidad"]), "precio": dinero(v["precio"]),
                     "descuento": float(v["descuento"]), "subtotal": dinero(subtotal(v)),
-                    "supera_tope": v["descuento"] > tope} for s, v in lineas.items()]
+                    "cambio": cambio(s, v), "supera_tope": v["descuento"] > tope} for s, v in lineas.items()]
+        detalle += [{"sku": s, "producto": nombres.get(s, ""), "cantidad": 0.0, "precio": dinero(a["precio"]),
+                     "descuento": float(a["descuento"]), "subtotal": "0.00", "cambio": f"se quita (tenía {float(a['cantidad']):g})",
+                     "supera_tope": False} for s, a in antes.items() if s not in lineas]
         total_antes = sum((subtotal(v) for v in antes.values()), Decimal("0"))
         total_nuevo = sum((subtotal(v) for v in lineas.values()), Decimal("0"))
         maximo = max((v["descuento"] for v in lineas.values()), default=Decimal("0"))
@@ -237,7 +262,22 @@ def registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj
                                   detalle={"quotation_id": quotation_id, "version": vigente["version"],
                                            "cambios": len(normalizados), "supera_tope": vista["supera_tope"]})
         huella_agente(request, quien, json.dumps(normalizados).encode(), proposal_id)
-        return {"propuesta_id": proposal_id, "estado": "PENDIENTE", "cotizacion": quotation_id,
+        # Texto exacto para el vendedor: el modelo lo repite y no reescribe cifras (evita totales mal copiados).
+        advertencias = [f"Atención: en {l['sku']} la {l['cambio']}; revise que eso sea lo que pidió el cliente."
+                        for l in detalle if " baja de " in l["cambio"] and "cantidad" in l["cambio"]]
+        advertencias += [f"Atención: {l['sku']} {l['cambio']}." for l in detalle if l["cambio"].startswith("se quita")]
+        if vista["supera_tope"]:
+            advertencias.append(f"Un descuento pasa el tope de {float(tope):g} %: al evaluar la nueva versión decidirá el gerente.")
+        sentido = "sube" if total_nuevo > total_antes else "baja" if total_nuevo < total_antes else "no cambia"
+        numero = vigente.get("numero_odoo") or f"{quotation_id} v{vigente['version']}"
+        resumen = "\n".join([f"Propuesta {proposal_id} para {numero}:",
+                             f"- Total actual: S/ {dinero(total_antes)}",
+                             f"- Total propuesto: S/ {dinero(total_nuevo)} (el total {sentido})",
+                             *[f"- {l['sku']}: {l['cambio']}" for l in detalle if l["cambio"] != "sin cambio"],
+                             *[f"- {a}" for a in advertencias],
+                             "La cotización todavía NO cambió: ábrala en Odoo y pulse «Aplicar como nueva versión» o «Descartar»."])
+        return {"resumen_para_el_vendedor": resumen, "advertencias": advertencias,
+                "propuesta_id": proposal_id, "estado": "PENDIENTE", "cotizacion": quotation_id,
                 "version_base": vigente["version"], "cambios": normalizados, "vista_previa": vista,
                 "mensaje": ("Propuesta registrada. Todavía NO cambia la cotización: el vendedor debe abrirla en Odoo y "
                             "pulsar «Aplicar como nueva versión». "

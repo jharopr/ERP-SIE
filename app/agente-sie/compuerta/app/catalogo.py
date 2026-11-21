@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+import re
 import unicodedata
 
 from fastapi import Depends, HTTPException, Query, Request
@@ -14,6 +15,41 @@ def normalizar(value):
 
 
 _CACHE = {}
+
+# Cómo lo dice el vendedor → cómo aparece en el catálogo. Cada término acepta cualquiera de sus formas.
+SINONIMOS = {
+    'gauge': ('gauge', 'calibre', 'ga'), 'awg': ('awg', 'calibre', 'ga'), 'calibre': ('calibre', 'gauge', 'ga'),
+    'amplificador': ('amplificador', 'amp', 'monoblock'), 'parlante': ('parlante', 'medio', 'altavoz', 'speaker'),
+    'radio': ('radio', 'autorradio', 'autoradio'), 'autoradio': ('autoradio', 'autorradio', 'radio'),
+    'autorradio': ('autorradio', 'autoradio', 'radio'), 'pantalla': ('pantalla', 'multimedia', 'android'),
+    'bajo': ('bajo', 'subwoofer'), 'subwoofer': ('subwoofer', 'bajo', 'sub'),
+}
+
+
+def _raiz(palabra):
+    for fin in ('es', 's'):
+        if len(palabra) > 4 and palabra.endswith(fin):
+            return palabra[:-len(fin)]
+    return palabra
+
+
+def terminos(texto):
+    """Palabras buscadas (sin tildes, en singular), cada una con sus sinónimos."""
+    salida = []
+    for w in normalizar(texto or '').replace(',', ' ').split():
+        if (len(w) > 1 or w.isdigit()) and w not in ('de', 'del', 'la', 'el', 'los', 'las', 'para', 'con', 'y'):
+            r = _raiz(w)
+            salida.append(SINONIMOS.get(r, SINONIMOS.get(w, (r,))))
+    return salida
+
+
+def coincide(buscados, texto):
+    """Todas las palabras buscadas aparecen (alguna de sus formas) en el texto."""
+    t = normalizar(texto or '')
+
+    def esta(f):  # un número no debe coincidir dentro de otro («4» no está en «1400w», sí en «4ga»)
+        return re.search(rf'(?<![0-9]){f}(?![0-9])', t) if f.isdigit() else f in t
+    return all(any(esta(f) for f in formas) for formas in buscados)
 
 
 def cargar_catalogo(path=None):
@@ -38,14 +74,10 @@ def registrar_catalogo(app, exigir, fuente, huella_agente=None):
         data = cargar_catalogo()
         if data is None:
             raise HTTPException(503, 'Catálogo no cargado.')
-        # Cada palabra debe aparecer (en cualquier orden); se aceptan plurales: «subwoofers pioneer» → subwoofer + pioneer.
-        def raiz(palabra):
-            for fin in ('es', 's'):
-                if len(palabra) > 4 and palabra.endswith(fin):
-                    return palabra[:-len(fin)]
-            return palabra
-        terminos = [raiz(w) for w in normalizar(q).split() if len(w) > 1]
-        matches = [p for p in data['productos'] if all(t in p['_texto'] for t in terminos)]
+        # Cada palabra debe aparecer (en cualquier orden); se aceptan plurales y sinónimos:
+        # «subwoofers pioneer» → subwoofer + pioneer; «kit 4 gauge» → kit + 4 + (gauge|calibre|ga).
+        buscados = terminos(q)
+        matches = [p for p in data['productos'] if coincide(buscados, p['_texto'])]
         try:
             current = fuente.productos([p['sku'] for p in matches[:limite]])
         except DependenciaNoDisponible:

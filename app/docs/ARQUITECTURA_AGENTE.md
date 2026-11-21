@@ -17,7 +17,7 @@ flowchart TB
   end
   subgraph n8n["n8n · W4 (orquestación del modelo)"]
     LLM[Modelo: Gemini o Claude<br/>LLM_PROVIDER]
-    T[15 herramientas HTTP<br/>solo lectura + proponer + escalar]
+    T[17 herramientas HTTP<br/>solo lectura + análisis + proponer + escalar]
   end
   subgraph C["Compuerta FastAPI · reglas R01–R12"]
     M[Motor determinista<br/>simulador.py intacto]
@@ -53,6 +53,8 @@ El agente **propone** y la persona **decide**. Una propuesta de cambio (`POST /p
 5. El vendedor confirma la venta. Odoo revalida y reserva stock en una sola transacción.
 
 El chat sirve en todos los pasos para consultar (catálogo, stock, perfil, cotizaciones), analizar un descuento con la secuencia fija de 6 pasos, proponer cambios y escalar. Nunca reemplaza un botón de decisión.
+
+También hace **análisis comercial** de solo lectura: rotación de productos, segmentación de la cartera por capacidad de compra y campañas sugeridas a partir de esas cifras. Las reglas están en [ANALISIS_COMERCIAL.md](ANALISIS_COMERCIAL.md).
 
 ## 3. Aprendizaje (sin reentrenar el modelo)
 

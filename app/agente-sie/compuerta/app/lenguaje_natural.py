@@ -26,7 +26,19 @@ class Validar(BaseModel):
     cotizacion: str = Field(min_length=2, max_length=100)
 
 
-def registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_senales, huella_agente):
+def registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_senales, huella_agente, reloj=None):
+    from datetime import datetime
+    from .config import ahora_lima
+    reloj = reloj or ahora_lima
+
+    def situacion(valid_until):
+        """Una aprobación vencida ya no sirve: hace falta una nueva decisión del gerente."""
+        try:
+            vigente = datetime.fromisoformat(valid_until) >= reloj()
+        except (TypeError, ValueError):
+            return "sin fecha de vigencia"
+        return "vigente" if vigente else "VENCIDA: ya no sirve, hace falta una nueva decisión del gerente"
+
     def evaluada(quotation_id, version):
         with repo.conexion() as db:
             fila = db.execute("SELECT request_id FROM requests WHERE company_id=? AND quotation_id=? AND quotation_version=?",
@@ -67,7 +79,8 @@ def registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_
                                        for d in decisiones],
             "aprobaciones_de_descuento": [{"para_version": a["quotation_version"], "numero_odoo": numero.get(a["quotation_version"]),
                                            "estado": a["status"], "total": a["total"], "aprobada": a["approved_at"],
-                                           "vale_hasta": a["valid_until"], "motivo": a["motivo"]} for a in aprobaciones],
+                                           "vale_hasta": a["valid_until"], "situacion_hoy": situacion(a["valid_until"]),
+                                           "motivo": a["motivo"]} for a in aprobaciones],
         }
 
     def familias(texto):

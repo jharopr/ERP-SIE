@@ -554,9 +554,11 @@ def crear_app(config: Config | None = None, fuente=None, reloj=ahora_lima) -> Fa
     from .catalogo import registrar_catalogo
     registrar_catalogo(app, exigir, fuente, huella_agente)
     from .lenguaje_natural import registrar_lenguaje_natural
-    registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_senales, huella_agente)
+    registrar_lenguaje_natural(app, config, repo, exigir, fuente, ejecutar, con_senales, huella_agente, reloj)
     from .aprendizaje import registrar_aprendizaje
     aprendizaje = registrar_aprendizaje(app, config, repo, exigir, fuente, reloj)
+    from .analisis import registrar_analisis
+    registrar_analisis(app, config, repo, exigir, fuente, huella_agente)
     from .propuestas import registrar_propuestas
     registrar_propuestas(app, config, repo, exigir, fuente, huella_agente, reloj, aprendizaje)
     return app
