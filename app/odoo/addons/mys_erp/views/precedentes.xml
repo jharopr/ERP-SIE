@@ -1,0 +1,14 @@
+<odoo>
+    <!-- Decisión del gerente: precedentes aprendidos de decisiones anteriores parecidas -->
+    <record id="view_decision_form_precedentes" model="ir.ui.view">
+        <field name="name">mys.decision.precedentes</field>
+        <field name="model">mys.decision</field>
+        <field name="inherit_id" ref="mys_erp.view_decision_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line_ids']" position="after">
+                <separator string="Casos parecidos (lo que el sistema aprendió)" invisible="tipo != 'DESCUENTO'"/>
+                <field name="precedentes_html" nolabel="1" readonly="1" invisible="tipo != 'DESCUENTO'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

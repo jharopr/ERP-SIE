@@ -1,0 +1,7 @@
+.env
+**/data/
+*.sqlite3*
+__pycache__/
+.pytest_cache/
+*.zip
+evidencias/agente_*_borrador.md

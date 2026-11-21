@@ -1,0 +1,209 @@
+{
+  "fecha": "2026-11-20T14:46:33",
+  "etiqueta": "estres8",
+  "flujo": {
+    "clientes": 80,
+    "concurrencia": 8,
+    "segundos_totales": 152.6,
+    "clientes_por_minuto": 31.5,
+    "aciertos": 64,
+    "errores": 0,
+    "por_escenario": {
+      "sin_descuento": {
+        "VALIDADA": 24,
+        "NO_AUTORIZADO": 7
+      },
+      "volumen_5": {
+        "VALIDADA": 19,
+        "NO_AUTORIZADO": 4
+      },
+      "descuento_alto": {
+        "NO_AUTORIZADO": 5,
+        "VALIDADA": 9
+      },
+      "falta_stock": {
+        "DISPONIBILIDAD_PARCIAL": 4
+      },
+      "descuento_sin_evidencia": {
+        "DEPENDENCIA_NO_DISPONIBLE": 8
+      }
+    },
+    "pasos": {
+      "login_vendedor": {
+        "n": 80,
+        "p50": 2.765,
+        "p95": 4.193,
+        "p99": 4.236,
+        "max": 4.357,
+        "media": 2.888
+      },
+      "crear_cotizacion": {
+        "n": 80,
+        "p50": 0.579,
+        "p95": 14.497,
+        "p99": 14.72,
+        "max": 14.903,
+        "media": 1.998
+      },
+      "enviar": {
+        "n": 89,
+        "p50": 0.353,
+        "p95": 1.02,
+        "p99": 1.845,
+        "max": 2.343,
+        "media": 0.477
+      },
+      "aceptacion": {
+        "n": 89,
+        "p50": 4.253,
+        "p95": 7.695,
+        "p99": 7.786,
+        "max": 7.792,
+        "media": 4.518
+      },
+      "evaluar": {
+        "n": 89,
+        "p50": 2.476,
+        "p95": 4.758,
+        "p99": 5.664,
+        "max": 7.201,
+        "media": 2.632
+      },
+      "pedir_decision": {
+        "n": 13,
+        "p50": 3.497,
+        "p95": 4.016,
+        "p99": 4.45,
+        "max": 4.45,
+        "media": 3.138
+      },
+      "login_gerente": {
+        "n": 13,
+        "p50": 2.814,
+        "p95": 3.186,
+        "p99": 3.281,
+        "max": 3.281,
+        "media": 2.831
+      },
+      "decision_gerente": {
+        "n": 13,
+        "p50": 2.593,
+        "p95": 4.819,
+        "p99": 5.095,
+        "max": 5.095,
+        "media": 2.814
+      }
+    },
+    "por_cliente": {
+      "n": 80,
+      "p50": 11.07,
+      "p95": 30.29,
+      "p99": 33.19,
+      "max": 34.55,
+      "media": 14.933
+    },
+    "errores_detalle": [],
+    "fallos_de_regla": [
+      {
+        "ref": "CARGA-144646-007",
+        "escenario": "descuento_alto",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 29.05
+      },
+      {
+        "ref": "CARGA-144646-008",
+        "escenario": "descuento_alto",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 29.68
+      },
+      {
+        "ref": "CARGA-144646-002",
+        "escenario": "volumen_5",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 30.28
+      },
+      {
+        "ref": "CARGA-144646-001",
+        "escenario": "volumen_5",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 32.15
+      },
+      {
+        "ref": "CARGA-144646-005",
+        "escenario": "descuento_alto",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 33.19
+      },
+      {
+        "ref": "CARGA-144646-009",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 11.91
+      },
+      {
+        "ref": "CARGA-144646-012",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 10.82
+      },
+      {
+        "ref": "CARGA-144646-019",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 11.7
+      },
+      {
+        "ref": "CARGA-144646-027",
+        "escenario": "sin_descuento",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 10.26
+      },
+      {
+        "ref": "CARGA-144646-028",
+        "escenario": "volumen_5",
+        "pasos": [],
+        "error": null,
+        "codigo": "NO_AUTORIZADO",
+        "estado": "RECHAZADA",
+        "acierto": false,
+        "segundos": 9.82
+      }
+    ]
+  }
+}

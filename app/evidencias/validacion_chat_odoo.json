@@ -1,0 +1,26 @@
+{
+  "checks": [
+    "Webhook sin secreto interno rechazado",
+    "Interfaz anterior despublicada: /webhook/6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01/chat",
+    "Interfaz anterior despublicada: /form/decision-dueno",
+    "Interfaz anterior despublicada: /form/modo-determinista",
+    "Estado del agente disponible con sesión Odoo",
+    "Conversación Gemini desde Odoo sin otra contraseña",
+    "Herramienta real conserva actor vendedor y actor_type AGENTE",
+    "Respuesta sin credenciales"
+  ],
+  "count": 8,
+  "status": {
+    "configured": true,
+    "enabled": true,
+    "model": "models/gemini-3.5-flash",
+    "code": "HABILITADO",
+    "message": "API key verificada. Agente disponible."
+  },
+  "response": {
+    "ok": true,
+    "message": "Aquí tienes dos opciones de radios con pantalla encontradas en el catálogo de Odoo:\n\n1. **SKU:** `SOT200-10`\n   * **Producto:** PANTALLA ANDROID 4x32GB* 8 NÚCLEOS CON CHIP\n   * **Precio:** S/ 650.00 PEN\n\n2. **SKU:** `SD-9955NEC`\n   * **Producto:** PANTALLA MULTIMEDIA ANDROID 9\" QLED 4GB RAM 32GB ROM LONGSTAR\n   * **Precio:** S/ 430.00 PEN\n\n*Nota: Precios verificados en Odoo. La consulta no realiza modificaciones ni reservas de stock.*",
+    "conversation": "ba6f757233da46cf8f4583aba8539c14"
+  },
+  "gemini_real_tested": true
+}

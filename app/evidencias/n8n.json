@@ -1,0 +1,20 @@
+{
+  "ejecutado_utc": "2026-11-11T23:50:37.678671+00:00",
+  "entorno": "n8n 2.46.7 real + Compuerta + Odoo real",
+  "comprobaciones": [
+    {
+      "comprobacion": "W3 ejecuta el caso normal sin modelo",
+      "correcto": true
+    },
+    {
+      "comprobacion": "W2 registra la decisión del dueño autenticado",
+      "correcto": true
+    },
+    {
+      "comprobacion": "Decisión atribuida a GER-DEMO-01 en bitácora",
+      "correcto": true
+    }
+  ],
+  "modelo_ia_ejecutado": false,
+  "correcto": true
+}

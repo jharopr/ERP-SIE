@@ -2,6 +2,14 @@
 
 Este repositorio reúne el análisis del negocio, la comparación de soluciones y la arquitectura base para implementar un sistema de gestión en **IMPORTACIONES MYS HERMANOS S.A.C.** (RUC 20606915528).
 
+## Sistema ejecutable · PC3
+
+La implementación integrada está en [`app/`](app/README.md): Odoo 18 Community con menú lateral MS Power/MYS, PostgreSQL 16, Agente SIE dentro de Odoo (FastAPI + n8n) y catálogo completo de 167 productos del Excel suministrado. Contactos, Leads/CRM, Inventario, Ventas, evaluación comercial, decisiones y trazabilidad utilizan una sola sesión Odoo. El agente original se trasladó a `app/agente-sie/`. El inventario, clientes y operaciones son de prueba.
+
+Desde `app/`, ejecutar `python scripts/iniciar.py` y abrir `http://localhost:8088`. Los avisos al dueño llegan por correo (buzón local en `http://localhost:8025`). La arquitectura efectiva y los límites están en [`app/docs/ARQUITECTURA.md`](app/docs/ARQUITECTURA.md).
+
+Accesos de demostración: vendedor **`vendedor01` / `vendedor01`**, dueño **`gerente` / `gerente`**, administrador **`admin` / `admin`**. El agente se abre en el menú de Odoo sin otra contraseña y muestra su estado según la API key configurada.
+
 ## Incremento vigente · PC2 (Consolidado Oficial v2.1)
 
 El documento principal de entrega consolidado conforme a la consigna oficial vigente (corte a la diapositiva 12 de la sesión 6) se encuentra en:

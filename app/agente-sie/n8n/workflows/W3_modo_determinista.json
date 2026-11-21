@@ -1,0 +1,200 @@
+{
+  "id": "agSIEw3Determ001",
+  "name": "W3 · Modo determinista (respaldo sin IA)",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "basicAuth",
+        "formTitle": "Modo determinista · Agente SIE (respaldo sin IA)",
+        "formDescription": "Ejecuta los casos PC3 directamente contra la compuerta, sin modelo de lenguaje.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "caso",
+              "fieldType": "dropdown",
+              "requiredField": true,
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "PC3-N01"
+                  },
+                  {
+                    "option": "PC3-E01"
+                  },
+                  {
+                    "option": "PC3-E02"
+                  },
+                  {
+                    "option": "PC3-F01"
+                  },
+                  {
+                    "option": "PC3-F01 · reanudar"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "path": "modo-determinista"
+        }
+      },
+      "id": "54cc1695-8241-5222-a194-2226793d0944",
+      "name": "Formulario de casos",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b03",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "mysFormVentas01",
+          "name": "Acceso vendedor MYS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const SOLICITUDES = {\"PC3-N01\": {\"contract_version\": \"1.0\", \"company_id\": \"MYS-DEMO\", \"request_id\": \"SOL-PC3-N01\", \"correlation_id\": \"COR-PC3-001\", \"opportunity_id\": \"OPP-DEMO-001\", \"customer_id\": \"CLI-DEMO-001\", \"quotation_id\": \"COT-DEMO-001\", \"quotation_version\": 1, \"acceptance_id\": \"ACE-PC3-001\"}, \"PC3-E01\": {\"contract_version\": \"1.0\", \"company_id\": \"MYS-DEMO\", \"request_id\": \"SOL-PC3-E01\", \"correlation_id\": \"COR-PC3-002\", \"opportunity_id\": \"OPP-DEMO-002\", \"customer_id\": \"CLI-DEMO-001\", \"quotation_id\": \"COT-DEMO-002\", \"quotation_version\": 1, \"acceptance_id\": \"ACE-PC3-002\"}, \"PC3-E02\": {\"contract_version\": \"1.0\", \"company_id\": \"MYS-DEMO\", \"request_id\": \"SOL-PC3-E02\", \"correlation_id\": \"COR-PC3-001\", \"opportunity_id\": \"OPP-DEMO-001\", \"customer_id\": \"CLI-DEMO-001\", \"quotation_id\": \"COT-DEMO-004\", \"quotation_version\": 2, \"acceptance_id\": \"ACE-PC3-003\"}, \"PC3-F01\": {\"contract_version\": \"1.0\", \"company_id\": \"MYS-DEMO\", \"request_id\": \"SOL-PC3-F01\", \"correlation_id\": \"COR-PC3-004\", \"opportunity_id\": \"OPP-DEMO-001\", \"customer_id\": \"CLI-DEMO-001\", \"quotation_id\": \"COT-DEMO-003\", \"quotation_version\": 1, \"acceptance_id\": \"ACE-PC3-004\"}};\nconst caso = $input.first().json.caso;\nif (caso === 'PC3-F01 · reanudar') {\n  return [{ json: { caso, url: 'http://compuerta:8000/solicitudes/SOL-PC3-F01/reanudar', body: {} } }];\n}\nreturn [{ json: { caso, url: 'http://compuerta:8000/solicitudes', body: SOLICITUDES[caso] } }];"
+      },
+      "id": "1e199e11-7fdf-5520-9478-e8c80b18c507",
+      "name": "Preparar solicitud",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $json.url }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Actor-Type",
+              "value": "HUMANO"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.body) }}",
+        "options": {
+          "response": {
+            "response": {
+              "neverError": true
+            }
+          }
+        }
+      },
+      "id": "c08d5706-9c57-509a-9116-9d668b8a19b0",
+      "name": "Compuerta (VENTAS)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "cmpVentasAgSIE01",
+          "name": "Compuerta VENTAS"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const r = $input.first().json;\nconst caso = $('Preparar solicitud').first().json.caso;\nif (!r.respuesta) { return [{ json: { titulo: `${caso}: sin respuesta tipificada`, texto: JSON.stringify(r) } }]; }\nconst x = r.respuesta;\nconst rep = (r.senales_reposicion || []).map(s => `${s.signal_id} (faltan ${s.faltante} de ${s.sku})`).join(', ') || '—';\nconst cond = (x.conditions || []).map(c => `${c.sku}: pedido ${c.requested_quantity}, disponible ${c.available_quantity}, fecha prometida: ninguna`).join('; ') || '—';\nconst texto = [\n  `Resultado: ${x.status} / ${x.code}`, `Motivo: ${x.message}`, `Quién actúa: ${x.responsible_role}`,\n  `Siguiente paso: ${x.required_action}`, `Total: ${x.total ?? '—'} ${x.currency ?? ''}`,\n  `Condiciones: ${cond}`, `order_id: ${x.order_id} (no se creó pedido)`,\n  `IDs: ${x.request_id} · ${x.correlation_id} · REP: ${rep}`].join('\\n');\nreturn [{ json: { titulo: `${caso} · modo determinista (sin IA)`, texto, respuesta: x } }];"
+      },
+      "id": "00dd7b49-3703-5202-9398-c00b17db30c9",
+      "name": "Formatear respuesta",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "={{ $json.titulo }}",
+        "completionMessage": "={{ $json.texto }}",
+        "options": {}
+      },
+      "id": "8b3808fe-5c30-5330-ad35-b7d441757bc6",
+      "name": "Mostrar resultado",
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 1,
+      "position": [
+        880,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Formulario de casos": {
+      "main": [
+        [
+          {
+            "node": "Preparar solicitud",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar solicitud": {
+      "main": [
+        [
+          {
+            "node": "Compuerta (VENTAS)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compuerta (VENTAS)": {
+      "main": [
+        [
+          {
+            "node": "Formatear respuesta",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Formatear respuesta": {
+      "main": [
+        [
+          {
+            "node": "Mostrar resultado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "America/Lima",
+    "saveManualExecutions": true
+  },
+  "pinData": {},
+  "tags": [],
+  "meta": {
+    "generado_por": "scripts/generar_workflows.py",
+    "datos": "sintéticos"
+  }
+}

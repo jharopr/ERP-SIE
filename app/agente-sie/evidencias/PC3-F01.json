@@ -1,0 +1,212 @@
+{
+  "caso": "PC3-F01",
+  "titulo": "Dependencia caída: Odoo (activo TI crítico) en mantenimiento",
+  "modo": "Docker: Odoo 18 + compuerta reales",
+  "ejecutado_utc": "2026-11-11T23:23:08.320819+00:00",
+  "entrada": {
+    "contract_version": "1.0",
+    "company_id": "MYS-DEMO",
+    "request_id": "SOL-PC3-F01",
+    "correlation_id": "COR-PC3-004",
+    "opportunity_id": "OPP-DEMO-001",
+    "customer_id": "CLI-DEMO-001",
+    "quotation_id": "COT-DEMO-003",
+    "quotation_version": 1,
+    "acceptance_id": "ACE-PC3-004"
+  },
+  "respuesta": {
+    "respuesta": {
+      "contract_version": "1.0",
+      "request_id": "SOL-PC3-F01",
+      "correlation_id": "COR-PC3-004",
+      "quotation_id": "COT-DEMO-003",
+      "quotation_version": 1,
+      "status": "PENDIENTE",
+      "code": "DEPENDENCIA_NO_DISPONIBLE",
+      "message": "No hay lectura confiable de los datos comerciales en Odoo.",
+      "responsible_role": "ADMINISTRADOR_Y_VENTAS",
+      "required_action": "Recuperar dependencia y reanudar la misma solicitud.",
+      "total": null,
+      "currency": null,
+      "order_id": null,
+      "conditions": []
+    },
+    "senales_reposicion": []
+  },
+  "chequeos": {
+    "status": {
+      "esperado": "PENDIENTE",
+      "observado": "PENDIENTE",
+      "ok": true
+    },
+    "code": {
+      "esperado": "DEPENDENCIA_NO_DISPONIBLE",
+      "observado": "DEPENDENCIA_NO_DISPONIBLE",
+      "ok": true
+    },
+    "responsible_role": {
+      "esperado": "ADMINISTRADOR_Y_VENTAS",
+      "observado": "ADMINISTRADOR_Y_VENTAS",
+      "ok": true
+    },
+    "order_id": {
+      "esperado": null,
+      "observado": null,
+      "ok": true
+    },
+    "conditions": {
+      "esperado": [],
+      "observado": [],
+      "ok": true
+    },
+    "reanudar.status": {
+      "esperado": "ACEPTADA",
+      "observado": "ACEPTADA",
+      "ok": true
+    },
+    "reanudar.code": {
+      "esperado": "VALIDADA",
+      "observado": "VALIDADA",
+      "ok": true
+    },
+    "reanudar.responsible_role": {
+      "esperado": "VENTAS",
+      "observado": "VENTAS",
+      "ok": true
+    },
+    "reanudar.total": {
+      "esperado": "1900.00",
+      "observado": "1900.00",
+      "ok": true
+    },
+    "reanudar.order_id": {
+      "esperado": null,
+      "observado": null,
+      "ok": true
+    },
+    "reanudar.conditions": {
+      "esperado": [],
+      "observado": [],
+      "ok": true
+    }
+  },
+  "ok": true,
+  "modo_caida": "bandera",
+  "respuesta_tras_reanudar": {
+    "respuesta": {
+      "contract_version": "1.0",
+      "request_id": "SOL-PC3-F01",
+      "correlation_id": "COR-PC3-004",
+      "quotation_id": "COT-DEMO-003",
+      "quotation_version": 1,
+      "status": "ACEPTADA",
+      "code": "VALIDADA",
+      "message": "Solicitud validada; confirmación operativa pendiente.",
+      "responsible_role": "VENTAS",
+      "required_action": "Informar resultado; revalidar al confirmar operativamente en otro incremento.",
+      "total": "1900.00",
+      "currency": "PEN",
+      "order_id": null,
+      "conditions": []
+    },
+    "senales_reposicion": []
+  },
+  "bitacora": [
+    {
+      "event_id": 28,
+      "occurred_at": "2026-11-11T18:23:04-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I03",
+      "event_type": "RECIBIDA",
+      "code": "RECIBIDA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "HUMANO",
+      "detalle": null
+    },
+    {
+      "event_id": 29,
+      "occurred_at": "2026-11-11T18:23:04-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "DEPENDENCIA_NO_DISPONIBLE",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 30,
+      "occurred_at": "2026-11-11T18:23:04-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "DEPENDENCIA_NO_DISPONIBLE",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 36,
+      "occurred_at": "2026-11-11T18:23:08-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I03",
+      "event_type": "REANUDADA",
+      "code": "RECIBIDA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "HUMANO",
+      "detalle": null
+    },
+    {
+      "event_id": 37,
+      "occurred_at": "2026-11-11T18:23:08-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I04",
+      "event_type": "CONSULTA",
+      "code": "SNAPSHOT_COMERCIAL",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 38,
+      "occurred_at": "2026-11-11T18:23:08-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I06",
+      "event_type": "CONSULTA",
+      "code": "POLITICA_DESCUENTO",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 39,
+      "occurred_at": "2026-11-11T18:23:08-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I05",
+      "event_type": "CONSULTA",
+      "code": "DISPONIBILIDAD",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    },
+    {
+      "event_id": 40,
+      "occurred_at": "2026-11-11T18:23:08-05:00",
+      "correlation_id": "COR-PC3-004",
+      "request_id": "SOL-PC3-F01",
+      "interface_id": "I07",
+      "event_type": "DECISION",
+      "code": "VALIDADA",
+      "actor_id": "VEN-DEMO-01",
+      "actor_type": "SISTEMA",
+      "detalle": null
+    }
+  ]
+}

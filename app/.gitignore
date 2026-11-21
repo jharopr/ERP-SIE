@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
+**/*.pyc
+**/*.sqlite3*
+**/data/
+!odoo/addons/mys_erp/data/
+backups/
+dist/
+logs/
+.test-runs/
+

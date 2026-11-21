@@ -1,0 +1,27 @@
+{
+  "nota": "Historial de compras SINTÉTICO para demostrar el perfil del cliente. Productos reales del catálogo; clientes, fechas y cantidades inventados. Las ventas se confirman y su entrega se cancela, para que NO cambien el stock de los casos PC3. 'dias' = hace cuántos días fue la compra.",
+  "esperado": {
+    "CLI-DEMO-003": "mayorista (taller: más de S/ 5 000 en 6 meses)",
+    "CLI-DEMO-002": "mayorista (sus 2 ventas de los casos PC3 suman 9 autorradios; con el historial pasa de S/ 5 000)",
+    "CLI-DEMO-006": "frecuente (3 compras pequeñas en 6 meses)",
+    "CLI-DEMO-001": "ocasional e inactivo (1 compra hace 95 días)",
+    "CLI-DEMO-005": "nuevo con alerta de inactividad (su única compra fue hace 250 días)"
+  },
+  "pedidos": [
+    {"cliente": "CLI-DEMO-003", "dias": 170, "estado": "sale", "lineas": [["MVH-S215BT", 6, 3], ["TS-G1620F-2", 6, 3], ["16GA", 100, 0]]},
+    {"cliente": "CLI-DEMO-003", "dias": 135, "estado": "sale", "lineas": [["GM-A6704", 4, 5], ["SSK4ANL", 4, 0]]},
+    {"cliente": "CLI-DEMO-003", "dias": 100, "estado": "sale", "lineas": [["MVH-S215BT", 8, 3], ["INS-EQUIPO-SONIDO", 2, 0]]},
+    {"cliente": "CLI-DEMO-003", "dias": 70, "estado": "sale", "lineas": [["STAGE2634", 6, 5], ["T3S", 6, 0]]},
+    {"cliente": "CLI-DEMO-003", "dias": 50, "estado": "cancel", "lineas": [["TS-A3000LS4", 4, 10]]},
+    {"cliente": "CLI-DEMO-003", "dias": 35, "estado": "sale", "lineas": [["TS-A3000LS4", 2, 0], ["GM-A6704", 2, 5]]},
+    {"cliente": "CLI-DEMO-003", "dias": 10, "estado": "sale", "lineas": [["DEH-S4250BT", 5, 3], ["16GA", 50, 0]]},
+    {"cliente": "CLI-DEMO-002", "dias": 120, "estado": "sale", "lineas": [["STAGE2634", 1, 0], ["T3S", 2, 0]]},
+    {"cliente": "CLI-DEMO-002", "dias": 65, "estado": "sale", "lineas": [["SD-YT0905PRO", 1, 0], ["INS-PANTALLA", 1, 0]]},
+    {"cliente": "CLI-DEMO-002", "dias": 18, "estado": "sale", "lineas": [["TS-G1620F-2", 1, 0], ["BH-FS2", 1, 0]]},
+    {"cliente": "CLI-DEMO-001", "dias": 95, "estado": "sale", "lineas": [["DEH-S4250BT", 1, 0], ["INS-PANTALLA", 1, 0]]},
+    {"cliente": "CLI-DEMO-005", "dias": 250, "estado": "sale", "lineas": [["STAGE2634", 2, 0]]},
+    {"cliente": "CLI-DEMO-006", "dias": 150, "estado": "sale", "lineas": [["T3S", 2, 0], ["16GA", 20, 0]]},
+    {"cliente": "CLI-DEMO-006", "dias": 80, "estado": "sale", "lineas": [["TS-G1620F-2", 1, 0]]},
+    {"cliente": "CLI-DEMO-006", "dias": 25, "estado": "sale", "lineas": [["BH-FS2", 2, 0], ["16GA", 15, 0]]}
+  ]
+}

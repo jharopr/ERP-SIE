@@ -1,0 +1,87 @@
+<odoo>
+    <record id="stage_mys_qualified" model="crm.stage">
+        <field name="name">Oportunidad calificada</field><field name="sequence">10</field>
+        <field name="mys_commercial_step">qualified</field><field name="is_won" eval="False"/>
+        <field name="requirements">Cliente identificado y necesidad concreta. Revisar compatibilidad, catálogo y disponibilidad.</field>
+    </record>
+    <record id="stage_mys_preparing" model="crm.stage">
+        <field name="name">Cotización en preparación</field><field name="sequence">20</field>
+        <field name="mys_commercial_step">preparing</field><field name="is_won" eval="False"/>
+        <field name="requirements">Preparar productos, cantidades, precios, descuento y vigencia de la oferta o nueva versión.</field>
+    </record>
+    <record id="stage_mys_presented" model="crm.stage">
+        <field name="name">Propuesta presentada</field><field name="sequence">30</field>
+        <field name="mys_commercial_step">presented</field><field name="is_won" eval="False"/>
+        <field name="requirements">Cotización preparada/presentada. El vendedor entrega la oferta y registra la respuesta real del cliente.</field>
+    </record>
+    <record id="stage_mys_review" model="crm.stage">
+        <field name="name">En revisión / negociación</field><field name="sequence">40</field>
+        <field name="mys_commercial_step">review</field><field name="is_won" eval="False"/>
+        <field name="requirements">El cliente solicita cambios o las reglas requieren corregir datos, condiciones o una decisión del gerente. No equivale a perdido.</field>
+    </record>
+    <record id="stage_mys_validated" model="crm.stage">
+        <field name="name">Cierre comercial validado</field><field name="sequence">50</field>
+        <field name="mys_commercial_step">validated</field><field name="is_won" eval="True"/>
+        <field name="requirements">Versión vigente, no vencida, aceptada por el cliente y evaluada ACEPTADA / VALIDADA. Sin pedido, reserva, factura ni despacho.</field>
+    </record>
+    <record id="crm_form_mys_pipeline" model="ir.ui.view">
+        <field name="name">crm.lead.mys.pipeline.form</field><field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="attributes">
+                <attribute name="domain">[('mys_commercial_step', '!=', False)] if type == 'opportunity' else [('mys_commercial_step', '=', False)]</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_set_won_rainbowman']" position="attributes">
+                <attribute name="string">Cerrar comercialmente</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="mys_commercial_control" string="Seguimiento comercial" invisible="type != 'opportunity'">
+                    <div class="alert alert-info" role="status">Las etapas describen el seguimiento comercial. La evaluación se muestra por separado. El cierre no confirma pedidos ni reserva stock.</div>
+                    <group>
+                        <field name="mys_policy_summary" readonly="1"/>
+                        <field name="mys_current_order_id" readonly="1"/>
+                        <field name="mys_evaluation_status" widget="badge" readonly="1"
+                               decoration-success="mys_evaluation_status == 'ACEPTADA'"
+                               decoration-warning="mys_evaluation_status in ['PENDIENTE', 'PROMESA_CONDICIONADA']"
+                               decoration-danger="mys_evaluation_status == 'RECHAZADA'"/>
+                        <field name="mys_evaluation_code" readonly="1" invisible="not mys_evaluation_code"/>
+                    </group>
+                    <p invisible="mys_current_order_id">Cree una cotización desde esta oportunidad para continuar.</p>
+                    <p invisible="mys_evaluation_status != 'RECHAZADA'">Revise el motivo y corrija o negocie. Una evaluación rechazada no significa que se perdió al cliente.</p>
+                    <p invisible="mys_evaluation_status != 'PROMESA_CONDICIONADA'">Revise cantidades o condiciones con el cliente. No existe una fecha de entrega comprometida.</p>
+                    <p invisible="mys_evaluation_status != 'PENDIENTE'">Falta completar la verificación. Se conserva la etapa comercial; reanude la solicitud cuando se recupere el servicio.</p>
+                    <p invisible="mys_evaluation_status != 'ACEPTADA'">El cierre requiere que esta sea la versión vigente, no vencida y aceptada por el cliente.</p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_kanban_mys_pipeline" model="ir.ui.view">
+        <field name="name">crm.lead.mys.pipeline.kanban</field><field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+        <field name="arch" type="xml">
+            <xpath expr="//t[@t-name='card']/field[@name='partner_id']" position="after">
+                <field name="mys_current_order_id" class="text-muted small" invisible="not mys_current_order_id"/>
+                <div class="mt-1" invisible="not mys_evaluation_status">
+                    <span class="text-muted small me-1">Evaluación:</span>
+                    <field name="mys_evaluation_status" widget="badge"
+                           decoration-success="mys_evaluation_status == 'ACEPTADA'"
+                           decoration-warning="mys_evaluation_status in ['PENDIENTE', 'PROMESA_CONDICIONADA']"
+                           decoration-danger="mys_evaluation_status == 'RECHAZADA'"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+    <record id="crm_list_mys_pipeline" model="ir.ui.view">
+        <field name="name">crm.lead.mys.pipeline.list</field><field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="mys_current_order_id" optional="show"/>
+                <field name="mys_evaluation_status" optional="show" widget="badge"
+                       decoration-success="mys_evaluation_status == 'ACEPTADA'"
+                       decoration-warning="mys_evaluation_status in ['PENDIENTE', 'PROMESA_CONDICIONADA']"
+                       decoration-danger="mys_evaluation_status == 'RECHAZADA'"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,27 @@
+{
+  "checks": [
+    "Webhook sin secreto interno rechazado",
+    "Interfaz anterior despublicada: /webhook/6f1c2a10-5b8e-4c1d-9a51-0c3e9f2a7b01/chat",
+    "Interfaz anterior despublicada: /form/decision-dueno",
+    "Interfaz anterior despublicada: /form/modo-determinista",
+    "Estado del agente disponible con sesión Odoo",
+    "Agotamiento de cuota del proveedor informado correctamente",
+    "Estado del agente refleja falta de cuota",
+    "Respuesta sin credenciales"
+  ],
+  "count": 8,
+  "status": {
+    "configured": true,
+    "enabled": false,
+    "model": "models/gemini-3.5-flash",
+    "code": "CUOTA_AGOTADA",
+    "message": "Sin cuota: Gemini agotó el límite de generación de la cuenta. La clave es válida. Espere a que el proveedor restablezca la cuota; las reglas y módulos de Odoo siguen disponibles."
+  },
+  "response": {
+    "ok": false,
+    "code": "CUOTA_AGOTADA",
+    "message": "Sin cuota: Gemini agotó el límite de generación de la cuenta. La clave es válida. Espere a que el proveedor restablezca la cuota; las reglas y módulos de Odoo siguen disponibles.",
+    "conversation": "18b90362172c4921b1dadb360dc4ce46"
+  },
+  "gemini_real_tested": false
+}

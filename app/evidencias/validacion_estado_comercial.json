@@ -1,0 +1,18 @@
+{
+  "columna_unificada_aplicada": true,
+  "detalle_conservado_en_formulario": true,
+  "filtros_comerciales_ok": true,
+  "pruebas_odoo": 40,
+  "documentos_conservados": 27,
+  "leads_conservados": 17,
+  "importes_aceptaciones_resultados_y_autorizaciones_sin_cambios": true,
+  "stock_y_reservas_sin_cambios": true,
+  "estados_actuales": {
+    "confirmed": 2,
+    "superseded": 12,
+    "expired": 7,
+    "cancelled": 2,
+    "unevaluated": 2,
+    "needs_changes": 2
+  }
+}

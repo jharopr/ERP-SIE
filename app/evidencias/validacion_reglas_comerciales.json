@@ -1,0 +1,159 @@
+{
+  "fecha": "2026-11-13",
+  "politica": "MYS-2026-11-13",
+  "odoo_version_modulo": "18.0.2.9.0",
+  "odoo_pruebas_aprobadas": 50,
+  "compuerta_pruebas_aprobadas": 46,
+  "origen": "Ejecucion local de pruebas ORM transaccionales y pytest; no valida otra PC ni disponibilidad del LLM.",
+  "nuevas_pruebas_odoo": 10,
+  "nuevas_pruebas_compuerta": 3,
+  "motor_pc2_sin_modificar": true,
+  "contrato_sin_cambios": true,
+  "datos_de_prueba": "Sinteticos, transacciones ORM revertidas al terminar cada prueba.",
+  "definiciones_confirmadas": {
+    "fidelidad": "Mas de 10 unidades entregadas netas acumuladas",
+    "recurrencia": "Cada uno de los 3 meses completos anteriores"
+  },
+  "casos": [
+    {
+      "id": "REG-01",
+      "criterio": "5 unidades de producto nacional; 5 %",
+      "esperado": "No elegible para descuento regular",
+      "observado": "No elegible para descuento regular",
+      "estado": "aprobado"
+    },
+    {
+      "id": "REG-02",
+      "criterio": "6 unidades del mismo producto; 5 %",
+      "esperado": "Cumple criterio regular",
+      "observado": "Cumple criterio regular",
+      "estado": "aprobado"
+    },
+    {
+      "id": "REG-03",
+      "criterio": "2 lineas del mismo producto con 3 unidades cada una",
+      "esperado": "Agrega 6 unidades; cumple",
+      "observado": "Agrega 6 unidades; cumple",
+      "estado": "aprobado"
+    },
+    {
+      "id": "REG-04",
+      "criterio": "Importado con evidencia y 20 unidades disponibles",
+      "esperado": "Cumple criterio de saldo importado",
+      "observado": "Cumple criterio de saldo importado",
+      "estado": "aprobado"
+    },
+    {
+      "id": "REG-05",
+      "criterio": "Importado con 21 unidades disponibles; cantidad comprada 5",
+      "esperado": "No cumple criterio regular",
+      "observado": "No cumple criterio regular",
+      "estado": "aprobado"
+    },
+    {
+      "id": "REG-06",
+      "criterio": "Origen sin verificar; cantidad 5",
+      "esperado": "Pendiente de evidencia, no se presume importado",
+      "observado": "Pendiente de evidencia, no se presume importado",
+      "estado": "aprobado"
+    },
+    {
+      "id": "EXC-01",
+      "criterio": "Margen comercial igual a S/ 2000",
+      "esperado": "No cumple el criterio de margen alto",
+      "observado": "No cumple el criterio de margen alto",
+      "estado": "aprobado"
+    },
+    {
+      "id": "EXC-02",
+      "criterio": "Margen comercial S/ 2005",
+      "esperado": "Cumple criterio; mantiene aprobacion humana obligatoria",
+      "observado": "Cumple criterio; mantiene aprobacion humana obligatoria",
+      "estado": "aprobado"
+    },
+    {
+      "id": "EXC-03",
+      "criterio": "Costo sin verificar y ningun otro criterio probado",
+      "esperado": "Pendiente de evidencia",
+      "observado": "Pendiente de evidencia",
+      "estado": "aprobado"
+    },
+    {
+      "id": "EXC-04",
+      "criterio": "Costo sin verificar, pero liquidacion certificada mayor a 6 meses",
+      "esperado": "Cumple por criterio alternativo",
+      "observado": "Cumple por criterio alternativo",
+      "estado": "aprobado"
+    },
+    {
+      "id": "EXC-05",
+      "criterio": "Antiguedad sin rotacion exactamente 6 meses",
+      "esperado": "No cumple liquidacion",
+      "observado": "No cumple liquidacion",
+      "estado": "aprobado"
+    },
+    {
+      "id": "EXC-06",
+      "criterio": "Antiguedad 6 meses y 1 dia",
+      "esperado": "Cumple liquidacion",
+      "observado": "Cumple liquidacion",
+      "estado": "aprobado"
+    },
+    {
+      "id": "FID-01",
+      "criterio": "10 unidades entregadas y pedido cancelado de 50",
+      "esperado": "No cumple mas de 10; excluye canceladas",
+      "observado": "No cumple mas de 10; excluye canceladas",
+      "estado": "aprobado"
+    },
+    {
+      "id": "FID-02",
+      "criterio": "11 unidades entregadas netas",
+      "esperado": "Cumple fidelidad",
+      "observado": "Cumple fidelidad",
+      "estado": "aprobado"
+    },
+    {
+      "id": "FID-03",
+      "criterio": "Compras en solo 2 de los 3 meses anteriores",
+      "esperado": "No cumple recurrencia",
+      "observado": "No cumple recurrencia",
+      "estado": "aprobado"
+    },
+    {
+      "id": "FID-04",
+      "criterio": "Compras entregadas en cada uno de los 3 meses anteriores",
+      "esperado": "Cumple recurrencia",
+      "observado": "Cumple recurrencia",
+      "estado": "aprobado"
+    },
+    {
+      "id": "SEG-01",
+      "criterio": "Vendedor intenta modificar evidencia de producto",
+      "esperado": "Acceso denegado",
+      "observado": "Acceso denegado",
+      "estado": "aprobado"
+    },
+    {
+      "id": "SEG-02",
+      "criterio": "Gerente solicita aprobar sin criterio estrategico",
+      "esperado": "HTTP 409; registra intento denegado",
+      "observado": "HTTP 409; registra intento denegado",
+      "estado": "aprobado"
+    },
+    {
+      "id": "CON-01",
+      "criterio": "Regla adicional no cumplida",
+      "esperado": "RECHAZADA / DATOS_INCONSISTENTES; schema valido",
+      "observado": "RECHAZADA / DATOS_INCONSISTENTES; schema valido",
+      "estado": "aprobado"
+    },
+    {
+      "id": "CON-02",
+      "criterio": "Evidencia confiable no disponible",
+      "esperado": "PENDIENTE / DEPENDENCIA_NO_DISPONIBLE; schema valido",
+      "observado": "PENDIENTE / DEPENDENCIA_NO_DISPONIBLE; schema valido",
+      "estado": "aprobado"
+    }
+  ]
+}

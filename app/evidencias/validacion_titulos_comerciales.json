@@ -1,0 +1,26 @@
+{
+  "leads_y_oportunidades_legibles": 17,
+  "cotizaciones_y_ventas_con_resumen": 27,
+  "importes_aceptaciones_y_resultados_conservados": true,
+  "referencias_y_vinculos_conservados": true,
+  "stock_y_reservas_conservados": true,
+  "benja_conservado": true,
+  "agente_sie_compatible": true,
+  "carga_repetida_sin_cambios": true,
+  "pruebas_odoo": 33,
+  "autorizaciones": {
+    "not_required": 8,
+    "no_decision": 1,
+    "not_requested": 6,
+    "approved_next": 6,
+    "review": 1,
+    "approved": 5
+  },
+  "ejemplo": {
+    "S00018": "Rechazada; descuento aprobado para S00019",
+    "S00019": "Aceptada; descuento aprobado para esta version"
+  },
+  "requieren_revision": [
+    "S00015"
+  ]
+}

@@ -1,0 +1,5 @@
+# Compatibilidad: el despliegue ?nico est? en app/compose.yaml.
+include:
+  - path: ../compose.yaml
+    project_directory: ..
+    env_file: ../.env
